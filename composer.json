@@ -1,0 +1,19 @@
+{
+    "name": "webart/verba",
+    "description": "verba web engine",
+    "minimum-stability": "dev",
+    "license": "",
+    "authors": [
+        {
+            "name": "Maksym V.K.",
+            "email": "kmv@webart.group"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Verba\\": "/src"
+        }
+    }
+}

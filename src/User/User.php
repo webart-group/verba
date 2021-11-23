@@ -109,12 +109,12 @@ class User extends \Verba\Mod
             $time = strtotime('+1 year');
         }
 
-        if(isset($_SERVER['HTTP_ORIGIN'])){
-            $origin = (new Url($_SERVER['HTTP_ORIGIN']))->host;
-            if($origin){
-                $domain = $origin;
-            }
-        }
+        // if(isset($_SERVER['HTTP_ORIGIN'])){
+        //     $origin = (new Url($_SERVER['HTTP_ORIGIN']))->host;
+        //     if($origin){
+        //         $domain = $origin;
+        //     }
+        // }
 
         if(!isset($domain)){
             $domain = '.' . SYS_THIS_HOST;

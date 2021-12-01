@@ -1,7 +1,7 @@
 <?php
 namespace Mod\User\Block\Registration;
 
-use \Verba\User\User\Block\Login\Form as LoginForm;
+use \Verba\User\Block\Login\Form as LoginForm;
 
 class Form extends LoginForm
 {

@@ -7,7 +7,7 @@
  * Time: 18:21
  */
 
-namespace KeyKeeper;
+namespace Verba\KeyKeeper;
 
 class Key {
 

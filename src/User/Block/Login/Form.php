@@ -1,5 +1,5 @@
 <?php
-namespace Mod\User\Block\Login;
+namespace Verba\User\Block\Login;
 
 class Form extends \Verba\Block\Html
 {

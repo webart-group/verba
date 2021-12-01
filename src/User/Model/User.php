@@ -340,7 +340,7 @@ class User extends \Verba\Model\Item
     function loadRights($keys, $ot_ids = false)
     {
 
-        if (!reductionToArray($keys)) return false;
+        if (!\Verba\reductionToArray($keys)) return false;
 
         //Генерация условия по ключам
         $keys_where = '(' . $this->DB()->makeWhereStatement($keys, 'key_id') . ')';
@@ -356,7 +356,7 @@ class User extends \Verba\Model\Item
             $UserGroups[0] = 0;
             $group_where = ' && (' . $this->DB()->makeWhereStatement(array_keys($UserGroups), 'group_id') . ')';
             // По типам объектов
-            $ot_id_where = reductionToArray($ot_ids) ? ' && (' . $this->DB()->makeWhereStatement($ot_ids, 'ot_id') . ')' : '';
+            $ot_id_where = \Verba\reductionToArray($ot_ids) ? ' && (' . $this->DB()->makeWhereStatement($ot_ids, 'ot_id') . ')' : '';
             $grpFields = 'group_id';
             $rightsFields = 's, c, u, d';
         }
@@ -383,7 +383,7 @@ WHERE $keys_where $group_where $ot_id_where";
     function chr($key_id, $rights = 's', $checkIn = 3, $ot_id = null)
     {
 
-        if (!is_numeric($key_id) || !reductionToArray($rights)) {
+        if (!is_numeric($key_id) || !\Verba\reductionToArray($rights)) {
             return false;
         }
 

@@ -103,20 +103,20 @@ class Router extends \Verba\Block {
                     . implode('\\', $urlFragments)
                     . '\\'.$lastE;
 
-                $possibleClassName = preg_replace("/[^\w\\\]/i", '_', $possibleClassName);
+                $possibleClassName = str_replace('\\\\', '\\', preg_replace("/[^\w\\\]/i", '_', $possibleClassName));
 
                 if(class_exists($possibleClassName)){
                     $className = $possibleClassName;
                     $shift = count($urlFragments) + 1;
                     break;
                 }
-            }while($urlFragments > 0);
+            }while(count($urlFragments));
         }
 
         if(!isset($className)
             && false === (
-                \Verba\Hive::isModExists($uf[0])
-                && ($className = '\\Mod\\'.ucfirst(strtolower($uf[0])).'\\Router')
+                \Verba\Hive::isModExists($urlFragments[0])
+                && ($className = '\\Mod\\'.ucfirst(strtolower($urlFragments[0])).'\\Router')
                 && class_exists($className)
             )
         ){

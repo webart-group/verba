@@ -202,28 +202,28 @@ class User extends \Verba\Mod
     function getAuthorizationUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->gC('auth', 'authorization_path')
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : ''). SYS_THIS_HOST . $this->gC('auth', 'authorization_path')
             : $this->gC('auth', 'authorization_path');
     }
 
     function getRegisterUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->gC('auth', 'register_path')
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->gC('auth', 'register_path')
             : $this->gC('auth', 'register_path');
     }
 
     function getSpecifyUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->gC('auth', 'specify')
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->gC('auth', 'specify')
             : $this->gC('auth', 'specify');
     }
 
     function getLoginPageUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->_c['auth']['login_page_url']
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->_c['auth']['login_page_url']
             : $this->_c['auth']['login_page_url'];
 
     }
@@ -231,7 +231,7 @@ class User extends \Verba\Mod
     function getLogoutUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->gC('auth', 'logout_path')
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->gC('auth', 'logout_path')
             : $this->gC('auth', 'logout_path');
 
     }
@@ -247,21 +247,21 @@ class User extends \Verba\Mod
     function getLostpasswordUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->gC('auth lostpassword')
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->gC('auth lostpassword')
             : $this->gC('auth lostpassword');
     }
 
     function getReclaimpasswordUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->gC('auth reclaimpassword')
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->gC('auth reclaimpassword')
             : $this->gC('auth reclaimpassword');
     }
 
     function getLoginfaildUrl($global = true)
     {
         return $global
-            ? SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . $this->gC('auth loginfaild_path')
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->gC('auth loginfaild_path')
             : $this->gC('auth loginfaild_path');
     }
 

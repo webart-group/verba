@@ -283,6 +283,8 @@ class Hive extends Configurable
             $this->sC(false, '__clearCache');
             $this->clearCache();
         }
+
+        Loger::saveToDB();
     }
 
     function handleDebugConfig()
@@ -993,7 +995,6 @@ class Hive extends Configurable
         global $S;
         return $S->gC($path);
     }
-
 }
 
 \Verba\Hive::$default_config = array(

@@ -247,11 +247,6 @@ class Block extends Configurable implements BlockInterface
         return (string)$r;
     }
 
-    function end()
-    {
-        \Verba\Loger::saveToDB();
-    }
-
     function parent($role = null)
     {
         if (!$role

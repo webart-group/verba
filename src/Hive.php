@@ -283,7 +283,10 @@ class Hive extends Configurable
             $this->sC(false, '__clearCache');
             $this->clearCache();
         }
+    }
 
+    public function saveLogs()
+    {
         Loger::saveToDB();
     }
 

@@ -1350,9 +1350,9 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
     }
 
     function getOTItemClass() {
-        return is_string($this->OT->handler)
-        && $this->OT->handler
-            ? $this->OT->handler
+        return is_string($this->OT->OItemClassName)
+        && $this->OT->OItemClassName
+            ? $this->OT->OItemClassName
             : '\Verba\Model\Item';
     }
 }

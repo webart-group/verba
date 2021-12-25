@@ -6,6 +6,7 @@ class ObjectType extends Base
     public $id;
     public $baseId;
     public $baseOT;
+    public $OItemClassName;
     private $_ancestors = null;
 
     public $code;
@@ -125,6 +126,7 @@ class ObjectType extends Base
 , `ot`.`owner`
 , `ot`.`handler`
 , `ot`.`role`
+, `ot`.`OItemClassName`
 , `ot`.`title_" . SYS_LOCALE . "` as `display`
 , GROUP_CONCAT(DISTINCT
   CONCAT_WS(':'
@@ -178,6 +180,9 @@ GROUP BY ot.id";
         $this->set_display($data['display']);
 
         $this->setRole($data['role']);
+
+        $this->setOItemClassName($data['OItemClassName']);
+
         return true;
     }
 
@@ -869,6 +874,20 @@ ORDER BY `priority` DESC";
     function setHandler($val)
     {
         $this->handler = (string)$val;
+    }
+
+    function setOItemClassName($var)
+    {
+        if (!is_string($var) || !$var) {
+            return false;
+        }
+        $this->OItemClassName = $var;
+        return $this->OItemClassName;
+    }
+
+    function getOItemClassName()
+    {
+        return $this->OItemClassName;
     }
 
     function getHandler()

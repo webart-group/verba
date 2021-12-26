@@ -7,7 +7,7 @@
  * Time: 13:43
  */
 
-namespace Model\Product;
+namespace Verba\Model\Product;
 
 
 class Resource extends \Verba\Model\Product

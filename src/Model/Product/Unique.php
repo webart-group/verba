@@ -7,7 +7,7 @@
  * Time: 13:41
  */
 
-namespace Model\Product;
+namespace Verba\Model\Product;
 
 
 class Unique extends \Verba\Model\Product

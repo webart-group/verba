@@ -13,7 +13,7 @@ class SwitchBool extends Around
     }
     $existsValue = $this->getExistsValue($this->A->getCode());
     $r = (int)!($existsValue);
-    $values = \Data\Boolean::getValues();
+    $values = \Verba\Data\Boolean::getValues();
     $this->ah->addExtendedData([
       $this->A->getCode().'__value' => $values[$r]
     ]);

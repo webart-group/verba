@@ -7,7 +7,7 @@
  * Time: 13:39
  */
 
-namespace Model\Product;
+namespace Verba\Model\Product;
 
 
 class Multi extends \Verba\Model\Product

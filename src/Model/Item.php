@@ -479,7 +479,7 @@ class Item extends \Verba\Configurable
     function prepareValueLogic($propName)
     {
         $v = (int)!!($this->data[$propName]);
-        $values = \Data\Boolean::getValues();
+        $values = \Verba\Data\Boolean::getValues();
 
         return $values[$v];
     }

@@ -1180,7 +1180,7 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
 
     function ph_logic_handler($attr_id, &$row)
     {
-        $values = \Data\Boolean::getValues();
+        $values = \Verba\Data\Boolean::getValues();
         $attr_code = $this->A($attr_id)->getCode();
         return array_key_exists($row[$attr_code], $values) ? $values[$row[$attr_code]] : $row[$attr_code];
     }

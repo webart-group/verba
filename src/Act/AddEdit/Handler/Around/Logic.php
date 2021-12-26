@@ -10,7 +10,7 @@ class Logic extends Around
     if($this->value === null){
       return null;
     }
-    $val = \Data\Boolean::toBool($this->value);
+    $val = \Verba\Data\Boolean::toBool($this->value);
     return is_bool($val) ? (int)$val : $this->value;
   }
 }

@@ -107,7 +107,7 @@ class Request
             $oh = false;
         }
         //key
-        if (isset($rq['key']) && !empty($rq['key']) && !\Data\Boolean::isStrBool($rq['key'])) {
+        if (isset($rq['key']) && !empty($rq['key']) && !\Verba\Data\Boolean::isStrBool($rq['key'])) {
             $this->key = $rq['key'];
         } elseif (is_object($oh)) {
             $this->key = $oh->getBaseKey();

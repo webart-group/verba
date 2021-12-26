@@ -36,7 +36,7 @@ class Logic extends \Verba\Act\MakeList\Filter{
 
   function getValues(){
     if($this->values === null){
-      $this->values = array('' => $this->getCaption()) + \Data\Boolean::getValues();
+      $this->values = array('' => $this->getCaption()) + \Verba\Data\Boolean::getValues();
 
     }
     return $this->values;

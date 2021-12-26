@@ -204,7 +204,7 @@ class Mod extends Configurable
         }
 
         //Определение key
-        if (isset($bp['key']) && !empty($bp['key']) && !\Data\Boolean::isStrBool($bp['key'])) {
+        if (isset($bp['key']) && !empty($bp['key']) && !\Verba\Data\Boolean::isStrBool($bp['key'])) {
             $bp['key'] = $bp['key'];
         } elseif (is_object($oh)) {
             $bp['key'] = $oh->getBaseKey();
@@ -236,7 +236,7 @@ class Mod extends Configurable
                     } elseif (isset($_REQUEST['piid'])) {
                         $piid = $_REQUEST['piid'];
                     }
-                    if ($piid && !\Data\Boolean::isStrBool($_REQUEST['piid'])) {
+                    if ($piid && !\Verba\Data\Boolean::isStrBool($_REQUEST['piid'])) {
                         $bp['pot'] = array($pot => array($piid));
                     }
                 }
@@ -265,7 +265,7 @@ class Mod extends Configurable
         }
 
         return isset($iid)
-        && (is_numeric($iid) && ($iid = intval($iid)) || (is_string($iid) && !\Data\Boolean::isStrBool($iid)))
+        && (is_numeric($iid) && ($iid = intval($iid)) || (is_string($iid) && !\Verba\Data\Boolean::isStrBool($iid)))
         && $iid
             ? $iid
             : false;

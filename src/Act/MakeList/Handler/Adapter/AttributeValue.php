@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\MakeList\Handler\Adapter;
 
-use Act\MakeList\Handler\Adapter;
+use \Verba\Act\MakeList\Handler\Adapter;
 
 class AttributeValue extends Adapter{
 

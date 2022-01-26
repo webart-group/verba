@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\OType\Attr;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class DataType extends Around
 {

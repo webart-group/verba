@@ -9,13 +9,13 @@ class Handler extends \Verba\Configurable
     protected $oh;
 
     /**
-     * @var \ObjectType\Attribute
+     * @var \Verba\ObjectType\Attribute
      */
     protected $A;
     protected $attr_code;
 
     /**
-     * @var \Verba\Act\MakeList|\Act\AddEdit
+     * @var \Verba\Act\MakeList|\Verba\Act\AddEdit
      */
     protected $ah;
 
@@ -31,7 +31,7 @@ class Handler extends \Verba\Configurable
     /**
      * Constructor
      * @param $oh
-     * @param $A string|\ObjectType\Attribute
+     * @param $A string|\Verba\ObjectType\Attribute
      * @param bool $cfg
      */
     function __construct($oh, $A, $cfg = false, $ah = null)
@@ -75,7 +75,7 @@ class Handler extends \Verba\Configurable
      * @param $A
      * @param $handlerString
      * @param bool $extra_cfg
-     * @return \ObjectType\Attribute\Handler|bool
+     * @return \Verba\ObjectType\Attribute\Handler|bool
      */
     static function extractHandlerFromCfg($oh, $A, $handlerString, $extra_cfg = false)
     {

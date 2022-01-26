@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Before;
 
-use Act\AddEdit\Handler\Before;
+use \Verba\Act\AddEdit\Handler\Before;
 
 /**
  *  Обработчик срабатывает перед созданием записи withdrawal и проверяет/выставляет ключевые параметры.

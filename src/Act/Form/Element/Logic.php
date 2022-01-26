@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class Logic extends Element
 {
@@ -14,14 +14,14 @@ class Logic extends Element
     $this->fire('makeE');
     $this->fire('getValues');
 
-    $h = new \Html\Hidden(parent::exportAsCfg());
+    $h = new \Verba\Html\Hidden(parent::exportAsCfg());
     $h->setValue($this->value ? 1 : 0);
 
     $this->tpl->clear_tpl(array_keys($this->templates));
     $this->tpl->define($this->templates);
     $checkboxCfg = $this->exportAsCfg();
     $checkboxCfg['classes'] = [];
-    $ui = new \Html\Checkbox($checkboxCfg);
+    $ui = new \Verba\Html\Checkbox($checkboxCfg);
     $ui->setOptions(array('' => ''));
     if($this->value){
       $ui->setValues(array(''));

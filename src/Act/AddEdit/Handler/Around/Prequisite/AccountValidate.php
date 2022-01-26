@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Prequisite;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class AccountValidate extends Around
 {
@@ -13,7 +13,7 @@ class AccountValidate extends Around
         }
 
         if (!$this->value) {
-            $this->log()->error(\Lang::get('prequisite form validation default'));
+            $this->log()->error(\Verba\Lang::get('prequisite form validation default'));
             return false;
         }
 
@@ -26,14 +26,14 @@ class AccountValidate extends Around
         $Paysys = \Verba\_mod('payment')->getPaysys($this->ah->getTempValue('paysysId'));
 
         if(!$Paysys || !$Cur){
-            $this->log()->error(\Lang::get('prequisite form validation default'));
+            $this->log()->error(\Verba\Lang::get('prequisite form validation default'));
             return false;
         }
 
         $PsMod = \Verba\_mod('payment')->getPaysysMod($Paysys->getId());
 
         if(!$PsMod){
-            $this->log()->error(\Lang::get('prequisite form validation default'));
+            $this->log()->error(\Verba\Lang::get('prequisite form validation default'));
             return false;
         }
 
@@ -45,7 +45,7 @@ class AccountValidate extends Around
             }else{
                 $langcode = $Paysys->code;
             }
-            $this->log()->error(\Lang::get('prequisite form validation '.$langcode));
+            $this->log()->error(\Verba\Lang::get('prequisite form validation '.$langcode));
             return false;
         }
 

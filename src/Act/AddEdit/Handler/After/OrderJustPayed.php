@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\After;
 
-use Act\AddEdit\Handler\After;
+use \Verba\Act\AddEdit\Handler\After;
 use Mod\Notifier\Event;
 use Mod\Notifier\Pipe;
 use Verba\User\Model\User;

@@ -20,14 +20,14 @@ class Response extends \Verba\Block\Html
         }
     }
 
-    function handleException($e)
-    {
-        $this->content = $e->getMessage();
-        $this->log()->error($e);
-        if (array_key_exists('Location', $this->headers)) {
-            unset($this->headers['Location']);
-        }
-    }
+//    function handleException($e)
+//    {
+//        $this->content = $e->getMessage();
+//        $this->log()->error($e);
+//        if (array_key_exists('Location', $this->headers)) {
+//            unset($this->headers['Location']);
+//        }
+//    }
 
     function output()
     {

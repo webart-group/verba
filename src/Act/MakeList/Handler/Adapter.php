@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\MakeList\Handler;
 
-use Act\MakeList\Handler;
+use \Verba\Act\MakeList\Handler;
 
 class Adapter extends Handler {
 
@@ -13,7 +13,7 @@ class Adapter extends Handler {
 
     public static function create($className, $list, $cfg) {
 
-        if(!$className instanceof \ObjectType\Attribute\Handler) {
+        if(!$className instanceof \Verba\ObjectType\Attribute\Handler) {
             $adapterName = __NAMESPACE__.'\Adapter\AttributeValue';
         }else{
             $adapterName = __NAMESPACE__.'\Adapter';

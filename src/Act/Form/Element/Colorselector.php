@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class Colorselector extends Element
 {
@@ -28,7 +28,7 @@ class Colorselector extends Element
     }
 
     //colorInput
-    $input = new \Html\Text(parent::exportAsCfg());
+    $input = new \Verba\Html\Text(parent::exportAsCfg());
     $this->tpl->assign(array(
       'COLORPICKER_FE_ID' => $input->getId(),
       'COLORSELECTOR_FE' => $input->build(),

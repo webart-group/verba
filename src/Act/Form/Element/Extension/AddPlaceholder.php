@@ -2,8 +2,8 @@
 
 namespace Verba\Act\Form\Element\Extension;
 
-use Act\Form\Element\Extension;
-use Act\Form\Element\Logic;
+use \Verba\Act\Form\Element\Extension;
+use \Verba\Act\Form\Element\Logic;
 
 class AddPlaceholder extends Extension
 {

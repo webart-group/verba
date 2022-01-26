@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\MakeList\Handler\Field;
 
-use Act\MakeList\Handler\Field;
+use \Verba\Act\MakeList\Handler\Field;
 
 class Unserialize extends Field {
 

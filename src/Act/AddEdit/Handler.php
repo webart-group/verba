@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit;
 
-use ObjectType\Attribute\Handler as AttributeHandler;
+use Verba\ObjectType\Attribute\Handler as AttributeHandler;
 
 class Handler extends AttributeHandler
 {

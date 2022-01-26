@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class TimeSlider extends Element
 {
@@ -30,7 +30,7 @@ class TimeSlider extends Element
     $this->tpl->define($this->templates);
 
     //dateInput
-    $input = new \Html\Text(parent::exportAsCfg());
+    $input = new \Verba\Html\Text(parent::exportAsCfg());
 
     if(is_string($this->getValue()) && !is_numeric($this->getValue())){
       $input->setValue($this->getValue());

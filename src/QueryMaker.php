@@ -1,6 +1,8 @@
 <?php
 namespace Verba;
 
+use Verba\DBDriver\mysql\Result;
+
 class QueryMaker extends Base
 {
     protected $ot_id;
@@ -1399,6 +1401,9 @@ class QueryMaker extends Base
         return $vault;
     }
 
+    /**
+     * @return Result
+     */
     function run()
     {
         $sqlr = $this->DB()->query($this->getQuery());

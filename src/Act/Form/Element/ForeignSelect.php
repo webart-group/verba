@@ -98,7 +98,7 @@ class ForeignSelect extends Select
         $r = array();
         $pac = $foh->getPAC();
 
-        $this->fieldsToTitle = \Configurable::substNumIdxAsStringValues($this->fieldsToTitle);
+        $this->fieldsToTitle = \Verba\Configurable::substNumIdxAsStringValues($this->fieldsToTitle);
         // если задан внешний обработчик значения, используем его.
         // Нет - обработчик по умолчанию
         if (is_array($this->valueFormater)) {

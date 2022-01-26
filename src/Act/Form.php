@@ -169,7 +169,7 @@ class Form extends AddEditHandler
             ? 'create'
             : 'update';
 
-        $url = new \Url($_SERVER['REQUEST_URI']);
+        $url = new \Verba\Url($_SERVER['REQUEST_URI']);
         $path = explode('/', $url->getFullPath());
         $path[count($path) - 1] = $faction;
 
@@ -383,7 +383,7 @@ class Form extends AddEditHandler
         //default field extensions
         if (is_array($this->defaultFieldExtensions = $this->gC('field_default extensions items'))
             && count($this->defaultFieldExtensions)) {
-            $this->defaultFieldExtensions = \Configurable::substNumIdxAsStringValues($this->defaultFieldExtensions);
+            $this->defaultFieldExtensions = \Verba\Configurable::substNumIdxAsStringValues($this->defaultFieldExtensions);
         } else {
             $this->defaultFieldExtensions = false;
         }
@@ -420,7 +420,7 @@ class Form extends AddEditHandler
         if (array_key_exists('extensions', $attr_cfg)) {
             $merge = isset($attr_cfg['extensions']['merge']) ? (bool)$attr_cfg['extensions']['merge'] : true;
             if (array_key_exists('items', $attr_cfg['extensions']) && is_array($attr_cfg['extensions']['items'])) {
-                $cfg_exts = \Configurable::substNumIdxAsStringValues($attr_cfg['extensions']['items']);
+                $cfg_exts = \Verba\Configurable::substNumIdxAsStringValues($attr_cfg['extensions']['items']);
             }
             unset($attr_cfg['extensions']);
         }
@@ -435,7 +435,7 @@ class Form extends AddEditHandler
             $ewrap_cfg = array();
         }
 
-        $defaultWrapClasses = 'ff-wrap ff-wrap-' . (is_object($attr) && $attr instanceof \ObjectType\Attribute ? $attr->getCode() : (string)$attr);
+        $defaultWrapClasses = 'ff-wrap ff-wrap-' . (is_object($attr) && $attr instanceof \Verba\ObjectType\Attribute ? $attr->getCode() : (string)$attr);
 
         $ewrap_cfg['classes'] = !array_key_exists('classes', $ewrap_cfg)
             ? $defaultWrapClasses
@@ -453,7 +453,7 @@ class Form extends AddEditHandler
             $baseExtensions = explode('.', $element);
             $element = array_shift($baseExtensions);
             if (count($baseExtensions) > 0) {
-                $baseExtensions = \Configurable::substNumIdxAsStringValues($baseExtensions);
+                $baseExtensions = \Verba\Configurable::substNumIdxAsStringValues($baseExtensions);
             }
         }
 
@@ -461,7 +461,7 @@ class Form extends AddEditHandler
             $baseExtensions = array_replace_recursive($this->defaultFieldExtensions, $baseExtensions);
         }
 
-        if (is_object($attr) && $attr instanceof \ObjectType\Attribute) {
+        if (is_object($attr) && $attr instanceof \Verba\ObjectType\Attribute) {
             $dbHandlers = $attr->getHandlers('form');
             if (is_array($dbHandlers) && count($dbHandlers)) {
                 foreach ($dbHandlers as $dbeId => $dbedata) {
@@ -480,7 +480,13 @@ class Form extends AddEditHandler
         } else {
             $extensions = $baseExtensions;
         }
-        $AEFEClassName = 'Act\Form\Element\\' . ucfirst($element);
+
+        if(strpos($element, '\\') === false){
+            $AEFEClassName = '\Verba\Act\Form\Element\\' . ucfirst($element);
+        }else{
+            $AEFEClassName = $element;
+        }
+
         if (!is_string($element) || empty($element) || !class_exists($AEFEClassName)) {
             throw new \Exception('Unable to find AEF Element \'' . $element . '\' class: ' . var_export($AEFEClassName, true));
         }
@@ -521,7 +527,7 @@ class Form extends AddEditHandler
             $fe->fire('addScripts');
 
             if ($fe->getHidden()) {
-                $this->addHidden(new \Html\Hidden($fe->exportAsCfg()));
+                $this->addHidden(new \Verba\Html\Hidden($fe->exportAsCfg()));
             } else {
                 if ($locales != false && $fe->isLcd) {
                     $E = '';
@@ -655,11 +661,11 @@ class Form extends AddEditHandler
     // locale switcher
     function makeLocaleSwitcher()
     {
-        $lcselect = new \Html\Select();
+        $lcselect = new \Verba\Html\Select();
         $lcselect->setName($this->getFormId() . '_locale_switcher');
         $lcselect->setId($lcselect->getName());
         $lcselect->setValue(SYS_LOCALE);
-        $lcselect->setValues(array_combine(\Lang::getUsedLC(), \Verba\Lang::getUsedLC()));
+        $lcselect->setValues(array_combine(\Verba\Lang::getUsedLC(), \Verba\Lang::getUsedLC()));
         return $lcselect->build();
     }
 
@@ -694,12 +700,12 @@ class Form extends AddEditHandler
             }
             // Кнопка передана как конфиг FE елемента
             if (is_array($buttonCfg['e'])) {
-                $btn_class = isset($buttonCfg['e']['_class']) ? '\\Html\\' . ucfirst(strtolower($buttonCfg['e']['_class'])) : false;
+                $btn_class = isset($buttonCfg['e']['_class']) ? '\\Verba\\Html\\' . ucfirst(strtolower($buttonCfg['e']['_class'])) : false;
                 if (!class_exists($btn_class)) {
                     continue;
                 }
                 /**
-                 * @var $btn \Html\Submit
+                 * @var $btn \Verba\Html\Submit
                  */
                 $btn = new $btn_class($buttonCfg['e']);
                 $estr = $btn->build();
@@ -802,7 +808,7 @@ class Form extends AddEditHandler
         // установка состояния локалезависимых атрибутов
         $locales = $this->gc('feats locales');
         if ($locales === null || $locales === true) {
-            if (count(\Lang::getUsedLC()) < 2
+            if (count(\Verba\Lang::getUsedLC()) < 2
                 || !is_array($this->lcd_attrs = array_intersect($this->oh->getAttrsByBehaviors('lcd'), array_keys($this->attributes)))
                 || !count($this->lcd_attrs)) {
                 $this->sC(false, 'feats locales');
@@ -1027,7 +1033,7 @@ Form::$_config_default = array(
             'items' => array(),
         ),
         'wrap' => array(
-            '_class' => '\Html\Div',
+            '_class' => '\Verba\Html\Div',
             //'classes' => '',
             // .... Any cfg here for AEF Wrap Element
         ),

@@ -5,7 +5,7 @@ namespace Verba\Act\Form\Element;
 class Extension extends \Verba\Configurable{
   public $code;
   /**
-   * @var \Html\Element
+   * @var \Verba\Html\Element
    */
   public $fe;
   /**

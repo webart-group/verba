@@ -497,7 +497,7 @@ class Hive extends Configurable
      *  ['db'] => если передано, после успешной установки соединения будет выбрана эта БД)
      * @param string $type тип SQL-сервера. На данный момент поддерживается только работа с MySQL
      *
-     * @return \DBDriver\mysql\Driver|false объект интерфейса соединения либо ошибку
+     * @return \Verba\DBDriver\mysql\Driver|false объект интерфейса соединения либо ошибку
      * @see db
      * @see query
      */

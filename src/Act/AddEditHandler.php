@@ -214,9 +214,9 @@ class AddEditHandler extends Action
                 : $A->getID();
 
             if (is_numeric($c_attr_id)) {
-                if ($A->get_lcd() && is_array(\Lang::getUsedLC())) {
+                if ($A->get_lcd() && is_array(\Verba\Lang::getUsedLC())) {
                     $this->exists_values[$c_attr_code] = array();
-                    foreach (\Lang::getUsedLC() as $c_lc_code) {
+                    foreach (\Verba\Lang::getUsedLC() as $c_lc_code) {
                         $this->exists_values[$c_attr_code][$c_lc_code] = isset($row[$c_attr_code . '_' . $c_lc_code])
                         ? $row[$c_attr_code . '_' . $c_lc_code]
                         : null;

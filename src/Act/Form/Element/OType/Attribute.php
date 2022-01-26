@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element\OType;
 
-use Act\Form\Element\Select;
+use \Verba\Act\Form\Element\Select;
 
 class Attribute extends Select
 {
@@ -50,7 +50,7 @@ class Attribute extends Select
         if ($action == 'edit') {
             $_oh = \Verba\_oh($form->getExistsValue('ot_iid'));
             $A = $_oh->A($form->getIID());
-            if ($A instanceof \ObjectType\Attribute) {
+            if ($A instanceof \Verba\ObjectType\Attribute) {
 
                 $ahs = $A->getHandlers();
 

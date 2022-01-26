@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element\Extension;
 
-use Act\Form\Element\Extension as FormElementExtension;
+use \Verba\Act\Form\Element\Extension as FormElementExtension;
 
 class PriceUnit extends FormElementExtension
 {

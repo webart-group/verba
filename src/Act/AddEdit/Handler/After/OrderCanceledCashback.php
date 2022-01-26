@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\After;
 
-use Act\AddEdit\Handler\After;
+use \Verba\Act\AddEdit\Handler\After;
 
 class OrderCanceledCashback extends After
 {

@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Account;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 /**
  * Class ActiveOneStableCurrencyAtLeast
@@ -39,7 +39,7 @@ class ActiveOneStableCurrencyAtLeast extends Around
         $sqlr = $this->DB()->query($q);
 
         if(!$sqlr || $sqlr->getNumRows() < 1){
-            $this->log()->error(\Lang::get('account warns stable-currency-account'));
+            $this->log()->error(\Verba\Lang::get('account warns stable-currency-account'));
             return false;
         }
         return $this->value;

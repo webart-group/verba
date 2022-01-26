@@ -328,7 +328,6 @@ class Action extends Parents
     function genClassAndCfgForFieldHandler($attr_code, $set_data)
     {
         // Если хендлер указан без пространства имен
-        // - применяем ПИ по умолчанию для текущего АктХендлера
         $className = strpos($set_data['ah_name'], '\\') === false
             ? $this->_handlers_class_prefix . '\\' . $set_data['ah_name']
             : $set_data['ah_name'];

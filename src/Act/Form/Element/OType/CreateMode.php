@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element\OType;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class CreateMode extends Element
 {

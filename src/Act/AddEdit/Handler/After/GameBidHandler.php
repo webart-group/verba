@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\AddEdit\Handler\After;
 
-use Act\AddEdit\Handler\After;
+use \Verba\Act\AddEdit\Handler\After;
 
 class GameBidHandler extends After{
 
@@ -89,7 +89,7 @@ class GameBidHandler extends After{
       }else{
         if($A->isLcd()){
           $r[$acode] = array();
-          foreach(\Lang::getUsedLC() as $clang){
+          foreach(\Verba\Lang::getUsedLC() as $clang){
             $r[$acode][$clang] = $this->prodItem->getNatural($acode, $clang);
           }
         }else{

@@ -31,7 +31,7 @@ class DateTimeSelector_GameStartAt extends Datetimeselector
 
     $modeSelId =$this->getId().'_mode';
 
-    $modeSel = new \Html\Select(array(
+    $modeSel = new \Verba\Html\Select(array(
       'id' => $modeSelId,
       'values' =>  \Verba\Lang::get('game form fields gameStartAt values'),
       'classes' => array('game-start-at-mode'),

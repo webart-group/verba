@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Account;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 /**
  * Class ModeOneStableWithUnstable
@@ -44,7 +44,7 @@ class ModeOneStableWithUnstable extends Around
         $sqlr = $this->DB()->query($q);
 
         if(!$sqlr || $sqlr->getNumRows() < 1){
-            $this->log()->error(\Lang::get('error data_handle'));
+            $this->log()->error(\Verba\Lang::get('error data_handle'));
             return false;
         }
 
@@ -58,7 +58,7 @@ class ModeOneStableWithUnstable extends Around
             // и при этом нет включенных стабильных кошельков
             || ($this->value == 1158 && $accCur->unstable == 1 && $row['stable_count'] == 0)
         ) {
-            $this->log()->error(\Lang::get('account warns stable-currency-account'));
+            $this->log()->error(\Verba\Lang::get('account warns stable-currency-account'));
             return false;
         }
 

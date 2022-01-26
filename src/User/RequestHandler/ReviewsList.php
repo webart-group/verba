@@ -13,7 +13,7 @@ class ReviewsList extends user_contentList {
 
     parent::init();
 
-    $Url = new \Url($this->urlBase);
+    $Url = new \Verba\Url($this->urlBase);
     $Url->shiftPath('list');
     $this->dcfg['url']['forward'] = $Url->get();
 

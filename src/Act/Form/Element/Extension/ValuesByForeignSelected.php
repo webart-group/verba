@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\Form\Element\Extension;
 
-use Act\Form\Element\Extension;
+use \Verba\Act\Form\Element\Extension;
 
 /**
  *  Заполняет селект выбранными значениями стороннего атрибута.
@@ -34,7 +34,7 @@ class ValuesByForeignSelected extends Extension{
     $values = array();
     /**
      * @var $Item \Verba\Model\Item
-     * @var $A \ObjectType\Attribute
+     * @var $A \Verba\ObjectType\Attribute
      */
     $Item = $this->ah()->getExtendedData('prodItem');
     if(!$Item){

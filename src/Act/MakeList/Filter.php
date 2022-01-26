@@ -39,7 +39,7 @@ class Filter extends \Verba\Configurable
      */
     protected $attr;
     /**
-     * @var bool|\ObjectType\Attribute
+     * @var bool|\Verba\ObjectType\Attribute
      */
     protected $A;
     /**
@@ -56,7 +56,7 @@ class Filter extends \Verba\Configurable
      */
     public $WD;
     /**
-     * @var \Html\Element
+     * @var \Verba\Html\Element
      */
     public $E;
 
@@ -93,7 +93,7 @@ class Filter extends \Verba\Configurable
 
         if (is_string($this->name) && !empty($this->name)) {
             $this->_alias = $this->name;
-        } elseif (is_object($this->A) && $this->A instanceof \ObjectType\Attribute) {
+        } elseif (is_object($this->A) && $this->A instanceof \Verba\ObjectType\Attribute) {
             $this->_alias = $this->A->getCode();
         } else {
             $this->_alias = 'unnamed';

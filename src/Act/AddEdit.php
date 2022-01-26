@@ -518,7 +518,7 @@ class AddEdit extends AddEditHandler
                     if($set_data['ah_name']{0} === '\\'){
                         $handlerClass = $set_data['ah_name'];
                     }else{
-                        $handlerClass = '\Act\AddEdit\Handler\Around\\' . ucfirst($set_data['ah_name']);
+                        $handlerClass = '\Verba\Act\AddEdit\Handler\Around\\' . ucfirst($set_data['ah_name']);
                     }
 
                     if (!class_exists($handlerClass)) {
@@ -538,7 +538,7 @@ class AddEdit extends AddEditHandler
                         $this);
                     try{
                         $cValue = $handler->run();
-                    }catch( \Verba\Exception\Building $e){
+                    }catch( \Exception $e){
                         $this->log()->error($e->getMessage());
                         $cValue = false;
                         break;
@@ -560,7 +560,7 @@ class AddEdit extends AddEditHandler
                 // ### Value analizing
                 // if field is required and not present while entry is created logs error
                 if ($this->action == 'new' && $isObligatory && $cValue !== 0 && !$cValue && ($lc == 0 || $lc === \Verba\Lang::getDefaultLC())) {
-                    $this->log()->error(\Lang::get('aef errors invalid', array(
+                    $this->log()->error(\Verba\Lang::get('aef errors invalid', array(
                         'fieldTitle' => $A->getTitle(),
                         'locale' => ($isLcd ? ' locale:[' . $lc . ']' : '')
                     )));
@@ -608,7 +608,7 @@ class AddEdit extends AddEditHandler
             if ($this->oh->A($attr_code)->get_lcd() && is_array($attr_value) && count($attr_value)) {
 
                 foreach ($attr_value as $c_lc => $c_lc_value) {
-                    if (\Lang::isLCValid($c_lc)) {
+                    if (\Verba\Lang::isLCValid($c_lc)) {
                         $fields[$attr_code . '_' . $c_lc] = $this->DB()->escape_string($c_lc_value);
                     }
                 }
@@ -693,7 +693,7 @@ class AddEdit extends AddEditHandler
         $linkProps['prim_ot_id'] = $this->oh()->getID();
         $linkProps['sec_ot_id'] = $ot;
 
-        $linkProps = new \ObjectType\LinkProps($linkProps);
+        $linkProps = new \Verba\ObjectType\LinkProps($linkProps);
 
         $linkGid = $linkProps->gid;
 
@@ -753,7 +753,7 @@ class AddEdit extends AddEditHandler
         }
         $linkProps['prim_ot_id'] = $this->oh()->getID();
         $linkProps['sec_ot_id'] = $ot;
-        $linkProps = new \ObjectType\LinkProps($linkProps);
+        $linkProps = new \Verba\ObjectType\LinkProps($linkProps);
 
         $linkGid = $linkProps->gid;
 
@@ -774,7 +774,7 @@ class AddEdit extends AddEditHandler
             foreach ($this->parents as $parentOt => $parentIids) {
                 $_p = \Verba\_oh($parentOt);
                 $p_ot_id = $_p->getID();
-                $lp = new \ObjectType\LinkProps(array(
+                $lp = new \Verba\ObjectType\LinkProps(array(
                     'prim_ot_id' => $this->oh()->getID(),
                     'sec_ot_id' => $p_ot_id,
                     'fr' => 2,
@@ -819,7 +819,7 @@ class AddEdit extends AddEditHandler
                 foreach ($links as $linkGid => $iids) {
                     if (isset($data['_link_props'][$ot][$linkGid])
                         && is_array($data['_link_props'][$ot][$linkGid])) {
-                        $linkProps = new \ObjectType\LinkProps($data['_link_props'][$ot][$linkGid]);
+                        $linkProps = new \Verba\ObjectType\LinkProps($data['_link_props'][$ot][$linkGid]);
                         $rule = $linkProps->rule;
                         $fr = $linkProps->fr;
                     } else {
@@ -872,7 +872,7 @@ class AddEdit extends AddEditHandler
             foreach ($this->need2BeRemoved as $ot => $links) {
                 foreach ($links as $linkGid => $linkData) {
                     /**
-                     * @var $lp \ObjectType\LinkProps
+                     * @var $lp \Verba\ObjectType\LinkProps
                      */
                     $lp = $linkData['lp'];
                     list($aff, $log) = $this->oh->unlink($this->iid, array($ot => $linkData['items']), $lp->getRule(), $lp->getFr());
@@ -894,7 +894,7 @@ class AddEdit extends AddEditHandler
             foreach ($this->need2BeLinked as $ot => $links) {
                 foreach ($links as $linkGid => $linkData) {
                     /**
-                     * @var $lp \ObjectType\LinkProps
+                     * @var $lp \Verba\ObjectType\LinkProps
                      */
                     $lp = $linkData['lp'];
                     list($aff, $log) = $this->oh->link($this->iid, array($ot => $linkData['items']), $lp->getRule(), $lp->getFr(), $lp->getExtData());
@@ -953,7 +953,7 @@ class AddEdit extends AddEditHandler
             if(is_string($set_data['ah_name']) && $set_data['ah_name']{0} === '\\'){
                 $className = $set_data['ah_name'];
             }else{
-                $className = '\Act\AddEdit\Handler\\' . ucfirst($case). '\\' .ucfirst($set_data['ah_name']);
+                $className = '\Verba\Act\AddEdit\Handler\\' . ucfirst($case). '\\' .ucfirst($set_data['ah_name']);
             }
 
             if (!class_exists($className)) {
@@ -1023,11 +1023,6 @@ class AddEdit extends AddEditHandler
             if (!$this->keyId) {
                 $this->log->error('Unknown object key ??');
             }
-        }
-
-        // Виртуальные компоненты
-        if ($this->virtualHandled === false && isset($_REQUEST['virel']) && is_array($_REQUEST['virel'])) {
-            $this->handleVirtuals();
         }
 
         $this->gettedObjectData['ok'] = $this->keyId;

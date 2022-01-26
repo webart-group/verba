@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Before;
 
-use Act\AddEdit\Handler\Before;
+use \Verba\Act\AddEdit\Handler\Before;
 
 class StorebidAccessCheck extends Before
 {

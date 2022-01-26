@@ -36,7 +36,7 @@ class Url extends \Verba\Data
     function validate()
     {
         $this->clearErrors();
-        $Url = new \Url();
+        $Url = new \Verba\Url();
         if (!$Url->parse($this->getValue(), $this->getRemote())) {
             $this->error('type');
             return false;

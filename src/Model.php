@@ -4,6 +4,9 @@ namespace Verba;
 
 class Model extends Base implements \Verba\ModelInterface
 {
+    const RELATION_TYPE_PARENT = 2;
+    const RELATION_TYPE_CHILD = 1;
+    const RELATION_TYPE_BOTH = 3;
 
     public $ot_id;
     public $code;
@@ -624,8 +627,8 @@ class Model extends Base implements \Verba\ModelInterface
     /**
      * Возвращает объект атрибута
      * @param mixed $attr_id код или id атрибута
-     * @return bool|\ObjectType\Attribute
-     * @see \ObjectType\Attribute
+     * @return bool|\Verba\ObjectType\Attribute
+     * @see \Verba\ObjectType\Attribute
      */
     function A($attr, $own = false)
     {

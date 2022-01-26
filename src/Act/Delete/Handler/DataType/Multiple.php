@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Delete\Handler\DataType;
 
-use Act\Delete\Handler;
+use \Verba\Act\Delete\Handler;
 
 class Multiple extends Handler
 {

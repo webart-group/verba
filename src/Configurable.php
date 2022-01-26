@@ -273,13 +273,13 @@ class Configurable extends Eventer
 
                     $p = &$this->{$confPropName}[$k];
                 }
-                // Если значение объект \Configurable\Prop\Restore
+                // Если значение объект \Verba\Configurable\Prop\Restore
                 // восстановление знеачения из конфига по умолчанию
                 // TO DO восстановление на данный момент только ключа первого уровня
                 // Для реализации этой функции для ключа любой глубины доработать функцию
                 // self::array_replace_keys_recursive() и пользовать ее
                 // в этом случае, первый if не понадобится
-                if (is_object($v) && $v instanceof \Configurable\Prop\Restore) {
+                if (is_object($v) && $v instanceof \Verba\Configurable\Prop\Restore) {
                     $p = $v->run($this, $k);
                 } elseif (is_array($p) && !empty($p) && is_array($v)) {
                     $p = array_replace_recursive($p, $v);

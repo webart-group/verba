@@ -116,7 +116,7 @@ class ImportExport extends User{
   }
 
   function uploadFormJson($BParams = null){
-    return \Verba\Response\Json::wrap(true, \Verba\_mod('file')->addEditForm(array('action' => 'new'), 'acp-file', $_REQUEST['url']));
+    return \Verba\Response\Json::wrap(\Verba\_mod('file')->addEditForm(array('action' => 'new'), 'acp-file', $_REQUEST['url']));
   }
 
   function exportForm($bp = null){
@@ -129,7 +129,7 @@ class ImportExport extends User{
       'SYS_IMAGES_URL' => SYS_IMAGES_URL,
     ));
 
-    return \Verba\Response\Json::wrap(true, $tpl->parse(false, 'body'));
+    return \Verba\Response\Json::wrap($tpl->parse(false, 'body'));
   }
 
   function exportNow($bp = null){
@@ -202,13 +202,13 @@ class ImportExport extends User{
       $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);
       $objWriter->save($path.'/'.$filename);
 
-      return \Verba\Response\Json::wrap(true, array('fileUrl' => $url, 'filename' => $filename));
+      return \Verba\Response\Json::wrap(array('fileUrl' => $url, 'filename' => $filename));
     }catch(Exception $e){
       $last = error_get_last();
       $this->log()->error($e->getMessage());
       $this->log()->error(var_export($last, true));
       $this->log()->error(var_export($row, true));
-      return \Verba\Response\Json::wrap(false, \Verba\Lang::get($e->getMessage()));
+      return \Verba\Response\Json::wrap(\Verba\Lang::get($e->getMessage()));
     }
   }
 }

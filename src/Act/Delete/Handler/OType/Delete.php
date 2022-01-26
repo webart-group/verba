@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Delete\Handler\OType;
 
-use Act\Delete\Handler;
+use \Verba\Act\Delete\Handler;
 
 class Delete extends Handler
 {

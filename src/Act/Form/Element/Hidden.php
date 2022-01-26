@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Hidden as HtmlHidden;
+use \Verba\Html\Hidden as HtmlHidden;
 
 class Hidden extends HtmlHidden
 {
@@ -11,7 +11,7 @@ class Hidden extends HtmlHidden
     function makeE()
     {
         $this->fire('makeE');
-        $hidden = new \Html\Hidden($this->exportAsCfg());
+        $hidden = new \Verba\Html\Hidden($this->exportAsCfg());
         $this->aef->addHidden($hidden);
         $this->fire('makeEFinalize');
     }

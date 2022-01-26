@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Gamebid\Resource;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class DiscountCollector extends Around
 {

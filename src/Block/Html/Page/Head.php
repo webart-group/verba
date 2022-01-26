@@ -253,7 +253,7 @@ class Head extends \Verba\Block\Html
                     fwrite($fp, "/* \n".date('Y-m-d H:i:s')." '".$part."' ".$_SERVER['REQUEST_URI']." */\n\n");
 
                     foreach($all_inc as $c_item){
-                        $url = new \Url($c_item[0]);
+                        $url = new \Verba\Url($c_item[0]);
                         //$fc = "/*** $c_item[0] ***/\n";
                         $fc = "/*** ~~~~~~~ ***/\n";
                         $inc_content = $this->loadIncContent($part, $c_item, $url);

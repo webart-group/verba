@@ -2,8 +2,8 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Text;
-use \Html\Hidden;
+use \Verba\Html\Text;
+use \Verba\Html\Hidden;
 
 class MenuUrl extends Text
 {

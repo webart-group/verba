@@ -91,15 +91,13 @@ class Loger extends Base
         }
 
         if (!is_string($dspStr)) {
-            if ($dspStr instanceof Exception) {
+            if ($dspStr instanceof \Exception) {
                 $btValue .= "\nTRACE\n" . $dspStr->getTraceAsString();
                 $dspStr = $dspStr->getMessage();
-            } elseif ($dspStr instanceof Error) {
+            } elseif ($dspStr instanceof \Error) {
                 $btValue .= "\nTRACE\n" . $dspStr->getTraceAsString();
                 $dspStr = $dspStr->getMessage();
             }
-
-
         }
 
         $le = error_get_last();

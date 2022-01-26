@@ -576,14 +576,14 @@ ORDER BY `priority` DESC";
     /**
      * Возвращает объект атрибута
      * @param mixed $attr_id код или id атрибута
-     * @return bool|\ObjectType\Attribute
-     * @see \ObjectType\Attribute
+     * @return bool|\Verba\ObjectType\Attribute
+     * @see \Verba\ObjectType\Attribute
      */
 
     function A($attr, $own = false)
     {
         $A = null;
-        if (is_object($attr) && $attr instanceof \ObjectType\Attribute) {
+        if (is_object($attr) && $attr instanceof \Verba\ObjectType\Attribute) {
 
             $A = $this->isA($attr->getID(), $own) ? $attr : false;
 
@@ -609,7 +609,7 @@ ORDER BY `priority` DESC";
 
     function isA($needle, $own = false)
     {
-        if (is_object($needle) && $needle instanceof \ObjectType\Attribute) {
+        if (is_object($needle) && $needle instanceof \Verba\ObjectType\Attribute) {
             $needle = $needle->getID();
         }
         if (is_string($needle) && array_key_exists($needle, $this->attr_binds)) {

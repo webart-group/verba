@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Gamebid;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class BasePrice extends Around
 {

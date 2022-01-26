@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Balop;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class Active extends Around
 {
@@ -73,7 +73,7 @@ class Active extends Around
                 'Validation error: '.$e->getMessage()
             );
 
-            $this->log()->error(\Lang::get('balop errors invalid'));
+            $this->log()->error(\Verba\Lang::get('balop errors invalid'));
 
             return 0;
         }

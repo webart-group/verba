@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class Fileupload extends Element{
   public $fileuploadE = true;
@@ -63,7 +63,7 @@ class Fileupload extends Element{
       array('swfupload', SYS_EXTERNALS_URL.'/swfupload/css'),
     ));
 
-    $fuload_url = var2url($this->fCfg->getUploadUrl(), 'cfg='.$this->fCfgName);
+    $fuload_url = \Verba\var2url($this->fCfg->getUploadUrl(), 'cfg='.$this->fCfgName);
     if(is_array($this->aef()->getParents()) && count($this->box()->aef()->getParents())){
       $fuload_url = $fuload_url.'&'.http_build_query($this->aef()->getParents(), 'parent_');
     }

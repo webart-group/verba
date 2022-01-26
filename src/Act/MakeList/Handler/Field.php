@@ -2,7 +2,7 @@
 
 namespace Verba\Act\MakeList\Handler;
 
-use ObjectType\Attribute\Handler as AttributeHandler;
+use Verba\ObjectType\Attribute\Handler as AttributeHandler;
 
 class Field extends AttributeHandler implements HandlerInterface
 {

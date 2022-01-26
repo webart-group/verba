@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class PriceCustomerstatus extends Element
 {
@@ -28,7 +28,7 @@ class PriceCustomerstatus extends Element
     $nameBase = $this->getName();
 
     $Ecfg = parent::exportAsCfg();
-    $priceE = new \Html\Text();
+    $priceE = new \Verba\Html\Text();
     $priceE->setName($nameBase);
     $priceE->setValue($basePrice);
     $priceE->addClasses('price-value base-price field-updateable');
@@ -41,13 +41,13 @@ class PriceCustomerstatus extends Element
     $this->tpl->assign(array('PRICE_STATUSES_ROWS' => '',));
     if(count($ps)){
       foreach($ps as $sid => $sdata){
-        $stE = new \Html\Text();
+        $stE = new \Verba\Html\Text();
         $stE->setName('status_price_'.$sid);
         $stE->setValue($sdata['price']);
         $stE->addClasses('price-status-value field-updateable');
         $stE->attr('data-cust', $sid);
 
-        $stpE = new \Html\Text();
+        $stpE = new \Verba\Html\Text();
         $stpE->addClasses('perc-value perc-cust-'.$sid);
 
         $this->tpl->assign(array(

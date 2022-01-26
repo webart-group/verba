@@ -71,7 +71,7 @@ class Set extends \Verba\Base
             return array();
         }
 
-        if (!is_string($lang) || $lang == SYS_LOCALE || !\Lang::isLCValid($lang)) {
+        if (!is_string($lang) || $lang == SYS_LOCALE || !\Verba\Lang::isLCValid($lang)) {
             return $this->values;
         }
 
@@ -136,7 +136,7 @@ ORDER BY sets.priority DESC, `pred`.`pred_id`";
         $U = \Verba\User();
 
 
-        $lang = !is_string($lang) || !\Lang::isLCValid($lang) ? SYS_LOCALE : $lang;
+        $lang = !is_string($lang) || !\Verba\Lang::isLCValid($lang) ? SYS_LOCALE : $lang;
 
         // все возможные фильтры применяются здесь
 

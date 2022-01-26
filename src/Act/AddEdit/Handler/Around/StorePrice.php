@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around;
 
-use Act\AddEdit\Handler\Around\Price;
+use \Verba\Act\AddEdit\Handler\Around\Price;
 use Mod\SnailMail\Exception;
 
 class StorePrice extends Price

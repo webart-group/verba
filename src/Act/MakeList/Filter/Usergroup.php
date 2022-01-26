@@ -55,7 +55,7 @@ class Usergroup extends \Verba\Act\MakeList\Filter{
   function build(){
     $this->tpl->clear_tpl(array_keys($this->templates));
     $this->tpl->define($this->templates);
-    $E = new \Html\Select($this->ecfg);
+    $E = new \Verba\Html\Select($this->ecfg);
     $this->getGValues();
     $E->setValues($this->gvalues);
 

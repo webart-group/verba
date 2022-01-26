@@ -97,6 +97,6 @@ class Currency extends Item
     }
 
     function toFixed($val){
-        return reductionToFloat($val, false, $this->data['precision']);
+        return \Verba\reductionToFloat($val, false, $this->data['precision']);
     }
 }

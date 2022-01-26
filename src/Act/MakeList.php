@@ -686,7 +686,7 @@ class MakeList extends Action
         if (!is_array($fields)) {
             $fields = array();
         } else {
-            $fields = \Configurable::substNumIdxAsStringValues($fields);
+            $fields = \Verba\Configurable::substNumIdxAsStringValues($fields);
         }
 
         foreach ($fields as $f_code => $f_cfg) {

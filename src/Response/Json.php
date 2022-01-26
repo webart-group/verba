@@ -13,22 +13,8 @@ class Json extends \Verba\Response {
 
 
     function run(){
-        try{
-
-            parent::run();
-
-        }catch(\Exception $e) {
-
-            $this->handleException($e);
-            $this->setOperationStatus(false);
-
-        }
-
-        $result = $this->getOperationStatus();
-        if(!is_bool($result)){
-            $result = true;
-        }
-        $this->content = $this->wrap($result, $this->content, JSON_FORCE_OBJECT);
+        parent::run();
+        $this->content = $this->wrap($this->content);
     }
 
     function build(){
@@ -71,12 +57,7 @@ class Json extends \Verba\Response {
         parent::output();
     }
 
-    static function wrap($result, $data = null, $opts = null){
-//        $ar = array('result' => (int)((bool)$result));
-//        if($data !== null){
-//            $ar['data'] = $data;
-//        }
-
+    static function wrap($data = null, $opts = JSON_FORCE_OBJECT){
         return \json_encode($data, $opts);
     }
 

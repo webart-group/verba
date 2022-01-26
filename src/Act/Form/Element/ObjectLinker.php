@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class ObjectLinker extends Element
 {
@@ -151,7 +151,7 @@ class ObjectLinker extends Element
 
     $selected = array();
 
-    $select = new \Html\Select();
+    $select = new \Verba\Html\Select();
     $select->addClasses('ot-selector');
     $select->setValues($options);
 

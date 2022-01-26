@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\Form\Element;
 
-use \Html\Checkbox as HtmlCheckbox;
+use \Verba\Html\Checkbox as HtmlCheckbox;
 
 class Checkbox extends HtmlCheckbox
 {

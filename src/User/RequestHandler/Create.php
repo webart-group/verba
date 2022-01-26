@@ -64,7 +64,7 @@ class Create extends \Verba\Block\Json
             } else {
                 if ($ae instanceof Exception) {
                     $msg = $ae->getMessage();
-                } elseif ($ae instanceof \Act\AddEdit) {
+                } elseif ($ae instanceof \Verba\Act\AddEdit) {
                     $msg = $ae->log()->getMessagesAsStr('error');
                 } else {
                     $msg = \Verba\Lang::get('user registration general_error');

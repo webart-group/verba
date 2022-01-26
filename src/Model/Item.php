@@ -21,7 +21,7 @@ class Item extends \Verba\Configurable
     private $_prep_alm;
     private $_prep_lc;
     /**
-     * @var bool|\ObjectType\Attribute
+     * @var bool|\Verba\ObjectType\Attribute
      */
     private $_prep_A;
 
@@ -250,7 +250,7 @@ class Item extends \Verba\Configurable
                 goto RETURN_AS_NORMAL;
             }
 
-            $lang = !$lang || !\Lang::isLCValid($lang) ? $this->internalLang : $lang;
+            $lang = !$lang || !\Verba\Lang::isLCValid($lang) ? $this->internalLang : $lang;
             return array_key_exists($lang, $this->data[$propName])
                 ? $this->data[$propName][$lang]
                 : null;
@@ -285,8 +285,8 @@ class Item extends \Verba\Configurable
             $this->_prepared[$propName] = null;
 
             if ($this->_prep_alm) {
-                $this->_prepared[$propName] = array_fill_keys(\Lang::getUsedLC(), '');
-                foreach (\Lang::getUsedLC() as $clc) {
+                $this->_prepared[$propName] = array_fill_keys(\Verba\Lang::getUsedLC(), '');
+                foreach (\Verba\Lang::getUsedLC() as $clc) {
                     $this->_prep_lc = $clc;
                     $this->_prepared[$propName][$clc] = $this->prepareValue($propName);
                 }
@@ -371,7 +371,7 @@ class Item extends \Verba\Configurable
 
                 } else {
                     /**
-                     * @var $handler \ObjectType\Attribute\Handler
+                     * @var $handler \Verba\ObjectType\Attribute\Handler
                      */
                     $handler = new $handlerClass($this->oh, $this->_prep_A, $handlerCfg);
                     $handler->setValue($this->data[$propName]);

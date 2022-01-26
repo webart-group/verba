@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\AddEdit\Handler\After;
 
-use Act\AddEdit\Handler\After\CurpsActiveUpdated;
+use \Verba\Act\AddEdit\Handler\After\CurpsActiveUpdated;
 
 class CurActiveUpdated extends CurpsActiveUpdated{
 

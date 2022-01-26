@@ -2,7 +2,7 @@
 //unhandled
 namespace Verba\Act\AddEdit\Handler\Around;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class FloatData extends Around
 {
@@ -13,6 +13,6 @@ class FloatData extends Around
     }
     $this->value = (string)$this->value;
     $this->value = str_replace(',', '.', $this->value);
-    return reductionToFloat($this->value);
+    return \Verba\reductionToFloat($this->value);
   }
 }

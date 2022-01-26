@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Order;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class QuantityAvaibleUpdate extends Around
 {
@@ -11,7 +11,7 @@ class QuantityAvaibleUpdate extends Around
         if(!preg_match("/^([\+\-]?)(.+)$/i", $this->value, $matches)){
             return null;
         }
-        $val = reductionToFloat($matches[2]);
+        $val = \Verba\reductionToFloat($matches[2]);
 
         $existsValue = $this->getExistsValue($this->A->getCode());
         if($matches[1] == '-'){

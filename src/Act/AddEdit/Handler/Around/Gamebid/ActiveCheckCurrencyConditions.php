@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Gamebid;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 /**
  * Class ActiveCheckCurrencyConditions
@@ -21,15 +21,15 @@ class ActiveCheckCurrencyConditions extends Around
         if($this->value == 1 || $this->value === null){
             try{
                 if(!$qa){
-                    throw  new \Verba\Exception\Building(\Lang::get('offer errors active_check bad_qa'));
+                    throw  new \Verba\Exception\Building(\Verba\Lang::get('offer errors active_check bad_qa'));
                 }
 
                 if(!$minAmount){
-                    throw  new \Verba\Exception\Building(\Lang::get('offer errors active_check bad_minAmount'));
+                    throw  new \Verba\Exception\Building(\Verba\Lang::get('offer errors active_check bad_minAmount'));
                 }
 
                 if($qa < $minAmount){
-                    throw  new \Verba\Exception\Building(\Lang::get('offer errors active_check qa_less_minAmount'));
+                    throw  new \Verba\Exception\Building(\Verba\Lang::get('offer errors active_check qa_less_minAmount'));
                 }
             }catch ( \Verba\Exception\Building $e) {
 

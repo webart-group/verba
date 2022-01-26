@@ -31,7 +31,7 @@ class Router extends \Verba\Block {
                 $mUser->getAuthorizationUrl(false),
                 $mUser->getLoginfaildUrl(false),
             ))
-            && !Verba\User()->in_group(array(22, 23)))
+            && !\Verba\User()->in_group(array(22, 23)))
         {
             $h = new \page_siteIsDisabled($this);
             $response = $h->route();
@@ -115,8 +115,8 @@ class Router extends \Verba\Block {
 
         if(!isset($className)
             && false === (
-                \Verba\Hive::isModExists($urlFragments[0])
-                && ($className = '\\Mod\\'.ucfirst(strtolower($urlFragments[0])).'\\Router')
+                \Verba\Hive::isModExists($rq->uf[0])
+                && ($className = '\\Mod\\'.ucfirst(strtolower($rq->uf[0])).'\\Router')
                 && class_exists($className)
             )
         ){

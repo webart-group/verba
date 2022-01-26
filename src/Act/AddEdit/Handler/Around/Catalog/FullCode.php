@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Catalog;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class FullCode extends Around
 {
@@ -74,7 +74,7 @@ class FullCode extends Around
         $this->value = $exists_fullcode_mode ? $parent_fullcode . '/' .$actual_code : $parent_fullcode;
 
         //if($exists_code != $actual_code){
-        $this->ah->listen('beforeComplete', 'updatePropaganda', $this);
+            $this->ah->listen('beforeComplete', 'updatePropaganda', $this);
         //}
 
         return $this->value;

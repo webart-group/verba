@@ -10,7 +10,7 @@ class PurchasesBtnGoPay extends PurchasesBtn{
 
     parent::init();
 
-    $url = new \Url(\Mod\Order::getInstance()->gC('url processpayment'));
+    $url = new \Verba\Url(\Mod\Order::getInstance()->gC('url processpayment'));
     $url->setParams(array('iid'=>''));
     $this->urlBase = $url->get(true);
 

@@ -2,7 +2,7 @@
 
 namespace Verba\Html;
 
-use Act\Form\Element\Extender;
+use \Verba\Act\Form\Element\Extender;
 
 class Element extends \Verba\Configurable
 {
@@ -33,7 +33,7 @@ class Element extends \Verba\Configurable
     public $action;
     public $_clientCfg = false;
     /**
-     * @var \FastTemplate Инициализируется
+     * @var \Verba\FastTemplate Инициализируется
      */
     public $tpl;
 

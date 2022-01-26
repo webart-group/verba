@@ -21,19 +21,19 @@ class _Float extends \Verba\Data
 
     function setMin($val)
     {
-        $this->min = reductionToFloat($val, $this->precision, true);
+        $this->min = \Verba\reductionToFloat($val, $this->precision, true);
     }
 
     function setMax($val)
     {
-        $this->max = reductionToFloat($val, $this->precision, true);
+        $this->max = \Verba\reductionToFloat($val, $this->precision, true);
     }
 
     function validate()
     {
         $this->clearErrors();
         $v = $this->getValue();
-        if (!is_numeric($v) || !($vFloat = reductionToFloat($v, $this->precision, true))) {
+        if (!is_numeric($v) || !($vFloat = \Verba\reductionToFloat($v, $this->precision, true))) {
             $this->error('type');
         }
         if (is_int($this->min) && $vFloat < $this->min) {

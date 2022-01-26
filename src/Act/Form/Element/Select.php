@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\Form\Element;
 
-use \Html\Select as HtmlSelect;
+use \Verba\Html\Select as HtmlSelect;
 
 class Select extends HtmlSelect{
 
@@ -13,7 +13,7 @@ class Select extends HtmlSelect{
 
       $ot_id = $this->aef()->oh()->getID();
       /**
-       * @var $pdSet \ObjectType\Attribute\Predefined\Set
+       * @var $pdSet \Verba\ObjectType\Attribute\Predefined\Set
        */
       $pdSet = $this->A->PdSet($ot_id);
       if($pdSet){

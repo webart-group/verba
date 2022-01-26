@@ -93,7 +93,7 @@ class MakeList extends Action
 
     // параметры для хнедлеров
     protected $_handlers_path_base = '';
-    protected $_handlers_class_prefix = '\Act\MakeList\Handler\Field';
+    protected $_handlers_class_prefix = '\Verba\Act\MakeList\Handler\Field';
 
     protected $rq = array();
     protected $config = array();
@@ -484,7 +484,7 @@ class MakeList extends Action
     function makeForwardUrl($url)
     {
 
-        $url = new \Url($url);
+        $url = new \Verba\Url($url);
         $get_params = $url->stringToParams($_SERVER['QUERY_STRING']);
         $url->setParams($get_params);
         // Add slID sign to forward URL
@@ -584,7 +584,7 @@ class MakeList extends Action
 
         if (count($this->parents)) {
             list($pot, $piid) = $this->getFirstParent();
-            $url = var2url($url, array('pot' => $pot, 'piid' => $piid));
+            $url = \Verba\var2url($url, array('pot' => $pot, 'piid' => $piid));
         }
         return $url;
     }
@@ -713,11 +713,11 @@ class MakeList extends Action
         if (!is_array($c)) {
             $c = array();
         } else {
-            $c = \Configurable::substNumIdxAsStringValues($c);
+            $c = \Verba\Configurable::substNumIdxAsStringValues($c);
         }
         if ($this->gC('only_config_fields') == false) {
             $attrs = $this->oh->getAttrs(true);
-            $attrs = \Configurable::substNumIdxAsStringValues($attrs);
+            $attrs = \Verba\Configurable::substNumIdxAsStringValues($attrs);
             $attrs = array_replace_recursive($attrs, $c);
         } else {
             $attrs = $c;
@@ -802,7 +802,7 @@ class MakeList extends Action
             && $U->chrItem($row['key_id'], 'u', $row)
             && is_string($editUrlPrefix) && !empty($editUrlPrefix)) {
             if ($this->editIdOver == 'get') {
-                $editurl = var2url($editUrlPrefix, 'iid=' . $iid);
+                $editurl = \Verba\var2url($editUrlPrefix, 'iid=' . $iid);
             } else {
                 $editurl = $editUrlPrefix . '/' . $iid;
             }
@@ -873,7 +873,7 @@ class MakeList extends Action
                 $switcherClassSign = 'number';
                 $img_title .= $img_suffix == 'asc' ? '10 -&gt; 0' : '0 -&gt; 10';
             }
-            $order2arrow = '<a class="list-button-order-switcher ' . $switcherClassSign . '" href="' . var2url($url, array($attrUrlOrderName => $flag2arrow)) . '"><img src="/images/acp/order_' . $img_suffix . '.gif" border="0" alt="' . $img_title . '"></a>';
+            $order2arrow = '<a class="list-button-order-switcher ' . $switcherClassSign . '" href="' . \Verba\var2url($url, array($attrUrlOrderName => $flag2arrow)) . '"><img src="/images/acp/order_' . $img_suffix . '.gif" border="0" alt="' . $img_title . '"></a>';
             $href_title = \Verba\Lang::get('list order on');
         } else {
             $flag2name = 'a';
@@ -881,9 +881,9 @@ class MakeList extends Action
             $href_title = \Verba\Lang::get('list order off');
         }
 
-        $field_href = '<a href="' . var2url($url, array($attrUrlOrderName => $flag2name)) . '" class="' . $class . '" title="' . $href_title . '"><i>' . $displayName . '</i></a>';
+        $field_href = '<a href="' . \Verba\var2url($url, array($attrUrlOrderName => $flag2name)) . '" class="' . $class . '" title="' . $href_title . '"><i>' . $displayName . '</i></a>';
         if (!empty($order2arrow)) {
-            $field_href .= '&nbsp;' . $order2arrow;
+            $field_href = '<div class="orderable-wrap">'.$field_href.'&nbsp;' . $order2arrow.'</div>';
         }
 
         return $field_href;
@@ -995,7 +995,7 @@ class MakeList extends Action
             return false;
         }
 
-        $cfg = isset($handlerCfg[1]) && is_array($handlerCfg[2])
+        $cfg = isset($handlerCfg[1]) && is_array($handlerCfg[1])
             ? $handlerCfg[1]
             : array();
 
@@ -1715,7 +1715,7 @@ class MakeList extends Action
         $this->_wrapClasses[] = 'list-empty';
 
         $this->tpl->assign(array(
-            'LIST_EMPTY_MESSAGE' => \Verba\Lang::get($this->gC('empty \LangKey'))
+            'LIST_EMPTY_MESSAGE' => \Verba\Lang::get($this->gC('empty \Verba\LangKey'))
         ));
 
         return $this->tpl->parse(false, 'empty_list');
@@ -1773,7 +1773,7 @@ class MakeList extends Action
         } else {
             $sideInt = $side == 'bottom' ? 2 : 1;
         }
-        $items = \Configurable::substNumIdxAsStringValues($panelCfg['items']);
+        $items = \Verba\Configurable::substNumIdxAsStringValues($panelCfg['items']);
         $ei = 0;
         foreach ($items as $itemKey => $itemCfg) {
             $item_tpl_var = 'SR_PI_' . strtoupper($itemKey);
@@ -1859,7 +1859,7 @@ class MakeList extends Action
         $tpl->assign('STRANIC_WORD', $make_padej_func(
                 $total_pages,
                 \Verba\Lang::get($cfg['item_root']),
-                array(\Lang::get($cfg['item_0']),
+                array(\Verba\Lang::get($cfg['item_0']),
                     \Verba\Lang::get($cfg['item_1']),
                     \Verba\Lang::get($cfg['item_2']))
             )
@@ -1867,7 +1867,7 @@ class MakeList extends Action
         $left_limit = 1;
         $right_limit = $total_pages + 1;
 
-        $url = new \Url($nav_url);
+        $url = new \Verba\Url($nav_url);
 
         //classes
         $linkclasses = $clinkclasses = 'list-button-page';
@@ -1948,7 +1948,7 @@ class MakeList extends Action
 
     function parseRonpSelector()
     {
-        $sl = new \Html\Select();
+        $sl = new \Verba\Html\Select();
         $sl->setValues($this->gC('navout ronp values'));
         $sl->setValue($this->Selection->ronp);
         $sl->setClasses('list-button-ronp list-' . $this->listId);
@@ -2509,7 +2509,7 @@ MakeList::$_config_default = array(
                     ),
                 ),
             ),
-            'default_button_class' => ''
+            'default_button_class' => 'btn-option'
         ),
         'bottom' => false, // использовать этот ключ что бы задать отдельные шаблоны кнопок в нижних опциях. Иначе испольуется конфиг кнопок верхнего блока.
     ),

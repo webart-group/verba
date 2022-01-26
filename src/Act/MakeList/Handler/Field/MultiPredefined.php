@@ -2,7 +2,7 @@
 
 namespace Verba\Act\MakeList\Handler\Field;
 
-use Act\MakeList\Handler\Field;
+use \Verba\Act\MakeList\Handler\Field;
 
 class MultiPredefined extends Field
 {

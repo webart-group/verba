@@ -272,19 +272,19 @@ class User extends \Verba\Mod
             $_user = \Verba\_oh('user');
             $ae = $_user->initAddEdit('new');
             if (!is_array($data)) {
-                throw new \Exception(\Lang::get('error bad_data'));
+                throw new \Exception(\Verba\Lang::get('error bad_data'));
             }
 
             $loginField = $this->gC('login_field');
             if (!array_key_exists($loginField, $data)) {
-                throw new \Exception(\Lang::get('error bad_data'));
+                throw new \Exception(\Verba\Lang::get('error bad_data'));
             }
 
             $qm = new \Verba\QueryMaker($_user, false, false);
             $qm->addWhere($data[$loginField], $loginField);
             $sqlr = $qm->run();
             if ($sqlr->getNumRows()) {
-                throw new \Exception(\Lang::get('user registration profile_exists', array(
+                throw new \Exception(\Verba\Lang::get('user registration profile_exists', array(
                     'restore_url' => $this->getLostpasswordUrl()
                 )));
             }
@@ -315,7 +315,7 @@ class User extends \Verba\Mod
 
             $iid = $ae->addedit_object();
             if (!$iid) {
-                throw new \Exception(\Lang::get('user registration general_error'));
+                throw new \Exception(\Verba\Lang::get('user registration general_error'));
             }
 
             // Accounts create

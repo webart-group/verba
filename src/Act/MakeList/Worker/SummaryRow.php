@@ -16,7 +16,7 @@ class SummaryRow extends Worker{
     if(!isset($this->attrs) || !is_array($this->attrs) || !count($this->attrs)){
       return false;
     }
-    $this->attrs = \Configurable::substNumIdxAsStringValues($this->attrs, array('fx' => 'sum', 'format' => 'nodecimal'));
+    $this->attrs = \Verba\Configurable::substNumIdxAsStringValues($this->attrs, array('fx' => 'sum', 'format' => 'nodecimal'));
 
     $qm = $this->parent->QM();
     list($a) = $qm->createAlias();

@@ -2,13 +2,13 @@
 
 namespace Verba\Act\Form\Element;
 
-use Act\Action;
+use \Verba\Act\Action;
 
 class Extender
 {
 
     /**
-     * @var \Html\Element
+     * @var \Verba\Html\Element
      */
     private $fe;
     /**
@@ -22,7 +22,7 @@ class Extender
     public $ah;
 
     /**
-     * @var bool|\ObjectType\Attribute
+     * @var bool|\Verba\ObjectType\Attribute
      */
     public $A = false;
     public $acode;
@@ -31,7 +31,7 @@ class Extender
      */
     public $oh = false;
     /**
-     * @var bool|\FastTemplate
+     * @var bool|\Verba\FastTemplate
      */
     public $tpl = false;
     /**
@@ -39,7 +39,7 @@ class Extender
      */
     public $ebox;
     public $wrap = array(
-        '_class' => '\Html\Div',
+        '_class' => '\Verba\Html\Div',
         'classes' => '',
         'templates' => [
             'ebox_inner' => false,
@@ -196,7 +196,7 @@ class Extender
     }
 
     /**
-     * @return \Html\Element
+     * @return \Verba\Html\Element
      */
     function fe()
     {
@@ -228,7 +228,7 @@ class Extender
     }
 
     /**
-     * @return \ObjectType\Attribute
+     * @return \Verba\ObjectType\Attribute
      */
     function A()
     {
@@ -264,7 +264,7 @@ class Extender
 
     function setLocale($val)
     {
-        if (\Lang::isLCValid($val))
+        if (\Verba\Lang::isLCValid($val))
             $this->locale = $val;
     }
 
@@ -288,7 +288,7 @@ class Extender
     {
         if (is_object($this->A) && $this->isLcd) {
             if (is_array($val)) {
-                foreach (\Lang::getUsedLC() as $lc) {
+                foreach (\Verba\Lang::getUsedLC() as $lc) {
                     if (isset($val[$lc])) {
                         $this->fe->value[$lc] = $val[$lc];
                     }
@@ -432,7 +432,7 @@ class Extender
             && is_string($this->wrap['_class'])
             && class_exists($this->wrap['_class'], false)
                 ? $this->wrap['_class']
-                : '\Html\Div';
+                : 'Verba\Html\Div';
 
         if (!array_key_exists('id', $this->wrap)) {
             $this->wrap['id'] = $this->fe->getId() . '_ebox';

@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around;
 
-use Act\AddEdit\Handler\Around\Serialize;
+use \Verba\Act\AddEdit\Handler\Around\Serialize;
 
 class Serialized extends Serialize
 {

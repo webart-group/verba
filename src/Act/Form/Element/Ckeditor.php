@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class Ckeditor extends Element
 {

@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element\Extension;
 
-use Act\Form\Element\Extension;
+use \Verba\Act\Form\Element\Extension;
 
 class SeoString extends Extension
 {

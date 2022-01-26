@@ -2,7 +2,7 @@
 
 namespace Verba\Act\AddEdit\Handler\Around\Account;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 /**
  * Class Mode
@@ -34,14 +34,14 @@ class Mode extends Around
             // Менять состояние Режима при отключенном счете
             // можно только админу
             if(!$active_value && !$adminAccess){
-                throw  new \Verba\Exception\Building(\Lang::get('account warns inactive_cause_mode inactive_account'));
+                throw  new \Verba\Exception\Building(\Verba\Lang::get('account warns inactive_cause_mode inactive_account'));
             }
 
             $prevValue = $this->getExistsValue('mode');
             // Изменять состояние Режима с 1160 на дпугой
             // можно только админу
             if($prevValue == 1160 && !$adminAccess){
-                throw  new \Verba\Exception\Building(\Lang::get('account warns inactive_cause_mode blocked'));
+                throw  new \Verba\Exception\Building(\Verba\Lang::get('account warns inactive_cause_mode blocked'));
             }
 
         }
@@ -52,7 +52,7 @@ class Mode extends Around
             if($this->action == 'new'){
                 $this->value = 1159;
             }else{
-                throw  new \Verba\Exception\Building(\Lang::get('account warns inactive_cause_mode inactive_currency'));
+                throw  new \Verba\Exception\Building(\Verba\Lang::get('account warns inactive_cause_mode inactive_currency'));
             }
 
         }

@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\AddEdit\Handler\Around;
 
-use Act\AddEdit\Handler\Around;
+use \Verba\Act\AddEdit\Handler\Around;
 
 class UrlHash extends Around
 {
@@ -14,7 +14,7 @@ class UrlHash extends Around
       return false;
     }
 
-    $url = new \Url($this->ah->getGettedValue($Av->getCode()));
+    $url = new \Verba\Url($this->ah->getGettedValue($Av->getCode()));
 
     $url->anchor = $url->user = $url->password = $url->params = null;
 

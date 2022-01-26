@@ -59,7 +59,7 @@ class CustomOrder extends Worker{
   }
 
   function parseSelect(){
-    $this->select = new \Html\Select();
+    $this->select = new \Verba\Html\Select();
     $this->select->addClasses('custom-list-order  custom-list-order-'.$this->alias.' list-order-'.$this->parent->getID());
     $this->select->setValues($this->options);
     $qm = $this->parent->QM();

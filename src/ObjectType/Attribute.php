@@ -31,11 +31,11 @@ class Attribute  extends \Verba\Base
      */
     protected $oh;
     /**
-     * @var \ObjectType
+     * @var \Verba\ObjectType
      */
     protected $OT;
     /**
-     * @var \ObjectType\Attribute\Predefined\Collection
+     * @var \Verba\ObjectType\Attribute\Predefined\Collection
      */
     protected $PdCollection = null;
     /**
@@ -76,7 +76,7 @@ class Attribute  extends \Verba\Base
     /**
      * @param $OT
      * @param $data
-     * @return \ObjectType\Attribute
+     * @return \Verba\ObjectType\Attribute
      */
     static function create($OT, $data){
 
@@ -221,7 +221,7 @@ class Attribute  extends \Verba\Base
     }
 
     /**
-     * @return \ObjectType\Attribute\Predefined\Set|false
+     * @return \Verba\ObjectType\Attribute\Predefined\Set|false
      */
     function PdSet($ot_ctx = false)
     {

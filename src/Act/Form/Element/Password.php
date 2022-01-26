@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Password as HtmlPassword;
+use \Verba\Html\Password as HtmlPassword;
 
 class Password extends HtmlPassword
 {
@@ -48,7 +48,7 @@ class Password extends HtmlPassword
     $this->tpl->define($this->templates);
 
     //Password Input
-    $pwdE = new \Html\Password($Ecfg);
+    $pwdE = new \Verba\Html\Password($Ecfg);
     $pwdE->setName($pwdE->getName().'[0]');
     $pwdE->setId($pwdE->getId().'_0');
     $pwdE->attr(array(
@@ -56,7 +56,7 @@ class Password extends HtmlPassword
     ));
 
     //Password Confirmation Input
-    $pwdECnfr = new \Html\Password($Ecfg);
+    $pwdECnfr = new \Verba\Html\Password($Ecfg);
     $pwdECnfr->setName($pwdECnfr->getName().'[1]');
     $pwdECnfr->setId($pwdECnfr->getId().'_1');
     $pwdECnfr->attr(array(
@@ -78,7 +78,7 @@ class Password extends HtmlPassword
     $this->tpl->parse('PASSWORD_CONFIRMATION_BLOCK', 'confirmation');
     //Password Input Exists
     if($this->aef->getAction() == 'edit' && $this->getExistsAllowed()){
-      $pwdEExists = new \Html\Password($Ecfg);
+      $pwdEExists = new \Verba\Html\Password($Ecfg);
       $pwdEExists->setName($pwdEExists->getName().'[2]');
       $pwdEExists->setId($pwdEExists->getId().'_2');
       $pwdEExists->setValue('');

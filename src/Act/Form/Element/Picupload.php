@@ -2,7 +2,7 @@
 
     namespace Verba\Act\Form\Element;
 
-    use \Html\Element;
+    use \Verba\Html\Element;
 
     class Picupload extends Element
     {
@@ -78,7 +78,7 @@
             if($this->acceptByTypes && isset($this->rstr_items['types']) && is_array($this->rstr_items['types'])){
                 $cfg['acceptTypes'] = $this->rstr_items['types'];
             }
-            $this->fileuploadE = new \Html\File($cfg);
+            $this->fileuploadE = new \Verba\Html\File($cfg);
         }
 
         function makeFileupload()
@@ -141,7 +141,7 @@
             if (!$cfg) {
                 $this->remoteE = (bool)$cfg;
             }
-            $this->remoteE = new \Html\Text($cfg);
+                $this->remoteE = new \Verba\Html\Text($cfg);
         }
 
         function makeRemote()
@@ -241,7 +241,7 @@
             }
 
             $this->tpl->assign(array(
-                'PREVIEW_JS_CFG' => json_encode($jsCfg, JSON_FORCE_OBJECT),
+                'PREVIEW_JS_CFG' => \json_encode($jsCfg, JSON_FORCE_OBJECT),
                 'PREVIEW_E_ID' => $this->getId() . '_preview',
             ));
 

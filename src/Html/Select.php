@@ -143,7 +143,7 @@ class Select extends Element
             : (count($this->values) + 1));
 
         if(!array_key_exists($gInx, $this->values)){
-          $this->values[$gInx] = new \Html\SelectOptgroup($v);
+          $this->values[$gInx] = new \Verba\Html\SelectOptgroup($v);
         }elseif($this->values[$gInx] instanceof \Html\SelectOptgroup){
           $this->values[$gInx]->applyConfig($v);
         }

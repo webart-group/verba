@@ -2,7 +2,7 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Html\Element;
+use \Verba\Html\Element;
 
 class CatalogConfigUI extends Element
 {
@@ -113,7 +113,7 @@ class CatalogConfigUI extends Element
                 }
             }
 
-            $fe = new \Html\Select();
+            $fe = new \Verba\Html\Select();
             $fe->setBlankoption('', $this->avaible_ot['blankOption']);
             $fe->setId('');
             $fe->setName('');

@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\Form\Element;
 
-use \Html\Radio as HtmlRadio;
+use \Verba\Html\Radio as HtmlRadio;
 
 class Radio extends HtmlRadio
 {

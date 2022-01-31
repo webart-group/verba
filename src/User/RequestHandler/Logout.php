@@ -1,19 +1,18 @@
 <?php
+
 namespace Verba\User\RequestHandler;
 
-class Logout extends \Verba\Block\Html{
+class Logout extends \Verba\Block\Html
+{
 
-  function build(){
-    /**
-     * @var $mUser \Verba\User\User
-     * @var $mGame \Mod\Game
-     */
-    $mUser = \Verba\_mod('User');
-    $mUser->logout();
-    $mGame = \Verba\_mod('game');
-    $mGame->clearUserCookies();
+    function build()
+    {
+        /**
+         * @var $mUser \Verba\User\User
+         */
+        $mUser = \Verba\_mod('User');
+        $mUser->logout();
 
-    $this->addHeader('Location', '/'); //$mUser->getHistoryBackUrl()
-  }
-
+        $this->addHeader('Location', '/'); //$mUser->getHistoryBackUrl()
+    }
 }

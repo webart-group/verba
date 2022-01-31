@@ -86,9 +86,9 @@ class Hive extends Configurable
     private $SQL;
 
     /**
-     * @var\Verba\Model\User объект представления активного пользователя
+     * @var\Verba\User\Model\User объект представления активного пользователя
      *
-     * @see\Verba\Model\User
+     * @see\Verba\User\Model\User
      */
 
     private $U = false;
@@ -386,7 +386,7 @@ class Hive extends Configurable
     }
 
     /**
-     * Инициализация системных классов - \Verba\Model\User, KeyKeeper.
+     * Инициализация системных классов - \Verba\User\Model\User, KeyKeeper.
      * Ссылки на созданные объекты хранятся в свойствах класса
      * @return void
      * @see \U
@@ -423,7 +423,7 @@ class Hive extends Configurable
 
         if (isset($_SESSION['hive']['U'])) {
             $U = unserialize($_SESSION['hive']['U']);
-            if (is_object($U) && $U instanceof \Verba\Model\User) {
+            if (is_object($U) && $U instanceof \Verba\User\Model\User) {
                 // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
                 if ($U->getAuthorized() || $U->requireRefresh()) {
                     $U = $U->getID();
@@ -451,11 +451,11 @@ class Hive extends Configurable
 
     function destroyUser()
     {
-        $this->U = new \Verba\Model\User();
+        $this->U = new \Verba\User\Model\User();
     }
 
     /**
-     * @param $udata \Verba\Model\User|integer|array
+     * @param $udata \Verba\User\Model\User|integer|array
      */
     function setUser($udata)
     {
@@ -628,8 +628,8 @@ class Hive extends Configurable
     /**
      * Возвращает текущий объект  U
      *
-     * @return \Verba\Model\User
-     * @see \Verba\Model\User
+     * @return \Verba\User\Model\User
+     * @see \Verba\User\Model\User
      */
     function U()
     {
@@ -1105,7 +1105,7 @@ function User()
 
 /**
  * Returns current user object.
- * @return \Verba\Model\User
+ * @return \Verba\User\Model\User
  */
 function getUser()
 {

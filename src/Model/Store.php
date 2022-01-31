@@ -6,7 +6,7 @@ class Store extends Item {
 
     protected $otype = 'store';
     /**
-     * @var \Verba\Model\User
+     * @var \Verba\User\Model\User
      */
     private $User ;
 
@@ -55,8 +55,8 @@ class Store extends Item {
 
     function getUser(){
         if($this->User === null){
-            $User = new \Verba\Model\User($this->owner);
-            $this->User = $User && $User instanceof \Verba\Model\User ? $User : false;
+            $User = new \Verba\User\Model\User($this->owner);
+            $this->User = $User && $User instanceof \Verba\User\Model\User ? $User : false;
         }
         return $this->User;
     }

@@ -49,7 +49,7 @@ class OrderCanceledCashback extends After
 
             // Возврат суммы на основной баланс Покупателя #balance #balance_change
 
-            $U_order = new \Verba\Model\User($this->ah->getActualValue('owner'));
+            $U_order = new \Verba\User\Model\User($this->ah->getActualValue('owner'));
             $buyerAcc = $U_order->Accounts()->getAccountByCur($orderCurId);
 
             $balopSellerGravity = $buyerAcc->balanceUpdate(

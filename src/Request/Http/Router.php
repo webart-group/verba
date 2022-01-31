@@ -96,6 +96,20 @@ class Router extends \Verba\Block {
         if (!count($urlFragments)) {
             $className = '\Router\Index';
         }else{
+            $chank_i = 0;
+            $b = function ($val) use (&$chank_i){
+                $val = strtolower($val);
+                return $chank_i++ === 0 ? $val : ucfirst($val);
+            };
+
+            $a = function($val) use ($b, &$chank_i) {
+                $chanks = preg_split("/\W+/i", $val);
+                $chank_i= 0;
+                $chanks = array_map($b, $chanks);
+                return implode('', $chanks);
+            };
+            $urlFragments = array_map($a, $urlFragments);
+
             do{
                 $lastE = ucfirst(array_pop($urlFragments));
 

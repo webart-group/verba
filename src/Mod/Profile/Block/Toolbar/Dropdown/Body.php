@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown;
 
 class Body extends \Verba\Block\Html {
 

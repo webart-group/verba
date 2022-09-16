@@ -151,7 +151,7 @@ class Element extends \Verba\Configurable
 
             // old scheme without namespace, deprecated
             if (strpos($ExtClassName, '\\') === false) {
-                $ExtClassNameFull = '\Act\Form\Element\Extension\\' . ucfirst($ExtClassName);
+                $ExtClassNameFull = '\Verba\Act\Form\Element\Extension\\' . ucfirst($ExtClassName);
             } else {
                 $ExtClassNameFull = $ExtClassName;
             }

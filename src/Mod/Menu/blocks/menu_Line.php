@@ -56,7 +56,7 @@ class menu_Line extends \Verba\Block\Html{
     }
 
     $this->tpl->clear_vars(array('ITEMS'));
-    $U = User();
+    $U = \Verba\User();
     $i = 0;
     while($row = $sqlr->fetchRow()){
       if(!$U->chr($row['key_id'])){

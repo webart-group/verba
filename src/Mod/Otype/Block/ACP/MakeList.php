@@ -7,7 +7,7 @@
  * Time: 19:00
  */
 
-namespace Mod\Otype\Block\ACP;
+namespace Verba\Mod\Otype\Block\ACP;
 
 class MakeList extends \Verba\Mod\Routine\Block\MakeList {
 

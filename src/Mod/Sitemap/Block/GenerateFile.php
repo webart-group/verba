@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Sitemap\Block;
+namespace Verba\Mod\Sitemap\Block;
 
 class GenerateFile extends \Verba\Mod\Sitemap\Block\Generator{
 
@@ -33,7 +33,7 @@ class GenerateFile extends \Verba\Mod\Sitemap\Block\Generator{
   }
 
   function createContext(){
-    return new \Mod\Sitemap\ContextFile($this->getTempFilepath());
+    return new \Verba\Mod\Sitemap\ContextFile($this->getTempFilepath());
   }
 
   function getContext(){

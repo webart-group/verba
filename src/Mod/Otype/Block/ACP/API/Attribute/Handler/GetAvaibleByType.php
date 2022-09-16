@@ -6,7 +6,7 @@
  * Date: 16.09.19
  * Time: 12:35
  */
-namespace Mod\Otype\Block\ACP\API\Attribute\Handler;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Handler;
 
 class GetAvaibleByType extends \Verba\Block\Html{
 
@@ -20,7 +20,7 @@ class GetAvaibleByType extends \Verba\Block\Html{
             throw new \Exception('Bad incoming parameters');
         }
 
-        $ahs = \Mod\Otype::getInstance()->getAhsByTypes($ah_type_id);
+        $ahs = \Verba\Mod\Otype::getInstance()->getAhsByTypes($ah_type_id);
 
         $this->content = array(
             $ah_type_id => $ahs,

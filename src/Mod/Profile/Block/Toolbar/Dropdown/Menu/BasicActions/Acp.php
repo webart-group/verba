@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Menu\BasicActions;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu\BasicActions;
 
 class Acp extends \Verba\Block\Html{
 
@@ -11,7 +11,7 @@ class Acp extends \Verba\Block\Html{
 
         $this->content = '';
 
-        $U = User();
+        $U = \Verba\User();
         $mAcp = \Verba\_mod('acp');
         $r = $mAcp->gC('access_rights');
 

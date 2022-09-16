@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Search\Block;
+namespace Verba\Mod\Search\Block;
 
 class Create extends \Verba\Block\Html
 {
@@ -20,7 +20,7 @@ class Create extends \Verba\Block\Html
     function build()
     {
         /**
-         * @var \Mod\Search $mSearch
+         * @var \Verba\Mod\Search $mSearch
          */
         $mSearch = \Verba\_mod('search');
         try {

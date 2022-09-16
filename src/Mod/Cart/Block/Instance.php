@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Cart\Block;
+namespace Verba\Mod\Cart\Block;
 
 class Instance extends \Verba\Block\Json
 {
@@ -8,7 +8,7 @@ class Instance extends \Verba\Block\Json
     function build()
     {
         /**
-         * @var \Mod\Cart $Cart
+         * @var \Verba\Mod\Cart $Cart
          */
 
         $Cart = \Verba\_mod('cart');

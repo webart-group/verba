@@ -3,7 +3,7 @@
 namespace Verba\Act\AddEdit\Handler\Around;
 
 use \Verba\Act\AddEdit\Handler\Around\Price;
-use Mod\SnailMail\Exception;
+use Verba\Mod\SnailMail\Exception;
 
 class StorePrice extends Price
 {
@@ -46,7 +46,7 @@ class StorePrice extends Price
         }
 
         if($currencyIdFrom != $currencyIdTo){
-            $price = \Mod\Currency::i()->crossConvert($price, $currencyIdFrom, $currencyIdTo);
+            $price = \Verba\Mod\Currency::i()->crossConvert($price, $currencyIdFrom, $currencyIdTo);
         }
 
         $this->value = $price;

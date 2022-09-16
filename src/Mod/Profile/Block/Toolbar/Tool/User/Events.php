@@ -1,7 +1,7 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Tool\User;
+namespace Verba\Mod\Profile\Block\Toolbar\Tool\User;
 
-use Mod\Notifier\Pipe;
+use Verba\Mod\Notifier\Pipe;
 
 class Events extends \Verba\Mod\Profile\Block\Toolbar\Tool\User{
 
@@ -27,7 +27,7 @@ class Events extends \Verba\Mod\Profile\Block\Toolbar\Tool\User{
 
     function loadNotifyCount(){
         /**
-         * @var $mChatik \Mod\Chatik
+         * @var $mChatik \Verba\Mod\Chatik
          */
         $mChatik = \Verba\_mod('chatik');
 

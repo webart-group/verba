@@ -7,7 +7,7 @@
  * Time: 22:20
  */
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Payment extends \Verba\Mod {
 
@@ -90,7 +90,7 @@ class Payment extends \Verba\Mod {
 
         while($row = $sqlr->fetchRow()){
 
-            $this->paysys[$row[$pac]] = new \Mod\Paysys\Model\Item($row);
+            $this->paysys[$row[$pac]] = new \Verba\Mod\Paysys\Model\Item($row);
             if($this->paysys[$row[$pac]]->isInternal){
                 $this->_paysys_internal[$row[$pac]] = $this->paysys[$row[$pac]];
             }

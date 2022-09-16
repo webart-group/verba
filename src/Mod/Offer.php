@@ -1,13 +1,13 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Offer extends \Verba\Mod
 {
     use \Verba\ModInstance;
     static function getOfferUrl($row, $data = array())
     {
-        return \Mod\Seo::idToSeoStr($row, $data, '/offer/');
+        return \Verba\Mod\Seo::idToSeoStr($row, $data, '/offer/');
     }
 
 }

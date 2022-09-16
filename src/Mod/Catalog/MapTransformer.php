@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Catalog;
+namespace Verba\Mod\Catalog;
 
 class MapTransformer
 {

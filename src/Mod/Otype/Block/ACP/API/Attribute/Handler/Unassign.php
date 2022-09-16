@@ -7,7 +7,7 @@
  * Time: 12:39
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Handler;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Handler;
 
 
 class Unassign extends \Verba\Block\Html{
@@ -15,7 +15,7 @@ class Unassign extends \Verba\Block\Html{
     function build(){
 
         $set_id = (int)$_REQUEST['set_id'];
-        $mOtype = \Mod\Otype::getInstance();
+        $mOtype = \Verba\Mod\Otype::getInstance();
         $result = $mOtype->unassignAhFromAttr($set_id);
         if(!$result){
             $this->getBlockByRole('response')->setOperationStatus(false);

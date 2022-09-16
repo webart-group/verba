@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Tool\User;
+namespace Verba\Mod\Profile\Block\Toolbar\Tool\User;
 
 class Account extends \Verba\Mod\Profile\Block\Toolbar\Tool\User{
 
@@ -34,14 +34,14 @@ class Account extends \Verba\Mod\Profile\Block\Toolbar\Tool\User{
         parent::prepare();
 
         /**
-         * @var $mCart \Mod\Cart
-         * @var $mShop \Mod\Shop
+         * @var $mCart \Verba\Mod\Cart
+         * @var $mShop \Verba\Mod\Shop
          */
         $mCart = \Verba\_mod('cart');
-        $mShop = \Mod\Shop::getInstance();
+        $mShop = \Verba\Mod\Shop::getInstance();
         $cartCur = $mCart->getCart()->getCurrency();
         /**
-         * @var $Acc \Mod\Account\Model\Account
+         * @var $Acc \Verba\Mod\Account\Model\Account
          */
 
         $summ = 0;

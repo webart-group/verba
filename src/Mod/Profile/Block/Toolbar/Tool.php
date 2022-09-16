@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar;
+namespace Verba\Mod\Profile\Block\Toolbar;
 
 class Tool  extends \Verba\Block\Html{
 

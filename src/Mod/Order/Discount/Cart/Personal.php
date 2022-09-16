@@ -7,7 +7,7 @@
  * Time: 16:37
  */
 
-namespace Mod\Order\Discount\Cart;
+namespace Verba\Mod\Order\Discount\Cart;
 
 class Personal extends \Verba\Mod\Order\Discount\Cart{
 

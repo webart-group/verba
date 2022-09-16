@@ -1,5 +1,5 @@
 <?php
-namespace Mod\WS;
+namespace Verba\Mod\WS;
 
 class Channel extends \Verba\Base implements ChannelInterface{
 
@@ -16,7 +16,7 @@ class Channel extends \Verba\Base implements ChannelInterface{
 
 
     /**
-     * \Mod\WS\Channel constructor.
+     * \Verba\Mod\WS\Channel constructor.
      * @param $Chchp Channel\Parts
      */
     function __construct($Chchp)
@@ -46,9 +46,9 @@ class Channel extends \Verba\Base implements ChannelInterface{
 
     function userHasAccess($U = null){
         if($U === null){
-            $U = User();
+            $U = \Verba\User();
         }
-        if($U instanceof \Verba\User\Model\User){
+        if($U instanceof \Verba\Mod\User\Model\User){
             $userId = $U->getId();
         }else{
             $userId = (int)$U;

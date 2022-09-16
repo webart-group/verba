@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar;
+namespace Verba\Mod\Profile\Block\Toolbar;
 
 class Tools  extends \Verba\Block\Html{
 
@@ -8,7 +8,7 @@ class Tools  extends \Verba\Block\Html{
 
     function init() {
 
-        $U = User();
+        $U = \Verba\User();
 
         if($U->haveStore()){
             $this->addItems([
@@ -25,7 +25,7 @@ class Tools  extends \Verba\Block\Html{
             new Tool\User\Account($this),
         ));
 
-        $this->addItems(new \Mod\Notifier\Block\Instance($this));
+        $this->addItems(new \Verba\Mod\Notifier\Block\Instance($this));
     }
 
     function orderNotifyAgent($Item){

@@ -1,18 +1,18 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Tool;
+namespace Verba\Mod\Profile\Block\Toolbar\Tool;
 
-use Mod\Profile\Block\Toolbar\Tool;
-use Verba\User\Model\User;
+use Verba\Mod\Profile\Block\Toolbar\Tool;
+use Verba\Mod\User\Model\User;
 
 class User  extends Tool
 {
     /**
-     * @var U
+     * @var User
      */
     protected $U;
 
     function init(){
-        $this->U = User();
+        $this->U = \Verba\User();
 
         $this->userId = $this->U->getId();
 

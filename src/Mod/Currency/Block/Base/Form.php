@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Currency\Block\Base;
+namespace Verba\Mod\Currency\Block\Base;
 
 class Form extends \Verba\Block\Html
 {
@@ -12,7 +12,7 @@ class Form extends \Verba\Block\Html
         $this->tpl->define(array(
             'currencybaseform' => 'shop/currency/basecurrencyform/form.tpl'
         ));
-        $sl = new \Html\Select(array('name' => 'basecurrencyid'));
+        $sl = new \Verba\Html\Select(array('name' => 'basecurrencyid'));
         $values = array();
         $_cur = \Verba\_oh('currency');
         $curPac = $_cur->getPAC();

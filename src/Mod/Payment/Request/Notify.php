@@ -7,7 +7,7 @@
  * Time: 21:10
  */
 
-namespace Mod\Payment\Request;
+namespace Verba\Mod\Payment\Request;
 
 class Notify extends \Verba\Mod\Payment\Request
 {

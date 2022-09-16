@@ -1,7 +1,7 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
-use \Verba\User\Model\User;
+use \Verba\Mod\User\Model\User;
 
 class Store extends \Verba\Mod
 {
@@ -23,8 +23,8 @@ class Store extends \Verba\Mod
     function create($U = false)
     {
         if ($U === false) {
-            $U = User();
-        } elseif (!$U instanceof \Verba\User\Model\User) {
+            $U = \Verba\User();
+        } elseif (!$U instanceof \Verba\Mod\User\Model\User) {
             throw new \Exception('$U is not a U class');
         }
         //$_account = \Verba\_oh('account');
@@ -37,7 +37,7 @@ class Store extends \Verba\Mod
 
         $currency = \Verba\_mod('cart')->getCurrency();
         if (!$currency) {
-            $currency =  \Mod\Currency::getInstance()->getBaseCurrency();
+            $currency =  \Verba\Mod\Currency::getInstance()->getBaseCurrency();
         }
 
         if (!is_object($currency)) {
@@ -136,13 +136,13 @@ class Store extends \Verba\Mod
         $qrm = "DELETE FROM `" . SYS_DATABASE . "`.`" . $this->cpk_table . "` WHERE storeId = '" . $Store->id . "'";
         $this->DB()->query($qrm);
 
-        $mShop = \Mod\Shop::getInstance();
+        $mShop = \Verba\Mod\Shop::getInstance();
 
         $_ps = \Verba\_oh('paysys');
         $_cur = \Verba\_oh('currency');
         $_acc = \Verba\_oh('account');
 
-        $mCurrency = \Mod\Currency::getInstance();
+        $mCurrency = \Verba\Mod\Currency::getInstance();
         $allCurrs = $mCurrency->getCurrency();
         $fields = array('storeId');
         $values = array($Store->getId());
@@ -171,7 +171,7 @@ class Store extends \Verba\Mod
             $values[] = $min_pc;
         }
 
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
 
         $q = "INSERT INTO `" . SYS_DATABASE . "`.`" . $mStore->cpk_table . "` 
     (`" . implode("`,`", $fields) . "`) VALUES ('" . implode("','", $values) . "')
@@ -243,7 +243,7 @@ class Store extends \Verba\Mod
             $userId =\Verba\User()->getId();
         } elseif (is_numeric($user)) {
             $userId = (int)$user;
-        } elseif (is_object($user) && $user instanceof \Verba\User\Model\User) {
+        } elseif (is_object($user) && $user instanceof \Verba\Mod\User\Model\User) {
             $userId = $user->getId();
         }
 

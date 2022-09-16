@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Catalog;
+namespace Verba\Mod\Catalog;
 
-use Mod\Catalog\MapTransformer;
+use Verba\Mod\Catalog\MapTransformer;
 
 class Map extends \Verba\Block\Json
 {

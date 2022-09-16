@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Banner\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Banner\Act\MakeList\Handler\Field;
 
 class Pic extends \Act\MakeList\Handler\Field {
 

@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class Blog extends \Verba\Mod{
 

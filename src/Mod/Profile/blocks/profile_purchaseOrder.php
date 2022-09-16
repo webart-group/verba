@@ -2,7 +2,7 @@
 class profile_purchaseOrder extends order_Page {
 
   /**
-   * @var $U \Verba\User\Model\User
+   * @var $U \Verba\Mod\User\Model\User
    */
   public $U;
 
@@ -10,7 +10,7 @@ class profile_purchaseOrder extends order_Page {
     parent::init();
 
     if(!is_object($this->U) || !$this->U->active){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
   }
@@ -48,7 +48,7 @@ class profile_purchaseOrder extends order_Page {
     }
 
     if($this->rq->node != ''){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     // добавление дефолтных блоков страницы заказа
@@ -56,7 +56,7 @@ class profile_purchaseOrder extends order_Page {
     parent::route();
 
     $this->classes['order-sign'] = 'order-purchase';
-    $mStore = \Mod\Store::getInstance();
+    $mStore = \Verba\Mod\Store::getInstance();
     $this->addItems(array(
 
       'PANEL_STORE_REVIEWS' => new page_coloredPanel($this, array(

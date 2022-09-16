@@ -1,14 +1,14 @@
 <?php
 
-namespace Mod\Sitemap\Block;
+namespace Verba\Mod\Sitemap\Block;
 
-use Mod\Sitemap\ContextFile;
+use Verba\Mod\Sitemap\ContextFile;
 
 interface generator_int{
   function getContext();
 }
 
-class Generator extends \Block\Template implements generator_int{
+class Generator extends \Verba\Block\Template implements generator_int{
 
   protected $context;
 

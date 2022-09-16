@@ -7,7 +7,7 @@
  * Time: 12:46
  */
 
-namespace Mod\Paysys\Model;
+namespace Verba\Mod\Paysys\Model;
 
 class Item extends \Verba\Configurable{
 

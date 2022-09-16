@@ -6,7 +6,7 @@
  * Date: 26.08.19
  * Time: 17:03
  */
-namespace Mod;
+namespace Verba\Mod;
 
 class News extends \Verba\Mod{
 
@@ -380,7 +380,7 @@ class NewsPublic extends \Verba\Mod{
 
         foreach($data as $cid => $citem){
             $date = strtotime($citem['date']);
-            $url = \Mod\Seo::idToSeoStr($citem,array('seq'=>$citem['__sec']));
+            $url = \Verba\Mod\Seo::idToSeoStr($citem,array('seq'=>$citem['__sec']));
 
             if(!empty($citem['picture']) && !empty($citem['_picture_config'])){
                 $imgCfg = \Verba\_mod('image')->getImageConfig($citem['_picture_config']);
@@ -412,7 +412,7 @@ class NewsPublic extends \Verba\Mod{
 
         $tpl = $this->tpl();
         $date = strtotime($row['date']);
-        $url = \Mod\Seo::idToSeoStr($row,array('seq'=>$list->getCurrentPos()));
+        $url = \Verba\Mod\Seo::idToSeoStr($row,array('seq'=>$list->getCurrentPos()));
 
         if(!empty($row['picture']) && !empty($row['_picture_config'])){
             $imgCfg = \Verba\_mod('image')->getImageConfig($row['_picture_config']);

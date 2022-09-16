@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Faq\Tree\View;
+namespace Verba\Mod\Faq\Tree\View;
 
 class ContentFaqOnPage extends ContentFaq
 {

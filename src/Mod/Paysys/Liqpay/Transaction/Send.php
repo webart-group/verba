@@ -7,7 +7,7 @@
  * Time: 15:18
  */
 
-namespace Mod\Paysys\Liqpay\Transaction;
+namespace Verba\Mod\Paysys\Liqpay\Transaction;
 
 class Send extends \Verba\Mod\Paysys\Liqpay\Transaction
 {

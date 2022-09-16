@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Devblog\Block;
+namespace Verba\Mod\Devblog\Block;
 
-use Mod\Devblog;
+use Verba\Mod\Devblog;
 
 class Version extends \Verba\Block\Html
 {

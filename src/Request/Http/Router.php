@@ -8,9 +8,8 @@
  */
 
 namespace Verba\Request\Http;
-
-use Model\Product\Resource;
-use Verba\Exception\Routing;
+use \App;
+use Verba\Hive;
 use Verba\Request;
 
 class Router extends \Verba\Block {
@@ -18,11 +17,11 @@ class Router extends \Verba\Block {
     function route()
     {
         /**
-         * @var $mUser \Verba\User\User
+         * @var $mUser \Verba\Mod\User
          */
         $mUser = \Verba\_mod('User');
         /**
-         * @var $mLocal \Mod\Local
+         * @var $mLocal \Verba\Mod\Local
          */
         $mLocal = \Verba\_mod('local');
         // if site is disabled
@@ -39,7 +38,7 @@ class Router extends \Verba\Block {
         }
 
         if(false === is_object($Router = $this->findRouter($this->request))){
-            goto PAGE_NOT_FOUND;
+            goto ROUTE_NOT_FOUND;
         }
 
         try
@@ -49,7 +48,7 @@ class Router extends \Verba\Block {
         catch (\Exception $e)
         {
             $this->log()->error($e);
-            if($e instanceof \Exception\Routing)
+            if($e instanceof \Verba\Exception\Routing)
             {
                 $RoutResult = (new \Verba\Response\Exception\NotFound($this))
                     ->setException($e);
@@ -61,9 +60,10 @@ class Router extends \Verba\Block {
             }
         }
 
-        if (!isset($RoutResult)) {
-            PAGE_NOT_FOUND:
+        if (empty($RoutResult)) {
+            ROUTE_NOT_FOUND:
             $RoutResult = new \Verba\Response\Exception\NotFound($this);
+
         }
 
         if ($RoutResult instanceof \Verba\Response) {
@@ -75,7 +75,7 @@ class Router extends \Verba\Block {
             $Response->addItems($RoutResult);
 
         } else { // default - html block wraped by default page
-            $Response = new \Layout\Local($this->rq);
+            $Response = new \App\Layout\Local($this->rq);
             $Response->addItems(array(
                 'CONTENT' => $RoutResult
             ));
@@ -94,7 +94,7 @@ class Router extends \Verba\Block {
         }
         $shift = 0;
         if (!count($urlFragments)) {
-            $className = '\Router\Index';
+            $className = '\\App\\Router\\Index';
         }else{
             $chank_i = 0;
             $b = function ($val) use (&$chank_i){
@@ -113,7 +113,7 @@ class Router extends \Verba\Block {
             do{
                 $lastE = ucfirst(array_pop($urlFragments));
 
-                $possibleClassName = '\Router\\'
+                $possibleClassName = '\\App\\Router\\'
                     . implode('\\', $urlFragments)
                     . '\\'.$lastE;
 
@@ -127,14 +127,17 @@ class Router extends \Verba\Block {
             }while(count($urlFragments));
         }
 
-        if(!isset($className)
-            && false === (
-                \Verba\Hive::isModExists($rq->uf[0])
-                && ($className = '\\Mod\\'.ucfirst(strtolower($rq->uf[0])).'\\Router')
-                && class_exists($className)
-            )
-        ){
-            return false;
+        if(!isset($className)){
+            if(\Verba\Hive::isModExists($rq->uf[0])
+                    && ($className = '\\Verba\\Mod\\'.ucfirst(strtolower($rq->uf[0])).'\\Router')
+                    && class_exists($className)
+            ) {
+                $shift = 1;
+            } elseif($NotFoundRouter = App::$self->gC('not_found_router')) {
+                $className = $NotFoundRouter;
+            } else {
+                return false;
+            }
         }
 
         return new $className($rq->shift($shift));

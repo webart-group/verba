@@ -10,7 +10,7 @@ use \Verba\Act\AddEdit\Handler\Around;
  * В случае редактирования с 1158 в другой режим проверяет чтобы оставался в режиме ввода
  * хотя бы один кошелек со стабильной валютой.
  *
- * @package Act\AddEdit\Handler\Around\Account
+ * @package Verba\Act\AddEdit\Handler\Around\Account
  */
 class ModeOneStableWithUnstable extends Around
 {
@@ -28,7 +28,7 @@ class ModeOneStableWithUnstable extends Around
         $ownerField = $_acc->getOwnerAttributeCode();
         $pac = $_acc->getPAC();
         $ownerId = $this->ah->getActualValue($ownerField);
-        $accCur =  \Mod\Currency::getInstance()->getCurrency($this->ah->getActualValue('currencyId'));
+        $accCur =  \Verba\Mod\Currency::getInstance()->getCurrency($this->ah->getActualValue('currencyId'));
 
         $q = "SELECT 
   SUM(IF(c.unstable = 0, 0, 1)) AS `unstable_count`,

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Game;
+namespace Verba\Mod\Game;
 
 class Item
 {

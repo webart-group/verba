@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Customer extends \Verba\Mod
 {
@@ -220,12 +220,12 @@ class Customer extends \Verba\Mod
     }
 
     /**
-     * @param $U \Verba\User\User
+     * @param $U \Verba\Mod\User
      * @return \Verba\Act\AddEdit|bool
      */
     function createUserCustomerProfile($U)
     {
-        if (!$U instanceof \Verba\User\Model\User
+        if (!$U instanceof \Verba\Mod\User\Model\User
             || !$U->getID()) {
             return false;
         }
@@ -278,7 +278,7 @@ class Customer extends \Verba\Mod
         $create = (bool)$create;
         $profile = $this->findProfile($email, $create);
         if (!$profile) {
-            throw new \Exception('Unable to handle \Mod\Customer\Profile for Email [' . var_export($email, true) . ']');
+            throw new \Exception('Unable to handle \Verba\Mod\Customer\Profile for Email [' . var_export($email, true) . ']');
         }
         $mCart = \Verba\_mod('cart');
         $newCart = $mCart->renewCartByProfile($profile);
@@ -320,7 +320,7 @@ class Customer extends \Verba\Mod
             $sqlr = $this->DB()->query($q);
             if ($sqlr && $sqlr->getNumRows()) {
                 //find customer Id
-                $U = new \Verba\User\Model\User($sqlr->fetchRow());
+                $U = new \Verba\Mod\User\Model\User($sqlr->fetchRow());
                 $profile = $this->loadProfileByUserId($U->getId());
 
                 // User - yes, Profile - yes, but User and Profile Email is Mismatch
@@ -495,7 +495,7 @@ class Customer extends \Verba\Mod
     {
         try {
             $_cust = \Verba\_oh('customer');
-            if (!$profile instanceof \Mod\Customer\Profile) {
+            if (!$profile instanceof \Verba\Mod\Customer\Profile) {
                 $profile = $this->profile;
             }
             if (is_array($data)) {
@@ -550,7 +550,7 @@ class Customer extends \Verba\Mod
     }
 
     /**
-     * @param $order \Mod\Order\Model\Order
+     * @param $order \Verba\Mod\Order\Model\Order
      * @param bool $add
      */
     function updateCustomerStatusByOrderTotal($order, $add = true)
@@ -558,8 +558,8 @@ class Customer extends \Verba\Mod
 
         $statuses = $this->getCustomerStatuses('a');
         $customer = $order->getCustomer();
-        if (!$customer instanceof \Mod\Customer\Profile) {
-            $this->log()->error('Unknown \Mod\Customer\Profile. orderId:' . $order->getId());
+        if (!$customer instanceof \Verba\Mod\Customer\Profile) {
+            $this->log()->error('Unknown \Verba\Mod\Customer\Profile. orderId:' . $order->getId());
             return;
         }
 
@@ -820,7 +820,7 @@ class Customer extends \Verba\Mod
             return 'Unknown user';
         }
 
-        $cU = new \Verba\User\Model\User($ownerId);
+        $cU = new \Verba\Mod\User\Model\User($ownerId);
 
         if (!$cU) {
             return $ownerId;
@@ -860,7 +860,7 @@ class Customer extends \Verba\Mod
 
     //function order_customerDiscount($ae, $items){
     /*
-      $discount = new \Mod\Order\Discount();
+      $discount = new \Verba\Mod\Order\Discount();
       $discount->title = \Verba\Lang::get('customer discount title');
       if(!is_array($items)){
         return false;
@@ -898,7 +898,7 @@ class Customer extends \Verba\Mod
 
         $qm->addCJoin(array(array('t' => $ot, 'a' => $oa)), array(
             array(
-                'p' => array('a' => $a, 'f' => \Mod\Customer\Profile::getIdPropName()),
+                'p' => array('a' => $a, 'f' => \Verba\Mod\Customer\Profile::getIdPropName()),
                 's' => array('a' => $oa, 'f' => 'customerId'),
             ),
             array(

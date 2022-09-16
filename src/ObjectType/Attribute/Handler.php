@@ -20,7 +20,7 @@ class Handler extends \Verba\Configurable
     protected $ah;
 
     /**
-     * @var \FastTemplate
+     * @var \Verba\FastTemplate
      */
     protected $tpl;
 

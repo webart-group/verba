@@ -7,7 +7,7 @@
  * Time: 14:04
  */
 
-namespace Mod\SnailMail;
+namespace Verba\Mod\SnailMail;
 
 
 /**

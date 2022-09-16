@@ -32,13 +32,11 @@ class ACPTabHandler extends Worker
     function fillListStates()
     {
 
-        \Verba\_mod('ACP')->loadUiClasses();
-
         if (!array_key_exists('addlistobject', $this->viewStates)) {
 
             $this->viewStates['addlistobject'] =
 
-                \ACPTabset::createTabsetByName('ListAEForm', array(
+                \Verba\Mod\Acp\Tabset::createTabsetByName('ListAEForm', array(
                     'tabs' => array(
                         'ListObjectForm' => array(
                             'action' => 'createform',
@@ -53,7 +51,7 @@ class ACPTabHandler extends Worker
         }
         if (!array_key_exists('editlistobject', $this->viewStates)) {
 
-            $this->viewStates['editlistobject'] = \ACPTabset::createTabsetByName('ListAEForm', array(
+            $this->viewStates['editlistobject'] = \Verba\Mod\Acp\Tabset::createTabsetByName('ListAEForm', array(
                 'tabs' => array(
                     'ListObjectForm' => array(
                         'action' => 'updateform',

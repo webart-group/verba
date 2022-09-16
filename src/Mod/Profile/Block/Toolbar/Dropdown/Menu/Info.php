@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Menu;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu;
 
 class Info extends \Verba\Block\Html {
 
@@ -14,7 +14,7 @@ class Info extends \Verba\Block\Html {
 
             'INFO_MENU' => new Info\Center($this),
 
-            'LANG_SELECTOR' => new \Mod\Profile\Block\Toolbar\Dropdown\Group($this,array(
+            'LANG_SELECTOR' => new \Verba\Mod\Profile\Block\Toolbar\Dropdown\Group($this,array(
                 'items' => array(
                     'CONTENT' => new \langu_publicSelector($this,array(
                         'templates' => array(
@@ -25,7 +25,7 @@ class Info extends \Verba\Block\Html {
                 ),
             )),
 
-            'BOTTOM_USER_LINKS' => new \Mod\Profile\Block\Toolbar\Dropdown\Group($this,array(
+            'BOTTOM_USER_LINKS' => new \Verba\Mod\Profile\Block\Toolbar\Dropdown\Group($this,array(
                 'items' => array(
                     'CONTENT' => new BasicActions($this)
                 ),

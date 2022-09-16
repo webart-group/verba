@@ -7,7 +7,7 @@
  * Time: 0:06
  */
 
-namespace Mod\Account\Model;
+namespace Verba\Mod\Account\Model;
 
 
 class Account extends \Verba\Model\Item
@@ -41,7 +41,7 @@ class Account extends \Verba\Model\Item
 
     protected function reloadBalances()
     {
-        list($balance, $hbalance) = \Mod\Account::getInstance()->loadAccBalances(
+        list($balance, $hbalance) = \Verba\Mod\Account::getInstance()->loadAccBalances(
             $this->getId()
             , $this->owner);
 
@@ -59,11 +59,11 @@ class Account extends \Verba\Model\Item
      */
     function balanceUpdate($cause, $iid = false)
     {
-        if (!$cause instanceof \Mod\Balop\Cause && \Verba\isOt($cause) && $iid) {
+        if (!$cause instanceof \Verba\Mod\Balop\Cause && \Verba\isOt($cause) && $iid) {
             $cause = $this->primCause($cause, $iid);
         }
 
-        if (!is_object($cause) || !$cause instanceof \Mod\Balop\Cause) {
+        if (!is_object($cause) || !$cause instanceof \Verba\Mod\Balop\Cause) {
             throw new \Exception('Bad balop params');
         }
 
@@ -120,7 +120,7 @@ class Account extends \Verba\Model\Item
     function getCurrency()
     {
         if ($this->currency === null) {
-            $this->currency =  \Mod\Currency::getInstance()->getCurrency($this->currencyId);
+            $this->currency =  \Verba\Mod\Currency::getInstance()->getCurrency($this->currencyId);
         }
         return $this->currency;
     }

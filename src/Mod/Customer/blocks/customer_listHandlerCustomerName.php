@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Customer\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Customer\Act\MakeList\Handler\Field;
 
 class Name extends \Act\MakeList\Handler{
 

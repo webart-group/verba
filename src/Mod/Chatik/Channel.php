@@ -1,10 +1,10 @@
 <?php
 
-namespace Mod\Chatik;
+namespace Verba\Mod\Chatik;
 
-use Mod\Notifier\Event;
-use Mod\Notifier\Event\Messenger\NewMessage;
-use Mod\Notifier\Pipe;
+use Verba\Mod\Notifier\Event;
+use Verba\Mod\Notifier\Event\Messenger\NewMessage;
+use Verba\Mod\Notifier\Pipe;
 
 class Channel extends \Verba\Mod\WS\Channel
 {
@@ -29,7 +29,7 @@ class Channel extends \Verba\Mod\WS\Channel
 
     /**
      * @param $message string
-     * @param $U \Verba\User\Model\User
+     * @param $U \Verba\Mod\User\Model\User
      * @return bool|Model\Message
      * @throws
      */
@@ -78,11 +78,11 @@ class Channel extends \Verba\Mod\WS\Channel
     {
         //Отправка оповещений в канал Пользователя и магазина
         /**
-         * @var $mNotifier \Mod\Notifier
-         * @var $mUser \Verba\User\User
+         * @var $mNotifier \Verba\Mod\Notifier
+         * @var $mUser \Verba\Mod\User
          */
         $mNotifier = \Verba\_mod('notifier');
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
         $mUser = \Verba\_mod('user');
 
         $event = new NewMessage([
@@ -144,7 +144,7 @@ class Channel extends \Verba\Mod\WS\Channel
     }
 
     /**
-     * @param $U \Verba\User\Model\User
+     * @param $U \Verba\Mod\User\Model\User
      * @return mixed|null
      */
     function extractInfoDataFromU($U)
@@ -154,7 +154,7 @@ class Channel extends \Verba\Mod\WS\Channel
             'picture' => '',
             'userId' => false,
         );
-        if (!$U instanceof \Verba\User\Model\User
+        if (!$U instanceof \Verba\Mod\User\Model\User
             || !$U->getAuthorized()) {
             return $r;
         }
@@ -167,14 +167,14 @@ class Channel extends \Verba\Mod\WS\Channel
     }
 
     /**
-     * @param $arg \Verba\User\Model\User|array
+     * @param $arg \Verba\Mod\User\Model\User|array
      * @return mixed|null
      */
     function generateMessageInfo($userData)
     {
 
 
-        if (is_object($userData) && $userData instanceof \Verba\User\Model\User) {
+        if (is_object($userData) && $userData instanceof \Verba\Mod\User\Model\User) {
             $userData = $this->extractInfoDataFromU($userData);
         }
 
@@ -197,7 +197,7 @@ class Channel extends \Verba\Mod\WS\Channel
 
             if (!empty($userData['picture'])) {
                 /**
-                 * @var $mImage \Mod\Image
+                 * @var $mImage \Verba\Mod\Image
                  */
                 $mImage = \Verba\_mod('Image');
                 $iCfg = $mImage->getImageConfig('user');
@@ -289,8 +289,8 @@ LIMIT 10
 
     function getForWho()
     {
-        $U = User();
-        if (!$U instanceof \Verba\User\Model\User || !$U->getAuthorized() || !$U->active) {
+        $U = \Verba\User();
+        if (!$U instanceof \Verba\Mod\User\Model\User || !$U->getAuthorized() || !$U->active) {
             return false;
         }
 
@@ -336,7 +336,7 @@ LIMIT 10
     }
 
     /**
-     * @param bool $U \Verba\User\Model\User
+     * @param bool $U \Verba\Mod\User\Model\User
      * @return bool
      */
     function canBeCreatedByUser($U = false)

@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Menu\BasicActions;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu\BasicActions;
 
 class Logout extends \Verba\Block\Html{
 

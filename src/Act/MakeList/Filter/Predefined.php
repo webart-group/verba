@@ -6,7 +6,7 @@ class Predefined extends \Verba\Act\MakeList\Filter
 {
 
     public $values;
-    public $felement = '\Html\Select';
+    public $felement = '\Verba\Html\Select';
 
     function applyValue()
     {

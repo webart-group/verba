@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\blocks\acp\tools\bids;
+namespace Verba\Mod\Game\blocks\acp\tools\bids;
 
 class refresh extends \Verba\Block\Json{
 

@@ -25,11 +25,11 @@ class catalog_products extends \Verba\Block\Html{
       $this->catsData = $mCat->getCatsChain($this->request->uf, 0);
     }
     if(!$this->catsData){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
     $this->currentCat = end($this->catsData);
     if(!$this->currentCat['active']){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     $this->request->addParam(array(

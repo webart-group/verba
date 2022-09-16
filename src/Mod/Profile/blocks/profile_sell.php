@@ -14,10 +14,10 @@ class profile_sell extends profile_order{
       $this->Store = $this->U->Stores()->getStore();
     }
     if(!$this->Store || !$this->Store instanceof \Model\Store){
-      throw new \Exception\Routing('Unknown param');
+      throw new \Verba\Exception\Routing('Unknown param');
     }
     if($this->Order->storeId != $this->Store->getId()){
-      throw new \Exception\Routing('Bad access param');
+      throw new \Verba\Exception\Routing('Bad access param');
     }
 
   }
@@ -34,7 +34,7 @@ class profile_sell extends profile_order{
     }
 
     if(!isset($b) || !is_object($b) || !$b instanceof Block){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
 

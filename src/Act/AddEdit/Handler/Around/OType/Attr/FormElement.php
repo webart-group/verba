@@ -12,7 +12,7 @@ class FormElement extends Around
             return $this->getExistsValue('form_element');
         }
 
-        $mOtype = \Mod\Otype::getInstance();
+        $mOtype = \Verba\Mod\Otype::getInstance();
         //list($type, $lenght, $default) = $mOtype->getColumnTypeForAttr();
         $fes = $mOtype->gC('avaibleFormElements');
         if(!array_key_exists($this->value, $fes)){

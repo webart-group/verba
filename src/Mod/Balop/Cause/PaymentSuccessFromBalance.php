@@ -1,7 +1,7 @@
 <?php
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
-use Mod\Balop\Cause;
+use Verba\Mod\Balop\Cause;
 
 
 class PaymentSuccessFromBalance extends Cause{
@@ -10,14 +10,14 @@ class PaymentSuccessFromBalance extends Cause{
     protected $_check_i_active = false;
 
     /**
-     * @var \Mod\Order\Model\Order
+     * @var \Verba\Mod\Order\Model\Order
      */
     protected $Order;
 
     function init()
     {
         if(is_object($this->_i) && !empty($this->_i->orderId)){
-            $this->Order = \Mod\Order::i()->getOrder($this->_i->orderId);
+            $this->Order = \Verba\Mod\Order::i()->getOrder($this->_i->orderId);
         }
     }
 
@@ -49,7 +49,7 @@ class PaymentSuccessFromBalance extends Cause{
 
         $this->_valid = false;
 
-        if(!is_object($this->Order) || !$this->Order instanceof \Mod\Order\Model\Order
+        if(!is_object($this->Order) || !$this->Order instanceof \Verba\Mod\Order\Model\Order
             || !$this->Order->active){
             throw new \Exception('Incorrect Order');
         }

@@ -16,6 +16,11 @@ namespace Verba;
 class Hive extends Configurable
 {
     /**
+     * @var static
+     */
+    public static $self;
+
+    /**
      * @var string Тип операционной системы хоста
      */
     static $platform;
@@ -86,9 +91,9 @@ class Hive extends Configurable
     private $SQL;
 
     /**
-     * @var\Verba\User\Model\User объект представления активного пользователя
+     * @var\Verba\Mod\User\Model\User объект представления активного пользователя
      *
-     * @see\Verba\User\Model\User
+     * @see\Verba\Mod\User\Model\User
      */
 
     private $U = false;
@@ -157,6 +162,8 @@ class Hive extends Configurable
      */
     function __construct($cfg)
     {
+        self::$self = $this;
+
         self::setPlatform();
 
         define('SYS_PLATFORM', self::$platform);
@@ -186,7 +193,6 @@ class Hive extends Configurable
         define('SYS_LC_DEFAULT', $cfg['lang']['locale']['default']);
 
         // Системные пути
-        define('SYS_ROOT', $cfg['path']['root']);
         define('APP_RESOURCES_DIR', SYS_ROOT.'/resources');
         define('APP_CODE', SYS_ROOT.'/'.$cfg['path']['engine']);
         define('SYS_PATH_MODULES', APP_CODE.'/Mod');
@@ -349,11 +355,11 @@ class Hive extends Configurable
                     self::getModule($requiredModCode);
                 }
             }
-            $modClass = '\Mod\\'.self::$modules[$code]['code'];
+            $modClass = '\\App\\Mod\\'.ucfirst(strtolower(self::$modules[$code]['code']));
 
             if(!class_exists($modClass)){
-                $modClass = '\Verba\\' . ucfirst(self::$modules[$code]['code']) . '\\' . ucfirst(self::$modules[$code]['code']);
-                if(!class_exists($modClass)){
+                $modClass = '\Verba\\Mod\\' . self::$modules[$code]['code'];
+                if(!class_exists($modClass)) {
                     throw new \Exception('Unknow mod - '.self::$modules[$code]['code']);
                 }
             }
@@ -386,7 +392,7 @@ class Hive extends Configurable
     }
 
     /**
-     * Инициализация системных классов - \Verba\User\Model\User, KeyKeeper.
+     * Инициализация системных классов - \Verba\Mod\User\Model\User, KeyKeeper.
      * Ссылки на созданные объекты хранятся в свойствах класса
      * @return void
      * @see \U
@@ -423,7 +429,7 @@ class Hive extends Configurable
 
         if (isset($_SESSION['hive']['U'])) {
             $U = unserialize($_SESSION['hive']['U']);
-            if (is_object($U) && $U instanceof \Verba\User\Model\User) {
+            if (is_object($U) && $U instanceof \Verba\Mod\User\Model\User) {
                 // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
                 if ($U->getAuthorized() || $U->requireRefresh()) {
                     $U = $U->getID();
@@ -432,7 +438,7 @@ class Hive extends Configurable
                 $U = null;
             }
         } else {
-            $U = new \Verba\User\Model\User();
+            $U = new \Verba\Mod\User\Model\User();
         }
         $this->setUser($U);
 
@@ -451,20 +457,20 @@ class Hive extends Configurable
 
     function destroyUser()
     {
-        $this->U = new \Verba\User\Model\User();
+        $this->U = new \Verba\Mod\User\Model\User();
     }
 
     /**
-     * @param $udata \Verba\User\Model\User|integer|array
+     * @param $udata \Verba\Mod\User\Model\User|integer|array
      */
     function setUser($udata)
     {
 
-        if (is_object($udata) && $udata instanceof \Verba\User\Model\User) {
+        if (is_object($udata) && $udata instanceof \Verba\Mod\User\Model\User) {
             $this->U = $udata;
 
         } else {
-            $this->U = new \Verba\User\Model\User($udata);
+            $this->U = new \Verba\Mod\User\Model\User($udata);
         }
 
         return $this->U;
@@ -628,8 +634,8 @@ class Hive extends Configurable
     /**
      * Возвращает текущий объект  U
      *
-     * @return \Verba\User\Model\User
-     * @see \Verba\User\Model\User
+     * @return \Verba\Mod\User\Model\User
+     * @see \Verba\Mod\User\Model\User
      */
     function U()
     {
@@ -928,12 +934,12 @@ class Hive extends Configurable
 
     static function loadFormMakerClass()
     {
-        return class_exists('\Act\Form');
+        return class_exists('\Verba\Act\Form');
     }
 
     static function loadMakeListClass()
     {
-        return class_exists('\Act\MakeList');
+        return class_exists('\Verba\Act\MakeList');
     }
 
     static function explodeHandlerParamAsArray($str)
@@ -1048,7 +1054,7 @@ class Hive extends Configurable
     'script_key' => '',
     'path' => [
         'root' => '',
-        'engine' => 'app',
+        'engine' => 'App',
         'images' => 'images', // relartive to webroot
         'css' => 'css',
         'js' => 'js',
@@ -1096,7 +1102,7 @@ function _mod($mod)
 
 /**
  * Returns current user object.
- * @return \Verba\User\Model\User
+ * @return \Verba\Mod\User\Model\User
  */
 function User()
 {
@@ -1105,7 +1111,7 @@ function User()
 
 /**
  * Returns current user object.
- * @return \Verba\User\Model\User
+ * @return \Verba\Mod\User\Model\User
  */
 function getUser()
 {
@@ -1326,7 +1332,7 @@ function make_padej_ru($q, $word_root, $padeji = array(0 => '', 1 => '', 2 => ''
 function make_padej_ua()
 {
     $args = func_get_args();
-    return call_user_func_array('make_padej_ru', $args);
+    return call_user_func_array('\Verba\make_padej_ru', $args);
 }
 
 /**

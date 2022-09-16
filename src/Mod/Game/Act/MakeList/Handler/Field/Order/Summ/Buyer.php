@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Game\Act\MakeList\Handler\Field\Order\Summ;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Field\Order\Summ;
 
-use \Mod\Game\Act\MakeList\Handler\Field\Order\Summ;
+use \Verba\Mod\Game\Act\MakeList\Handler\Field\Order\Summ;
 
 class Buyer extends Summ
 {

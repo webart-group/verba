@@ -38,7 +38,7 @@ class Block extends Configurable implements BlockInterface
     protected $_cache_alias;
     private $_cache_dir = '';
     /**
-     * @var \Cache
+     * @var \Verba\Cache
      */
     protected $_cache;
     public static $roleRegistry = [];
@@ -266,7 +266,7 @@ class Block extends Configurable implements BlockInterface
 
     /**
      * @param $role
-     * @return \Block\Html|null
+     * @return \Verba\Block\Html|null
      */
     function getBlockByRole($role)
     {

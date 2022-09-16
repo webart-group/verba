@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Devblog\Act\MakeList\Handler;
+namespace Verba\Mod\Devblog\Act\MakeList\Handler;
 
 use Act\MakeList\Handler\Row as RowDefault;
 

@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Content\Block;
+namespace Verba\Mod\Content\Block;
 
 class AsPage extends \content_block
 {

@@ -6,7 +6,7 @@ class Store extends Item {
 
     protected $otype = 'store';
     /**
-     * @var \Verba\User\Model\User
+     * @var \Verba\Mod\User\Model\User
      */
     private $User ;
 
@@ -55,8 +55,8 @@ class Store extends Item {
 
     function getUser(){
         if($this->User === null){
-            $User = new \Verba\User\Model\User($this->owner);
-            $this->User = $User && $User instanceof \Verba\User\Model\User ? $User : false;
+            $User = new \Verba\Mod\User\Model\User($this->owner);
+            $this->User = $User && $User instanceof \Verba\Mod\User\Model\User ? $User : false;
         }
         return $this->User;
     }
@@ -66,7 +66,7 @@ class Store extends Item {
      */
     function getPcDataByCurrency($Cur){
         if(!$Cur instanceof \Verba\Model\Currency){
-            $Cur =  \Mod\Currency::getInstance()->getCurrency($Cur);
+            $Cur =  \Verba\Mod\Currency::getInstance()->getCurrency($Cur);
         }
 
         if(!$Cur instanceof \Verba\Model\Currency){
@@ -91,7 +91,7 @@ class Store extends Item {
         if($currArg instanceof \Verba\Model\Currency){
             $curr = $currArg;
         }elseif($currArg){
-            $curr =  \Mod\Currency::getInstance()->getCurrency($currArg, true);
+            $curr =  \Verba\Mod\Currency::getInstance()->getCurrency($currArg, true);
         }
 
         if (!isset($curr)) {
@@ -133,11 +133,11 @@ class Store extends Item {
         /**
          * @var $mStore Store
          */
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
         /**
          * @var $mShop Shop
          */
-        $mShop = \Mod\Shop::getInstance();
+        $mShop = \Verba\Mod\Shop::getInstance();
 
         $_cur = \Verba\_oh('currency');
         // $Cur - Валюта ввода средств
@@ -244,7 +244,7 @@ class Store extends Item {
     }
 
     public function getUrlBase($subaction = false){
-        return \Mod\Store::getInstance()->getPublicUrl($this->getId(), $subaction);
+        return \Verba\Mod\Store::getInstance()->getPublicUrl($this->getId(), $subaction);
     }
 
     public function getAccounts(){
@@ -254,7 +254,7 @@ class Store extends Item {
     function getAccountByCur($currencyId){
         $accs = $this->getAccounts();
         /**
-         * @var $cAcc Mod\Account\Model\Account
+         * @var $cAcc Verba\Mod\Account\Model\Account
          */
         foreach($accs as $cAcc){
             if($cAcc->getRawValue('currencyId') == $currencyId){

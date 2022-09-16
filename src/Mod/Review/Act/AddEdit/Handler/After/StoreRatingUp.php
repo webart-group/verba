@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Review\Act\AddEdit\Handler\After;
+namespace Verba\Mod\Review\Act\AddEdit\Handler\After;
 
-use Act\AddEdit\Handler\After;
+use Verba\Act\AddEdit\Handler\After;
 
 class StoreRatingUp extends After
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Account\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Account\Act\MakeList\Handler\Field;
 
 use Act\MakeList\Handler\Field;
 
@@ -21,7 +21,7 @@ class BalopBlocked extends Field{
     }else{
 
       $str = \Verba\Lang::get('balop descriptions holdTill', array(
-        'holdTill' => \Mod\Shop::formatDate(strtotime($this->list->row['holdTill'])),
+        'holdTill' => \Verba\Mod\Shop::formatDate(strtotime($this->list->row['holdTill'])),
       ));
 
     }

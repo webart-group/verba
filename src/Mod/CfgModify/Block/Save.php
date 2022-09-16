@@ -1,15 +1,17 @@
 <?php
 
-namespace Mod\CfgModify\Block;
+namespace Verba\Mod\CfgModify\Block;
 
-class Save extends \Block\Raw
+use Verba\Mod\Acp;
+
+class Save extends \Verba\Block\Raw
 {
 
     public $modcode;
 
     function init()
     {
-        $this->addHeader('Location', \Verba\Hive::getBackURL());
+        $this->addHeader('Location', Acp::i()->cfg['url']);
     }
 
     function build()

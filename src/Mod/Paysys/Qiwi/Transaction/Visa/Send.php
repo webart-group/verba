@@ -7,7 +7,7 @@
  * Time: 14:25
  */
 
-namespace Mod\Paysys\Qiwi\Transaction\Visa;
+namespace Verba\Mod\Paysys\Qiwi\Transaction\Visa;
 
 
 class Send extends \Verba\Mod\Paysys\Qiwi\Transaction

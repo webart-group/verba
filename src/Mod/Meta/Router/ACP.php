@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Meta\Router;
+namespace Verba\Mod\Meta\Router;
 
 class ACP extends \Verba\Request\Http\Router
 {
@@ -9,14 +9,14 @@ class ACP extends \Verba\Request\Http\Router
     {
         switch ($this->request->node) {
             case 'cuform':
-                $h = new \Mod\Meta\Block\Form($this);
+                $h = new \Verba\Mod\Meta\Block\Form($this);
                 break;
             case 'editnow':
             case 'newnow':
-                $h = new \Mod\Meta\Block\AddEditNow($this);
+                $h = new \Verba\Mod\Meta\Block\AddEditNow($this);
                 break;
             default:
-                throw new \Exception\Routing();
+                throw new \Verba\Exception\Routing();
         }
         return $h;
     }

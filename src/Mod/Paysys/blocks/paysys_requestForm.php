@@ -6,7 +6,7 @@ class paysys_requestForm extends \Verba\Block\Html{
   );
 
   /**
-   * @var $Order \Mod\Order\Model\Order
+   * @var $Order \Verba\Mod\Order\Model\Order
    */
   public $Order;
 

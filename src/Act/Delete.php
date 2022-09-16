@@ -156,7 +156,7 @@ class Delete extends Action
                             if($set_data['ah_name']{0} === '\\'){
                                 $handlerClass = $set_data['ah_name'];
                             }else{
-                                $handlerClass = '\Act\Delete\Handler\\'.$set_data['ah_name'];
+                                $handlerClass = '\Verba\Act\Delete\Handler\\'.$set_data['ah_name'];
                             }
 
                             if (!class_exists($handlerClass)) {

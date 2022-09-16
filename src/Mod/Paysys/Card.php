@@ -1,13 +1,13 @@
 <?php
 
-namespace Mod\Paysys;
+namespace Verba\Mod\Paysys;
 
-use Mod\Instance;
+use Verba\Mod\Instance;
 
 class Card extends \Verba\Mod
 {
     use \Verba\ModInstance;
-    use \Mod\Payment\Paysys;
+    use \Verba\Mod\Payment\Paysys;
 
     /**
      * @param $value string|integer

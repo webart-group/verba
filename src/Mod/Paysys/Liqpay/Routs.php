@@ -7,10 +7,10 @@
  * Time: 17:54
  */
 
-namespace Mod\Local;
+namespace Verba\Mod\Local;
 
 
-class Routs extends \Block
+class Routs extends \Verba\Block
 {
     function route(){
         $rq = clone $this->request;
@@ -24,7 +24,7 @@ class Routs extends \Block
                 break;
         }
         if(!isset($h)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $h->route();

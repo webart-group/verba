@@ -15,7 +15,7 @@ class ActiveCheckByCurrencyState extends Around
 
         $curId = $this->ah->getActualValue('currencyId');
 
-        $mCurrency = \Mod\Currency::getInstance();
+        $mCurrency = \Verba\Mod\Currency::getInstance();
         $cur = $mCurrency->getCurrency($curId);
 
         if(!$cur /*|| !$cur->active*/){ // валюта отстутвует или неактивна

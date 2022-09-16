@@ -7,7 +7,7 @@
  * Time: 16:30
  */
 
-namespace Mod\Order\Discount;
+namespace Verba\Mod\Order\Discount;
 
 
 class Cart extends \Verba\Mod\Order\Discount{

@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 require_once(SYS_EXTERNALS_DIR.'/PHPMailer/class.phpmailer.php');
 

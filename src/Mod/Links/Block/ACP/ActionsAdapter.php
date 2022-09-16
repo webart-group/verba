@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Links\Block\ACP;
+namespace Verba\Mod\Links\Block\ACP;
 
-use Mod\Links\Block\Load;
+use Verba\Mod\Links\Block\Load;
 
 class ActionsAdapter extends \Verba\Block\Html
 {

@@ -1,7 +1,7 @@
 <?php
-namespace Mod\Profile\Router;
+namespace Verba\Mod\Profile\Router;
 
-use Mod\Profile\Block\Accounts\Tab;
+use Verba\Mod\Profile\Block\Accounts\Tab;
 
 class Accounts extends \Verba\Request\Http\Router {
 
@@ -12,7 +12,7 @@ class Accounts extends \Verba\Request\Http\Router {
                 $b = new Tab($this);
                 break;
             case 'list':
-                $b = new \Mod\Routine\Router($this->rq->shift(), array(
+                $b = new \Verba\Mod\Routine\Router($this->rq->shift(), array(
                     'valid_otype' => 'account',
                     '_handlers' => array(
                         'update' => '\profile_accountsCUNow',
@@ -21,7 +21,7 @@ class Accounts extends \Verba\Request\Http\Router {
         }
 
         if (!isset($b)) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $handler = $b->route();

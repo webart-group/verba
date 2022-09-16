@@ -34,7 +34,7 @@ class menu_page extends \Verba\Block\Html{
 
     if(!$this->nodeId){
       // 404
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     $items = array();

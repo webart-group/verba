@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Search\Block\Agent;
+namespace Verba\Mod\Search\Block\Agent;
 
-use Mod\Search\Block\HtmlIncludes;
+use Verba\Mod\Search\Block\HtmlIncludes;
 
 class Input extends HtmlIncludes
 {

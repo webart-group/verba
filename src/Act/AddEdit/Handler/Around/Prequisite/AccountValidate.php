@@ -22,7 +22,7 @@ class AccountValidate extends Around
          * @var $PsMod \PaySystemBase
          */
 
-        $Cur =  \Mod\Currency::getInstance()->getCurrency($this->ah->getTempValue('currencyId'));
+        $Cur =  \Verba\Mod\Currency::getInstance()->getCurrency($this->ah->getTempValue('currencyId'));
         $Paysys = \Verba\_mod('payment')->getPaysys($this->ah->getTempValue('paysysId'));
 
         if(!$Paysys || !$Cur){

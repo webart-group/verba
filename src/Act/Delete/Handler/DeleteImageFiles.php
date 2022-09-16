@@ -15,7 +15,7 @@ class DeleteImageFiles extends Handler
             return null;
         }
 
-        $iu = new \Mod\Image\Cleaner($imageConfName, basename($this->row[$this->A->getCode()]));
+        $iu = new \Verba\Mod\Image\Cleaner($imageConfName, basename($this->row[$this->A->getCode()]));
         return $iu->delete();
     }
 }

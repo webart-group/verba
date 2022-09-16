@@ -7,15 +7,15 @@
  * Time: 15:38
  */
 
-namespace Mod\Paysys;
+namespace Verba\Mod\Paysys;
 
-use Mod\Instance;
+use Verba\Mod\Instance;
 
 class Easypay extends \Verba\Mod
 {
 
     use \Verba\ModInstance;
-    use \Mod\Payment\Paysys;
+    use \Verba\Mod\Payment\Paysys;
 
 //  function handleNotify($bp = null){
 //    $bp = $this->extractBParams($bp);

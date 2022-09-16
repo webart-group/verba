@@ -7,7 +7,7 @@
  * Time: 16:26
  */
 
-namespace Mod\Order;
+namespace Verba\Mod\Order;
 
 
 class Discount extends \Verba\Configurable{
@@ -24,7 +24,7 @@ class Discount extends \Verba\Configurable{
     protected $applicable = true;
 
     function __construct($cfg = false, $cart){
-        if(!$cart || !$cart instanceof \Mod\Cart\CartInstance){
+        if(!$cart || !$cart instanceof \Verba\Mod\Cart\CartInstance){
             throw new \Exception('\Mod\Order\Discount: Invalid Cart object');
         }
         $this->cart = $cart;
@@ -82,7 +82,7 @@ class Discount extends \Verba\Configurable{
         $total = 0;
         foreach($items as $hash => $Item){
             /**
-             * @var $Item \Mod\Cart\Item
+             * @var $Item \Verba\Mod\Cart\Item
              */
             $goodsPromos = $Item->getPromosByAffect('goods');
             if(is_array($goodsPromos) && !empty($goodsPromos)){

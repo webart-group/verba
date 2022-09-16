@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Links\Router\ACP;
+namespace Verba\Mod\Links\Router\ACP;
 
 //links_acpRoutinRouter
 class Routine extends Lcfg
@@ -12,12 +12,12 @@ class Routine extends Lcfg
         $node = (string)$this->rq->node;
         switch ($node) {
             case '':
-                $r = new \Mod\Links\Block\ACP\Routine\Tab($this, array(
+                $r = new \Verba\Mod\Links\Block\ACP\Routine\Tab($this, array(
                         'lcfg' => $this->lcfg,
                         'urlbase' => $this->urlbase)
                 );
                 $r->addItems(
-                    new \Mod\Links\Block\Load($this, array(
+                    new \Verba\Mod\Links\Block\Load($this, array(
                         'role' => 'linksLoader',
                         'lcfg' => $this->lcfg,
                     ))
@@ -26,16 +26,16 @@ class Routine extends Lcfg
         }
 
         if (!isset($r)) {
-            $router = new \Mod\Links\Router\ACP($this->rq, array('lcfg' => $this->lcfg));
+            $router = new \Verba\Mod\Links\Router\ACP($this->rq, array('lcfg' => $this->lcfg));
             $gen = $router->route();
 
-            $r = new \Mod\Links\Block\ACP\ActionsAdapter($gen->rq, array('p' => $this->p, 's' => $this->s));
+            $r = new \Verba\Mod\Links\Block\ACP\ActionsAdapter($gen->rq, array('p' => $this->p, 's' => $this->s));
             $r->addItems($gen);
             return $r;
         }
 
         if (!isset($r) || !$r) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $r;

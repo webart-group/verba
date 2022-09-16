@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Image;
+namespace Verba\Mod\Image;
 
 
 class Config extends \Verba\Base
@@ -470,7 +470,7 @@ class Config extends \Verba\Base
     {
         if (!count($this->extensions)) return true;
         if (is_numeric($extension)) {
-            $t = \Mod\Image::getMIMETypeById($extension);
+            $t = \Verba\Mod\Image::getMIMETypeById($extension);
             $extension = $t;
         }
         return in_array($extension, $this->extensions);

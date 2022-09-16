@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Offer\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Offer\Act\MakeList\Handler\Field;
 
 use \Act\MakeList\Handler\Field;
 
@@ -39,7 +39,7 @@ class StoreInfo extends Field
             ));
         }
         /**
-         * @var  $mUser \Verba\User\User
+         * @var  $mUser \Verba\Mod\User
          */
         $mUser = \Verba\_mod('user');
         $ostatus = $mUser->getOnlineStatusByDatetime($this->list->row['store_last_activity']);

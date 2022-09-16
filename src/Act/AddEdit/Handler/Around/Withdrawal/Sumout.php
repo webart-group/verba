@@ -33,7 +33,7 @@ class Sumout extends Around
             $sumOut = $sum - $taxOut;
         }
 
-        $Cur =  \Mod\Currency::getInstance()->getCurrency($this->ah->getTempValue('currencyId'));
+        $Cur =  \Verba\Mod\Currency::getInstance()->getCurrency($this->ah->getTempValue('currencyId'));
 
         return $Cur->round($sumOut);
     }

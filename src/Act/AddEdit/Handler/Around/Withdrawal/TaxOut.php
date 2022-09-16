@@ -27,7 +27,7 @@ class TaxOut extends Around
             return false;
         }
 
-        $Cur =  \Mod\Currency::getInstance()->getCurrency($curOutId);
+        $Cur =  \Verba\Mod\Currency::getInstance()->getCurrency($curOutId);
 
         $kOut = (float)$Cur->getPaysysLinkValue('output', $psOutId, 'kOut');
 

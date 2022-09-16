@@ -12,7 +12,7 @@ class feedback_publicForm extends \Verba\Mod\Routine\Block\Form{
     $this->rq->action = 'new';
     $this->cfg = 'public public/feedback';
 
-    $U = User();
+    $U = \Verba\User();
     if($U->getAuthorized()){
       $customizeCfg = array(
         'fields' => array(

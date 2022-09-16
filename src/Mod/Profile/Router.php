@@ -7,7 +7,7 @@
  * Time: 18:13
  */
 
-namespace Mod\Profile;
+namespace Verba\Mod\Profile;
 
 
 class Router extends \Verba\Block\Html
@@ -15,7 +15,7 @@ class Router extends \Verba\Block\Html
     function route(){
 
         if(!User()->getAuthorized()){
-            throw new \Exception\Routing('Unknown request');
+            throw new \Verba\Exception\Routing('Unknown request');
         }
 
         switch($this->rq->node){
@@ -39,14 +39,14 @@ class Router extends \Verba\Block\Html
                 break;
 
             case 'purchases':
-                $b = new \profile_purchases($this->rq->shift(), array('U' => User()));
+                $b = new \profile_purchases($this->rq->shift(), array('U' => \Verba\User()));
                 break;
 
             case 'sells':
-                $b = new \profile_sells($this->rq->shift(), array('U' => User()));
+                $b = new \profile_sells($this->rq->shift(), array('U' => \Verba\User()));
                 break;
             case 'msgs':
-                $b = new \profile_msgs($this->rq->shift(), array('U' => User()));
+                $b = new \profile_msgs($this->rq->shift(), array('U' => \Verba\User()));
                 break;
 
             default:

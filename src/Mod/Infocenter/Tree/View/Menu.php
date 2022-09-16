@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Infocenter\Tree\View;
+namespace Verba\Mod\Infocenter\Tree\View;
 
-use \Mod\Menu\Tree\View\Menu as MenuView;
+use \Verba\Mod\Menu\Tree\View\Menu as MenuView;
 
 class Menu extends MenuView
 {

@@ -23,16 +23,16 @@ class chatik_confirmRead extends \Verba\Block\Json{
       throw  new \Verba\Exception\Building('Bad data');
     }
 
-    $U = User();
+    $U = \Verba\User();
 
     if(!$userId || $U->getId() != $userId || !$U->active){
       throw  new \Verba\Exception\Building('User error');
     }
 
     /**
-     * @var $Channel \Mod\Chatik\Channel\Store
+     * @var $Channel \Verba\Mod\Chatik\Channel\Store
      */
-    $Channel = \Mod\WS\Channel::initObject($channel);
+    $Channel = \Verba\Mod\WS\Channel::initObject($channel);
     if(!$Channel || !$Channel->valid()){
       throw  new \Verba\Exception\Building('Channel not found');
     }

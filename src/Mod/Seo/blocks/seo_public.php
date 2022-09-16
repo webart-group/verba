@@ -39,7 +39,7 @@ class seo_public extends \Verba\Block\Html
         }
         foreach ($this->items as $icode => $i) {
             $c = '';
-            if ($i instanceof \Block\Html) {
+            if ($i instanceof \Verba\Block\Html) {
                 $c = $i->content;
                 $i->content = '';
             } elseif (is_string($i)) {

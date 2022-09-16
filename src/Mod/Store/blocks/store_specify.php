@@ -4,7 +4,7 @@ class store_specify extends \Verba\Block\Json{
   function build(){
 
     try{
-      $U = User();
+      $U = \Verba\User();
       if(!$U->getAuthorized()){
         throw new Exception('No stores for guest');
       }

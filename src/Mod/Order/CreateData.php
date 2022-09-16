@@ -7,7 +7,7 @@
  * Time: 16:18
  */
 
-namespace Mod\Order;
+namespace Verba\Mod\Order;
 
 
 class CreateData extends \Verba\Configurable{
@@ -23,7 +23,7 @@ class CreateData extends \Verba\Configurable{
 
     public $customerId;
     /**
-     * @var \Mod\Cart\CartInstance
+     * @var \Verba\Mod\Cart\CartInstance
      */
     public $Cart;
 
@@ -71,7 +71,7 @@ class CreateData extends \Verba\Configurable{
 
         list($customerProfile, $this->Cart) = $mCustomer->finalizeProfileAndCart($this->data['email'], true);
 
-        if(!is_object($this->Cart) || !$this->Cart instanceof \Mod\Cart\CartInstance){
+        if(!is_object($this->Cart) || !$this->Cart instanceof \Verba\Mod\Cart\CartInstance){
             return false;
         }
 
@@ -110,7 +110,7 @@ class CreateData extends \Verba\Configurable{
             $i--;
         }
 
-        if(!is_object($this->Cart) || !$this->Cart instanceof \Mod\Cart\CartInstance){
+        if(!is_object($this->Cart) || !$this->Cart instanceof \Verba\Mod\Cart\CartInstance){
             $this->log()->error('CreateOrder `Cart` is invalid');
             $i--;
         }

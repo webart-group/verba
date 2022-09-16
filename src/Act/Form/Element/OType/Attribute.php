@@ -11,7 +11,7 @@ class Attribute extends Select
     function loadValues()
     {
 
-        $fe = \Mod\Otype::getInstance()->gC('avaibleFormElements');
+        $fe = \Verba\Mod\Otype::getInstance()->gC('avaibleFormElements');
         $translate = \Verba\Lang::get('oattribute avaibleFormElements');
         $r = array();
         foreach ($fe as $fe_code => $fe_cfg) {
@@ -88,9 +88,9 @@ class Attribute extends Select
             }
         }
         /**
-         * @var $mOtype \Mod\Otype
+         * @var $mOtype \Verba\Mod\Otype
          */
-        $mOtype = \Mod\Otype::getInstance();
+        $mOtype = \Verba\Mod\Otype::getInstance();
         $workerCfg = array(
             '_className' => 'AcpOAttrUI',
             'OAttrUICfg' => array(

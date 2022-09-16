@@ -18,7 +18,7 @@ class CurRemoveCpprUpdate extends Handler
     {
         $Store = \Verba\_mod('store');
         /**
-         * @var $Shop \Mod\Shop
+         * @var $Shop \Verba\Mod\Shop
          */
         $Shop = \Verba\_mod('shop');
         $curId = $this->row[$this->oh->getPAC()];

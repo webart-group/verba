@@ -7,7 +7,7 @@
  * Time: 15:41
  */
 
-namespace Mod\Paysys\Balance\Request;
+namespace Verba\Mod\Paysys\Balance\Request;
 
 
 class Send extends \Verba\Mod\Payment\Request\Send {

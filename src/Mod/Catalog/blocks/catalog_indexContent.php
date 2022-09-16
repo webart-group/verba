@@ -69,7 +69,7 @@ class catalog_IndexContent extends \Verba\Block\Html
                 if ($restSubitems > 1) {
                     $this->tpl->assign(array(
                         'MORE_SUBCATS_COUNT' => $restSubitems,
-                        'MORE_SUBCATS_COUNT_WORD' => make_padej_ru($restSubitems, \Verba\Lang::get('catalog more root'), \Verba\Lang::get('catalog more v'))
+                        'MORE_SUBCATS_COUNT_WORD' => \Verba\make_padej_ru($restSubitems, \Verba\Lang::get('catalog more root'), \Verba\Lang::get('catalog more v'))
                     ));
                     $this->tpl->parse('SUBITEMS_PREFIX', 'subitems_prefix');
                 }

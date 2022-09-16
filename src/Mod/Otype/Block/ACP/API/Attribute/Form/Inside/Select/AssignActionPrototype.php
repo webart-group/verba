@@ -7,7 +7,7 @@
  * Time: 12:17
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
 
 
 class AssignActionPrototype extends \Verba\Block\Json{

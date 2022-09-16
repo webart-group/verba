@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Langu\Block;
+namespace Verba\Mod\Langu\Block;
 
 use Verba\Exception\Building;
 use Verba\Lang;

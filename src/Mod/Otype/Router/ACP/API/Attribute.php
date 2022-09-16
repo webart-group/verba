@@ -7,12 +7,12 @@
  * Time: 20:14
  */
 
-namespace Mod\Otype\Router\ACP\API;
+namespace Verba\Mod\Otype\Router\ACP\API;
 
-use Mod\ACP\Router\ObjectType;
-use Mod\Otype\Block\ACP\API\Attribute\Form\Inside;
-use Mod\Otype\Block\ACP\API\Attribute\GetAttrs;
-use Mod\Otype\Block\ACP\API\Attribute\Load;
+use Verba\Mod\Acp\Router\ObjectType;
+use Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside;
+use Verba\Mod\Otype\Block\ACP\API\Attribute\GetAttrs;
+use Verba\Mod\Otype\Block\ACP\API\Attribute\Load;
 
 class Attribute extends \Verba\Request\Http\Router
 {
@@ -47,7 +47,7 @@ class Attribute extends \Verba\Request\Http\Router
         }
 
         if(!isset($h)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $h->route();

@@ -45,7 +45,7 @@ class AccUpdateCpprUpdate extends After
                 && is_array($updData = $this->ah->getUpdatedData())
                 && (array_key_exists('active', $updData) || array_key_exists('mode', $updData))
             )) {
-            $Store = \Mod\Store::getInstance();
+            $Store = \Verba\Mod\Store::getInstance();
             $Store->refreshStoreCPK($this->Store);
         }
 

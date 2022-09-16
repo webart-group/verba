@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Review\Block\Tool;
+namespace Verba\Mod\Review\Block\Tool;
 
 class RecalcAllStoresRatings extends \Verba\Block\Html{
 

@@ -1,6 +1,6 @@
 <?php
 
-use Mod\Payment\Transaction\Send;
+use Verba\Mod\Payment\Transaction\Send;
 
 use\Mod\Payment;
 
@@ -18,7 +18,7 @@ class paysys_Notify extends \Verba\Block\Html
         $pscode = $this->request->node;
 
         /**
-         * @var \Mod\Payment\Paysys $psmod
+         * @var \Verba\Mod\Payment\Paysys $psmod
          */
         $psmod = Payment::i()->getPaysysMod($pscode, true);
 
@@ -31,14 +31,14 @@ class paysys_Notify extends \Verba\Block\Html
 
         if (!is_object($psmod)) {
             $this->log()->error('Unable to load PaysysModule for ps code ' . var_export($pscode, true) . ', order_id: ' . var_export($orderId, true));
-            throw new \Exception\Routing('Unable to load PaysysModule');
+            throw new \Verba\Exception\Routing('Unable to load PaysysModule');
         }
 
         $className = $psmod::getNotifyHandler();
         if (!class_exists($className)) {
             $className = '\\Mod\\' . $psmod->getCode() . '\\Notify';
             if (!class_exists($className)) {
-                throw new \Exception\Routing('Unknown notify handler');
+                throw new \Verba\Exception\Routing('Unknown notify handler');
             }
         }
 

@@ -10,7 +10,7 @@ use \Verba\Act\AddEdit\Handler\Around;
  * В случае редактирования проверяет чтобы оставалась хотя бы одна
  * включенная стабильная валюта. Если такой нет - включает значение.
  *
- * @package Act\AddEdit\Handler\Around\Account
+ * @package Verba\Act\AddEdit\Handler\Around\Account
  */
 class ActiveOneStableCurrencyAtLeast extends Around
 {

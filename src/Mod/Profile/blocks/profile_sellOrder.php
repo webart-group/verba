@@ -6,7 +6,7 @@ class profile_sellOrder extends order_Page {
   );
 
   /**
-   * @var $U \Verba\User\Model\User
+   * @var $U \Verba\Mod\User\Model\User
    */
   public $U;
 
@@ -17,11 +17,11 @@ class profile_sellOrder extends order_Page {
     parent::init();
 
     if(!is_object($this->U) || !$this->U->active){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     if($this->Order->getStore()->owner != $this->U->getID()){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
   }
@@ -47,14 +47,14 @@ class profile_sellOrder extends order_Page {
     }
 
     /**
-     * @var $b \Block\Html
+     * @var $b \Verba\Block\Html
      */
     if(isset($b)){
       return $b->route();
     }
 
     if($this->rq->node != ''){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
     /**
      * @var $mProfile Profile
@@ -68,7 +68,7 @@ class profile_sellOrder extends order_Page {
     // вернет $this
     parent::route();
 
-    $mStore = \Mod\Store::getInstance();
+    $mStore = \Verba\Mod\Store::getInstance();
     $mChat = \Verba\_mod('Chatik');
 
     $this->addItems(array(
@@ -81,7 +81,7 @@ class profile_sellOrder extends order_Page {
           'scheme' => 'blue',
         )
       ),
-      'PANEL_PROFILE_INFO' => new profile_publicViewStats($this, array('U' => new \Verba\User\Model\User($this->Order->owner))),
+      'PANEL_PROFILE_INFO' => new profile_publicViewStats($this, array('U' => new \Verba\Mod\User\Model\User($this->Order->owner))),
       'PANEL_ORDER_STATUS_EXTEND' => new profile_sellOrderStatusExtend($this, $baseCfg)
     ));
     return $this;

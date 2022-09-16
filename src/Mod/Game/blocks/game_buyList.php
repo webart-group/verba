@@ -4,7 +4,7 @@ class game_buyList extends \Verba\Block\Html
 {
 
     /**
-     * @var \Mod\Game\ServiceRequest
+     * @var \Verba\Mod\Game\ServiceRequest
      */
     public $gsr;
 
@@ -30,7 +30,7 @@ class game_buyList extends \Verba\Block\Html
             'order' => array('priority' => array()),
         );
 
-        $Cart = \Mod\Cart::getInstance();
+        $Cart = \Verba\Mod\Cart::getInstance();
         $userCurrency = $Cart->getCurrency();
         /**
          * @var $mLister Lister

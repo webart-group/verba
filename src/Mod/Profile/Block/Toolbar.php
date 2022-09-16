@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block;
+namespace Verba\Mod\Profile\Block;
 
 /**
  * Тулбар

@@ -2,7 +2,7 @@
 /**
  * @copyright
  */
-namespace Mod\Page\Block;
+namespace Verba\Mod\Page\Block;
 
 class Modal extends \Verba\Block\Html{
 

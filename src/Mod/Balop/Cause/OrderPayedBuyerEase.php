@@ -1,11 +1,11 @@
 <?php
 
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
 class OrderPayedBuyerEase extends Ordered
 {
     /**
-     * @var \Mod\Order\Model\Order
+     * @var \Verba\Mod\Order\Model\Order
      */
     protected $_i;
     protected $otype = 'order';

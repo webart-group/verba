@@ -9,7 +9,7 @@ use \Verba\Act\AddEdit\Handler\Around;
  *
  * Сопряжение Режим с полем active
  *
- * @package Act\AddEdit\Handler\Around
+ * @package Verba\Act\AddEdit\Handler\Around
  */
 class Mode extends Around
 {
@@ -47,7 +47,7 @@ class Mode extends Around
         }
 
         // Проверка состояния Активно у Валюты
-        $accCur =  \Mod\Currency::getInstance()->getCurrency($this->ah->getActualValue('currencyId'));
+        $accCur =  \Verba\Mod\Currency::getInstance()->getCurrency($this->ah->getActualValue('currencyId'));
         if(!$accCur->active && $this->value == 1158){
             if($this->action == 'new'){
                 $this->value = 1159;

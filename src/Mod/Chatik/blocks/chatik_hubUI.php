@@ -35,7 +35,7 @@ class chatik_hubUI extends page_content
     function generateNotifierCfg()
     {
         /**
-         * @var $mChat \Mod\Chatik
+         * @var $mChat \Verba\Mod\Chatik
          */
         $mChat = \Verba\_mod('Chatik');
         $this->notifierCfg = $mChat->genNotifierCfgFor($this->notifierCfg);

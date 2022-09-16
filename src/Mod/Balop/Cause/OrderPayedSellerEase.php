@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
 class OrderPayedSellerEase extends Ordered
 {

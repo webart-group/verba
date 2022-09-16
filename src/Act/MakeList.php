@@ -1016,7 +1016,7 @@ class MakeList extends Action
         }
 
         if (!$mod && strpos($className, '\\') === false) {
-            $className = '\Act\MakeList\Handler\\' . ucfirst($type) . '\\' . $className;
+            $className = '\Verba\Act\MakeList\Handler\\' . ucfirst($type) . '\\' . $className;
         }
 
         // если класс сушествует
@@ -1854,7 +1854,7 @@ class MakeList extends Action
             'SEARCHNAVOUT_CENTER' => '',
             'SR_NAV_URL' => $nav_url,
         ));
-        $make_padej_func = 'make_padej_' . SYS_LC_DEFAULT;
+        $make_padej_func = '\Verba\make_padej_' . SYS_LC_DEFAULT;
 
         $tpl->assign('STRANIC_WORD', $make_padej_func(
                 $total_pages,

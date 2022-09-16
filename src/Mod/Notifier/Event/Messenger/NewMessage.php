@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Notifier\Event\Messenger;
+namespace Verba\Mod\Notifier\Event\Messenger;
 
-use Mod\Notifier\Event;
+use Verba\Mod\Notifier\Event;
 
 class NewMessage extends Event
 {

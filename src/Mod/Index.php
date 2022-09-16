@@ -7,7 +7,7 @@
  * Time: 20:20
  */
 
-namespace Mod;
+namespace Verba\Mod;
 
 
 class Index extends \Verba\Mod

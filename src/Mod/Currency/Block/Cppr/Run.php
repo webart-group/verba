@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Currency\Block\Cppr;
+namespace Verba\Mod\Currency\Block\Cppr;
 
 class Run extends \Verba\Block\Json
 {

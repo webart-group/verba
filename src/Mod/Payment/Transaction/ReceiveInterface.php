@@ -7,7 +7,7 @@
  * Time: 21:04
  */
 
-namespace Mod\Payment\Transaction;
+namespace Verba\Mod\Payment\Transaction;
 
 
 interface ReceiveInterface{

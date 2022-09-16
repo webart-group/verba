@@ -10,7 +10,7 @@ class profile_ordersList extends \Verba\Mod\Routine\Block\MakeList
     public $otype = 'order';
     protected $_orderSide = false;
     /**
-     * @var \Verba\User\Model\User
+     * @var \Verba\Mod\User\Model\User
      */
     public $U;
     protected $userId;
@@ -19,7 +19,7 @@ class profile_ordersList extends \Verba\Mod\Routine\Block\MakeList
     {
         parent::init();
 
-        if ($this->U && $this->U instanceof \Verba\User\Model\User) {
+        if ($this->U && $this->U instanceof \Verba\Mod\User\Model\User) {
             $this->userId = $this->U->getId();
         }
     }
@@ -27,9 +27,9 @@ class profile_ordersList extends \Verba\Mod\Routine\Block\MakeList
     function route()
     {
 
-        if (!$this->U || !$this->U instanceof \Verba\User\Model\User
+        if (!$this->U || !$this->U instanceof \Verba\Mod\User\Model\User
             || !$this->userId) {
-            throw new \Exception\Routing('Bad user');
+            throw new \Verba\Exception\Routing('Bad user');
         }
 
         return $this;

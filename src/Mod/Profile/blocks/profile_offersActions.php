@@ -27,7 +27,7 @@ class profile_offersActions extends \Verba\Block{
     }
 
     if(!isset($b)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     return $b->route();
@@ -103,7 +103,7 @@ class OffersWorkingData{
       }
     }
 
-    $U = User();
+    $U = \Verba\User();
     $Store = $store = $U->Stores()->getStore();
     if(!$Store){
       throw  new \Verba\Exception\Building('Bad or unavaible store');

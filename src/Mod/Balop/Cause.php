@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Balop;
+namespace Verba\Mod\Balop;
 
 class Cause extends \Verba\Configurable
 {
@@ -33,7 +33,7 @@ class Cause extends \Verba\Configurable
     protected $_i;
     protected $oh;
     /**
-     * @var \Mod\Account\Model\Account
+     * @var \Verba\Mod\Account\Model\Account
      */
     protected $Acc;
     protected $accId;
@@ -86,7 +86,7 @@ class Cause extends \Verba\Configurable
 
     function setAcc($acc)
     {
-        if (!$acc instanceof \Mod\Account\Model\Account) {
+        if (!$acc instanceof \Verba\Mod\Account\Model\Account) {
             return false;
         }
         $this->Acc = $acc;
@@ -98,9 +98,9 @@ class Cause extends \Verba\Configurable
     function setAccId($val)
     {
 
-        $this->Acc = new \Mod\Account\Model\Account($val);
+        $this->Acc = new \Verba\Mod\Account\Model\Account($val);
 
-        if (!$this->Acc instanceof \Mod\Account\Model\Account) {
+        if (!$this->Acc instanceof \Verba\Mod\Account\Model\Account) {
             $this->Acc = false;
             $this->accId = false;
             return false;
@@ -232,7 +232,7 @@ class Cause extends \Verba\Configurable
 
         try {
 
-            if (!is_object($this->Acc) || !$this->Acc instanceof \Mod\Account\Model\Account) {
+            if (!is_object($this->Acc) || !$this->Acc instanceof \Verba\Mod\Account\Model\Account) {
                 throw new \Exception('Invalid Acc instance');
             }
 

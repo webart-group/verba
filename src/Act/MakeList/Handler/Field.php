@@ -32,7 +32,7 @@ class Field extends AttributeHandler implements HandlerInterface
     function initTpl()
     {
         if ($this->sharedTpl) {
-            $this->tpl = \FastTemplate::getShared(get_class($this), [
+            $this->tpl = \Verba\FastTemplate::getShared(get_class($this), [
                 'templates' => $this->templates
             ]);
         }else{

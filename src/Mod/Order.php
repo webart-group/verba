@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Order extends \Verba\Mod
 {
@@ -8,14 +8,14 @@ class Order extends \Verba\Mod
     protected $ordersCache = array();
 
     /**
-     * @param \Mod\Order\CreateData $createOrderData
-     * @return array(AddEdit, \Mod\Order\Model\Order)
+     * @param \Verba\Mod\Order\CreateData $createOrderData
+     * @return array(AddEdit, \Verba\Mod\Order\Model\Order)
      * @throws \Exception
      */
     function createOrder($orderCreateData = null)
     {
 
-        if (!is_object($orderCreateData) || !$orderCreateData instanceof \Mod\Order\CreateData
+        if (!is_object($orderCreateData) || !$orderCreateData instanceof \Verba\Mod\Order\CreateData
             || !$orderCreateData->validate()) {
             throw new \Exception('Bad createOrder data');
         }
@@ -33,7 +33,7 @@ class Order extends \Verba\Mod
             $ae->addExtendedData(array('items' => $orderCreateData->items));
         }
 
-        if (is_object($orderCreateData->Cart) && $orderCreateData->Cart instanceof \Mod\Cart\CartInstance) {
+        if (is_object($orderCreateData->Cart) && $orderCreateData->Cart instanceof \Verba\Mod\Cart\CartInstance) {
             $ae->addExtendedData(array('cart' => $orderCreateData->Cart));
         }
 
@@ -62,12 +62,12 @@ class Order extends \Verba\Mod
     /**
      * @param integer|string $iid Order Id or Code
      * @param bool $searchByCode
-     * @return bool| \Mod\Order\Model\Order
+     * @return bool| \Verba\Mod\Order\Model\Order
      */
     function getOrder($iid)
     {
 
-        if (is_object($iid) && $iid instanceof \Mod\Order\Model\Order) {
+        if (is_object($iid) && $iid instanceof \Verba\Mod\Order\Model\Order) {
             return $iid;
         }
 
@@ -80,7 +80,7 @@ class Order extends \Verba\Mod
 //    }
 
         try {
-            $o = new \Mod\Order\Model\Order($iid);
+            $o = new \Verba\Mod\Order\Model\Order($iid);
 
             if (!$o->id) {
                 throw new \Exception();
@@ -100,7 +100,7 @@ class Order extends \Verba\Mod
 
     /**
      * @param string $code Order Code
-     * @return bool| \Mod\Order\Model\Order
+     * @return bool| \Verba\Mod\Order\Model\Order
      */
     function getOrderByCode($code)
     {
@@ -321,7 +321,7 @@ class Order extends \Verba\Mod
 
 
     /**
-     * @param $Order \Mod\Order\Model\Order|integer
+     * @param $Order \Verba\Mod\Order\Model\Order|integer
      */
     function finalOrderSellerGravity($Order, $Acc)
     {
@@ -342,7 +342,7 @@ class Order extends \Verba\Mod
 
         // Снятие суммы с блокированного баланса Торговца #balance #balance_change
         $balopSellerEase = $Acc->balanceUpdate(
-            new \Mod\Balop\Cause\OrderPayedSellerEase(array(
+            new \Verba\Mod\Balop\Cause\OrderPayedSellerEase(array(
                     'primitiveId' => $orderId,
                     'Acc' => $Acc,
                 )
@@ -356,7 +356,7 @@ class Order extends \Verba\Mod
 
         // Перевод суммы на основной баланс Торговца #balance #balance_change
         $balopSellerGravity = $Acc->balanceUpdate(
-            new \Mod\Balop\Cause\OrderPayedSellerGravityFinal($balopSellerEase)
+            new \Verba\Mod\Balop\Cause\OrderPayedSellerGravityFinal($balopSellerEase)
         );
         if (!$balopSellerGravity || !$balopSellerGravity->active) {
             $this->log()->flow('critical', 'Unable to create sellerGravityFinal Order Id: ' . $orderId);

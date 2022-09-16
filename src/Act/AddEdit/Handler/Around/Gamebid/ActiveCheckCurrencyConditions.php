@@ -9,7 +9,7 @@ use \Verba\Act\AddEdit\Handler\Around;
  *
  * Проверка условий для поля активно лота
  *
- * @package Act\AddEdit\Handler\Around\Gamebid
+ * @package Verba\Act\AddEdit\Handler\Around\Gamebid
  */
 class ActiveCheckCurrencyConditions extends Around
 {

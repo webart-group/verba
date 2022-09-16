@@ -22,7 +22,7 @@ class profile_sellsList extends profile_ordersList
             || !$this->Store instanceof \Model\Store
             || !$this->Store->getId()
         ) {
-            throw new \Exception\Routing('Unknown param');
+            throw new \Verba\Exception\Routing('Unknown param');
         }
 
     }
@@ -33,7 +33,7 @@ class profile_sellsList extends profile_ordersList
         if (!$this->Store || !$this->Store instanceof \Model\Store
             || !$this->userId
             || $this->Store->owner != $this->userId) {
-            throw new \Exception\Routing('Bad user content');
+            throw new \Verba\Exception\Routing('Bad user content');
         }
         return $this;
     }
@@ -47,7 +47,7 @@ class profile_sellsList extends profile_ordersList
 
         if (!$this->list) {
 
-            throw new \Exception\Routing('Bad input params');
+            throw new \Verba\Exception\Routing('Bad input params');
 
         }
         // Добавление условия выборки - искать по магазину

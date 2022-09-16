@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Routine\Block;
+namespace Verba\Mod\Routine\Block;
 
 class MakeList extends \Verba\Block\Html
 {
@@ -16,7 +16,7 @@ class MakeList extends \Verba\Block\Html
      */
     public $dcfg = [];
     /**
-     * @var \Act\MakeList
+     * @var \Verba\Act\MakeList
      */
     public $list;
 
@@ -48,7 +48,7 @@ class MakeList extends \Verba\Block\Html
             throw  new \Verba\Exception\Building('Unknown list content');
         }
 
-        if (!is_object($this->list) || !$this->list instanceof \Act\MakeList) {
+        if (!is_object($this->list) || !$this->list instanceof \Verba\Act\MakeList) {
 
             $cfg = $this->request->asArray();
             $cfg['block'] = $this;
@@ -109,7 +109,7 @@ class MakeList extends \Verba\Block\Html
     {
 
         $this->content = false;
-        if (!is_object($this->list) || !$this->list instanceof \Act\MakeList) {
+        if (!is_object($this->list) || !$this->list instanceof \Verba\Act\MakeList) {
             throw   new \Verba\Exception\Building('No valid list');
         }
 

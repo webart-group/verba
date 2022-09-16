@@ -20,7 +20,7 @@ class order_Transactions extends \Verba\Block\Html{
         $order = \Verba\_mod('order')->getOrder($orderid);
       }
 
-      if(!$order instanceof \Mod\Order\Model\Order){
+      if(!$order instanceof \Verba\Mod\Order\Model\Order){
         throw new Exception('Unknown order');
       }
       $trans = $order->getTrans();

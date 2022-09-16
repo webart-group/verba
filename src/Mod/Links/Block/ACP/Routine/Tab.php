@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Links\Block\ACP\Routine;
+namespace Verba\Mod\Links\Block\ACP\Routine;
 
 /* ACP links currencies Tab, or links action routed */
 

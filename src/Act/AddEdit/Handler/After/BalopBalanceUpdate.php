@@ -19,12 +19,12 @@ class BalopBalanceUpdate extends After {
       return false;
     }
 
-    $Acc = new \Mod\Account\Model\Account($Balop->accountId);
+    $Acc = new \Verba\Mod\Account\Model\Account($Balop->accountId);
 
     $_acc = \Verba\_oh('account');
     $_balop = \Verba\_oh('balop');
 
-    list($balance, $hbalance) = \Mod\Account::getInstance()->loadAccBalances(
+    list($balance, $hbalance) = \Verba\Mod\Account::getInstance()->loadAccBalances(
       $Balop->accountId, $Acc->owner);
 
     //  Обновление балансов кошелька

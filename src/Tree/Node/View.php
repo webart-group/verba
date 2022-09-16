@@ -20,7 +20,7 @@ class View extends \Tree\Node
         'items' => 'tree/node/items.tpl',
     );
     /**
-     * @var \FastTemplate
+     * @var \Verba\FastTemplate
      */
     protected $tpl;
 
@@ -40,7 +40,7 @@ class View extends \Tree\Node
     {
         if ($this->tpl === null) {
 
-            $this->tpl = \FastTemplate::getShared($this->tplSharedKey, array(
+            $this->tpl = \Verba\FastTemplate::getShared($this->tplSharedKey, array(
                 'templates' => $this->templates,
             ));
         }

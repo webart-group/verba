@@ -6,18 +6,18 @@ class order_Create extends \Verba\Block\Html{
   );
 
   /**
-   * @var \Mod\Order\CreateData
+   * @var \Verba\Mod\Order\CreateData
    */
   public $orderCreateData;
 
   function build() {
 
-    $mOrder = \Mod\Order::i();
+    $mOrder = \Verba\Mod\Order::i();
 
     try{
 
       if(!is_object($this->orderCreateData)){
-        $this->orderCreateData = new \Mod\Order\CreateData(array());
+        $this->orderCreateData = new \Verba\Mod\Order\CreateData(array());
       }
 
       if(!$this->orderCreateData->validate()){
@@ -41,7 +41,7 @@ class order_Create extends \Verba\Block\Html{
       return $this->content;
     }
 
-    $url = \Mod\Profile::getInstance()->getPurchaseActionUrl($order);
+    $url = \Verba\Mod\Profile::getInstance()->getPurchaseActionUrl($order);
 
     $this->tpl->assign(array(
       'ORDER_PROCESSING_LINK_URL' => $url,

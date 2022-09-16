@@ -12,7 +12,7 @@ class shop_ibFormRouter extends \Verba\Block
     {
 
         if (!$this->service->itemsOtId) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
         $oh = \Verba\_oh($this->service->itemsOtId);
 
@@ -23,9 +23,9 @@ class shop_ibFormRouter extends \Verba\Block
         $cfg['service'] = $this->service;
         $cfg['Store'] = $this->Store;
 
-        if ($oh instanceof \Model\Product\Resource) {
+        if ($oh instanceof \Verba\Model\Product\Resource) {
             $h = new shop_ibFormResource($rq, $cfg);
-        } elseif ($oh instanceof \Model\Product\Multi) {
+        } elseif ($oh instanceof \Verba\Model\Product\Multi) {
             $h = new shop_ibFormMulti($rq, $cfg);
         } else { //$oh instanceof ot_prodUniq or unknown
             $h = new shop_ibFormUnique($rq, $cfg);

@@ -1,5 +1,5 @@
 <?php
-namespace Mod\WS\Channel;
+namespace Verba\Mod\WS\Channel;
 
 class Parts extends \Verba\Base {
 

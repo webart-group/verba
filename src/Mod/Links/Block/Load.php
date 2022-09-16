@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Links\Block;
+namespace Verba\Mod\Links\Block;
 
 class Load extends \Verba\Block\Html
 {

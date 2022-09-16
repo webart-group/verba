@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class Review extends \Verba\Mod{
     use \Verba\ModInstance;
@@ -102,7 +102,7 @@ class Review extends \Verba\Mod{
 
   /**
    * @param $Store \Model\Store
-   * @param $U \Verba\User\Model\User
+   * @param $U \Verba\Mod\User\Model\User
    */
   function checkIfAllowCreateReview($Store, $U){
     $_order = \Verba\_oh('order');

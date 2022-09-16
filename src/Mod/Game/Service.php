@@ -1,10 +1,10 @@
 <?php
-namespace Mod\Game;
+namespace Verba\Mod\Game;
 
 class Service extends \Verba\Model\Item
 {
     /**
-     * @var \Mod\Game\Item
+     * @var \Verba\Mod\Game\Item
      */
     protected $_parent;
 

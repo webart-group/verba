@@ -1,13 +1,13 @@
 <?php
-namespace Mod\Notifier\WS\Channel;
-use \Verba\User\Model\User;
+namespace Verba\Mod\Notifier\WS\Channel;
+use \Verba\Mod\User\Model\User;
 class Store extends \Verba\Mod\WS\Channel
 {
 
     function userHasAccess($U = null)
     {
         if ($U === null) {
-            $U = User();
+            $U = \Verba\User();
         }
         if (!$U instanceof U
             && is_numeric($U)) {

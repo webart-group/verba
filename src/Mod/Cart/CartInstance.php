@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Cart;
+namespace Verba\Mod\Cart;
 
 use Verba\ObjectType\Attribute\Predefined;
 
@@ -33,13 +33,13 @@ class CartInstance extends \Verba\Base
     protected $paysys;
     protected $dbExists = false;
     /**
-     * @var \Mod\Customer\Profile
+     * @var \Verba\Mod\Customer\Profile
      */
     protected $cp;
 
     function __construct($customerProfile, $loadItems = true)
     {
-        if (!$customerProfile instanceof \Mod\Customer\Profile) {
+        if (!$customerProfile instanceof \Verba\Mod\Customer\Profile) {
             return false;
         }
         $this->cp = $customerProfile;
@@ -92,8 +92,8 @@ class CartInstance extends \Verba\Base
 
     function refreshCustomerProfile($profile)
     {
-        if (!$profile instanceof \Mod\Customer\Profile) {
-            throw new \Exception('Unable to refresh Cart \Mod\Customer\Profile - wrong type.');
+        if (!$profile instanceof \Verba\Mod\Customer\Profile) {
+            throw new \Exception('Unable to refresh Cart \Verba\Mod\Customer\Profile - wrong type.');
         }
         $this->cp = $profile;
         return $this->cp;
@@ -116,7 +116,7 @@ class CartInstance extends \Verba\Base
     }
 
     /**
-     * @return \Mod\Customer\Profile
+     * @return \Verba\Mod\Customer\Profile
      */
     function getProfile()
     {
@@ -186,7 +186,7 @@ WHERE p_ot_id = '" . $_cst->getID() . "' && p_iid = '" . $cstId . "'");
     {
 
         if (!is_object($currency) && (is_string($currency) || is_numeric($currency))) {
-            $currency =  \Mod\Currency::getInstance()->getCurrency($currency, true);
+            $currency =  \Verba\Mod\Currency::getInstance()->getCurrency($currency, true);
         }
 
         if (!$currency instanceof \Verba\Model\Currency
@@ -200,12 +200,12 @@ WHERE p_ot_id = '" . $_cst->getID() . "' && p_iid = '" . $cstId . "'");
                 return false;
             }
 
-            $currency =  \Mod\Currency::getInstance()->getBaseCurrency();
+            $currency =  \Verba\Mod\Currency::getInstance()->getBaseCurrency();
             if (!$currency
                 || !$currency->active
                 || $currency->hidden
             ) {
-                $all_active_visible_curs =  \Mod\Currency::getInstance()->getCurrency(false, true, true);
+                $all_active_visible_curs =  \Verba\Mod\Currency::getInstance()->getCurrency(false, true, true);
                 if (is_array($all_active_visible_curs) && count($all_active_visible_curs)) {
                     $currency = current($all_active_visible_curs);
                 }
@@ -657,7 +657,7 @@ WHERE `p_ot_id` = '" . $_cst->getID() . "'
     function addPromo($id, $Promo, $cartItem = false)
     {
 
-        if (!$Promo instanceof \Mod\Order\Discount) {
+        if (!$Promo instanceof \Verba\Mod\Order\Discount) {
             return false;
         }
 
@@ -665,7 +665,7 @@ WHERE `p_ot_id` = '" . $_cst->getID() . "'
             if (!is_string($Promo->context) || empty($Promo->context)) {
                 $Promo->context = 'global';
             }
-            if ($Promo instanceof \Mod\Order\Discount\Cart\Item) {
+            if ($Promo instanceof \Verba\Mod\Order\Discount\Cart\Item) {
                 $Promo->addCartItem($cartItem);
             }
             $this->promos[$id] = $Promo;
@@ -680,7 +680,7 @@ WHERE `p_ot_id` = '" . $_cst->getID() . "'
             return null;
         }
 
-        if (!$this->promos[$id] instanceof \Mod\Order\Discount) {
+        if (!$this->promos[$id] instanceof \Verba\Mod\Order\Discount) {
             return false;
         }
 
@@ -745,7 +745,7 @@ WHERE `p_ot_id` = '" . $_cst->getID() . "'
     function removePromo($id)
     {
         if (!array_key_exists($id, $this->promos)
-            || !$this->promos[$id] instanceof \Mod\Order\Discount) {
+            || !$this->promos[$id] instanceof \Verba\Mod\Order\Discount) {
             return false;
         }
         unset($this->promos[$id]);
@@ -770,7 +770,7 @@ WHERE `p_ot_id` = '" . $_cst->getID() . "'
         $_cst = \Verba\_oh('customer');
         $hash = (string)$hash;
         if (!$this->itemInCart($hash)
-            || !($Item = $this->getItems($hash)) instanceof \Mod\Cart\Item) {
+            || !($Item = $this->getItems($hash)) instanceof \Verba\Mod\Cart\Item) {
             throw new \Exception('Cart Item not found');
         }
         $_product = $Item->getOh();
@@ -966,8 +966,8 @@ WHERE `p_ot_id` = '" . $_cst->getID() . "'
         }
 
         /**
-         * @var $mShop \Mod\Shop
-         * @var $item \Mod\Cart\Item
+         * @var $mShop \Verba\Mod\Shop
+         * @var $item \Verba\Mod\Cart\Item
          */
         $mShop = \Verba\_mod('shop');
         $items_price = 0;
@@ -996,8 +996,8 @@ WHERE `p_ot_id` = '" . $_cst->getID() . "'
             return $this->total;
         }
         /**
-         * @var $mShop \Mod\Shop
-         * @var $item \Mod\Cart\Item
+         * @var $mShop \Verba\Mod\Shop
+         * @var $item \Verba\Mod\Cart\Item
          */
         $mShop = \Verba\_mod('shop');
         foreach ($this->items as $hash => $item)

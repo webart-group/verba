@@ -8,7 +8,7 @@ class account_withdrawalForm extends \Verba\Mod\Routine\Block\Form
     function prepare()
     {
         /**
-         * @var $Acc \Mod\Account\Model\Account
+         * @var $Acc \Verba\Mod\Account\Model\Account
          */
         $Acc =\Verba\User()->Accounts()->getAccount($this->rq->getParam('accId', true));
 

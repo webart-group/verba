@@ -7,7 +7,7 @@
  * Time: 16:34
  */
 
-namespace Mod\Order\Discount\Cart;
+namespace Verba\Mod\Order\Discount\Cart;
 
 
 class FirstPurchase extends \Verba\Mod\Order\Discount\Cart{

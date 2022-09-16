@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Image;
+namespace Verba\Mod\Image;
 
 class Cleaner extends \Verba\Base
 {
@@ -20,7 +20,7 @@ class Cleaner extends \Verba\Base
 
         if (is_string($cfg) && !empty($cfg)) {
             $this->cfgBox = \Verba\_mod('image')->getImageConfig($cfg);
-        } elseif ($cfg instanceof \Mod\Image\Config) {
+        } elseif ($cfg instanceof \Verba\Mod\Image\Config) {
             $this->cfgBox = $cfg;
         }
     }
@@ -33,7 +33,7 @@ class Cleaner extends \Verba\Base
     function delete()
     {
         $i = 0;
-        if (!$this->cfgBox instanceof \Mod\Image\Config
+        if (!$this->cfgBox instanceof \Verba\Mod\Image\Config
             || !$this->filename) {
             return $i;
         }

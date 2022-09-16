@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Menu;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu;
 
 class Common extends \Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu {
     public $rootId = 310;

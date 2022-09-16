@@ -23,7 +23,7 @@ class profile_withdrawalRouter extends \Verba\Block{
     }
 
     if(!isset($b)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     return $b->route();

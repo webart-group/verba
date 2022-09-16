@@ -7,9 +7,9 @@
  * Time: 13:02
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute;
 
-use \Mod\Otype;
+use \Verba\Mod\Otype;
 
 class GetAttrs extends \Verba\Block\Json {
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Currency\Router;
+namespace Verba\Mod\Currency\Router;
 
-use Mod\ACP\Router\ObjectType;
+use Verba\Mod\Acp\Router\ObjectType;
 
 class ACP extends \Verba\Request\Http\Router
 {
@@ -13,10 +13,10 @@ class ACP extends \Verba\Request\Http\Router
 
         switch ($this->rq->node) {
             case 'baseform':
-                $router = new \Mod\Currency\Block\Base\Form($this);
+                $router = new \Verba\Mod\Currency\Block\Base\Form($this);
                 break;
             case 'savebasecurrencyid':
-                $router = new \Mod\Currency\Block\Base\Save($this);
+                $router = new \Verba\Mod\Currency\Block\Base\Save($this);
                 break;
             case 'cppr':
                 $router = new ACP\Cppr($this->rq->shift());

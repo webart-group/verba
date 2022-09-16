@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Auth;
+namespace Verba\Mod\Profile\Block\Auth;
 
 use Verba\Block\Html;
 

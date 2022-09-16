@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
 
-use Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
+use Verba\Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
 
 class Buyer extends Nom
 {
@@ -12,7 +12,7 @@ class Buyer extends Nom
     function prepare()
     {
         parent::prepare();
-        $this->profileUrl = \Mod\Store::getInstance()->getPublicUrl($this->list->row['storeId'], 'info');
+        $this->profileUrl = \Verba\Mod\Store::getInstance()->getPublicUrl($this->list->row['storeId'], 'info');
         $this->profileText = $this->list->row['storeId__value'];
     }
 

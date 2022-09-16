@@ -1,17 +1,17 @@
 <?php
-namespace Mod\Routine\Block;
+namespace Verba\Mod\Routine\Block;
 
 class CUNow extends \Verba\Block\Json
 {
     public $data;
 
     /**
-     * @var \Act\AddEdit
+     * @var \Verba\Act\AddEdit
      */
     public $ae;
 
     /**
-     * @var \Model
+     * @var \Verba\Model
      */
     public $oh;
 
@@ -45,9 +45,9 @@ class CUNow extends \Verba\Block\Json
 
         $this->ae = $this->oh->initAddEdit($cfg);
 
-        if (!$this->isRoutedAction(\Act\AddEdit::make_action_sign2($this->ae->getAction(), $this->ae->getIID()))) {
+        if (!$this->isRoutedAction(\Verba\Act\AddEdit::make_action_sign2($this->ae->getAction(), $this->ae->getIID()))) {
             $this->content = false;
-            throw new \Exception\Routing('Bad action param');
+            throw new \Verba\Exception\Routing('Bad action param');
         }
 
         if (!is_array($this->data)) {

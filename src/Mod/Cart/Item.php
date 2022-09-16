@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Cart;
+namespace Verba\Mod\Cart;
 
 
 class Item extends \Verba\Base {
@@ -31,7 +31,7 @@ class Item extends \Verba\Base {
         'description' => '',
     );
     /**
-     * @var \Mod\Cart\CartInstance
+     * @var \Verba\Mod\Cart\CartInstance
      */
     protected $cart;
     /**
@@ -180,7 +180,7 @@ class Item extends \Verba\Base {
             return true;
         }
         foreach($this->promos as $did => $Discount){
-            if(!$Discount instanceof \Mod\Order\Discount\Cart\FirstPurchase){
+            if(!$Discount instanceof \Verba\Mod\Order\Discount\Cart\FirstPurchase){
                 continue;
             }
             $Discount->unlinkGoods($this);

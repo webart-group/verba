@@ -7,14 +7,14 @@
  * Time: 15:53
  */
 
-namespace Mod\Paysys\Unitpay\Transaction;
+namespace Verba\Mod\Paysys\Unitpay\Transaction;
 
 class Send extends \Verba\Mod\Payment\Transaction\Send
 {
 
     protected $_paysysCode = 'unitpay';
     /**
-     * @var \Mod\Paysys\Unitpay
+     * @var \Verba\Mod\Paysys\Unitpay
      */
     protected $mod;
 

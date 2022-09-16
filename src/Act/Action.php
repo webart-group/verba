@@ -2,10 +2,12 @@
 
 namespace Verba\Act;
 
+use \Verba\Block\Html;
+
 class Action extends Parents
 {
     /**
-     * @var \Block\Html
+     * @var Html
      */
     protected $block;
     protected $otId;
@@ -42,7 +44,7 @@ class Action extends Parents
     );
 
     /**
-     * @var \FastTemplate
+     * @var \Verba\FastTemplate
      */
     protected $tpl;
 
@@ -51,7 +53,7 @@ class Action extends Parents
     protected static $staticData = array();
 
     /**
-     * @return \FastTemplate
+     * @return \Verba\FastTemplate
      */
     function tpl()
     {
@@ -117,7 +119,7 @@ class Action extends Parents
 
         //if its block-tied action
         // try to apply cfg by path
-        if (is_object($this->block) && $this->block instanceof \Block) {
+        if (is_object($this->block) && $this->block instanceof \Verba\Block) {
             $path = $this->convertRequestUriToCfgPath($this->block->rq);
 
             if (!array_key_exists($path, $this->loaded_configs_by_path)) {
@@ -227,7 +229,7 @@ class Action extends Parents
 
     function mergeHtmlIncludesWithTiedBlock()
     {
-        if (!isset($this->block) || !$this->block instanceof \Block\Html) {
+        if (!isset($this->block) || !$this->block instanceof \Verba\Block\Html) {
             return;
         }
         $this->block->mergeHtmlIncludes($this);

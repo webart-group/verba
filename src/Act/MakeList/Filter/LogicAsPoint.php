@@ -5,7 +5,7 @@ class LogicAsPoint extends \Verba\Act\MakeList\Filter{
   public $captionLangKey = false;
   public $values;
 
-  public $felement = '\Html\Select';
+  public $felement = '\Verba\Html\Select';
   public $ftype = 'logic';
 
   function makeCaption(){

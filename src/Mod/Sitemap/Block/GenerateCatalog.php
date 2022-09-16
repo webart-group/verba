@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Sitemap\Block;
+namespace Verba\Mod\Sitemap\Block;
 class GenerateCatalog extends \Verba\Mod\Sitemap\Block\Generator {
 
   public $cat_id = 0;

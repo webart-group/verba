@@ -7,7 +7,7 @@
  * Time: 19:06
  */
 
-namespace Mod\Otype\Block\ACP;
+namespace Verba\Mod\Otype\Block\ACP;
 
 
 class Form extends \Verba\Block\Json

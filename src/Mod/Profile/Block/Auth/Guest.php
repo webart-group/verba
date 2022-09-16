@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Auth;
+namespace Verba\Mod\Profile\Block\Auth;
 
 use Verba\Block\Html;
 
@@ -12,8 +12,8 @@ class Guest extends Html
     function prepare()
     {
         $this->tpl->assign([
-            'REGISTRATION_URL' => \Verba\User\User::i()->getRegisterUrl(),
-            'LOGIN_URL' => \Verba\User\User::i()->getLoginPageUrl(),
+            'REGISTRATION_URL' => \Verba\Mod\User::i()->getRegisterUrl(),
+            'LOGIN_URL' => \Verba\Mod\User::i()->getLoginPageUrl(),
         ]);
     }
 }

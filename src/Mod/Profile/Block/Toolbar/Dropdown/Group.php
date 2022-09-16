@@ -1,10 +1,10 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown;
 
 
 /**
  * Class Group
- * @package Mod\Profile\Block\Toolbar\Dropdown
+ * @package Verba\Mod\Profile\Block\Toolbar\Dropdown
  *
  */
 

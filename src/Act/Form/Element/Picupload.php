@@ -56,7 +56,7 @@
                 return false;
             }
             \Verba\_mod('image');
-            $this->imgCfg = \Mod\Image::getImageConfig($cfgName);
+            $this->imgCfg = \Verba\Mod\Image::getImageConfig($cfgName);
             $this->imgCfgName = $cfgName;
 
             if (!$this->imgCfg->isPrimaryExtracted()) return false;

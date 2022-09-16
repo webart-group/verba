@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Search\Block;
+namespace Verba\Mod\Search\Block;
 
 class RequestHandler extends \Verba\Block\Html
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Profile\Block\Toolbar\Tool\User;
+namespace Verba\Mod\Profile\Block\Toolbar\Tool\User;
 
-use Mod\Notifier\Pipe;
+use Verba\Mod\Notifier\Pipe;
 
 class Purchases extends \Verba\Mod\Profile\Block\Toolbar\Tool\User
 {

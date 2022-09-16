@@ -7,7 +7,7 @@
  * Time: 19:57
  */
 
-namespace Mod\File;
+namespace Verba\Mod\File;
 
 
 class Cleaner extends \Verba\Base{
@@ -18,7 +18,7 @@ class Cleaner extends \Verba\Base{
     function __construct($oh, $cfg, $filename){
         \Verba\_mod('file');
         if(is_string($cfg)){
-            $this->fCfg = \Mod\File::getFileConfig($cfg);
+            $this->fCfg = \Verba\Mod\File::getFileConfig($cfg);
         }elseif($cfg instanceof Config){
             $this->fCfg = $cfg;
         }else{

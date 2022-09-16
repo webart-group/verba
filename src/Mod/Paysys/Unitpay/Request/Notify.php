@@ -7,7 +7,7 @@
  * Time: 15:55
  */
 
-namespace Mod\Paysys\Unitpay\Request;
+namespace Verba\Mod\Paysys\Unitpay\Request;
 
 
 class Notify extends \Verba\Mod\Payment\Request\Notify {

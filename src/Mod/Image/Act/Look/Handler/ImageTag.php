@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Image\Act\Look\Handler;
+namespace Verba\Mod\Image\Act\Look\Handler;
 
 use Act\Look\Handler;
 
@@ -22,7 +22,7 @@ class ImageTag extends Handler
         }
 
         if ($this->iCfg === null) {
-            $this->iCfg = \Mod\Image::getImageConfig($this->oh()->p($this->attr_code . '_config'));
+            $this->iCfg = \Verba\Mod\Image::getImageConfig($this->oh()->p($this->attr_code . '_config'));
         }
 
         return '<img src="' . $this->iCfg->getFileUrl(basename($this->value), $this->copy) . '"/>';

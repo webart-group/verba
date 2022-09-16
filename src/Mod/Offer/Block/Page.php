@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Offer\Block;
+namespace Verba\Mod\Offer\Block;
 
 class Page extends \Verba\Block\Html
 {
@@ -17,7 +17,7 @@ class Page extends \Verba\Block\Html
     );
 
     /**
-     * @var \Mod\Game\ServiceRequest
+     * @var \Verba\Mod\Game\ServiceRequest
      */
     public $gsr;
 
@@ -48,7 +48,7 @@ class Page extends \Verba\Block\Html
         }
 
         if (!$this->prodItem || !$this->prodItem->getId()) {
-            throw new \Exception\Routing('Unknown Product Item');
+            throw new \Verba\Exception\Routing('Unknown Product Item');
         }
 
         $this->_prod = \Verba\_oh($this->prodItem->getOh());
@@ -66,7 +66,7 @@ class Page extends \Verba\Block\Html
     function route()
     {
 
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
 
         $this->addItems(array(
 

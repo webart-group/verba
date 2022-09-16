@@ -13,7 +13,7 @@ use \Verba\Act\AddEdit\Handler\Around;
  * При создании счета ищет магазин пользователя и смотрит его валюту
  * Если валюта кошелька и магазина совпадают значение active = 1
  *
- * @package Act\AddEdit\Handler\Around\Account
+ * @package Verba\Act\AddEdit\Handler\Around\Account
  */
 class ActivePresetByPossibleOwnerStore extends Around
 {
@@ -44,7 +44,7 @@ class ActivePresetByPossibleOwnerStore extends Around
 
                 if(isset($storeCurId)
                     && $storeCurId == $currencyId
-                    && is_object($c =  \Mod\Currency::getInstance()->getCurrency($currencyId))
+                    && is_object($c =  \Verba\Mod\Currency::getInstance()->getCurrency($currencyId))
                     && $c->active)
                 {
                     $active = 1;

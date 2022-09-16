@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Content\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Content\Act\MakeList\Handler\Field;
 
 class Trim extends \Act\MakeList\Handler
 {

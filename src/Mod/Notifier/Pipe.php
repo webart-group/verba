@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Notifier;
+namespace Verba\Mod\Notifier;
 
-use \Mod\Notifier;
+use \Verba\Mod\Notifier;
 
 class Pipe
 {

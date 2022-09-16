@@ -16,7 +16,7 @@ class WithdrawalPrequisite extends Extension
    */
   public $Cur;
   /**
-   * @var $Acc \Mod\Account\Model\Account
+   * @var $Acc \Verba\Mod\Account\Model\Account
    */
   public $Acc;
   public $phrases;
@@ -30,7 +30,7 @@ class WithdrawalPrequisite extends Extension
      */
     $aef = $this->fe->ah();
     $this->Acc = $aef->getExtendedData('Acc');
-    $this->Cur =  \Mod\Currency::getInstance()->getCurrency($this->Acc->currencyId);
+    $this->Cur =  \Verba\Mod\Currency::getInstance()->getCurrency($this->Acc->currencyId);
     $this->phrases = \Verba\Lang::get('withdrawal form preqtitles');
   }
 

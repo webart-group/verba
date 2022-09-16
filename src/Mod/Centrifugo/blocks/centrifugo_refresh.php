@@ -11,7 +11,7 @@ class centrifugo_refresh extends \Verba\Block\Html{
   function build(){
 
     $this->content = false;
-    $U = User();
+    $U = \Verba\User();
     if (!$U->getAuthorized()) {
       $this->addHeader('Unauthorized', 403);
       return false;
@@ -34,7 +34,7 @@ class centrifugo_refresh extends \Verba\Block\Html{
 //
 //    $response = [];
 //    foreach($rq['channels'] as $channel){
-//      $Channel = \Mod\WS\Channel::initObject($channel, false);
+//      $Channel = \Verba\Mod\WS\Channel::initObject($channel, false);
 //      if(!$Channel || !$Channel->valid() || !$Channel->userHasAccess($U)){
 //        $response[$channel] = ['status' => 403];
 //        continue;

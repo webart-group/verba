@@ -20,7 +20,7 @@ class order_Status extends \Verba\Block\Html
     );
 
     /**
-     * @var \Mod\Order\Model\Order
+     * @var \Verba\Mod\Order\Model\Order
      */
     public $Order;
     /**
@@ -48,8 +48,8 @@ class order_Status extends \Verba\Block\Html
 
         parent::init();
 
-        if (!is_object($this->Order) || !$this->Order instanceof \Mod\Order\Model\Order || !$this->Order->getId() || !$this->Order->active) {
-            throw new \Exception\Routing();
+        if (!is_object($this->Order) || !$this->Order instanceof \Verba\Mod\Order\Model\Order || !$this->Order->getId() || !$this->Order->active) {
+            throw new \Verba\Exception\Routing();
         }
 
         if (is_array($this->grid_cfg)) {
@@ -148,7 +148,7 @@ class order_Status extends \Verba\Block\Html
             ));
         }
 
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
 
         if (!$this->Order->storeId) {
             $this->tpl->assign('ORDER_STORE_LINK', \Verba\Lang::get('order fields store_no_title_no_id'));

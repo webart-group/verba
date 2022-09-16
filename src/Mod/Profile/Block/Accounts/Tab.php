@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Profile\Block\Accounts;
+namespace Verba\Mod\Profile\Block\Accounts;
 
 class Tab extends \profile_contentCommon
 {
@@ -74,7 +74,7 @@ class Tab extends \profile_contentCommon
 
         $qm = new \Verba\QueryMaker($_preq);
         $qm->addWhere($this->U->getId(), 'owner');
-        $mCurrency = \Mod\Currency::getInstance();
+        $mCurrency = \Verba\Mod\Currency::getInstance();
         $sqlr = $qm->run();
         $preqs = array();
         if ($sqlr && $sqlr->getNumRows()) {

@@ -7,7 +7,7 @@
  * Time: 12:14
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
 
 
 class Init extends \Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Base

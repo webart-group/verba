@@ -1,8 +1,8 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Body;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Body;
 
 use Html\Div;
-use Mod\Profile\Block\Toolbar\Dropdown\Menu\Common;
+use Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu\Common;
 
 class Guest extends \Verba\Mod\Profile\Block\Toolbar\Dropdown\Body {
 
@@ -13,7 +13,7 @@ class Guest extends \Verba\Mod\Profile\Block\Toolbar\Dropdown\Body {
             'templates' => [
                 'content' => 'profile/toolbar/dropdown/menu/basic/login.tpl',
             ],
-            'tplvars' => ['LOGIN_URL' => \Verba\User\User::i()->getLoginPageUrl()]
+            'tplvars' => ['LOGIN_URL' => \Verba\Mod\User::i()->getLoginPageUrl()]
         ];
 
         $b = new \Verba\Block\Html($this, $args);
@@ -27,7 +27,7 @@ class Guest extends \Verba\Mod\Profile\Block\Toolbar\Dropdown\Body {
                     'templates' => [
                         'content' => 'profile/toolbar/dropdown/menu/basic/registration.tpl',
                     ],
-                    'tplvars' => ['REGISTRATION_URL' => \Verba\User\User::i()->getLoginPageUrl()]
+                    'tplvars' => ['REGISTRATION_URL' => \Verba\Mod\User::i()->getLoginPageUrl()]
                 ]),
             ]]))
         ));

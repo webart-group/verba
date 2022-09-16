@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 /*
 \Verba\_mod('customer');
 \Verba\_mod('order');
@@ -15,7 +15,7 @@ class Cart extends \Verba\Mod
 {
     use \Verba\ModInstance;
     /**
-     * @var \Mod\Cart\CartInstance
+     * @var \Verba\Mod\Cart\CartInstance
      */
     protected $cart;
 
@@ -49,7 +49,7 @@ class Cart extends \Verba\Mod
     function loadFromSession()
     {
 
-        $customerProfile = \Mod\Customer::getInstance()->getProfile();
+        $customerProfile = \Verba\Mod\Customer::getInstance()->getProfile();
 
         if (!$customerProfile) {
             return false;
@@ -59,9 +59,9 @@ class Cart extends \Verba\Mod
 
             is_string($cartInstance)
             && is_object($cartInstance = unserialize($cartInstance))
-            && $cartInstance instanceof \Mod\Cart\CartInstance) {
+            && $cartInstance instanceof \Verba\Mod\Cart\CartInstance) {
             $Profile = $cartInstance->getProfile();
-            if (!$Profile || !$Profile instanceof \Mod\Customer\Profile) {
+            if (!$Profile || !$Profile instanceof \Verba\Mod\Customer\Profile) {
                 return false;
             }
             $cart_customer_timestamp = $Profile->getDbTimestamp();
@@ -90,7 +90,7 @@ class Cart extends \Verba\Mod
     function switchCurrentCart($cart)
     {
 
-        if (!$cart instanceof \Mod\Cart\CartInstance
+        if (!$cart instanceof \Verba\Mod\Cart\CartInstance
             || $cart->getCustomerId() != \Verba\_mod('customer')->getProfile()->getId()) {
             return false;
         }
@@ -100,7 +100,7 @@ class Cart extends \Verba\Mod
     }
 
     /**
-     * @return \Mod\Cart\CartInstance
+     * @return \Verba\Mod\Cart\CartInstance
      */
     function getCartInstance()
     {
@@ -108,7 +108,7 @@ class Cart extends \Verba\Mod
     }
 
     /**
-     * @return \Mod\Cart\CartInstance
+     * @return \Verba\Mod\Cart\CartInstance
      */
     function getCart()
     {
@@ -120,7 +120,7 @@ class Cart extends \Verba\Mod
         $email = isset($bp['email']) ? $bp['email'] : $_REQUEST['email'];
         $mCustomer = \Verba\_mod('customer');
         list($profile, $Cart) = $mCustomer->finalizeProfileAndCart($email, false);
-        if (!$profile || !$Cart instanceof \Mod\Cart\CartInstance) {
+        if (!$profile || !$Cart instanceof \Verba\Mod\Cart\CartInstance) {
             throw Exception();
         }
         $cfg = $Cart->packToCfg();
@@ -149,7 +149,7 @@ class Cart extends \Verba\Mod
             return $cCart;
         }
         $curr = $cCart->getCurrency();
-        $nCart = new \Mod\Cart\CartInstance($profile, false);
+        $nCart = new \Verba\Mod\Cart\CartInstance($profile, false);
         $nCart->currencyChange($curr->getId());
         $nCart->setPaysys($cCart->getPaysysId());
         $nCart->clearItems();

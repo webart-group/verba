@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Product\Types;
+namespace Verba\Mod\Product\Types;
 
 class Product extends \Verba\Configurable
 {

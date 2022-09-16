@@ -19,7 +19,7 @@ class order_Page extends \Verba\Block\Html {
   );
 
   /**
-   * @var \Mod\Order\Model\Order
+   * @var \Verba\Mod\Order\Model\Order
    */
   protected $Order;
 
@@ -46,11 +46,11 @@ class order_Page extends \Verba\Block\Html {
   function init(){
 
     if(!is_object($this->Order) && $this->rq->iid){
-      $this->Order = \Mod\Order::i()->getOrder($this->rq->iid);
+      $this->Order = \Verba\Mod\Order::i()->getOrder($this->rq->iid);
     }
 
-    if(!is_object($this->Order) || !$this->Order instanceof \Mod\Order\Model\Order || !$this->Order->getId()){
-      throw new \Exception\Routing('Order not found');
+    if(!is_object($this->Order) || !$this->Order instanceof \Verba\Mod\Order\Model\Order || !$this->Order->getId()){
+      throw new \Verba\Exception\Routing('Order not found');
     }
 
     $orderItems = $this->Order->getItems();

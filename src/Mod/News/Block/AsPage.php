@@ -1,5 +1,5 @@
 <?php
-namespace Mod\News\Block;
+namespace Verba\Mod\News\Block;
 
 class AsPage extends \Verba\Mod\Content\Block\AsPage
 {

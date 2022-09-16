@@ -1,7 +1,7 @@
 <?php
 
-use \Mod\Notifier\Pipe;
-use \Mod\Notifier\Event\Messenger\VUpd;
+use \Verba\Mod\Notifier\Pipe;
+use \Verba\Mod\Notifier\Event\Messenger\VUpd;
 
 class chatik_messagesHistory extends \Verba\Block\Json
 {
@@ -31,16 +31,16 @@ class chatik_messagesHistory extends \Verba\Block\Json
             throw  new \Verba\Exception\Building('Bad data');
         }
 
-        $U = User();
+        $U = \Verba\User();
 
         if (!$userId || $U->getId() != $userId || !$U->active) {
             throw  new \Verba\Exception\Building('User error');
         }
 
         /**
-         * @var $Channel \Mod\Chatik\Channel\Store
+         * @var $Channel \Verba\Mod\Chatik\Channel\Store
          */
-        $Channel = \Mod\WS\Channel::initObject($channel);
+        $Channel = \Verba\Mod\WS\Channel::initObject($channel);
         if (!$Channel || !$Channel->valid()) {
             //Канал не существует в БД
             if ($Channel->OItem === false && $Channel->parts->isValid() && $Channel->userHasAccess()) {
@@ -67,7 +67,7 @@ class chatik_messagesHistory extends \Verba\Block\Json
             $Channel->updateChecked(time(), $forOt, $forId);
 
             /**
-             * @var $mNotifier \Mod\Notifier
+             * @var $mNotifier \Verba\Mod\Notifier
              */
             $mNotifier = \Verba\_mod('notifier');
             $_store = \Verba\_oh('store');

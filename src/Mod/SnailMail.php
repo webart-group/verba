@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 /**
  * Класс отправки письма

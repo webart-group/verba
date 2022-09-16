@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Review\Act\AddEdit\Handler\Around;
+namespace Verba\Mod\Review\Act\AddEdit\Handler\Around;
 
-use Act\AddEdit\Handler\Around;
+use Verba\Act\AddEdit\Handler\Around;
 
 class RatingNominal extends Around
 {

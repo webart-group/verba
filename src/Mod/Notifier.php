@@ -1,9 +1,9 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
-use Mod\Notifier\Event;
-use Mod\Notifier\Pipe;
+use Verba\Mod\Notifier\Event;
+use Verba\Mod\Notifier\Pipe;
 
 class Notifier extends \Verba\Mod
 {
@@ -50,7 +50,7 @@ class Notifier extends \Verba\Mod
     function sendNotify(string $channel, $events) : bool
     {
         /**
-         * @var $mCent \Mod\Centrifugo
+         * @var $mCent \Verba\Mod\Centrifugo
          */
         $mCent = Centrifugo::getInstance();
 
@@ -88,15 +88,15 @@ class Notifier extends \Verba\Mod
     }
 
     /**
-     * @param $Channel \Mod\Chatik\Channel
+     * @param $Channel \Verba\Mod\Chatik\Channel
      * @param bool $forOt
      */
     function getNotifyChannelName($Channel, $forOt = false)
     {
         /**
-         * @var $mUser \Verba\User\User
+         * @var $mUser \Verba\Mod\User
          */
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
         $mUser = \Verba\_mod('user');
         $_store = \Verba\_oh('store');
         $_usr = \Verba\_oh('user');

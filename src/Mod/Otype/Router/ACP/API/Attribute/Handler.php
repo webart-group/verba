@@ -7,11 +7,11 @@
  * Time: 12:30
  */
 
-namespace Mod\Otype\Router\ACP\API\Attribute;
+namespace Verba\Mod\Otype\Router\ACP\API\Attribute;
 
-use Mod\Otype\Block\ACP\API\Attribute\Handler\GetAvaibleByType;
-use Mod\Otype\Block\ACP\API\Attribute\Handler\Assign;
-use Mod\Otype\Block\ACP\API\Attribute\Handler\Unassign;
+use Verba\Mod\Otype\Block\ACP\API\Attribute\Handler\GetAvaibleByType;
+use Verba\Mod\Otype\Block\ACP\API\Attribute\Handler\Assign;
+use Verba\Mod\Otype\Block\ACP\API\Attribute\Handler\Unassign;
 
 class Handler extends \Verba\Request\Http\Router {
 
@@ -32,7 +32,7 @@ class Handler extends \Verba\Request\Http\Router {
 
 
         if(!isset($router)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $h = $router->route();

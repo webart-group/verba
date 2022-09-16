@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Payment;
+namespace Verba\Mod\Payment;
 
 class Transaction extends \Verba\Base
 {
@@ -17,7 +17,7 @@ class Transaction extends \Verba\Base
     protected $_paysysCode = '';
 
     /**
-     * @var \Mod\Order\Model\Order
+     * @var \Verba\Mod\Order\Model\Order
      */
     public $Order;
 
@@ -63,7 +63,7 @@ class Transaction extends \Verba\Base
         $this->log();
 
         if (!is_object($this->Order)) {
-            if (!is_object($this->Order = \Mod\Order::i()->getOrder($orderId))
+            if (!is_object($this->Order = \Verba\Mod\Order::i()->getOrder($orderId))
                 || !$this->Order->getId()) {
                 $this->log->error('Order not found [' . var_export($orderId, true) . ']');
                 throw new \Exception('Bad Order');
@@ -115,7 +115,7 @@ class Transaction extends \Verba\Base
 
     function setOrder($orderData)
     {
-        if (!$orderData instanceof \Mod\Order\Model\Order) {
+        if (!$orderData instanceof \Verba\Mod\Order\Model\Order) {
             return false;
         }
         $this->Order = $orderData;

@@ -63,7 +63,7 @@ class Select extends Element
     foreach($vls as $k => $v){
       if(is_string($v)){
         $r .= $this->generateOption($v, $k, $this->value, $this->extOptionAttrs);
-      }elseif(is_object($v) && $v instanceof \Html\SelectOptgroup){
+      }elseif(is_object($v) && $v instanceof \Verba\Html\SelectOptgroup){
         $r .= $v->build();
       }
     }
@@ -144,7 +144,7 @@ class Select extends Element
 
         if(!array_key_exists($gInx, $this->values)){
           $this->values[$gInx] = new \Verba\Html\SelectOptgroup($v);
-        }elseif($this->values[$gInx] instanceof \Html\SelectOptgroup){
+        }elseif($this->values[$gInx] instanceof \Verba\Html\SelectOptgroup){
           $this->values[$gInx]->applyConfig($v);
         }
       }elseif(settype($v, 'string')){

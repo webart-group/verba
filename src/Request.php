@@ -326,11 +326,10 @@ class Request
             : array(false, false);
     }
 
-    function shifted($offset = 1)
+    function shifted(int $offset = 1)
     {
-        $offset = (int)$offset;
-        if ($offset < 1) {
-            $offset = 1;
+        if ($offset <= 0) {
+            return $this;
         }
 
         $cfg = $this->asArray();
@@ -342,11 +341,6 @@ class Request
     }
 
     function shift($offset = 1)
-    {
-        return $this->shifted($offset);
-    }
-
-    function shiftAndClone($offset = 1)
     {
         return $this->shifted($offset);
     }

@@ -1,14 +1,14 @@
 <?php
 
-namespace Mod\Paysys;
+namespace Verba\Mod\Paysys;
 
-use Mod\Instance;
+use Verba\Mod\Instance;
 
 class Liqpay extends \Verba\Mod
 {
 
     use \Verba\ModInstance;
-    use \Mod\Payment\Paysys;
+    use \Verba\Mod\Payment\Paysys;
 
 //  function createAutoSendForm($orderId){
 //    $prq = new PaySend_Liqpay($orderId);
@@ -63,7 +63,7 @@ class Liqpay extends \Verba\Mod
             'ORDER_CODE' => htmlspecialchars($bp['iid']),
             'ORDER_SUPPORT_EMAIL' => $supportEmail
         ));
-        if (!$order instanceof \Mod\Order\Model\Order) {
+        if (!$order instanceof \Verba\Mod\Order\Model\Order) {
             $this->tpl->define(array(
                 'reportBody' => 'shop/paysys/liqpay/error.tpl'
             ));
@@ -195,7 +195,7 @@ class Liqpay extends \Verba\Mod
             return null;
         }
         while ($row = $sqlr->fetchRow()) {
-            $trns[$row['id']] = new \Mod\Order\Transaction($row);
+            $trns[$row['id']] = new \Verba\Mod\Order\Transaction($row);
         }
         $whereIids = $this->DB->makeWhereStatement(array_keys($trns), 'rqId');
         $q = "SELECT * FROM `" . SYS_DATABASE . "`.`" . $this->gC('transLogTable') . "` WHERE " . $whereIids . " ORDER BY `rqId` DESC, `created` DESC";

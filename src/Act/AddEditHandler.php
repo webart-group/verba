@@ -83,7 +83,7 @@ class AddEditHandler extends Action
     {
         if ($this->_U === null) {
             $this->_U = is_int($this->delegatedOwnerId)
-                ? new \Verba\User\Model\User($this->delegatedOwnerId)
+                ? new \Verba\Mod\User\Model\User($this->delegatedOwnerId)
                 : \Verba\User();
         }
         return $this->_U;

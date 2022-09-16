@@ -5,7 +5,7 @@ class ReviewByRating extends \Verba\Act\MakeList\Filter {
   public $captionLangKey = 'review list filters rewByRating';
   public $name = 'rewByRating';
   public $attr = 'rating';
-  public $felement = '\Html\Select';
+  public $felement = '\Verba\Html\Select';
 
   function setValue($val){
     $val = intval($val);

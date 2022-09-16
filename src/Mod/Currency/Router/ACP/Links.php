@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Currency\Router\ACP;
+namespace Verba\Mod\Currency\Router\ACP;
 
 class Links extends \Verba\Request\Http\Router
 {
@@ -28,7 +28,7 @@ class Links extends \Verba\Request\Http\Router
             throw new \Exception;
         }
 
-        $router = new \Mod\Links\Router\ACP\Routine($rq, array(
+        $router = new \Verba\Mod\Links\Router\ACP\Routine($rq, array(
             'lcfg' => $lcfg,
             'urlbase' => $url));
 
@@ -93,7 +93,7 @@ class Links extends \Verba\Request\Http\Router
                 ),
                 'curr_cross' => array(
                     '_className' => 'CurrencyCrossUI',
-                    'baseCurCode' => \Mod\Currency::getInstance()->getBaseCurrency()->code
+                    'baseCurCode' => \Verba\Mod\Currency::getInstance()->getBaseCurrency()->code
                 ),
                 'exSave' => array(
                     '_className' => 'FloatSave',

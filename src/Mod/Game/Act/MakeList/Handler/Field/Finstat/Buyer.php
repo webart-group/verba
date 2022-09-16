@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Game\Act\MakeList\Handler\Field\Finstat;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Field\Finstat;
 
 use \Act\MakeList\Handler\Field;
 

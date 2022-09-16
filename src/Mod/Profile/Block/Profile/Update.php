@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Profile\Block\Profile;
+namespace Verba\Mod\Profile\Block\Profile;
 
 class Update extends \Verba\Block\Html
 {
@@ -20,7 +20,7 @@ class Update extends \Verba\Block\Html
         $cfg = $this->request->asArray();
 
         $oh = \Verba\_oh('user');
-        $U = User();
+        $U = \Verba\User();
         $this->ae = $ae = $oh->initAddEdit(array(
             'action' => 'edit',
             'iid' => $U->getID(),
@@ -39,7 +39,7 @@ class Update extends \Verba\Block\Html
         $ae->addedit_object();
         $this->content = '';
 
-        $this->addHeader('Location', \Mod\Profile::getPrivateUrl());
+        $this->addHeader('Location', \Verba\Mod\Profile::getPrivateUrl());
 
         $U->planeToReload();
 

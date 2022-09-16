@@ -19,7 +19,7 @@ class paysys_ProcessPage extends \Verba\Block\Html
     );
 
     /**
-     * @var $Order \Mod\Order\Model\Order
+     * @var $Order \Verba\Mod\Order\Model\Order
      */
     public $Order;
 
@@ -35,13 +35,13 @@ class paysys_ProcessPage extends \Verba\Block\Html
 
             $this->Order = \Verba\_mod('order')->getOrderByCode($orderId);
 
-            if (!$this->Order instanceof \Mod\Order\Model\Order) {
-                throw new \Exception\Routing('Unknown order');
+            if (!$this->Order instanceof \Verba\Mod\Order\Model\Order) {
+                throw new \Verba\Exception\Routing('Unknown order');
             }
             $this->Psmod = \Verba\_mod('payment')->getPaysysMod($this->Order->paysysId, true);
             if (!is_object($this->Psmod)) {
                 $this->log()->error('Unable to load PaysysModule for order_id: ' . var_export($orderId, true) . ', paysys_id: ' . var_export($this->Order->paysysId, true) . '.');
-                throw new \Exception\Routing('Unable to load PaysysModule');
+                throw new \Verba\Exception\Routing('Unable to load PaysysModule');
             }
 
             $payTransactionHandler = $this->Psmod->getPayTransactionHandler();

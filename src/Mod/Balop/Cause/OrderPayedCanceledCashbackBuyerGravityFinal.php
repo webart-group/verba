@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
 class OrderPayedCanceledCashbackBuyerGravityFinal extends Ordered
 {
@@ -10,7 +10,7 @@ class OrderPayedCanceledCashbackBuyerGravityFinal extends Ordered
 
     function calcSum()
     {
-        if(!$this->Order || !$this->Order instanceof \Mod\Order\Model\Order){
+        if(!$this->Order || !$this->Order instanceof \Verba\Mod\Order\Model\Order){
             return 0;
         }
 

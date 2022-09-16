@@ -10,7 +10,7 @@ class account_acpToolChangeBalance extends \Verba\Block\Json
 
     function build()
     {
-        $targetAcc = new \Mod\Account\Model\Account($this->accId);
+        $targetAcc = new \Verba\Mod\Account\Model\Account($this->accId);
 
         if (!$targetAcc || !$targetAcc->getId()) {
             throw  new \Verba\Exception\Building('Bad Item');
@@ -22,7 +22,7 @@ class account_acpToolChangeBalance extends \Verba\Block\Json
             throw  new \Verba\Exception\Building('Bad input');
         }
         $sum = $this->op == 'plus' ? $this->sum : '-' . $this->sum;
-        $balopCause = new \Mod\Balop\Cause\AdminBalanceChange(array(
+        $balopCause = new \Verba\Mod\Balop\Cause\AdminBalanceChange(array(
             'sum' => $sum,
             'block' => (int)$this->block,
         ));

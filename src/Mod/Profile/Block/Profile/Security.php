@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Profile\Block\Profile;
+namespace Verba\Mod\Profile\Block\Profile;
 
 class Security extends \profile_contentCommon
 {

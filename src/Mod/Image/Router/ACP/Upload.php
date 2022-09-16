@@ -7,15 +7,15 @@
  * Time: 1:17
  */
 
-namespace Mod\Image\Router\ACP;
+namespace Verba\Mod\Image\Router\ACP;
 
 class Upload extends \Verba\Block\Html
 {
     function build()
     {
         /**
-         * @var $fCfg \Mod\Image\Config
-         * @var $mImage \Mod\Image
+         * @var $fCfg \Verba\Mod\Image\Config
+         * @var $mImage \Verba\Mod\Image
          */
 
         $mFile = \Verba\_mod('file');

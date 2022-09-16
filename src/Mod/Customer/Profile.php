@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Customer;
+namespace Verba\Mod\Customer;
 
 class Profile extends \Verba\Configurable
 {
@@ -160,7 +160,7 @@ class Profile extends \Verba\Configurable
     }
 
     function getFullName(){
-        return \Verba\User::getFullName(array(
+        return \Verba\Mod\User::getFullName(array(
             'name' => $this->name,
             'patronymic' => $this->patronymic,
             'surname' => $this->surname

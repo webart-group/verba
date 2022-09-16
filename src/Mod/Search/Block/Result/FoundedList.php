@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Search\Block\Result;
+namespace Verba\Mod\Search\Block\Result;
 
 class FoundedList extends \Verba\Block\Html
 {

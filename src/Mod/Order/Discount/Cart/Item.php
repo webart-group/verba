@@ -7,7 +7,7 @@
  * Time: 16:30
  */
 
-namespace Mod\Order\Discount\Cart;
+namespace Verba\Mod\Order\Discount\Cart;
 
 
 class Item extends \Verba\Mod\Order\Discount{
@@ -16,14 +16,14 @@ class Item extends \Verba\Mod\Order\Discount{
     protected $linkedGoods = array();
 
     function setCartItem($cartItem){
-        if(!($cartItem instanceof \Mod\Cart\Item)){
+        if(!($cartItem instanceof \Verba\Mod\Cart\Item)){
             return false;
         }
         $this->linkedGoods = array($cartItem->getHash() => $cartItem);
         return current($this->linkedGoods);
     }
     function addCartItem($cartItem){
-        if(!($cartItem instanceof \Mod\Cart\Item)){
+        if(!($cartItem instanceof \Verba\Mod\Cart\Item)){
             return false;
         }
         $this->linkedGoods[$cartItem->getHash()]  = $cartItem;

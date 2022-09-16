@@ -7,9 +7,9 @@ class store_msgs extends \Verba\Block {
   public $Store;
 
   function route(){
-    $U = User();
+    $U = \Verba\User();
     if(!$U->getAuthorized() || !$this->Store instanceof \Model\Store || $this->Store->owner != $U->getId()){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     switch($this->rq->node){
@@ -17,7 +17,7 @@ class store_msgs extends \Verba\Block {
         $h = new store_msgsUI($this, array('Store' => $this->Store));
         break;
       default:
-        throw new \Exception\Routing();
+        throw new \Verba\Exception\Routing();
     }
 
     return $h->route();

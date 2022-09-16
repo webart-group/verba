@@ -9,7 +9,7 @@ class ImageUpload extends Around
     function run()
     {
         /**
-         * @var $mImage \Mod\Image
+         * @var $mImage \Verba\Mod\Image
          */
 
         $mImage = \Verba\_mod('image');
@@ -20,7 +20,7 @@ class ImageUpload extends Around
             || !isset($gettedValue)) {
             return null;
         }
-        $imgCfg = \Mod\Image::getImageConfig($gettedValueConfig);
+        $imgCfg = \Verba\Mod\Image::getImageConfig($gettedValueConfig);
 
         if (!$imgCfg->isPrimaryExtracted()) {
             $this->log()->error('Unable to parse Image Conf data');
@@ -136,7 +136,7 @@ class ImageUpload extends Around
             && is_string($exists_value) && !empty($exists_value)
             && $exists_value != $storagefileName // или изменилось значение
         ) {
-            $iu = new \Mod\Image\Cleaner($imgCfg, $exists_value);
+            $iu = new \Verba\Mod\Image\Cleaner($imgCfg, $exists_value);
             $removed = $iu->delete();
         }
         return $storagefileName;

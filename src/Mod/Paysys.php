@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Paysys1
 {
@@ -72,7 +72,7 @@ class Paysys1
             $modOrder = \Verba\_mod('order');
             $order = $modOrder->getOrderByCode($bp['iid']);
 
-            if (!$order instanceof \Mod\Order\Model\Order) {
+            if (!$order instanceof \Verba\Mod\Order\Model\Order) {
                 throw new \Exception(\Lang::get('order not_found'));
             }
 
@@ -251,11 +251,11 @@ class Paysys1
 
             if ($n->successPayment()) {
                 /**
-                 * @var $buyerAcc \Mod\Account\Model\Account
+                 * @var $buyerAcc \Verba\Mod\Account\Model\Account
                  */
                 $buyerAcc = $n->Order->Buyer()->Accounts()->getAccountByCur($n->Order->getCurrency());
 
-                $balopCause = new \Mod\Balop\Cause\PaymentSuccess($n->getTx());
+                $balopCause = new \Verba\Mod\Balop\Cause\PaymentSuccess($n->getTx());
                 $balop = $buyerAcc->balanceUpdate($balopCause);
 
                 $data['payed'] = 1;

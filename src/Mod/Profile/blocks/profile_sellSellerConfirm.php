@@ -12,7 +12,7 @@ class profile_sellSellerConfirm extends profile_sell {
     parent::init();
 
     if(!$this->Order->canBeConfirmedBySeller()){
-      throw new \Exception\Routing('Unable to be confirmed by Seller');
+      throw new \Verba\Exception\Routing('Unable to be confirmed by Seller');
     }
 
   }

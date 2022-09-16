@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Menu\Tree\View;
+namespace Verba\Mod\Menu\Tree\View;
 
 use \Tree\Node\View as TreeNodeView;
 

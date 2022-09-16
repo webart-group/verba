@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Routine\Block\MakeList;
+namespace Verba\Mod\Routine\Block\MakeList;
 
 class Json extends \Verba\Mod\Routine\Block\MakeList{
 

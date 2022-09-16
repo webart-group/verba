@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Game\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Field;
 
 use \Act\MakeList\Handler\Field;
 
@@ -51,9 +51,9 @@ class StartAt extends Field
                 // больше часа но меньше 4 часов
             } elseif ($interval->h < 4) {
                 $class_sign = 'in-few-hours';
-                $mkpadejMethod = 'make_padej_' . SYS_LOCALE;
+                $mkpadejMethod = '\Verba\make_padej_' . SYS_LOCALE;
                 if (!function_exists($mkpadejMethod)) {
-                    $mkpadejMethod = 'make_padej_ru';
+                    $mkpadejMethod = '\Verba\make_padej_ru';
                 }
 
                 if ($interval->i <= 25) {

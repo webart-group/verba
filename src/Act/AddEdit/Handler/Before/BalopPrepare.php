@@ -22,13 +22,13 @@ class BalopPrepare extends Before {
 
       $this->ah->resetGettedData();
 
-      $mShop = \Mod\Shop::getInstance();
+      $mShop = \Verba\Mod\Shop::getInstance();
       $sum = $cause->getSum();
       $currencyId = $cause->getCurrencyId();
 
       list($block, $holdTill) = $cause->getBlockParams();
 
-      list($balanceBefore, $hbalanceBefore) = \Mod\Account::getInstance()->loadAccBalances(
+      list($balanceBefore, $hbalanceBefore) = \Verba\Mod\Account::getInstance()->loadAccBalances(
         $Acc->getId(), $Acc->owner);
 
       $data = array(

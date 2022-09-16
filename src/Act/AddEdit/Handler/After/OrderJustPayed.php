@@ -3,9 +3,9 @@
 namespace Verba\Act\AddEdit\Handler\After;
 
 use \Verba\Act\AddEdit\Handler\After;
-use Mod\Notifier\Event;
-use Mod\Notifier\Pipe;
-use Verba\User\Model\User;
+use Verba\Mod\Notifier\Event;
+use Verba\Mod\Notifier\Pipe;
+use Verba\Mod\User\Model\User;
 
 class OrderJustPayed extends After
 {
@@ -41,9 +41,9 @@ class OrderJustPayed extends After
         $buyerAcc = $U_owner->Accounts()->getAccountByCur($orderCurId);
 
         /**
-         * @var $cAcc \Mod\Account\Model\Account
-         * @var $buyerAcc \Mod\Account\Model\Account
-         * @var $sellerAcc \Mod\Account\Model\Account
+         * @var $cAcc \Verba\Mod\Account\Model\Account
+         * @var $buyerAcc \Verba\Mod\Account\Model\Account
+         * @var $sellerAcc \Verba\Mod\Account\Model\Account
          */
         if (!isset($buyerAcc)) {
             $this->log()->flow('critical', 'Buyer Account not found. Order Success Payed Balop process interrupted. Order Id: ' . $this->Order->getId());
@@ -53,7 +53,7 @@ class OrderJustPayed extends After
         // Создание балансовой операции #balance_change
         // Снятие средств с баланса Покупателя
         // для последующего зачисления на баланс Торговца #balance #balance_change
-        $easeBuyerSellerBalop = $buyerAcc->balanceUpdate(new \Mod\Balop\Cause\OrderPayedBuyerEase(array('_i' => $this->Order)));
+        $easeBuyerSellerBalop = $buyerAcc->balanceUpdate(new \Verba\Mod\Balop\Cause\OrderPayedBuyerEase(array('_i' => $this->Order)));
         if (!$easeBuyerSellerBalop || !$easeBuyerSellerBalop->active) {
             $this->log()->error('Unable to create easeBuyerSellerBalop Order Id: ' . $this->Order->getId());
             return false;
@@ -65,7 +65,7 @@ class OrderJustPayed extends After
             return false;
         }
         // Зачисление средств на баланс Торговца #balance #balance_change
-        $gravitySellerBalop = $sellerAcc->balanceUpdate(new \Mod\Balop\Cause\OrderPayedSellerGravity($easeBuyerSellerBalop));
+        $gravitySellerBalop = $sellerAcc->balanceUpdate(new \Verba\Mod\Balop\Cause\OrderPayedSellerGravity($easeBuyerSellerBalop));
         if (!$gravitySellerBalop || !$gravitySellerBalop->active) {
             $this->log()->flow('critical', 'Unable to create gravitySellerBalop Order Id: ' . $this->Order->getId());
             return false;
@@ -87,10 +87,10 @@ class OrderJustPayed extends After
 
         //Отправка оповещения в канал
         /**
-         * @var $mNotifier \Mod\Notifier
+         * @var $mNotifier \Verba\Mod\Notifier
          */
         $mNotifier = \Verba\_mod('notifier');
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
 
         $event = new Event(['id' => $this->Order->getId()], 'newOrder');
 

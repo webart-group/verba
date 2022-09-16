@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class Meta extends \Verba\Mod{
     use \Verba\ModInstance;

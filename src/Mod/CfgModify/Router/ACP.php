@@ -1,9 +1,9 @@
 <?php
 
-namespace Mod\CfgModify\Router;
+namespace Verba\Mod\CfgModify\Router;
 
-use Mod\CfgModify\Block\Form;
-use Mod\CfgModify\Block\Save;
+use Verba\Mod\CfgModify\Block\Form;
+use Verba\Mod\CfgModify\Block\Save;
 
 class ACP extends \Verba\Request\Http\Router
 {
@@ -17,7 +17,7 @@ class ACP extends \Verba\Request\Http\Router
                 $h = new Save($this, array('modcode' => $this->request->uf[1]));
                 break;
             default:
-                throw new \Exception\Routing();
+                throw new \Verba\Exception\Routing();
         }
 
         return $h;

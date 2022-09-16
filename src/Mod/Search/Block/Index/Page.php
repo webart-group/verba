@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Search\Block\Index;
+namespace Verba\Mod\Search\Block\Index;
 
-use Mod\Search\Block\HtmlIncludes;
+use Verba\Mod\Search\Block\HtmlIncludes;
 
 class Page extends HtmlIncludes
 {

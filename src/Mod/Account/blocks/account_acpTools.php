@@ -15,7 +15,7 @@ class account_acpTools extends \Verba\Block {
         break;
     }
     if(!isset($h)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     return $h->route();

@@ -20,7 +20,7 @@ class OrderClosedComplete extends After {
 
 
     /**
-     * @var $sellerAcc \Mod\Account\Model\Account
+     * @var $sellerAcc \Verba\Mod\Account\Model\Account
      */
     try{
       $Store = $this->Order->getStore();
@@ -100,7 +100,7 @@ class OrderClosedComplete extends After {
 
       // Задержки выплаты нет - переводим средства торговцу в состояние доступно
       }else{
-          \Mod\Order::getInstance()->finalOrderSellerGravity($this->Order, $sellerAcc);
+          \Verba\Mod\Order::getInstance()->finalOrderSellerGravity($this->Order, $sellerAcc);
       }
 
 

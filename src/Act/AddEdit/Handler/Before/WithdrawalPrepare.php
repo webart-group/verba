@@ -22,7 +22,7 @@ class WithdrawalPrepare extends Before
 
         $accId = $this->ah->getGettedValue('accountId');
         /**
-         * @var $Acc \Mod\Account\Model\Account
+         * @var $Acc \Verba\Mod\Account\Model\Account
          */
         $Acc = $U->Accounts()->getAccount($accId);
 

@@ -7,7 +7,7 @@
  * Time: 12:23
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
 
 
 class AssignUpdate extends AssignActionPrototype {
@@ -20,7 +20,7 @@ class AssignUpdate extends AssignActionPrototype {
 
         $this->extData = $this->rq->getParam('fields');
         if(!is_array($this->extData) || !count($this->extData)){
-            throw new \Exception\Routing('Fields not found');
+            throw new \Verba\Exception\Routing('Fields not found');
         }
 
     }

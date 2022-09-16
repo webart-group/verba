@@ -38,7 +38,7 @@ class Jqupload extends Element
     }
 
     if($this->_confType == 'image'){
-      $this->fCfg = \Mod\Image::getImageConfig($this->fCfgName);
+      $this->fCfg = \Verba\Mod\Image::getImageConfig($this->fCfgName);
     }elseif($this->_confType == 'file'){
       \Verba\_mod('file');
       $this->fCfg = file::getFileConfig($this->fCfgName);

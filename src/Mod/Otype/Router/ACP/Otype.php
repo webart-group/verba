@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Otype\Router\ACP;
+namespace Verba\Mod\Otype\Router\ACP;
 
-use Mod\ACP\Router\ObjectType;
+use Verba\Mod\Acp\Router\ObjectType;
 
 class Otype extends \Verba\Request\Http\Router
 {
@@ -12,7 +12,7 @@ class Otype extends \Verba\Request\Http\Router
         $this->request->setOt('otype');
         $h = (new ObjectType($this->request))->route();
 
-        if($h instanceof \Mod\Routine\Block\Form && $this->request->node == 'cuform-prod'){
+        if($h instanceof \Verba\Mod\Routine\Block\Form && $this->request->node == 'cuform-prod'){
             $cfg = $h->request->getParam('cfg');
             if(!$cfg){
                 $cfg = 'acp-otype-prod';
@@ -22,7 +22,7 @@ class Otype extends \Verba\Request\Http\Router
             $h->request->addParam(['cfg' => $cfg]);
         }
 
-        if($h instanceof \Mod\Routine\Block\MakeList && $this->request->node == 'list-prod'){
+        if($h instanceof \Verba\Mod\Routine\Block\MakeList && $this->request->node == 'list-prod'){
             $h->request->addParam([
                 'dcfg' => [
                     'url' => [
@@ -30,7 +30,7 @@ class Otype extends \Verba\Request\Http\Router
                     ]
                 ]
             ]);
-            $h->listen(\Block::EV_PREPARE_AFTER, 'modifyList', $this, null, $h);
+            $h->listen(\Verba\Block::EV_PREPARE_AFTER, 'modifyList', $this, null, $h);
         }
 
         return $h;

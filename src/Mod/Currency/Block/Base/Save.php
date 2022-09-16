@@ -1,12 +1,12 @@
 <?php
-namespace Mod\Currency\Block\Base;
+namespace Verba\Mod\Currency\Block\Base;
 
 class Save extends \Verba\Block\Html
 {
 
     function build()
     {
-        $Cur = \Mod\Currency::getInstance();
+        $Cur = \Verba\Mod\Currency::getInstance();
         $curs = $Cur->getCurrency();
         $cid = $_REQUEST['basecurrencyid'];
 

@@ -49,7 +49,7 @@ class game_pageSell extends game_pageContent {
       $jsCfg['_hideGameServiceSelector'] = is_object($this->gsr->game) && is_object($this->gsr->service);
     }
 
-    $User = User();
+    $User = \Verba\User();
     if($User->getAuthorized()){
       $store = $User->Stores()->getStore();
       $storeId = is_object($store) ? $store->id : false;

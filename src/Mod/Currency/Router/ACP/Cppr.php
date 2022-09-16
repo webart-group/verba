@@ -1,10 +1,10 @@
 <?php
 
-namespace Mod\Currency\Router\ACP;
+namespace Verba\Mod\Currency\Router\ACP;
 
-use Mod\Currency\Block\Cppr\Info;
-use Mod\Currency\Block\Cppr\Run;
-use Mod\Currency\Block\Cppr\Tab;
+use Verba\Mod\Currency\Block\Cppr\Info;
+use Verba\Mod\Currency\Block\Cppr\Run;
+use Verba\Mod\Currency\Block\Cppr\Tab;
 
 class Cppr extends \Verba\Request\Http\Router
 {
@@ -21,7 +21,7 @@ class Cppr extends \Verba\Request\Http\Router
                 $h = new Tab($this->rq);
                 break;
             default:
-                throw new \Exception\Routing();
+                throw new \Verba\Exception\Routing();
         }
         return $h;
     }

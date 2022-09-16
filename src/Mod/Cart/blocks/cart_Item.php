@@ -25,7 +25,7 @@ class cart_Item extends \Verba\Block\Html
                 $h = new cart_ItemDelete($this);
                 break;
             default:
-                throw new \Exception\Routing();
+                throw new \Verba\Exception\Routing();
         }
 
         $ItemSup = new cart_ItemSup($this);

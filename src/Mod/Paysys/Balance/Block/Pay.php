@@ -1,34 +1,34 @@
 <?php
-namespace Mod\Paysys\Balance\Block;
+namespace Verba\Mod\Paysys\Balance\Block;
 
 class Pay extends \Verba\Block\Html
 {
 
     /**
-     * @var $U \Verba\User\Model\User
+     * @var $U \Verba\Mod\User\Model\User
      */
     public $U;
 
     /**
-     * @var $Order \Mod\Order\Model\Order
+     * @var $Order \Verba\Mod\Order\Model\Order
      */
     public $Order;
 
     function route()
     {
-        $this->U = User();
+        $this->U = \Verba\User();
         $this->Order = \Verba\_mod('order')->getOrderByCode($this->rq->getParam('orderId'));
         if (!$this->Order || !$this->Order->getId()) {
-            throw new \Exception\Routing('Bad request');
+            throw new \Verba\Exception\Routing('Bad request');
         }
 
         if (!$this->U->getAuthorized()
             || $this->Order->owner != $this->U->getId()) {
-            throw new \Exception\Routing('Unauthorized request');
+            throw new \Verba\Exception\Routing('Unauthorized request');
         }
 
         if ($this->Order->payed || !$this->Order->active) {
-            throw new \Exception\Routing('Wrong action');
+            throw new \Verba\Exception\Routing('Wrong action');
         }
 
         return $this;
@@ -47,7 +47,7 @@ class Pay extends \Verba\Block\Html
             throw  new \Verba\Exception\Building('Sum not approved');
         }
         /**
-         * @var $mOrder \Mod\Order
+         * @var $mOrder \Verba\Mod\Order
          */
         $mOrder = \Verba\_mod('order');
         $valid_payment_statuses = $mOrder->gC('paymentStatusAliases');

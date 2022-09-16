@@ -1,10 +1,10 @@
 <?php
 
-namespace Mod\Devblog;
+namespace Verba\Mod\Devblog;
 
-use Mod\News\Block\AsPage;
-use Mod\Devblog;
-use Mod\Routine\Block\MakeList;
+use Verba\Mod\News\Block\AsPage;
+use Verba\Mod\Devblog;
+use Verba\Mod\Routine\Block\MakeList;
 
 class Router extends \Verba\Request\Http\Router
 {
@@ -26,7 +26,7 @@ class Router extends \Verba\Request\Http\Router
         }
 
         if (!isset($h)) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $response = $h->route();

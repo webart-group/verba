@@ -1,9 +1,9 @@
 <?php
 
-namespace Mod\Paysys;
+namespace Verba\Mod\Paysys;
 
-use \Mod\Instance;
-use \Mod\Payment\Paysys;
+use \Verba\Mod\Instance;
+use \Verba\Mod\Payment\Paysys;
 
 class Webmoney extends \Verba\Mod
 {

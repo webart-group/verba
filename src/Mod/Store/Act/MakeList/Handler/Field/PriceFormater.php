@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Store\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Store\Act\MakeList\Handler\Field;
 
 use Act\MakeList\Handler\Field;
 
@@ -7,11 +7,11 @@ class PriceFormater extends Field {
 
     function run(){
         /**
-         * @var $mCart \Mod\Cart
+         * @var $mCart \Verba\Mod\Cart
          */
         $mCart = \Verba\_mod('Cart');
         /**
-         * @var $mCurrency \Mod\Currency
+         * @var $mCurrency \Verba\Mod\Currency
          */
         $mCurrency = \Verba\_mod('Currency');
         /**

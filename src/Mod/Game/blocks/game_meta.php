@@ -11,7 +11,7 @@ class game_meta extends \Verba\Block\Html{
   public $prodItem;
 
     /**
-     * @var \Mod\Game\ServiceRequest
+     * @var \Verba\Mod\Game\ServiceRequest
      */
     public $gsr;
 

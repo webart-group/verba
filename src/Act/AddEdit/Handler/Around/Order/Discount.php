@@ -13,7 +13,7 @@ class Discount extends Around
             return $this->value;
         }
         /**
-         * @var $Cart \Mod\Cart\CartInstance
+         * @var $Cart \Verba\Mod\Cart\CartInstance
          */
         $Cart = $this->ah->getExtendedData('cart');
         $Cart->getPromos();

@@ -20,7 +20,7 @@ class profile_purchasesList extends profile_ordersList
 
         if (!$this->list || !$this->userId || !is_numeric($this->userId) || $this->userId < 1) {
 
-            throw new \Exception\Routing('Bad input params');
+            throw new \Verba\Exception\Routing('Bad input params');
 
         }
 

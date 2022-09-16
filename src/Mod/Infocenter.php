@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class Infocenter extends \Verba\Mod{
     use \Verba\ModInstance;

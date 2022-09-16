@@ -7,7 +7,7 @@
  * Time: 1:16
  */
 
-namespace Mod\Image\Router;
+namespace Verba\Mod\Image\Router;
 
 class ACP extends \Verba\Request\Http\Router
 {
@@ -30,7 +30,7 @@ class ACP extends \Verba\Request\Http\Router
         }
 
         if (!isset($router)) {
-            $h = (new \Mod\Routine\Router($this->rq))->route();
+            $h = (new \Verba\Mod\Routine\Router($this->rq))->route();
         } else {
             $h = $router->route();
         }

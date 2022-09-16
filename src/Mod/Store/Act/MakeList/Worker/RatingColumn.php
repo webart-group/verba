@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Store\Act\MakeList\Worker;
+namespace Verba\Mod\Store\Act\MakeList\Worker;
 
 use Act\MakeList\Worker;
 

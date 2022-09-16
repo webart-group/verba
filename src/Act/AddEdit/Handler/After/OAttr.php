@@ -33,7 +33,7 @@ class OAttr extends After{
     $attr = $_attr->getData($attr_id, 1);
     $oh = \Verba\_oh($attr['ot_iid']);
     $createIndex = $this->ah->getGettedValue('_db_index');
-    $modOtype = \Mod\Otype::getInstance();
+    $modOtype = \Verba\Mod\Otype::getInstance();
     if(!is_array($columnMetaData = $modOtype->addTableFieldForAttribute($oh, $attr, $createIndex))){
       $this->log()->error('Unable to create Table Column for ot: '.var_dump($oh->getCode()).', attr: '.var_dump($attr['attr_code']));
       return false;

@@ -30,13 +30,13 @@ class infocenter_page extends \Verba\Block\Html
     {
 
         /**
-         * @var $mMenu \Mod\Menu
+         * @var $mMenu \Verba\Mod\Menu
          */
         $mMenu = \Verba\_mod('menu');
         $this->menuNode = $mMenu->getActiveNode();
 
         if (!$this->menuNode) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $_cnt = \Verba\_oh('content');

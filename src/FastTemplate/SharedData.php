@@ -18,7 +18,7 @@ class SharedData
     protected $clientsCount = 0;
 
     /**
-     * @param $FT \FastTemplate
+     * @param $FT \Verba\FastTemplate
      */
     function init($FT)
     {

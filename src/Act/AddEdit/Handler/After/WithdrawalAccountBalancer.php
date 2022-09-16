@@ -18,7 +18,7 @@ class WithdrawalAccountBalancer extends After {
     $accId = $this->ah->getObjectValue('accountId');
     $U = \Verba\User();
     /**
-     * @var \Mod\Account\Model\Account
+     * @var \Verba\Mod\Account\Model\Account
      */
     $Acc = $U->Accounts()->getAccount($accId);
 
@@ -27,7 +27,7 @@ class WithdrawalAccountBalancer extends After {
       return null;
     }
 
-    $balopWithdrawalEase = $Acc->balanceUpdate(new \Mod\Balop\Cause\WithdrawalEase($this->ah->getIID()));
+    $balopWithdrawalEase = $Acc->balanceUpdate(new \Verba\Mod\Balop\Cause\WithdrawalEase($this->ah->getIID()));
     if(!$balopWithdrawalEase || !$balopWithdrawalEase->active){
       $this->log()->flow('critical', 'Unable to create Withdrawal, Id: '.$this->ah->getIID());
       return false;

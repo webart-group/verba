@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Otype\Router;
+namespace Verba\Mod\Otype\Router;
 
-use Mod\ACP\Router\ObjectType;
+use Verba\Mod\Acp\Router\ObjectType;
 
 class ACP extends \Verba\Request\Http\Router
 {

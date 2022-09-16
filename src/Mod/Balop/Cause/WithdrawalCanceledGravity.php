@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
-use Mod\Balop\Cause;
+use Verba\Mod\Balop\Cause;
 
 class WithdrawalCanceledGravity extends Cause{
 

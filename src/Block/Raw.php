@@ -1,5 +1,5 @@
 <?php
-namespace Block;
+namespace Verba\Block;
 
 class Raw extends Html
 {

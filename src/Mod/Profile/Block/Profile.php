@@ -2,7 +2,7 @@
 /**
  * Router and Tab for profile public pages
  */
-namespace Mod\Profile\Block;
+namespace Verba\Mod\Profile\Block;
 
 
 class Profile extends \profile_contentCommon
@@ -29,7 +29,7 @@ class Profile extends \profile_contentCommon
         }
 
         if (!$routed) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $routed;
@@ -51,7 +51,7 @@ class Profile extends \profile_contentCommon
         ));
         $this->addCss('form-settings', 'profile');
 
-        $aef->tpl()->assign(['SECURITY_URL' => \Mod\Profile::getPrivateUrl().'s']);
+        $aef->tpl()->assign(['SECURITY_URL' => \Verba\Mod\Profile::getPrivateUrl().'s']);
 
         $profileProperties = new \page_coloredPanel($this, array(
             'title' => \Verba\Lang::get('profile props panelTitle'),

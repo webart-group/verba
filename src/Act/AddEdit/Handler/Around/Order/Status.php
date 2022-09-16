@@ -3,8 +3,8 @@
 namespace Verba\Act\AddEdit\Handler\Around\Order;
 
 use \Verba\Act\AddEdit\Handler\Around;
-use Mod\Order;
-use Mod\Customer;
+use Verba\Mod\Order;
+use Verba\Mod\Customer;
 
 class Status extends Around
 {
@@ -124,7 +124,7 @@ class Status extends Around
         $groupped = $order->getItems(true);
         if(is_array($groupped) && count($groupped)){
             /**
-             * @var $mProduct \Mod\Product
+             * @var $mProduct \Verba\Mod\Product
              */
             $mProduct = \Verba\_mod('product');
             foreach($groupped as $ot => $items){

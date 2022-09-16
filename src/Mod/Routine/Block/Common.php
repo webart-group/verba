@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Routine\Block;
+namespace Verba\Mod\Routine\Block;
 
 trait Common
 {

@@ -7,7 +7,7 @@
  * Time: 21:03
  */
 
-namespace Mod\Payment\Transaction;
+namespace Verba\Mod\Payment\Transaction;
 
 
 class Receive

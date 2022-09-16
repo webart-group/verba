@@ -54,7 +54,7 @@ class system_tools extends \Verba\Block\Html
                 $h = new system_toolBidsRefresh($this);
                 break;
             case 'store-rating-recalc-all':
-                $h = new \Mod\Review\Block\Tool\RecalcAllStoresRatings($this);
+                $h = new \Verba\Mod\Review\Block\Tool\RecalcAllStoresRatings($this);
                 break;
             case 'm1':
                 $h = new system_toolM1($this->rq->shift());
@@ -62,7 +62,7 @@ class system_tools extends \Verba\Block\Html
         }
 
         if (!isset($h)) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $h->route();
@@ -338,7 +338,7 @@ class system_toolAccountRecalcBalance extends \Verba\Block\Html
     {
         //exit;
         set_time_limit(82000);
-        return \Mod\Account::getInstance()->recalcAndSaveAccountBalances($this->rq->iid);
+        return \Verba\Mod\Account::getInstance()->recalcAndSaveAccountBalances($this->rq->iid);
     }
 
 }
@@ -469,7 +469,7 @@ class system_toolStoreRecalcCppr extends \Verba\Block\Html
     function build()
     {
 
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
 
         $mStore->refreshStoreCPK($this->rq->iid);
 
@@ -483,7 +483,7 @@ class system_toolRefreshStoresPc extends \Verba\Block\Html
     function build()
     {
 
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
 
         $mStore->refreshStoresCPK();
 
@@ -559,7 +559,7 @@ class system_toolM1 extends \Verba\Block\Json {
 
         $router = get_class($this).'_'.ucfirst($this->rq->node);
         if(!class_exists($router)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return (new $router($this->rq->shift()))->route();
@@ -630,11 +630,11 @@ class system_toolM1Catalog extends \Verba\Block\Json
                                 $handler = $fieldCfg['handler'];
 
                                 if(preg_match("/(.*)_listHandler(.*)/i", $handler,$_buff)) {
-                                    $handler = '\Mod\\'.ucfirst($_buff[1]).'\Act\MakeList\Handler\Field\\'.ucfirst($_buff[2]);
+                                    $handler = '\Verba\Mod\\'.ucfirst($_buff[1]).'\Act\MakeList\Handler\Field\\'.ucfirst($_buff[2]);
                                 }
 
                                 if(preg_match("/\\\Mods\\\([a-z]+)\\\Handlers\\\HList\\\([a-z0-9_]+)(\(.*)?$/i", $handler,$_buff)) {
-                                    $handler = '\Mod\\'.ucfirst($_buff[1]).'\Act\MakeList\Handler\Field\\'.ucfirst($_buff[2]).$_buff[3];
+                                    $handler = '\Verba\Mod\\'.ucfirst($_buff[1]).'\Act\MakeList\Handler\Field\\'.ucfirst($_buff[2]).$_buff[3];
                                 }
 
                                 if(preg_match("/\\\Mods\\\Image\\\Handlers\\\Present\\\([a-z0-9_]+)$/i", $handler,$_buff)) {
@@ -687,11 +687,11 @@ class system_toolM1Catalog extends \Verba\Block\Json
                                 $all_f[] = $fieldCfg['handler'];
 
                                 if( preg_match("/(\\\Mods\\\([a-z]+)\\\Handlers)?\\\Form\\\E\\\Ext\\\([a-z0-9_]+)(\(.*)?$/i", $fieldCfg['handler'],$_buff)) {
-                                    // Mod
+                                    // Verba\Mod
                                     if($_buff[2] ){
-                                        $fieldUpdate['handler'] = '\Mod\\'.ucfirst($_buff[2]).'\Act\Form\Element\Extension\\'.ucfirst($_buff[3]).$_buff[4];
+                                        $fieldUpdate['handler'] = '\Verba\Mod\\'.ucfirst($_buff[2]).'\Act\Form\Element\Extension\\'.ucfirst($_buff[3]).$_buff[4];
                                     } else {
-                                        $fieldUpdate['handler'] = '\Act\Form\Element\Extension\\'.ucfirst($_buff[3]).$_buff[4];
+                                        $fieldUpdate['handler'] = '\Verba\Act\Form\Element\Extension\\'.ucfirst($_buff[3]).$_buff[4];
                                     }
                                     $all_subs[] = array(
                                         $formKey,
@@ -740,7 +740,7 @@ class system_toolM1_1 extends \Verba\Block\Json
     function init(){
         $this->addItems([
             # new system_toolBidsRefresh($this->rq->shift(), ['contentType' => 'json']),
-            new \Mod\Review\Block\Tool\RecalcAllStoresRatings($this),
+            new \Verba\Mod\Review\Block\Tool\RecalcAllStoresRatings($this),
         ]);
     }
 

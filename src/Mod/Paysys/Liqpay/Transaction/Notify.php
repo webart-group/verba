@@ -7,7 +7,7 @@
  * Time: 15:20
  */
 
-namespace Mod\Paysys\Liqpay\Transaction;
+namespace Verba\Mod\Paysys\Liqpay\Transaction;
 
 
 class Notify extends \Verba\Mod\Paysys\Liqpay\Transaction{

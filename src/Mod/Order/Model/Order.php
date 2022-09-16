@@ -6,7 +6,7 @@
  * Date: 26.08.19
  * Time: 16:19
  */
-namespace Mod\Order\Model;
+namespace Verba\Mod\Order\Model;
 
 class Order extends  \Model\Item
 {
@@ -27,7 +27,7 @@ class Order extends  \Model\Item
     protected $Store;
 
     /**
-     * @var \Verba\User\Model\User
+     * @var \Verba\Mod\User\Model\User
      */
     private $_Buyer;
 
@@ -121,7 +121,7 @@ class Order extends  \Model\Item
 
         $orderCurrency = $this->getCurrency();
         /**
-         * @var $mShop \Mod\Shop
+         * @var $mShop \Verba\Mod\Shop
          */
         $mShop = \Verba\_mod('shop');
 
@@ -249,7 +249,7 @@ WHERE `p_ot_id` = '".$_order->getID()."' && `p_iid` = '".$this->getIid()."'";
     }
 
     function getFullName(){
-        return \Verba\User\User::getFullName(array(
+        return \Verba\Mod\User::getFullName(array(
             'name' => $this->name,
             'patronymic' => $this->patronymic,
             'surname' => $this->surname
@@ -402,7 +402,7 @@ WHERE `p_ot_id` = '".$_order->getID()."' && `p_iid` = '".$this->getIid()."'";
 
         if(!array_key_exists($action, $this->__url)){
             /**
-             * @var $mProfile \Mod\Profile
+             * @var $mProfile \Verba\Mod\Profile
              */
             $mProfile = \Verba\_mod('profile');
             $this->__url[$action] = $mProfile->getPurchaseActionUrl($this, $action);
@@ -452,7 +452,7 @@ WHERE `p_ot_id` = '".$_order->getID()."' && `p_iid` = '".$this->getIid()."'";
     function Buyer(){
 
         if($this->_Buyer === null){
-            $this->_Buyer = new \Verba\User\Model\User($this->owner);
+            $this->_Buyer = new \Verba\Mod\User\Model\User($this->owner);
         }
 
         return $this->_Buyer;
@@ -517,7 +517,7 @@ WHERE `p_ot_id` = '".$_order->getID()."' && `p_iid` = '".$this->getIid()."'";
     function getOCur(){
 
         if($this->__oCur === null){
-            $this->__oCur =  \Mod\Currency::getInstance()->getCurrency($this->{$this->_confPropName}['price_map']['oCurId']);
+            $this->__oCur =  \Verba\Mod\Currency::getInstance()->getCurrency($this->{$this->_confPropName}['price_map']['oCurId']);
         }
 
         return $this->__oCur;

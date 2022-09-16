@@ -61,7 +61,7 @@ class profile_contentAndMenu extends \Verba\Block\Html{
 
   public function prepare(){
     $this->content = null;
-    $U = User();
+    $U = \Verba\User();
 
     if(!$U->getAuthorized()){
       $this->content = '';

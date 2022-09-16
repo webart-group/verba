@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Menu;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu;
 
 class BasicActions extends \Verba\Block\Html {
 

@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class Seo extends \Verba\Mod{
     use \Verba\ModInstance;

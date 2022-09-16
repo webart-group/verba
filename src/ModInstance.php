@@ -6,7 +6,7 @@ namespace Verba;
 trait ModInstance
 {
     /**
-     * @var \Mod
+     * @var \Verba\Mod
      */
     protected static $_instance = null;
 

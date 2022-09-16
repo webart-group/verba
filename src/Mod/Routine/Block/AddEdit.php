@@ -7,7 +7,7 @@
  * Time: 17:04
  */
 
-namespace Mod\Routine\Block;
+namespace Verba\Mod\Routine\Block;
 
 
 class AddEdit extends \Verba\Block\Json

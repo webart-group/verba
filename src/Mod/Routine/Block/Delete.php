@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Routine\Block;
+namespace Verba\Mod\Routine\Block;
 
 class Delete extends \Verba\Block\Json
 {

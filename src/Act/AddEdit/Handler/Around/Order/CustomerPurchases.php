@@ -14,7 +14,7 @@ class CustomerPurchases extends Around
         }
         $customerId = $this->ah->getExtendedData('customerId');
         /**
-         * @var $customerProfile \Mod\Customer\Profile
+         * @var $customerProfile \Verba\Mod\Customer\Profile
          */
         $customerProfile = \Verba\_mod('customer')->getProfile($customerId);
         return $customerProfile->getTotalPurchases();

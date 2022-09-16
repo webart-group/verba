@@ -1,7 +1,7 @@
 <?php
 class profile_pageContent extends page_content{
   /**
-   * @var \Verba\User\Model\User
+   * @var \Verba\Mod\User\Model\User
    */
   protected $U;
   protected $userId;
@@ -15,9 +15,9 @@ class profile_pageContent extends page_content{
   function init(){
 
     if(!$this->U){
-      $this->U = User();
+      $this->U = \Verba\User();
     }
-    if(!$this->U || !$this->U instanceof \Verba\User\Model\User
+    if(!$this->U || !$this->U instanceof \Verba\Mod\User\Model\User
       || $this->U->getID() !=\Verba\User()->getID())
     {
       throw  new \Verba\Exception\Building('Unknown user');

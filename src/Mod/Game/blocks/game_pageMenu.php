@@ -10,7 +10,7 @@ class game_pageMenu extends \Verba\Block\Html{
 
   public $color_scheme = 'blue';
     /**
-     * @var \Mod\Game\ServiceRequest
+     * @var \Verba\Mod\Game\ServiceRequest
      */
     public $gsr;
 

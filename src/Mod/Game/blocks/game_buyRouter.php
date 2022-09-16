@@ -7,7 +7,7 @@ class game_buyRouter extends \Verba\Block
         if (isset($this->rq->uf[0]) && $this->rq->uf[0] == 'list') {
             $rq = $this->rq->shift();
             $b = new game_buyList($rq, array(
-                'gsr' => new \Mod\Game\ServiceRequest($rq)
+                'gsr' => new \Verba\Mod\Game\ServiceRequest($rq)
             ));
             $response = new \Verba\Response\Json($rq);
             $response->addItems($b);
@@ -15,7 +15,7 @@ class game_buyRouter extends \Verba\Block
         }
 
         $b = new game_catalog($this->rq, array(
-            'gsr' => new \Mod\Game\ServiceRequest($this->rq)
+            'gsr' => new \Verba\Mod\Game\ServiceRequest($this->rq)
         ));
         return $b->route();
     }

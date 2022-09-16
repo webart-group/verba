@@ -1,10 +1,10 @@
 <?php
-namespace Mod\Paysys_Webmoney;
+namespace Verba\Mod\Paysys_Webmoney;
 
 class PayNotify extends \PaymentTransactionReceive{
 
   /**
-   * @var \Mod\Paysys_Webmoney
+   * @var \Verba\Mod\Paysys_Webmoney
    */
   protected $mod;
   protected $_paysysCode = 'webmoney';

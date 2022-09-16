@@ -7,7 +7,7 @@
  * Time: 12:03
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form;
 
 class Inside extends \Verba\Block\Json
 {
@@ -33,11 +33,11 @@ class Inside extends \Verba\Block\Json
         if ($iid) {
             $this->attr = $_attr->getData($iid, 1);
             if (!$this->attr) {
-                throw new \Exception\Routing('Unable to obtain attr data');
+                throw new \Verba\Exception\Routing('Unable to obtain attr data');
             }
         }
         /**
-         * @var $h \Block\Html
+         * @var $h \Verba\Block\Html
          *
          */
         $h = new $className($this->rq->shift());

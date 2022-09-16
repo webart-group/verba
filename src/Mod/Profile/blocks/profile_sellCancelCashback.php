@@ -11,7 +11,7 @@ class profile_sellCancelCashback extends profile_sell
     {
         parent::init();
         if (!$this->Order->canBeCanceledByStore()) {
-            throw new \Exception\Routing('Bad action params');
+            throw new \Verba\Exception\Routing('Bad action params');
         }
     }
 

@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\Act\Form\Element\Extension;
+namespace Verba\Mod\Game\Act\Form\Element\Extension;
 
 class CustomizePlaceholderTrqResource extends CustomizePlaceholderResource{
 

@@ -28,7 +28,7 @@ class OrderLinkItems extends After
         $ordOtId = $_order->getId();
         $orderId = $this->ah->getIID();
         /**
-         * @var $item \Mod\Cart\Item
+         * @var $item \Verba\Mod\Cart\Item
          */
         foreach ($orderCreateData->items as $hash => $item) {
             $id = $item->getId();

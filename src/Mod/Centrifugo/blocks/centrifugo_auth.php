@@ -14,7 +14,7 @@ class centrifugo_auth extends \Verba\Block\Html
     {
 
         $this->content = false;
-        $U = User();
+        $U = \Verba\User();
         if (!$U->getAuthorized()) {
             $this->addHeader('Unauthorized', 401);
             return false;
@@ -28,8 +28,8 @@ class centrifugo_auth extends \Verba\Block\Html
         $rq['channels'] = is_array($rq['channels']) ? $rq['channels'] : [$rq['channels']];
 
         /**
-         * @var $mCentrifugo \Mod\Centrifugo
-         * @var $mChat \Mod\Chatik
+         * @var $mCentrifugo \Verba\Mod\Centrifugo
+         * @var $mChat \Verba\Mod\Chatik
          */
         $mCentrifugo = \Verba\_mod('Centrifugo');
         \Verba\_mod('Chatik');
@@ -37,7 +37,7 @@ class centrifugo_auth extends \Verba\Block\Html
 
         $channels = [];
         foreach ($rq['channels'] as $channel) {
-            $Channel = \Mod\WS\Channel::initObject($channel, false);
+            $Channel = \Verba\Mod\WS\Channel::initObject($channel, false);
             if (!$Channel || !$Channel->valid() || !$Channel->userHasAccess($U)) {
                 continue;
             }

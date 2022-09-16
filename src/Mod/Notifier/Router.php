@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Notifier;
+namespace Verba\Mod\Notifier;
 
 class Router extends \Verba\Request\Http\Router {
 
@@ -12,7 +12,7 @@ class Router extends \Verba\Request\Http\Router {
                 break;
         }
         if(!isset($h)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $h;

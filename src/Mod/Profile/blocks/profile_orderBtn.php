@@ -4,7 +4,7 @@ class profile_orderBtn extends page_eInteractive
 {
 
     /**
-     * @var \Mod\Order\Model\Order
+     * @var \Verba\Mod\Order\Model\Order
      */
     public $Order;
 
@@ -14,7 +14,7 @@ class profile_orderBtn extends page_eInteractive
     function init()
     {
 
-        if (!is_object($this->Order) || !$this->Order instanceof \Mod\Order\Model\Order) {
+        if (!is_object($this->Order) || !$this->Order instanceof \Verba\Mod\Order\Model\Order) {
             throw new Exception();
         }
 

@@ -20,7 +20,7 @@ class infocenter_struct extends \Verba\Block\Html
         $Tree->applyConfigDirect($treeCfg);
 
         /**
-         * @var $Node \Mod\Infocenter\Tree\View\Menu
+         * @var $Node \Verba\Mod\Infocenter\Tree\View\Menu
          */
         $Node = $Tree->buildNodesTree();
 

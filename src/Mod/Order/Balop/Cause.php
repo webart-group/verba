@@ -7,7 +7,7 @@
  * Time: 16:11
  */
 
-namespace Mod\Order\Balop;
+namespace Verba\Mod\Order\Balop;
 
 
 class Cause

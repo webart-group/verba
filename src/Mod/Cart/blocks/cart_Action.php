@@ -28,7 +28,7 @@ class cart_Action extends \Verba\Block\Html
                 }
                 break;
             default:
-                throw new \Exception\Routing('Invalid cart action');
+                throw new \Verba\Exception\Routing('Invalid cart action');
         }
 
         $h->addItems($this);
@@ -40,7 +40,7 @@ class cart_Action extends \Verba\Block\Html
 
     function prepare()
     {
-        \Mod\Cart::getInstance()->clearSessionCache();
+        \Verba\Mod\Cart::getInstance()->clearSessionCache();
     }
 }
 

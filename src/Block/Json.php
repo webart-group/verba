@@ -1,5 +1,6 @@
 <?php
 namespace Verba\Block;
+
 class Json extends \Verba\Block\Html
 {
 

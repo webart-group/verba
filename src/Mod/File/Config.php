@@ -7,7 +7,7 @@
  * Time: 19:56
  */
 
-namespace Mod\File;
+namespace Verba\Mod\File;
 
 
 class Config extends \Verba\Configurable{

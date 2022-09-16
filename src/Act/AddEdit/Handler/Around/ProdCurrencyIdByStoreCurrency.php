@@ -3,7 +3,7 @@
 namespace Verba\Act\AddEdit\Handler\Around;
 
 use \Verba\Act\AddEdit\Handler\Around;
-use Mod\SnailMail\Exception;
+use Verba\Mod\SnailMail\Exception;
 
 /**
  * Class ProdCurrencyIdByStoreCurrency
@@ -11,7 +11,7 @@ use Mod\SnailMail\Exception;
  *  !! Обязательный обработчик атрибута, должен генерироваться после storeId и до price
  *  Результат обязательно должен совпадать со значение currencyId для магазина
  *
- * @package Act\AddEdit\Handler\Around
+ * @package Verba\Act\AddEdit\Handler\Around
  */
 class ProdCurrencyIdByStoreCurrency extends Around
 {

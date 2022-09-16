@@ -35,16 +35,16 @@ class Multi extends Element
         $tmp['name'] = $field['cfg']['name'];
         $tmp['id'] = $field['cfg']['name'];
         switch($field['ctype']){
-          case '\Html\Textarea':
+          case '\Verba\Html\Textarea':
             $tmp['ctype'] = 'textarea';
             break;
-          case '\Html\Text':
+          case '\Verba\Html\Text':
             $tmp['ctype'] = 'text';
             break;
-          case '\Html\Select':
+          case '\Verba\Html\Select':
             $tmp['ctype'] = 'select';
             break;
-          case '\Html\Hidden':
+          case '\Verba\Html\Hidden':
             $tmp['ctype'] = 'hidden';
             break;
         }

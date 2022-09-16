@@ -29,7 +29,7 @@ class game_allGamesSelectorPanel extends \Verba\Block\Json{
     $mImage = \Verba\_mod('image');
     $iCfg = false;
     $_game = \Verba\_oh('game');
-    $iCfg = \Mod\Image::getImageConfig($_game->p('icon_config'));
+    $iCfg = \Verba\Mod\Image::getImageConfig($_game->p('icon_config'));
     foreach($allGames as $gid => $Game){
 
       $key = $Game->pop ? 'top' : 'alpha';

@@ -1,5 +1,5 @@
 <?php
-namespace Mod\CfgModify\Block;
+namespace Verba\Mod\CfgModify\Block;
 
 class Form extends \Verba\Block\Json
 {
@@ -86,7 +86,7 @@ class Form extends \Verba\Block\Json
         );
         $this->tpl->assign(array(
             'CFG_ELEMENT_WRAP_CLASS' => $warapId,
-            'CFG_ELEMENT_ARRAY_DATA' => json_encode($arrayData),
+            'CFG_ELEMENT_ARRAY_DATA' => \json_encode($arrayData),
         ));
         return $this->tpl->parse(false, 'element_array');
     }
@@ -96,7 +96,7 @@ class Form extends \Verba\Block\Json
 
         if (!is_array($value)) return '';
         /**
-         * @var $modCfg \Mod\CfgModify
+         * @var $modCfg \Verba\Mod\CfgModify
          */
 
         $modCfg = \Verba\_mod('cfgmodify');
@@ -149,7 +149,7 @@ class Form extends \Verba\Block\Json
     function createCfgElementString($key, $ename, $value, $keyData, $mod = false)
     {
         /**
-         * @var $modCfg \Mod\CfgModify
+         * @var $modCfg \Verba\Mod\CfgModify
          */
         $modCfg = \Verba\_mod('cfgmodify');
 
@@ -165,12 +165,12 @@ class Form extends \Verba\Block\Json
     function createCfgElementBoolean($key, $ename, $value, $keyData, $mod = false)
     {
         /**
-         * @var $modCfg \Mod\CfgModify
+         * @var $modCfg \Verba\Mod\CfgModify
          */
         $modCfg = \Verba\_mod('cfgmodify');
 
         $value = $modCfg->normalizeCfgValue($value, $keyData);
-        $sl = new \Html\Select(array(
+        $sl = new \Verba\Html\Select(array(
             'name' => str_replace(' ', '-', $key)
         ));
         $sl->setValues(array(0 => \Verba\Lang::get('acp customizecfg boolean values 0'), 1 => \Verba\Lang::get('acp customizecfg boolean values 1'),));
@@ -186,7 +186,7 @@ class Form extends \Verba\Block\Json
     function createCfgElementTextarea($key, $ename, $value, $keyData, $mod = false)
     {
         /**
-         * @var $modCfg \Mod\CfgModify
+         * @var $modCfg \Verba\Mod\CfgModify
          */
         $modCfg = \Verba\_mod('cfgmodify');
 
@@ -197,7 +197,7 @@ class Form extends \Verba\Block\Json
         if (isset($keyData['econfig']) && is_array($keyData['econfig'])) {
             $cfg = array_replace_recursive($cfg, $keyData['econfig']);
         }
-        $sl = new \Html\Textarea($cfg);
+        $sl = new \Verba\Html\Textarea($cfg);
         $sl->setValue($value);
 
         $this->tpl->assign(array(

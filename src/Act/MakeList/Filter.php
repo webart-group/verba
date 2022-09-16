@@ -28,7 +28,7 @@ class Filter extends \Verba\Configurable
     protected $ecfg = array();
 
     public $ftype = ''; // filter-type, значение используется для генерации css-класса list-filter-type-<$ftype>
-    public $felement = '\Html\Text'; // filter-элемент
+    public $felement = '\Verba\Html\Text'; // filter-элемент
 
     public $name; // name required to generate form data key
 
@@ -47,7 +47,7 @@ class Filter extends \Verba\Configurable
      */
     protected $oh;
     /**
-     * @var \FastTemplate
+     * @var \Verba\FastTemplate
      */
     protected $tpl;
     protected $_alias;

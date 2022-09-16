@@ -17,7 +17,7 @@ class paysys_status extends \Verba\Block\Html
         'ORDER_PAYMENT_EXTEND' => '',
     );
     /**
-     * @var object \Mod\Order\Model\Order
+     * @var object \Verba\Mod\Order\Model\Order
      *
      */
     public $o;
@@ -37,7 +37,7 @@ class paysys_status extends \Verba\Block\Html
     function build()
     {
 
-        if (!$this->o instanceof \Mod\Order\Model\Order) {
+        if (!$this->o instanceof \Verba\Mod\Order\Model\Order) {
             return '';
         }
 
@@ -97,14 +97,14 @@ class paysys_status extends \Verba\Block\Html
                 $leftTime = \Verba\Lang::get('order paymentAwaiting less5min');
             } elseif ($d < 3600) {
                 $minLeft = ceil($d / 60);
-                $leftTime = $minLeft . ' ' . make_padej_ru($minLeft, \Verba\Lang::get('order paymentAwaiting rootes minutes root'),  \Verba\Lang::get('order paymentAwaiting rootes minutes padej'));
+                $leftTime = $minLeft . ' ' . \Verba\make_padej_ru($minLeft, \Verba\Lang::get('order paymentAwaiting rootes minutes root'),  \Verba\Lang::get('order paymentAwaiting rootes minutes padej'));
             } else {
                 $leftHours = floor($d / 3600);
-                $leftTime = $leftHours . ' ' . make_padej_ru($leftHours, \Verba\Lang::get('order paymentAwaiting rootes hours root'),  \Verba\Lang::get('order paymentAwaiting rootes hours padej'));
+                $leftTime = $leftHours . ' ' . \Verba\make_padej_ru($leftHours, \Verba\Lang::get('order paymentAwaiting rootes hours root'),  \Verba\Lang::get('order paymentAwaiting rootes hours padej'));
                 $secLeft = $d - $leftHours * 3600;
                 if ($secLeft > 60) {
                     $minLeft = floor($secLeft / 60);
-                    $minLeft = $minLeft . ' ' . make_padej_ru($minLeft, \Verba\Lang::get('order paymentAwaiting rootes minutes root'),  \Verba\Lang::get('order paymentAwaiting rootes minutes padej'));
+                    $minLeft = $minLeft . ' ' . \Verba\make_padej_ru($minLeft, \Verba\Lang::get('order paymentAwaiting rootes minutes root'),  \Verba\Lang::get('order paymentAwaiting rootes minutes padej'));
                 }
                 if (isset($leftTime)) {
                     $leftTime .= ' ' . $minLeft;
@@ -124,9 +124,9 @@ class paysys_status extends \Verba\Block\Html
 
     function parsePaymentButton()
     {
-        $pspr =  \Mod\Payment::i()->getPaysysMod($this->o->paysys->getId());
+        $pspr =  \Verba\Mod\Payment::i()->getPaysysMod($this->o->paysys->getId());
         if (!$pspr) {
-            return 'Unable to initiate Paysys Mod';
+            return 'Unable to initiate Paysys Verba\Mod';
         }
         if ($this->o->status != 20 || !$pspr->gC('haveGataway')) {
             return '';
@@ -134,9 +134,9 @@ class paysys_status extends \Verba\Block\Html
 
         $topay = $this->o->getTopay();
         $curr = $this->o->getCurrency();
-        $paysys = \Mod\Payment::i()->getPaysys($this->o->paysys->getId());
+        $paysys = \Verba\Mod\Payment::i()->getPaysys($this->o->paysys->getId());
 
-        $url = \Mod\Order::i()->gC('url processpayment');
+        $url = \Verba\Mod\Order::i()->gC('url processpayment');
         $url = new \Url($url);
 
         $this->tpl->assign(array(

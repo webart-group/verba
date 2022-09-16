@@ -1,12 +1,12 @@
 <?php
-namespace Mod\Currency\Block\Cppr;
+namespace Verba\Mod\Currency\Block\Cppr;
 
 class Info extends \Verba\Block\Json
 {
 
     function build()
     {
-        $Shop = \Mod\Shop::getInstance();
+        $Shop = \Verba\Mod\Shop::getInstance();
         $_cur = \Verba\_oh('currency');
         $_ps = \Verba\_oh('paysys');
         $this->content = array('lastoptime' => '', 'dataset' => array());
@@ -33,7 +33,7 @@ ORDER BY cur1, ps1, cur2
                 $this->content['dataset'][$key] = $row;
             }
         }
-        $mCron = \Mod\Cron::getInstance();
+        $mCron = \Verba\Mod\Cron::getInstance();
         $task = $mCron->getTask('', 'cron_shopRecalcCurrencyPaysysPairsRatio');
         if ($task) {
             $this->content['lastoptime'] = $task['lastStart'];

@@ -13,7 +13,7 @@ abstract class Row extends \Verba\Configurable implements HandlerInterface
     public $row;
 
     /**
-     * @var \FastTemplate
+     * @var \Verba\FastTemplate
      */
     protected $tpl;
 

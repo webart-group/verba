@@ -2,7 +2,7 @@
 class profile_orders extends \Verba\Block\Html {
 
   /**
-   * @var \Verba\User\Model\User
+   * @var \Verba\Mod\User\Model\User
    */
   public $U;
   protected $userId;
@@ -12,7 +12,7 @@ class profile_orders extends \Verba\Block\Html {
 
   function init()
   {
-    if(!$this->U || !$this->U instanceof \Verba\User\Model\User
+    if(!$this->U || !$this->U instanceof \Verba\Mod\User\Model\User
     || $this->U->getID() !=\Verba\User()->getID()){
       throw new Exception('Bad data');
     }
@@ -30,7 +30,7 @@ class profile_orders extends \Verba\Block\Html {
 
     if(!$this->_orderSide
     || !$this->userId){
-      throw new \Exception\Routing('Bad params');
+      throw new \Verba\Exception\Routing('Bad params');
     }
 
     $this->baseCfg['U'] = $this->U;
@@ -45,7 +45,7 @@ class profile_orders extends \Verba\Block\Html {
         $rq = $this->rq->shift();
         $tabClassName = 'profile_'.$this->_orderSide.'sList';
         /**
-         * @var $b \Block\Html
+         * @var $b \Verba\Block\Html
          */
         $b = new $tabClassName($rq, $this->baseCfg);
         $b->contentType = 'json';
@@ -54,7 +54,7 @@ class profile_orders extends \Verba\Block\Html {
     }
 
     if(!isset($b)){
-      if($orderCode = \Mod\Order::i()->isOrderCode($this->rq->node))
+      if($orderCode = \Verba\Mod\Order::i()->isOrderCode($this->rq->node))
       {
         $rq = $this->rq->shift();
 
@@ -67,7 +67,7 @@ class profile_orders extends \Verba\Block\Html {
      * @var $b Block
      */
     if(!isset($b)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     return $b->route();

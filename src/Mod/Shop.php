@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Shop extends \Verba\Mod
 {
@@ -29,7 +29,7 @@ class Shop extends \Verba\Mod
 
     function packCurrenciesToClient()
     {
-        $mCurr = \Mod\Currency::getInstance();
+        $mCurr = \Verba\Mod\Currency::getInstance();
         $currs = $mCurr->getCurrencies(false);
         $r = array();
         if (!is_array($currs) || empty($currs)) {
@@ -85,8 +85,8 @@ class Shop extends \Verba\Mod
 
         $cc = $Currency->getCrossCurrencyProps();
 
-        //$Store = \Mod\Store::getInstance();
-        $Shop = \Mod\Shop::getInstance();
+        //$Store = \Verba\Mod\Store::getInstance();
+        $Shop = \Verba\Mod\Shop::getInstance();
         $Nk = (float)$Shop->gC('Nk');
 
         // Очищение таблицы Pc
@@ -178,7 +178,7 @@ class Shop extends \Verba\Mod
         set_time_limit(600);
         $this->recalcCPPR();
 
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
         $mStore->refreshStoresCPK();
 
     }
@@ -221,7 +221,7 @@ class Shop extends \Verba\Mod
         }
 
         /**
-         * @var $mCurrency \Mod\Currency
+         * @var $mCurrency \Verba\Mod\Currency
          */
         $mCurrency = \Verba\_mod('currency');
         if (!$rateIn) {
@@ -248,7 +248,7 @@ class Shop extends \Verba\Mod
     function crossrate($curInId, $curOutId)
     {
         /**
-         * @var $mCurrency \Mod\Currency
+         * @var $mCurrency \Verba\Mod\Currency
          */
         $mCurrency = \Verba\_mod('currency');
 
@@ -284,7 +284,7 @@ class Shop extends \Verba\Mod
     {
 
         if (is_numeric($Cur)) {
-            $Cur =  \Mod\Currency::getInstance()->getCurrency($Cur);
+            $Cur =  \Verba\Mod\Currency::getInstance()->getCurrency($Cur);
         }
 
         return '<span class="o-cur-sym">' . \Verba\reductionToCurrency($sum) . '<span>' . (!$Cur instanceof \Verba\Model\Currency ? '??' : $Cur->symbol) . '</span></span>';

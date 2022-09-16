@@ -1,6 +1,6 @@
 <?php
 
-class captcha_img extends \Block\Raw
+class captcha_img extends \Verba\Block\Raw
 {
 
     public $hash;
@@ -9,7 +9,7 @@ class captcha_img extends \Block\Raw
     {
 
         if (!$this->hash) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $response = new \Verba\Response\Raw();
@@ -22,7 +22,7 @@ class captcha_img extends \Block\Raw
     {
 
         /**
-         * @var $mCaptcha \Mod\Captcha
+         * @var $mCaptcha \Verba\Mod\Captcha
          */
 
         $mCaptcha = \Verba\_mod('captcha');

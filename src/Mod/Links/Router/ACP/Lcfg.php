@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Links\Router\ACP;
+namespace Verba\Mod\Links\Router\ACP;
 
 class Lcfg extends \Verba\Request\Http\Router
 {

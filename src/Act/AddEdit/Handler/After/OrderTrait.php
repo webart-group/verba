@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Act\AddEdit\Handler\After;
 
-use Mod\Order;
+use Verba\Mod\Order;
 
 trait OrderTrait{
   /**
@@ -9,7 +9,7 @@ trait OrderTrait{
    */
   protected $mOrder;
   /**
-   * @var \Mod\Order\Model\Order
+   * @var \Verba\Mod\Order\Model\Order
    *
    */
   protected $Order;
@@ -23,7 +23,7 @@ trait OrderTrait{
 
     $this->mOrder = Order::getInstance();
 
-    $this->Order = new \Mod\Order\Model\Order($this->ah->getIID());
+    $this->Order = new \Verba\Mod\Order\Model\Order($this->ah->getIID());
 
     if(!$this->Order instanceof \Verba\Mod\Order\Model\Order){
       $this->log()->error('Order item not found');

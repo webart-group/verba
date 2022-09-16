@@ -24,8 +24,8 @@ class OrderCanceledCashback extends After
         $orderCurId = $this->Order->getCurrency()->getId();
 
         /**
-         * @var $sellerAcc \Mod\Account\Model\Account
-         * @var $buyerAcc \Mod\Account\Model\Account
+         * @var $sellerAcc \Verba\Mod\Account\Model\Account
+         * @var $buyerAcc \Verba\Mod\Account\Model\Account
          */
         try {
             $sellerAcc = $this->Order->getStore()->getAccountByCur($orderCurId);
@@ -36,7 +36,7 @@ class OrderCanceledCashback extends After
 
             // Снятие суммы с блокированного баланса Торговца #balance #balance_change
             $balopSellerEase = $sellerAcc->balanceUpdate(
-                new \Mod\Balop\Cause\OrderPayedCanceledCashbackSellerEase(array(
+                new \Verba\Mod\Balop\Cause\OrderPayedCanceledCashbackSellerEase(array(
                         'primitiveId' => $this->Order->getId(),
                         'Acc' => $sellerAcc,
                     )
@@ -49,11 +49,11 @@ class OrderCanceledCashback extends After
 
             // Возврат суммы на основной баланс Покупателя #balance #balance_change
 
-            $U_order = new \Verba\User\Model\User($this->ah->getActualValue('owner'));
+            $U_order = new \Verba\Mod\User\Model\User($this->ah->getActualValue('owner'));
             $buyerAcc = $U_order->Accounts()->getAccountByCur($orderCurId);
 
             $balopSellerGravity = $buyerAcc->balanceUpdate(
-                new \Mod\Balop\Cause\OrderPayedCanceledCashbackBuyerGravityFinal($balopSellerEase)
+                new \Verba\Mod\Balop\Cause\OrderPayedCanceledCashbackBuyerGravityFinal($balopSellerEase)
             );
 
             if (!$balopSellerGravity || !$balopSellerGravity->active) {

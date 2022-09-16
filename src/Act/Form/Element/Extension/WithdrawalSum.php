@@ -37,7 +37,7 @@ class WithdrawalSum extends Extension
         $this->tpl->define($this->templates);
 
         $this->tpl->assign(array(
-            'CUR_UNIT' => \Mod\Currency::getInstance()->getCurrency($this->curId)->symbol
+            'CUR_UNIT' => \Verba\Mod\Currency::getInstance()->getCurrency($this->curId)->symbol
         ));
 
         $this->ah()->addJsAfter("

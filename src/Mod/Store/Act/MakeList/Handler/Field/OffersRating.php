@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Store\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Store\Act\MakeList\Handler\Field;
 
 use Act\MakeList\Handler\Field;
 
@@ -21,7 +21,7 @@ class OffersRating extends Field {
                 : 0,
             'COUNT_TEXT' => \Verba\Lang::get('review count how_mutch',[
                 'count' => $this->list->row['store_reviews_count'],
-                'word' => make_padej_ru($this->list->row['store_reviews_count'],
+                'word' => \Verba\make_padej_ru($this->list->row['store_reviews_count'],
                     \Verba\Lang::get('review count forms root'),
                     \Verba\Lang::get('review count forms cases')
                 )

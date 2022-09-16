@@ -13,7 +13,7 @@ class Extension extends \Verba\Configurable{
    */
   public $ah;
   /**
-   * @var \FastTemplate
+   * @var \Verba\FastTemplate
    */
   public $tpl;
 

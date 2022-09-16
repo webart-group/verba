@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\Act\Look\Handler;
+namespace Verba\Mod\Game\Act\Look\Handler;
 
 use Act\Look\Handler;
 
@@ -13,6 +13,6 @@ class StartAtWithDeal extends Handler
             return \Verba\Lang::get('game view startAsWithDeal');
         }
 
-        return \Mod\Shop::formatDate($ts);
+        return \Verba\Mod\Shop::formatDate($ts);
     }
 }

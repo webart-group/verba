@@ -7,7 +7,7 @@
  * Time: 21:01
  */
 
-namespace Mod\Payment\Transaction;
+namespace Verba\Mod\Payment\Transaction;
 
 
 class Send extends \Verba\Mod\Payment\Transaction

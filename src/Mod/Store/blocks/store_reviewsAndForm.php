@@ -11,7 +11,7 @@ class store_reviewsAndForm extends \Verba\Block\Html
 
     protected $_userCanAddNewReview;
     /**
-     * @var $Order \Mod\Order\Model\Order
+     * @var $Order \Verba\Mod\Order\Model\Order
      */
     public $Order;
     /**
@@ -44,7 +44,7 @@ class store_reviewsAndForm extends \Verba\Block\Html
         if ($this->rq->node === 'create'
             || $this->rq->node === 'createform') {
             if (!$this->userCanAddReview()) {
-                $response = new \Block\Json($this);
+                $response = new \Verba\Block\Json($this);
                 $response->setOperationStatus(false);
                 $response->content = $this->_userCanAddNewReview;
                 return $response;
@@ -62,7 +62,7 @@ class store_reviewsAndForm extends \Verba\Block\Html
                     $rq->addParent($this->prodItem->getOtId(), $this->prodItem->getId());
                 }
             }
-            $response = $b = new \Mod\Routine\Block\Form\Json($rq, array(
+            $response = $b = new \Verba\Mod\Routine\Block\Form\Json($rq, array(
                 'cfg' => 'public public/order/review',
                 'dcfg' => array(
                     'url' => array(
@@ -73,7 +73,7 @@ class store_reviewsAndForm extends \Verba\Block\Html
             // добавление отзыва
         } elseif ($this->rq->node === 'create') {
 
-            $response = new \Mod\Routine\Block\CUNow($rq);
+            $response = new \Verba\Mod\Routine\Block\CUNow($rq);
 
             // html-список отзывов
         } elseif ($this->rq->node === 'list') {
@@ -86,7 +86,7 @@ class store_reviewsAndForm extends \Verba\Block\Html
             return $response;
         }
 
-        throw new \Exception\Routing();
+        throw new \Verba\Exception\Routing();
     }
 
     function setUrlBase($url)
@@ -116,10 +116,10 @@ class store_reviewsAndForm extends \Verba\Block\Html
     {
         if ($this->_userCanAddNewReview === null) {
             /**
-             * @var $mReview \Mod\Review
+             * @var $mReview \Verba\Mod\Review
              */
             $mReview = \Verba\_mod('Review');
-            $this->_userCanAddNewReview = $mReview->checkIfAllowCreateReview($this->Store, User());
+            $this->_userCanAddNewReview = $mReview->checkIfAllowCreateReview($this->Store, \Verba\User());
         }
         return $this->_userCanAddNewReview === true;
     }

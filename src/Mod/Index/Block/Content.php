@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Index\Block;
+namespace Verba\Mod\Index\Block;
 
 class Content extends \Verba\Block\Html
 {

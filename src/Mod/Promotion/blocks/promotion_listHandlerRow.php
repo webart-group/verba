@@ -7,7 +7,7 @@ class promotion_listHandlerRow extends ListHandlerRow {
 
     self::$c++;
     $tpl = $this->list->tpl();
-    $url = \Mod\Seo::idToSeoStr($this->list->row, array('seq' => $this->list->getCurrentPos(), 'slID' => $this->list->getID()));
+    $url = \Verba\Mod\Seo::idToSeoStr($this->list->row, array('seq' => $this->list->getCurrentPos(), 'slID' => $this->list->getID()));
 
     $tpl->assign(array(
       'ITEM_DESCRIPTION' => $this->list->row['description'],

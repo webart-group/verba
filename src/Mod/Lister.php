@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 class Lister extends \Verba\Mod
 {
     use \Verba\ModInstance;

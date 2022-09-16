@@ -7,7 +7,7 @@ class cart_Instance extends \Verba\Block\Html{
       array('cart customer', 'shop'),
     ));
     /**
-     * @var \Mod\Cart $Cart
+     * @var \Verba\Mod\Cart $Cart
      */
     $Cart = \Verba\_mod('cart');
     $paysys = $Cart->getPaysys();

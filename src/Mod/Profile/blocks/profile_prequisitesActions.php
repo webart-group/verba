@@ -10,20 +10,20 @@ class profile_prequisitesActions extends \Verba\Block{
       case 'create':
         //$this->rq->action = $this->rq->node;
         $baseCfg['responseAs'] =  'json-item-updated';
-        $b = new \Mod\Routine\Block\CUNow($this, $baseCfg);
+        $b = new \Verba\Mod\Routine\Block\CUNow($this, $baseCfg);
         break;
 
       case 'cuform':
-        $b = new \Mod\Profile\Block\Prequisites\Form($this);
+        $b = new \Verba\Mod\Profile\Block\Prequisites\Form($this);
         break;
 
       case 'remove':
-        $b = new \Mod\Routine\Block\Delete($this, $baseCfg);
+        $b = new \Verba\Mod\Routine\Block\Delete($this, $baseCfg);
         break;
     }
 
     if(!isset($b)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     return $b->route();

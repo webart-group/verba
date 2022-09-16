@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Order\Router;
+namespace Verba\Mod\Order\Router;
 
-use Mod\ACP\Router\ObjectType;
+use Verba\Mod\Acp\Router\ObjectType;
 
 class ACP extends \Verba\Request\Http\Router
 {
@@ -14,7 +14,7 @@ class ACP extends \Verba\Request\Http\Router
         if (!empty($this->request->action)) {
             switch ($this->request->action) {
                 case 'transactions':
-                    $router = new \Mod\Order\Transaction($this);
+                    $router = new \Verba\Mod\Order\Transaction($this);
                     break;
             }
         }

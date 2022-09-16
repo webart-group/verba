@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class Account extends \Verba\Mod
 {
@@ -14,7 +14,7 @@ class Account extends \Verba\Mod
     function loadAccBalances($accId, $ownerId = false)
     {
 
-        if (is_object($accId) && $accId instanceof \Mod\Account\Model\Account) {
+        if (is_object($accId) && $accId instanceof \Verba\Mod\Account\Model\Account) {
             $Acc = $accId;
             $accId = $Acc->getId();
             $ownerId = $Acc->owner;
@@ -59,7 +59,7 @@ SELECT
 
         $_account = \Verba\_oh('account');
 
-        $Acc = new \Mod\Account\Model\Account($accId);
+        $Acc = new \Verba\Mod\Account\Model\Account($accId);
         if (!$Acc || !$Acc->getId()) {
             return 0;
         }

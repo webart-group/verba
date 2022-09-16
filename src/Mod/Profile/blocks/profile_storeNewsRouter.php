@@ -26,14 +26,14 @@ class profile_storeNewsRouter extends \Verba\Block{
       case 'update':
         $blockCfg['responseAs'] = 'json-item-updated';
 
-        $b = new \Mod\Routine\Block\CUNow($rq, $blockCfg);
+        $b = new \Verba\Mod\Routine\Block\CUNow($rq, $blockCfg);
         break;
 
       case 'cuform':
         $blockCfg['cfg'] = 'public public/profile/store_news';
 
 
-        $b = new \Mod\Routine\Block\Form\Json($rq, $blockCfg);
+        $b = new \Verba\Mod\Routine\Block\Form\Json($rq, $blockCfg);
         break;
       case '':
       case 'list':
@@ -44,7 +44,7 @@ class profile_storeNewsRouter extends \Verba\Block{
         );
         switch($this->rq->node){
           case 'list':
-            $b = new \Mod\Routine\Block\MakeList\Json($rq, $blockCfg);
+            $b = new \Verba\Mod\Routine\Block\MakeList\Json($rq, $blockCfg);
             break;
           case '':
 
@@ -53,19 +53,19 @@ class profile_storeNewsRouter extends \Verba\Block{
               'titleLangKey' => 'store news list title',
             ));
             $b->addItems(array(
-              new \Mod\Routine\Block\MakeList($rq, $blockCfg)
+              new \Verba\Mod\Routine\Block\MakeList($rq, $blockCfg)
             ));
             break;
         }
         break;
       case 'delete':
 
-        $b = new \Mod\Routine\Block\Delete\Json($rq, $blockCfg);
+        $b = new \Verba\Mod\Routine\Block\Delete\Json($rq, $blockCfg);
         break;
     }
 
     if(!isset($b)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     return $b->route();

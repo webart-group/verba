@@ -14,7 +14,7 @@ class DataType extends Around
             return $this->getExistsValue('data_type');
         }
 
-        $mOtype = \Mod\Otype::getInstance();
+        $mOtype = \Verba\Mod\Otype::getInstance();
         $dts = $mOtype->gC('avaibleDataTypes');
         if(!array_key_exists($this->value, $dts)){
             $this->log()->error('Unknown OAttr Data Type code '.var_export($this->value, true));

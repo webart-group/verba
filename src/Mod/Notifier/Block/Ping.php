@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Notifier\Block;
+namespace Verba\Mod\Notifier\Block;
 
 class Ping extends \Verba\Block\Json{
 

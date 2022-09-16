@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class Langu extends \Verba\Mod {
     use \Verba\ModInstance;

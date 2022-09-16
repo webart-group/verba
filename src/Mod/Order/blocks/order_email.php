@@ -12,11 +12,11 @@ class order_email extends \Verba\Block\Html
         'ORDER_INFO_FIELDS' => '',
     );
     /**
-     * @var \Mod\CoMail\PHPMailer
+     * @var \Verba\Mod\CoMail\PHPMailer
      */
     protected $Mail;
     /**
-     * @var \Mod\Order\Model\Order
+     * @var \Verba\Mod\Order\Model\Order
      */
     protected $Order;
 
@@ -48,7 +48,7 @@ class order_email extends \Verba\Block\Html
     function init()
     {
 
-        if (!is_object($this->Order) || !$this->Order instanceof \Mod\Order\Model\Order) {
+        if (!is_object($this->Order) || !$this->Order instanceof \Verba\Mod\Order\Model\Order) {
             throw  new \Verba\Exception\Building('Bad Order Object');
         }
 
@@ -322,7 +322,7 @@ class order_email extends \Verba\Block\Html
 
     function setOrder($order)
     {
-        $this->Order = $order instanceof \Mod\Order\Model\Order ? $order : false;
+        $this->Order = $order instanceof \Verba\Mod\Order\Model\Order ? $order : false;
         if (!$this->Order) {
             throw new Exception('Bad order instance');
         }

@@ -16,9 +16,9 @@ class CurActiveUpdated extends CurpsActiveUpdated{
     //                                              //
     //..............................................//
     /**
-     * @var $mShop \Mod\Shop;
+     * @var $mShop \Verba\Mod\Shop;
      */
-    $mShop = \Mod\Shop::getInstance();
+    $mShop = \Verba\Mod\Shop::getInstance();
 
     // обновляем значение iCurrencyActive, oCurrencyActive
     $q = "
@@ -60,7 +60,7 @@ class CurActiveUpdated extends CurpsActiveUpdated{
 
       $this->DB()->query($q);
 
-      \Mod\Store::getInstance()->refreshStoresCPK();
+      \Verba\Mod\Store::getInstance()->refreshStoresCPK();
     }
 
 

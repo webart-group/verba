@@ -30,7 +30,7 @@ class Payed extends Around
 
             }elseif($paymentCause instanceof \Verba\Mod\Account\Model\Account){
                 /**
-                 * @var $this->_existsItem \Mod\Order\Model\Order
+                 * @var $this->_existsItem \Verba\Mod\Order\Model\Order
                  */
                 $r = (int)($paymentCause->active
                     && $paymentCause->isSumApproved($this->ah->getExistsItem()->getByuerSum() * -1)

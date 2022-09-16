@@ -7,7 +7,7 @@
  * Time: 14:03
  */
 
-namespace Mod\SnailMail;
+namespace Verba\Mod\SnailMail;
 
 
 class Exception extends \Exception

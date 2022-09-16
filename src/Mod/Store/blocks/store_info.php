@@ -17,7 +17,7 @@ class store_info extends \Verba\Block\Html{
     }
 
     if(!$this->Store instanceof \Model\Store || !$this->Store->getId()){
-      throw new \Exception\Routing('Unknown store');
+      throw new \Verba\Exception\Routing('Unknown store');
     }
 
     return true;
@@ -26,7 +26,7 @@ class store_info extends \Verba\Block\Html{
   function route(){
 
 //    if($this->Store->getID() < 20 && !\Verba\_mod('acp')->checkAccess()){
-//      throw new \Exception\Routing();
+//      throw new \Verba\Exception\Routing();
 //    }
 
     $listId = 'or_'._oh('store')->getID().'_'.$this->Store->getId();
@@ -46,7 +46,7 @@ class store_info extends \Verba\Block\Html{
 
     $this->mergeHtmlIncludes(new page_htmlIncludesForm($this->rq));
 
-    $mStore = \Mod\Store::getInstance();
+    $mStore = \Verba\Mod\Store::getInstance();
 
     $this->addItems(array(
 
@@ -78,7 +78,7 @@ class store_info extends \Verba\Block\Html{
   function prepare(){
 
     $this->tpl->assign(array(
-      'STORE_URL' => \Mod\Store::getInstance()->getPublicUrl($this->Store->getId())
+      'STORE_URL' => \Verba\Mod\Store::getInstance()->getPublicUrl($this->Store->getId())
     ));
 
   }

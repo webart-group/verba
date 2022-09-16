@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Tool;
+namespace Verba\Mod\Profile\Block\Toolbar\Tool;
 
 class Store  extends User
 {
@@ -16,7 +16,7 @@ class Store  extends User
     function prepareNotifierAgent()
     {
 
-        $this->notifierAgent['channel'] = \Mod\Store::getInstance()->getStoreChannelName($this->U->getStoreId());
+        $this->notifierAgent['channel'] = \Verba\Mod\Store::getInstance()->getStoreChannelName($this->U->getStoreId());
 
         parent::prepareNotifierAgent();
     }

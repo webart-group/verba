@@ -11,7 +11,7 @@ class OAttributeDataTypeValues extends Extension
   }
 
   function loadValues(){
-    $dt = \Mod\Otype::getInstance()->gC('avaibleDataTypes');
+    $dt = \Verba\Mod\Otype::getInstance()->gC('avaibleDataTypes');
     $translate = \Verba\Lang::get('oattribute avaibleDataTypes');
     $r = array();
     foreach($dt as $code => $cfg){

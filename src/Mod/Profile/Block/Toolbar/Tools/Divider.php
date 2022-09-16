@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Tools;
+namespace Verba\Mod\Profile\Block\Toolbar\Tools;
 
 class Divider extends \Verba\Block\Html {
 

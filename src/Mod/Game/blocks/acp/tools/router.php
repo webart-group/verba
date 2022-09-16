@@ -1,7 +1,7 @@
 <?php
-namespace Mod\Game\blocks\acp\tools;
+namespace Verba\Mod\Game\blocks\acp\tools;
 
-class router extends \Block{
+class router extends \Verba\Block{
 
   function route()
   {
@@ -15,7 +15,7 @@ class router extends \Block{
         break;
     }
     if(!isset($h)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     return $h;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
-use Mod\Notifier\Pipe;
+use Verba\Mod\Notifier\Pipe;
 
 class Chatik extends \Verba\Mod
 {
@@ -14,7 +14,7 @@ class Chatik extends \Verba\Mod
     }
 
     /**
-     * @param $Channel \Mod\Chatik\Channel\Store
+     * @param $Channel \Verba\Mod\Chatik\Channel\Store
      * @return bool
      * @throws
      */
@@ -32,7 +32,7 @@ class Chatik extends \Verba\Mod
             'namespace' => $Channel->namespace,
         ));
         $ae->addedit_object();
-        $Channel = \Mod\WS\Channel::initObject($Channel->parts);
+        $Channel = \Verba\Mod\WS\Channel::initObject($Channel->parts);
         if (!$Channel->OItem->getId()) {
             return false;
         }
@@ -78,7 +78,7 @@ LEFT JOIN " . $_cm->vltURI() . " cm ON cml.ch_iid = cm.id && cm.created > a.chec
             return array();
         }
         /**
-         * @var $mImage \Mod\Image
+         * @var $mImage \Verba\Mod\Image
          */
         $mImage = \Verba\_mod('image');
 
@@ -189,7 +189,7 @@ LEFT JOIN " . $_cm->vltURI() . " cm ON cml.ch_iid = cm.id && cm.created > a.chec
 
     function genNotifierCfgForStore($Store)
     {
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
         return array(
             'channel' => $mStore->getStoreChannelName($Store),
             'pipe' => Pipe::ALIAS_STORE,

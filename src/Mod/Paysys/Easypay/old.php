@@ -40,7 +40,7 @@ class PayTransaction_Easypay extends Base{
   }
 
   function setOrderData($orderData){
-    if(!$orderData instanceof \Mod\Order\Model\Order){
+    if(!$orderData instanceof \Verba\Mod\Order\Model\Order){
       return false;
     }
     $this->orderData = $orderData;

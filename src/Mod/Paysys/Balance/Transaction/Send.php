@@ -6,7 +6,7 @@
  * Date: 26.08.19
  * Time: 15:42
  */
-namespace Mod\Paysys\Balance\Transaction;
+namespace Verba\Mod\Paysys\Balance\Transaction;
 
 class Send extends \Verba\Mod\Payment\Transaction\Send
 {
@@ -14,14 +14,14 @@ class Send extends \Verba\Mod\Payment\Transaction\Send
     protected $_paysysCode = 'persBal';
 
     /**
-     * @var \Mod\Paysys\Balance
+     * @var \Verba\Mod\Paysys\Balance
      */
     protected $mod;
 
     function __construct($orderId){
 
         $this->mod = \Verba\_mod('Paysys_Balance');
-        $this->Order = \Mod\Order::i()->getOrder($orderId);
+        $this->Order = \Verba\Mod\Order::i()->getOrder($orderId);
         $this->currency = $this->Order->getCurrency();
 
         $this->_paysysCode .= $this->currency->code;
@@ -30,7 +30,7 @@ class Send extends \Verba\Mod\Payment\Transaction\Send
 
         $this->url = '/pay';
 
-        $this->request =  new \Mod\Paysys\Balance\Request\Send($this, $this->genRequestData());
+        $this->request =  new \Verba\Mod\Paysys\Balance\Request\Send($this, $this->genRequestData());
 
         $this->validate();
         $this->status = $this->genStatus();

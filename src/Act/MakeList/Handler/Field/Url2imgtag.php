@@ -3,7 +3,7 @@
 namespace Verba\Act\MakeList\Handler\Field;
 
 use \Verba\Act\MakeList\Handler\Field;
-use Mod\Image;
+use Verba\Mod\Image;
 
 class Url2imgtag extends Field
 {

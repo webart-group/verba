@@ -22,7 +22,7 @@ class OType extends After
 
     $newVltName = $code;
 
-    $modOtype = \Mod\Otype::getInstance();
+    $modOtype = \Verba\Mod\Otype::getInstance();
 
     $cloned_vlt_id = $modOtype->cloneVault($_base, $newVltName);
     if(!$cloned_vlt_id){

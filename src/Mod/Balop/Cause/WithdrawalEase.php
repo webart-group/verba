@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
-use Mod\Balop\Cause;
+use Verba\Mod\Balop\Cause;
 
 class WithdrawalEase extends Cause{
 
@@ -15,7 +15,7 @@ class WithdrawalEase extends Cause{
 
     function init()
     {
-        $this->Cur =  \Mod\Currency::getInstance()->getCurrency($this->_i->currencyId);
+        $this->Cur =  \Verba\Mod\Currency::getInstance()->getCurrency($this->_i->currencyId);
         $this->getSum();
     }
 

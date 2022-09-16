@@ -1,16 +1,16 @@
 <?php
 
-namespace Mod\Paysys;
+namespace Verba\Mod\Paysys;
 
-use Mod\Instance;
-use Mod\Paysys\Unitpay\Transaction\CreateBill;
-use Mod\Paysys\Unitpay\Transaction\Send;
-use Mod\Paysys\Unitpay\Transaction\Notify as TransactionNontify;
+use Verba\Mod\Instance;
+use Verba\Mod\Paysys\Unitpay\Transaction\CreateBill;
+use Verba\Mod\Paysys\Unitpay\Transaction\Send;
+use Verba\Mod\Paysys\Unitpay\Transaction\Notify as TransactionNontify;
 
 class Unitpay extends \Verba\Mod
 {
     use \Verba\ModInstance;
-    use \Mod\Payment\Paysys;
+    use \Verba\Mod\Payment\Paysys;
 
     protected $_tx_code = 'tx_unitpay';
 

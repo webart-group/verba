@@ -6,7 +6,7 @@
  * Date: 26.08.19
  * Time: 16:12
  */
-namespace Mod\Order\Balop\Cause;
+namespace Verba\Mod\Order\Balop\Cause;
 
 class Success extends \Verba\Mod\Order\Balop\Cause
 {

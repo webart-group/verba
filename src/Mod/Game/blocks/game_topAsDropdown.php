@@ -28,7 +28,7 @@ class game_topAsDropdown extends \Verba\Block\Html{
 
     $mImage = \Verba\_mod('image');
     $_game = \Verba\_oh('game');
-    $iCfg = \Mod\Image::getImageConfig($_game->p('icon_config'));
+    $iCfg = \Verba\Mod\Image::getImageConfig($_game->p('icon_config'));
     foreach($this->games as $catalogId => $CatItem){
 
       if(!$CatItem->icon){

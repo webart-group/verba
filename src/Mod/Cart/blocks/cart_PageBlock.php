@@ -9,7 +9,7 @@ class cart_PageBlock extends \Verba\Block\Html{
     $pad = \Verba\Lang::get('cart case');
     $root = \Verba\Lang::get('cart totalQuant');
     for($i=0; $i<10; ++$i){
-      $padezh[$i] = call_user_func('make_padej_'.SYS_LOCALE, $i, $root, $pad);
+      $padezh[$i] = call_user_func('\Verba\make_padej_'.SYS_LOCALE, $i, $root, $pad);
     }
     $cfg = array(
       'container' => '#cart-holder',

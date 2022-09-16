@@ -15,7 +15,7 @@ class CustomerStatusId extends Around
         $customerId = $this->ah->getExtendedData('customerId');
         /**
          * @var $mCustomer \Customer
-         * @var $customerProfile \Mod\Customer\Profile
+         * @var $customerProfile \Verba\Mod\Customer\Profile
          */
         $mCustomer = \Verba\_mod('customer');
         $customerProfile = $mCustomer->getProfile($customerId);

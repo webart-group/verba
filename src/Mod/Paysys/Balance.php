@@ -1,15 +1,15 @@
 <?php
 
-namespace Mod\Paysys;
+namespace Verba\Mod\Paysys;
 
-use \Mod\Instance;
-use \Mod\Payment\Paysys;
+use \Verba\Mod\Instance;
+use \Verba\Mod\Payment\Paysys;
 
 class Balance extends \Verba\Mod
 {
 
     use \Verba\ModInstance;
-    use \Mod\Payment\Paysys;
+    use \Verba\Mod\Payment\Paysys;
 
     public $pscode = 'balance';
 

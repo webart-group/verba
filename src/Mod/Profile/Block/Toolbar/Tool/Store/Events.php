@@ -1,7 +1,7 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Tool\Store;
+namespace Verba\Mod\Profile\Block\Toolbar\Tool\Store;
 
-use Mod\Notifier\Pipe;
+use Verba\Mod\Notifier\Pipe;
 
 class Events extends \Verba\Mod\Profile\Block\Toolbar\Tool\Store{
     public $url = '/store/msgs';

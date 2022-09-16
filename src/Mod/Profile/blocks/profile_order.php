@@ -6,7 +6,7 @@ class profile_order extends profile_orders{
   );
 
   /**
-   * @var \Mod\Order\Model\Order
+   * @var \Verba\Mod\Order\Model\Order
    */
   public $Order;
 
@@ -14,9 +14,9 @@ class profile_order extends profile_orders{
 
     parent::init();
 
-    $this->Order =  \Mod\Order::i()->getOrder($this->rq->iid);
+    $this->Order =  \Verba\Mod\Order::i()->getOrder($this->rq->iid);
     if(!$this->Order){
-      throw new \Exception\Routing('Bad params');
+      throw new \Verba\Exception\Routing('Bad params');
     }
 
     $this->rq->iid = $this->Order->getId();
@@ -31,7 +31,7 @@ class profile_order extends profile_orders{
     $blockName = 'profile_'.$this->_orderSide.'Order';
 
     if(!class_exists($blockName)){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
     /**

@@ -681,7 +681,7 @@ ORDER BY `priority` DESC";
 
         // Доступ к атрибуту по правам
         if (\Verba\reductionToArray($rights) && count($attr_list)) {
-            $U = User();
+            $U = \Verba\User();
             foreach ($attr_list as $attr_id => $attr_code) {
                 $A = $this->A($attr_id, true);
                 if ($A->restrict_key != 0 && is_int($A->restrict_key) && !$U->chr($A->restrict_key, $rights)) {

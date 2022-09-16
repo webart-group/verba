@@ -66,7 +66,7 @@ class shop_ibForm extends \Verba\Block\Html
                 ? $this->service->config['groups']['tform']
                 : false;
         }
-        $U = User();
+        $U = \Verba\User();
         if ($U->getAuthorized() && $this->_trq) {
             $qm = new \Verba\QueryMaker($this->_trq, false, true);
             $qm->addWhere($U->getID(), $this->_prod->getOwnerAttributeCode());

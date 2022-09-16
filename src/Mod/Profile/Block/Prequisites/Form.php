@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Profile\Block\Prequisites;
+namespace Verba\Mod\Profile\Block\Prequisites;
 
 class Form extends \Verba\Block\Json{
 

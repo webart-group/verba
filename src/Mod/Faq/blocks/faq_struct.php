@@ -17,7 +17,7 @@ class faq_struct extends \Verba\Block\Html
         $Tree = new Tree($_menu, 320, 1, array($_cnt->getID(), $_menu->getID()));
         $Tree->applyConfigDirect($treeCfg);
         /**
-         * @var $Node \Mod\Infocenter\Tree\View\Menu
+         * @var $Node \Verba\Mod\Infocenter\Tree\View\Menu
          */
         $Node = $Tree->buildNodesTree();
 

@@ -1,12 +1,12 @@
 <?php
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
-use Mod\Balop\Cause;
+use Verba\Mod\Balop\Cause;
 
 class Ordered extends Cause{
 
     /**
-     * @var \Mod\Order\Model\Order
+     * @var \Verba\Mod\Order\Model\Order
      */
 
     protected $Order;
@@ -18,7 +18,7 @@ class Ordered extends Cause{
         }
 
         if(!empty($this->primitiveId) && $this->primitiveOt == $orderOtId){
-            $this->Order = \Mod\Order::i()->getOrder($this->primitiveId);
+            $this->Order = \Verba\Mod\Order::i()->getOrder($this->primitiveId);
         }
 
     }

@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\Cron;
+namespace Verba\Mod\Game\Cron;
 
 class DisbleOverdueStartAt extends \Verba\Configurable {
 

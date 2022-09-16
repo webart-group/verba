@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Button;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Button;
 
 
 class Guest extends \Verba\Block\Html {
@@ -9,7 +9,7 @@ class Guest extends \Verba\Block\Html {
 
     function prepare(){
         $this->tpl->assign([
-            'USER_LOGIN_PAGE_URL' => \Verba\User\User::i()->getLoginPageUrl(),
+            'USER_LOGIN_PAGE_URL' => \Verba\Mod\User::i()->getLoginPageUrl(),
         ]);
     }
 }

@@ -10,7 +10,7 @@ class ForeignId extends \Verba\Act\MakeList\Filter
     public $attr;
     public $check_active;
     public $check_priority;
-    public $felement = '\Html\Select';
+    public $felement = '\Verba\Html\Select';
 
     function __construct($list, $cfg)
     {

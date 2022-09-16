@@ -7,7 +7,7 @@
  * Time: 12:11
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form\Inside;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside;
 
 
 class Select extends Base {
@@ -38,7 +38,7 @@ class Select extends Base {
         }
 
         if(!isset($h)){
-            throw new \Exception\Routing('Attr Inside Select unknown action');
+            throw new \Verba\Exception\Routing('Attr Inside Select unknown action');
         }
         return $h;
     }

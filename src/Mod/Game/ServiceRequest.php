@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Game;
+namespace Verba\Mod\Game;
 
 class ServiceRequest
 {
@@ -25,7 +25,7 @@ class ServiceRequest
     function __construct($game, $service = null)
     {
         /**
-         * @var $mGame \Mod\Game
+         * @var $mGame \Verba\Mod\Game
          */
         $mGame = \Verba\_mod('game');
 

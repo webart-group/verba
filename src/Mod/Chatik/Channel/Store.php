@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Chatik\Channel;
+namespace Verba\Mod\Chatik\Channel;
 
 class Store extends \Verba\Mod\Chatik\Channel
 {
@@ -20,7 +20,7 @@ class Store extends \Verba\Mod\Chatik\Channel
     }
 
     /**
-     * @param $U \Verba\User\Model\User
+     * @param $U \Verba\Mod\User\Model\User
      */
     function getContactsStruct($U)
     {
@@ -40,7 +40,7 @@ class Store extends \Verba\Mod\Chatik\Channel
     }
 
     /**
-     * @param $U \Verba\User\Model\User
+     * @param $U \Verba\Mod\User\Model\User
      * @return mixed|null
      */
     function customMessageInfoGenerator($userData)
@@ -117,9 +117,9 @@ class Store extends \Verba\Mod\Chatik\Channel
     function userHasAccess($U = null)
     {
         if ($U === null) {
-            $U = User();
+            $U = \Verba\User();
         }
-        if ($U instanceof \Verba\User\Model\User) {
+        if ($U instanceof \Verba\Mod\User\Model\User) {
             $userId = $U->getId();
         } else {
             $userId = (int)$U;
@@ -132,8 +132,8 @@ class Store extends \Verba\Mod\Chatik\Channel
 
     function canBeCreatedByUser($U = false)
     {
-        if (!$U || !$U instanceof \Verba\User\Model\User) {
-            $U = User();
+        if (!$U || !$U instanceof \Verba\Mod\User\Model\User) {
+            $U = \Verba\User();
         }
 
         return $this->userHasAccess($U);

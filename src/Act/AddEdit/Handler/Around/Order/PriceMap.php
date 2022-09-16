@@ -22,7 +22,7 @@ class PriceMap extends Around
 
         $pc_data = $ocd->Store->getPcOutData($iCurId, $iPaysysId);
         /**
-         * @var $Cart \Mod\Cart\CartInstance
+         * @var $Cart \Verba\Mod\Cart\CartInstance
          */
         $Cart = $this->ah->getExtendedData('cart');
         $items_price = $Cart->getItemsPrice();
@@ -34,7 +34,7 @@ class PriceMap extends Around
             'Pck' => $pc_data['Pck'],
             'ps_tax' => $iCur->round(($pc_data['Pc'] - $pc_data['balPers']) * $items_price),
             'oCurId' => $pc_data['oCurId'],
-            'crossrate' => \Mod\Shop::getInstance()->crossrate($iCur->getId(), $pc_data['oCurId']),
+            'crossrate' => \Verba\Mod\Shop::getInstance()->crossrate($iCur->getId(), $pc_data['oCurId']),
         );
         $r = json_encode($r);
         return $r;

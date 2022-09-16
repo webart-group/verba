@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 use phpcent\Client as CentClient;
 
@@ -47,9 +47,9 @@ class Centrifugo extends \Verba\Mod
     {
 
         if ($U === null) {
-            $U = User();
+            $U = \Verba\User();
         }
-        if (!$U || !$U instanceof \Verba\User\Model\User) {
+        if (!$U || !$U instanceof \Verba\Mod\User\Model\User) {
             return false;
         }
 

@@ -24,7 +24,7 @@ class Body extends \Verba\Block\Html
     use \Verba\Block\Html\Element\Attribute\CssClass;
 
     /**
-     * @return \Block\Html|\Response\Html
+     * @return \Verba\Block\Html|\Response\Html
      */
     function route()
     {

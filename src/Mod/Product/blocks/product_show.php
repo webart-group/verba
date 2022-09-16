@@ -414,7 +414,7 @@ class product_show extends \Verba\Block\Html{
 
   function genColorSelector($item){
     $oh = \Verba\_oh($item['ot_id']);
-    $ls = new \Html\Select();
+    $ls = new \Verba\Html\Select();
     $ls->setName('item-colors');
     $ls->setId('item'.$item[$oh->getPAC()].'_variant_selector');
 
@@ -432,7 +432,7 @@ class product_show extends \Verba\Block\Html{
   }
 
   function genSizesSelector($item){
-    $ls = new \Html\Select();
+    $ls = new \Verba\Html\Select();
     $ls->setName('item-sizes');
     $oh = \Verba\_oh($item['ot_id']);
 

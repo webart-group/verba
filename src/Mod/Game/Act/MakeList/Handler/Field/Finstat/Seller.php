@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Game\Act\MakeList\Handler\Field\Finstat;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Field\Finstat;
 
 use \Act\MakeList\Handler\Field;
 
@@ -36,7 +36,7 @@ class Seller extends Field
                 if ($this->list->row['sumHoldTill']) {
                     $r = '<div class="o-finstat-v">' . \Verba\Lang::get('game order fin_statuses holded-till') . '</div>';
                     if ($holdtime = strtotime($this->list->row['sumHoldTill'])) {
-                        $r .= \Mod\Game::parseToGameTimeHtml($holdtime);
+                        $r .= \Verba\Mod\Game::parseToGameTimeHtml($holdtime);
                     }
                 }
 

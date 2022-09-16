@@ -1,12 +1,12 @@
 <?php
-namespace Mod\Profile\Block\Toolbar;
+namespace Verba\Mod\Profile\Block\Toolbar;
 
 
-use \Mod\Profile\Block\Toolbar\Dropdown\Button\User as ButtonUser;
-use \Mod\Profile\Block\Toolbar\Dropdown\Button\Guest as ButtonGuest;
+use \Verba\Mod\Profile\Block\Toolbar\Dropdown\Button\User as ButtonUser;
+use \Verba\Mod\Profile\Block\Toolbar\Dropdown\Button\Guest as ButtonGuest;
 
-use \Mod\Profile\Block\Toolbar\Dropdown\Body\User as BodyUser;
-use \Mod\Profile\Block\Toolbar\Dropdown\Body\Guest as BodyGuest;
+use \Verba\Mod\Profile\Block\Toolbar\Dropdown\Body\User as BodyUser;
+use \Verba\Mod\Profile\Block\Toolbar\Dropdown\Body\Guest as BodyGuest;
 
 /**
  * Обертка меню

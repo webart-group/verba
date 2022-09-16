@@ -15,7 +15,7 @@ class Controller extends \Verba\Configurable
 
     protected $rq;
     /**
-     * @var \FastTemplate
+     * @var \Verba\FastTemplate
      */
     protected $tpl;
     /**
@@ -146,7 +146,7 @@ class Controller extends \Verba\Configurable
             }
 
             $className = strpos($className,'\\') === false
-                ? '\Act\MakeList\Filter\\'.ucfirst($className)
+                ? '\Verba\Act\MakeList\Filter\\'.ucfirst($className)
                 : $className;
 
             if (!class_exists($className)) {

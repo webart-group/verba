@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Paysys\Unitpay\Transaction;
+namespace Verba\Mod\Paysys\Unitpay\Transaction;
 
-class Notify extends \Mod\Payment\Transaction\Receive
+class Notify extends \Verba\Mod\Payment\Transaction\Receive
 {
 
     protected $_paysysCode = 'unitpay';
@@ -15,7 +15,7 @@ class Notify extends \Mod\Payment\Transaction\Receive
         if (!$ct) {
             $ct = &$_REQUEST;
         }
-        $this->request = new \Mod\Payment\Request\Notify($this, $ct);
+        $this->request = new \Verba\Mod\Payment\Request\Notify($this, $ct);
 
         $this->url = SYS_THIS_HOST . $_SERVER['REQUEST_URI'];
 

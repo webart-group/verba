@@ -6,7 +6,7 @@ class Logic extends \Verba\Act\MakeList\Filter{
   public $values;
 
   public $ftype = 'logic';
-  public $felement = '\Html\Select';
+  public $felement = '\Verba\Html\Select';
 
   function makeCaption(){
     $r = parent::makeCaption();

@@ -7,7 +7,7 @@
  * Time: 12:19
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
 
 
 class Assign extends AssignActionPrototype {

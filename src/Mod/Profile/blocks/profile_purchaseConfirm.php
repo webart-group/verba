@@ -11,7 +11,7 @@ class profile_purchaseConfirm extends profile_purchase
     {
         parent::init();
         if (!$this->Order->canBeClosedByBuyer()) {
-            throw new \Exception\Routing('Bad action params');
+            throw new \Verba\Exception\Routing('Bad action params');
         }
         $this->profileSuccessMsgLKey = 'orderConfirmedSuccessfull';
     }

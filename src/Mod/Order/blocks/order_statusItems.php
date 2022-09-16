@@ -21,7 +21,7 @@ class order_statusItems extends \Verba\Block\Html{
   public $parsePromotions = false;
 
   /**
-   * @var \Mod\Order\Model\Order
+   * @var \Verba\Mod\Order\Model\Order
    */
   public $Order;
   protected $curr;
@@ -36,7 +36,7 @@ class order_statusItems extends \Verba\Block\Html{
 
   function build(){
     $this->content = '';
-    if(!$this->Order instanceof \Mod\Order\Model\Order){
+    if(!$this->Order instanceof \Verba\Mod\Order\Model\Order){
       return $this->content;
     }
     $this->curr = $this->Order->getCurrency();

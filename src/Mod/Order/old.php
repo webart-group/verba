@@ -385,7 +385,7 @@ WHERE created > '".$date."' && of.`status` = 'success')";
                 $order = \Verba\_mod('order')->getOrder($orderid);
             }
 
-            if(!$order instanceof \Mod\Order\Model\Order){
+            if(!$order instanceof \Verba\Mod\Order\Model\Order){
                 throw new Exception('Unknown order');
             }
             $items = $order->getItems();
@@ -431,7 +431,7 @@ WHERE created > '".$date."' && of.`status` = 'success')";
                 $order = \Verba\_mod('order')->getOrder($orderid);
             }
 
-            if(!$order instanceof \Mod\Order\Model\Order){
+            if(!$order instanceof \Verba\Mod\Order\Model\Order){
                 throw new Exception('Unknown order');
             }
             $trans = $order->getTrans();

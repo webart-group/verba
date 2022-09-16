@@ -18,15 +18,15 @@ class profile_publicViewStats extends \Verba\Block\Html{
   );
 
   /**
-   * @var $U \Verba\User\Model\User
+   * @var $U \Verba\Mod\User\Model\User
    */
   public $U;
 
 
   function init(){
-    if(!is_object($this->U) || !$this->U instanceof \Verba\User\Model\User
+    if(!is_object($this->U) || !$this->U instanceof \Verba\Mod\User\Model\User
   || !$this->U->getID()){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
   }
 
@@ -43,7 +43,7 @@ class profile_publicViewStats extends \Verba\Block\Html{
     $this->tpl->assign(array(
       'PROFILE_PIC_URL' => $picUrl,
       'PROFILE_DISPLAY_NAME' => htmlspecialchars($this->U->display_name),
-      'PROFILE_PUB_URL' => \Mod\Profile::getInstance()->getPublicUrl($this->U->getID()),
+      'PROFILE_PUB_URL' => \Verba\Mod\Profile::getInstance()->getPublicUrl($this->U->getID()),
       'PROFILE_RATING' => 100,
       'ONLINE_STATUS_SIGN' => $this->U->getOnlineStatus()
     ));

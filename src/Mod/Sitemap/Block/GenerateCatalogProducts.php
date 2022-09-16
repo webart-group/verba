@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Sitemap\Block;
+namespace Verba\Mod\Sitemap\Block;
 
 class GenerateCatalogProducts extends \Verba\Mod\Sitemap\Block\Generator {
 

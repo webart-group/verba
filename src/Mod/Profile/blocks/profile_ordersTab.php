@@ -26,7 +26,7 @@ class profile_ordersTab extends profile_contentCommon
         parent::init();
 
         if (!$this->_orderSide) {
-            throw new \Exception\Routing('Bad Params');
+            throw new \Verba\Exception\Routing('Bad Params');
         }
 
         $this->bodyClass = 'profile-' . $this->_orderSide . 's';

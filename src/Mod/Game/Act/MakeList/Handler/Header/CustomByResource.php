@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\Act\MakeList\Handler\Header;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Header;
 
 class CustomByResource extends \Act\MakeList\Handler\Header
 {

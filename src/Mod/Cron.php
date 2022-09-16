@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Cron extends \Verba\Mod
 {
@@ -77,7 +77,7 @@ WHERE id = '" . $task['id'] . "'";
                         $args = array();
                     }
                     // Block
-                    if ($Class instanceof \Block) {
+                    if ($Class instanceof \Verba\Block) {
                         $Class->prepare();
                         $handler = array($Class, 'build');
                         // Cron task

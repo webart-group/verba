@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Links\Block;
+namespace Verba\Mod\Links\Block;
 
 class InitUI extends \Verba\Block\Json
 {

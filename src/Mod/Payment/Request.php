@@ -7,7 +7,7 @@
  * Time: 21:09
  */
 
-namespace Mod\Payment;
+namespace Verba\Mod\Payment;
 
 
 class Request extends \Verba\Configurable {

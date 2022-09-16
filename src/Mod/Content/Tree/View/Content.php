@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Content\Tree\View;
+namespace Verba\Mod\Content\Tree\View;
 
 class Content extends \Tree\Node\View
 {

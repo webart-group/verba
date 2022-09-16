@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class File extends \Verba\Mod
 {
@@ -195,7 +195,7 @@ class File extends \Verba\Mod
      * put your comment there...
      *
      * @param mixed $name
-     * @return \Mod\File\Config
+     * @return \Verba\Mod\File\Config
      */
     static function getFileConfig($name)
     {

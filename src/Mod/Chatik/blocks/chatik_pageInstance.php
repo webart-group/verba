@@ -34,7 +34,7 @@ class chatik_pageInstance extends \Verba\Block\Html
 
     function prepare()
     {
-        $U = User();
+        $U = \Verba\User();
         $this->userId = $U->getId();
 
         if (!$this->userId) {

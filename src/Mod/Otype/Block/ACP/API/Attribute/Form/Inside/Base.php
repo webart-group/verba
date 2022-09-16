@@ -7,7 +7,7 @@
  * Time: 12:09
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form\Inside;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside;
 
 
 class Base extends \Verba\Block\Json

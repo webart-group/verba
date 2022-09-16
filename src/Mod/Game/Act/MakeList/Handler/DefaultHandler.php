@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\Act\MakeList\Handler;
+namespace Verba\Mod\Game\Act\MakeList\Handler;
 
 class DefaultHandler extends \Act\MakeList\Handler\Field {
 
@@ -9,7 +9,7 @@ class DefaultHandler extends \Act\MakeList\Handler\Field {
         self::$c++;
         $tpl = $this->list->tpl();
         $oh = \Verba\_oh($this->list->row['ot_id']);
-        $url = \Mod\Seo::idToSeoStr($this->list->row, array('seq' => $this->list->getCurrentPos(), 'slID' => $this->list->getID()));
+        $url = \Verba\Mod\Seo::idToSeoStr($this->list->row, array('seq' => $this->list->getCurrentPos(), 'slID' => $this->list->getID()));
         $iid = $this->list->row[$oh->getPAC()];
         $cur = \Verba\_mod('cart')->getCurrency();
 

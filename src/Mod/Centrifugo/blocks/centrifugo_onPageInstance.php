@@ -21,7 +21,7 @@ class centrifugo_onPageInstance extends \Verba\Block\Html
         ));
 
         /**
-         * @var $mCent \Mod\Centrifugo
+         * @var $mCent \Verba\Mod\Centrifugo
          */
         $mCent = \Verba\_mod('centrifugo');
 

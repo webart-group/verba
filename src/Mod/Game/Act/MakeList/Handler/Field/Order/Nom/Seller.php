@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
 
-use Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
+use Verba\Mod\Game\Act\MakeList\Handler\Field\Order\Nom;
 
 class Seller extends Nom
 {

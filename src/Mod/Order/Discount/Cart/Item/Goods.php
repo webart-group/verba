@@ -7,7 +7,7 @@
  * Time: 16:40
  */
 
-namespace Mod\Order\Discount\Cart\Item;
+namespace Verba\Mod\Order\Discount\Cart\Item;
 
 
 class Goods extends \Verba\Mod\Order\Discount\Cart\Item{

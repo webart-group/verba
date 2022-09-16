@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Product\Act\MakeList\Handler\Row;
+namespace Verba\Mod\Product\Act\MakeList\Handler\Row;
 
 class DefaultHandler extends \Act\MakeList\Handler\Row
 {
@@ -11,7 +11,7 @@ class DefaultHandler extends \Act\MakeList\Handler\Row
         self::$c++;
         $tpl = $this->list->tpl();
         $oh = \Verba\_oh($this->list->row['ot_id']);
-        $url = \Mod\Seo::idToSeoStr($this->list->row, array('seq' => $this->list->getCurrentPos(), 'slID' => $this->list->getID()));
+        $url = \Verba\Mod\Seo::idToSeoStr($this->list->row, array('seq' => $this->list->getCurrentPos(), 'slID' => $this->list->getID()));
         $iid = $this->list->row[$oh->getPAC()];
         $cur = \Verba\_mod('cart')->getCurrency();
 
@@ -71,7 +71,7 @@ class DefaultHandler extends \Act\MakeList\Handler\Row
         if (!$cc) {
             $cc = $cw = '';
         } else {
-            $cw = make_padej_ru($cc, \Verba\Lang::get('comment word root'), \Verba\Lang::get('comment word padeji'));
+            $cw = \Verba\make_padej_ru($cc, \Verba\Lang::get('comment word root'), \Verba\Lang::get('comment word padeji'));
         }
         reset($variants);
         $first_var = current($variants);

@@ -42,7 +42,7 @@ class shop_paymentSelector extends \Verba\Block\Html{
     /**
      * @var $mShop Shop
      */
-    $mShop = \Mod\Shop::getInstance();
+    $mShop = \Verba\Mod\Shop::getInstance();
     $this->clientCfg['items'] = $mShop->getPaymentSelectorItems($this->currency->getId(), $this->Store);
     $this->clientCfg['warns']['messages']['tax_merch_mp'] = \Verba\Lang::get('paysys warns tax_merch_mp');
 

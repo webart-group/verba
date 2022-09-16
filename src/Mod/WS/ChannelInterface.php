@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\WS;
+namespace Verba\Mod\WS;
 
 interface ChannelInterface {
 

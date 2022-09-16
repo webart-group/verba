@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Sitemap;
+namespace Verba\Mod\Sitemap;
 
 class ContextFile extends \Verba\Base
 {

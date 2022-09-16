@@ -32,7 +32,7 @@ class store_infoAndAnnounces extends \Verba\Block\Html {
     \Verba\_mod('image');
 
     if(strlen($this->Store->picture)){
-      $iCfg = \Mod\Image::getImageConfig($_store->p('picture_config'));
+      $iCfg = \Verba\Mod\Image::getImageConfig($_store->p('picture_config'));
     }
     if(isset($iCfg)){
       $picUrl = $iCfg->getFullUrl(basename($this->Store->picture), 'ico80');
@@ -43,7 +43,7 @@ class store_infoAndAnnounces extends \Verba\Block\Html {
     $this->tpl->assign(array(
       'STORE_PIC_URL' => $picUrl,
       'STORE_NAME' => htmlspecialchars($this->Store->title),
-      'STORE_INFO_URL' => \Mod\Store::getInstance()->getPublicUrl($this->Store->id,'info'),
+      'STORE_INFO_URL' => \Verba\Mod\Store::getInstance()->getPublicUrl($this->Store->id,'info'),
       'ONLINE_STATUS_SIGN' => $this->Store->getOnlineStatus()
     ));
 

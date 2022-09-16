@@ -12,10 +12,10 @@ class ReviewRibbonPanel extends Row
 
         $tpl = $this->list->tpl();
         /**
-         * @var $mReview \Mod\Review
-         * @var $mShop \Mod\Shop
-         * @var $mCart \Mod\Cart
-         * @var $mCurrency \Mod\Currency
+         * @var $mReview \Verba\Mod\Review
+         * @var $mShop \Verba\Mod\Shop
+         * @var $mCart \Verba\Mod\Cart
+         * @var $mCurrency \Verba\Mod\Currency
          */
         $mReview = \Verba\_mod('review');
         $mCurrency = \Verba\_mod('currency');
@@ -40,7 +40,7 @@ class ReviewRibbonPanel extends Row
 
         if ($this->list->row['prodPrice'] && $this->list->row['prodCurrencyId']) {
 
-            $itemUrl = '/offer' . \Mod\Seo::idToSeoStr(array(
+            $itemUrl = '/offer' . \Verba\Mod\Seo::idToSeoStr(array(
                     'ot_id' => $this->list->row['prodOt'],
                     'id' => $this->list->row['prodId'],
                     'url_code' => '',

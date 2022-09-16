@@ -11,8 +11,8 @@ class chatik_channelInit extends \Verba\Block\Json
          * @var $mChatik Chatik
          */
 
-        $mCent = \Mod\Centrifugo::i();
-        $mChatik = \Mod\Chatik::i();
+        $mCent = \Verba\Mod\Centrifugo::i();
+        $mChatik = \Verba\Mod\Chatik::i();
 
         if (!$mCent->verifyClientToken($_REQUEST['token'], $_REQUEST['user'])) {
             throw  new \Verba\Exception\Building('Error issue');
@@ -21,16 +21,16 @@ class chatik_channelInit extends \Verba\Block\Json
         $userId = (int)$_REQUEST['user'];
         $channel = $_REQUEST['channel'];
 
-        $U = User();
+        $U = \Verba\User();
 
         if (!$userId || $U->getId() != $userId || !$U->active) {
             throw  new \Verba\Exception\Building('User error');
         }
 
         /**
-         * @var $Channel \Mod\Chatik\Channel\Store
+         * @var $Channel \Verba\Mod\Chatik\Channel\Store
          */
-        $Channel = \Mod\WS\Channel::initObject($channel);
+        $Channel = \Verba\Mod\WS\Channel::initObject($channel);
 
         if (!$Channel || !$Channel->valid()
             || !$Channel->loadable

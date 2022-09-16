@@ -7,7 +7,7 @@ class profile_purchase extends profile_order{
     parent::init();
 
     if($this->Order->owner != $this->U->getId()){
-      throw new \Exception\Routing('Bad access param');
+      throw new \Verba\Exception\Routing('Bad access param');
     }
 
   }
@@ -23,7 +23,7 @@ class profile_purchase extends profile_order{
     }
 
     if(!isset($b) || !is_object($b) || !$b instanceof Block){
-      throw new \Exception\Routing();
+      throw new \Verba\Exception\Routing();
     }
 
 

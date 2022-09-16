@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Tool\Store;
+namespace Verba\Mod\Profile\Block\Toolbar\Tool\Store;
 
 class Bids extends \Verba\Mod\Profile\Block\Toolbar\Tool\Store{
 

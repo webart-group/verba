@@ -7,7 +7,7 @@
  * Time: 17:29
  */
 
-namespace Mod\Otype\Router\ACP;
+namespace Verba\Mod\Otype\Router\ACP;
 
 
 class API extends \Verba\Request\Http\Router
@@ -24,7 +24,7 @@ class API extends \Verba\Request\Http\Router
         }
 
         if(!isset($h)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $h->route();

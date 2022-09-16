@@ -7,7 +7,7 @@
  * Time: 19:06
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute;
 
 class Load extends \Verba\Block\Json {
 

@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Meta\Block;
+namespace Verba\Mod\Meta\Block;
 
 class Form extends \Verba\Block\Json
 {
@@ -21,7 +21,7 @@ class Form extends \Verba\Block\Json
             return '';
         }
         /**
-         * @var $mod \Mod\Meta
+         * @var $mod \Verba\Mod\Meta
          */
         $mod = \Verba\_mod('meta');
         $cfg = $mod->gC();
@@ -39,10 +39,10 @@ class Form extends \Verba\Block\Json
         $this->tpl->assign(array(
             'LOCALE_SELECTOR' => '',
             'OT_ID' => $_meta->getID(),
-            'PAC' => $_meta->getPAC(),
+            'PAC' => $pac,
             'POT' => $pot->getID(),
             'PIID' => $piid,
-            'FORWARD_ACTION' => '/acp/aenow/meta/editnow',
+            'FORWARD_ACTION' => '/acp/h/meta/editnow',
             'META_PAC' => $pac,
             'INSERT_OPTIONS' => '',
         ));

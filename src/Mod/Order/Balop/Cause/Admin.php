@@ -7,7 +7,7 @@
  * Time: 16:16
  */
 
-namespace Mod\Order\Balop\Cause;
+namespace Verba\Mod\Order\Balop\Cause;
 
 
 class Admin

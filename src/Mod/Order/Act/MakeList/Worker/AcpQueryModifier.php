@@ -1,7 +1,7 @@
 <?php
-namespace Mod\Order\Act\MakeList\Worker;
+namespace Verba\Mod\Order\Act\MakeList\Worker;
 
-use \Act\MakeList\Worker;
+use \Verba\Act\MakeList\Worker;
 
 class AcpQueryModifier extends Worker
 {

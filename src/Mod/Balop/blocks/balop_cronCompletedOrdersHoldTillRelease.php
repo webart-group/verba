@@ -21,7 +21,7 @@ class balop_cronCompletedOrdersHoldTillRelease extends \Verba\Block {
     LIMIT";
 
     $nr = $step = 100;
-    $mOrder = \Mod\Order::i();
+    $mOrder = \Verba\Mod\Order::i();
     for($i = 0; $nr == $step; $i = $i+$step) {
       $qc = $q . ' ' . $i . ',' . $step;
       $sqlr = $this->DB()->query($qc);
@@ -30,7 +30,7 @@ class balop_cronCompletedOrdersHoldTillRelease extends \Verba\Block {
         break;
       }
       while ($row = $sqlr->fetchRow()) {
-        $Acc = new \Mod\Account\Model\Account($row['accountId']);
+        $Acc = new \Verba\Mod\Account\Model\Account($row['accountId']);
         if($mOrder->finalOrderSellerGravity($row['primitiveId'],$Acc)){
           $this->DB()->query("UPDATE ".$_balop->vltURI()." SET `unblocked` = '".date('Y-m-d H:i:s')."' WHERE id = '".$row['id']."'");
           // Обновление поля sumHoldTill у Заказа

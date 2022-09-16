@@ -7,7 +7,7 @@
  * Time: 12:22
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside\Select;
 
 
 class Unassign extends AssignActionPrototype {

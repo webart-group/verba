@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Button;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Button;
 
 
 class User extends \Verba\Block\Html {
@@ -9,7 +9,7 @@ class User extends \Verba\Block\Html {
     );
 
     function prepare(){
-        $U = User();
+        $U = \Verba\User();
         $displayName = $U->display_name;
         if(!$displayName){
             $displayName = '??';

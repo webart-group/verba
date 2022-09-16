@@ -7,7 +7,7 @@
  * Time: 12:38
  */
 
-namespace Mod\Otype\Block\ACP\API\Attribute\Handler;
+namespace Verba\Mod\Otype\Block\ACP\API\Attribute\Handler;
 
 
 class Assign extends \Verba\Block\Json {
@@ -19,7 +19,7 @@ class Assign extends \Verba\Block\Json {
         $logic = (int)$_REQUEST['logic'];
         $priority = (int)$_REQUEST['priority'];
 
-        list($linkInfo, $ahData) = \Mod\Otype::getInstance()->assignAhToAttr($attr_id, $ah_id, $logic, $priority);
+        list($linkInfo, $ahData) = \Verba\Mod\Otype::getInstance()->assignAhToAttr($attr_id, $ah_id, $logic, $priority);
         if(!$linkInfo){
             $this->getBlockByRole('response')->setOperationStatus(false);
             $this->content = 'Error assign ah';

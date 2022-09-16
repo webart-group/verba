@@ -7,7 +7,7 @@
  * Time: 15:56
  */
 
-namespace Mod\Callback;
+namespace Verba\Mod\Callback;
 
 
 class Router extends \Verba\Request\Http\Router
@@ -26,7 +26,7 @@ class Router extends \Verba\Request\Http\Router
         }
 
         if(!isset($h)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $r = $h->route();

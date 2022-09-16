@@ -1,8 +1,8 @@
 <?php
-namespace Mod\Order\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Order\Act\MakeList\Handler\Field;
 
 use Act\MakeList\Handler\Field;
-use Mod\Image;
+use Verba\Mod\Image;
 
 class Store extends Field
 {

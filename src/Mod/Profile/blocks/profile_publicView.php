@@ -12,17 +12,17 @@ class profile_publicView extends page_content {
   );
 
   /**
-   * @var $U \Verba\User\Model\User
+   * @var $U \Verba\Mod\User\Model\User
    */
   public $U;
 
   function init(){
-    if(!$this->U instanceof \Verba\User\Model\User && is_numeric($this->U)){
-      $this->U = new \Verba\User\Model\User($this->U);
+    if(!$this->U instanceof \Verba\Mod\User\Model\User && is_numeric($this->U)){
+      $this->U = new \Verba\Mod\User\Model\User($this->U);
     }
 
-    if(!$this->U instanceof \Verba\User\Model\User || !$this->U->getID()){
-      throw new \Exception\Routing('Unknown store');
+    if(!$this->U instanceof \Verba\Mod\User\Model\User || !$this->U->getID()){
+      throw new \Verba\Exception\Routing('Unknown store');
     }
 
     return true;

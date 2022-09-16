@@ -7,7 +7,7 @@ class shop_onpageInstance extends \Verba\Block\Html{
       array('shop', 'shop'),
     ));
 
-    $mShop = \Mod\Shop::getInstance();
+    $mShop = \Verba\Mod\Shop::getInstance();
     $cfg = $mShop->packToCfg();
     $this->addJsBefore("
 window.ShopInstance = new Shop(".json_encode($cfg,JSON_FORCE_OBJECT).");

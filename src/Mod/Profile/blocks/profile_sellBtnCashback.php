@@ -17,7 +17,7 @@ class profile_sellBtnCashback extends profile_sellBtn
 
         $this->script = (new \Url(SYS_JS_URL . '/profile/tools/sell_buttons.js'))->get(true);
         /**
-         * @var $mProfile \Mod\Profile
+         * @var $mProfile \Verba\Mod\Profile
          */
         $mProfile = \Verba\_mod('profile');
 

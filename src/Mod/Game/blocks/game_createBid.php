@@ -27,19 +27,19 @@ class game_createBid extends \Verba\Block\Html{
     $mGame = \Verba\_mod('game');
     $this->game = $mGame->getGame($this->gameId);
     if(!is_object($this->game)){
-      throw new \Exception\Routing('Bad game id');
+      throw new \Verba\Exception\Routing('Bad game id');
     }
 
     $this->service = $this->game->getService($this->serviceId);
     if(!$this->service){
-      throw new \Exception\Routing('Bad service id');
+      throw new \Verba\Exception\Routing('Bad service id');
     }
 
 //    if($this->currencyId === null && isset($_REQUEST['currencyId'])){
 //      $this->currencyId = (int)$_REQUEST['currencyId'];
 //    }
 //    if(!$this->currencyId || !\Verba\_mod('currency')->getCurrency($this->currencyId, true)){
-//      throw new \Exception\Routing('Bad currency Id');
+//      throw new \Verba\Exception\Routing('Bad currency Id');
 //    }
 
   }
@@ -47,7 +47,7 @@ class game_createBid extends \Verba\Block\Html{
   function build(){
     $this->content = false;
 
-    $U = User();
+    $U = \Verba\User();
     /**
      * @var $mUser User
      */

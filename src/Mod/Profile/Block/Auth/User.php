@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Profile\Block\Auth;
+namespace Verba\Mod\Profile\Block\Auth;
 
 use Verba\Block\Html;
 
@@ -10,7 +10,7 @@ class User extends Html
     ];
 
     function prepare(){
-        $U = User();
+        $U = \Verba\User();
         $displayName = $U->display_name;
         if(!$displayName){
             $displayName = '??';

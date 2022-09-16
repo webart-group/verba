@@ -12,7 +12,7 @@ class profile_sells extends profile_orders {
       $this->Store = $this->U->Stores()->getStore();
     }
     if(!$this->Store || !$this->Store instanceof \Model\Store){
-      throw new \Exception\Routing('Unknown param');
+      throw new \Verba\Exception\Routing('Unknown param');
     }
   }
 

@@ -7,7 +7,7 @@
  * Time: 18:10
  */
 
-namespace Mod\Routine;
+namespace Verba\Mod\Routine;
 
 
 class Router extends \Verba\Request\Http\Router {
@@ -25,7 +25,7 @@ class Router extends \Verba\Request\Http\Router {
 
         if(!array_key_exists($this->rq->node, $this->_handlers) || !$this->_handlers[$this->rq->node]
         || !class_exists($this->_handlers[$this->rq->node])) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $rq = $this->rq->shift();
@@ -34,7 +34,7 @@ class Router extends \Verba\Request\Http\Router {
         $className = $this->_handlers[$this->rq->node];
 
         /**
-         * @var $b \Block
+         * @var $b \Verba\Block
          */
         $b = new $className($rq);
 

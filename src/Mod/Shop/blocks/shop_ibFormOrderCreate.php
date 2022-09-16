@@ -3,16 +3,16 @@
 class shop_ibFormOrderCreate extends \Verba\Block\Json
 {
     /**
-     * @var \Verba\User\Model\User
+     * @var \Verba\Mod\User\Model\User
      */
     protected $U;
     /**
-     * @var \Mod\Cart\CartInstance
+     * @var \Verba\Mod\Cart\CartInstance
      */
     protected $Cart;
 
     /**
-     * @var \Mod\Customer\Profile
+     * @var \Verba\Mod\Customer\Profile
      */
     protected $cst;
 
@@ -68,13 +68,13 @@ class shop_ibFormOrderCreate extends \Verba\Block\Json
             ),
         );
 
-        $orderCreateData = new \Mod\Order\CreateData($cfg);
+        $orderCreateData = new \Verba\Mod\Order\CreateData($cfg);
         /**
-         * @var $Order \Mod\Order\Model\Order
+         * @var $Order \Verba\Mod\Order\Model\Order
          */
         list($ae, $Order) = $mOrder->createOrder($orderCreateData);
         /**
-         * @var $mProfile \Mod\Profile
+         * @var $mProfile \Verba\Mod\Profile
          */
         $mProfile = \Verba\_mod('profile');
         $url = new \Url($mProfile->getPurchaseActionUrl($Order));

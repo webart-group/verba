@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class Profile extends \Verba\Mod
 {
@@ -42,7 +42,7 @@ class Profile extends \Verba\Mod
 
         if (is_array($row)) {
             $code = $row['code'];
-        } elseif (is_object($row) && $row instanceof \Mod\Order\Model\Order) {
+        } elseif (is_object($row) && $row instanceof \Verba\Mod\Order\Model\Order) {
             $code = $row->getCode();
         }
 

@@ -29,7 +29,7 @@ class StoreCurrencyChange extends After
 
         $storeId = $this->ah->getIID();
         $store = $this->ah->getActualItem();
-        $Currency = \Mod\Currency::getInstance();
+        $Currency = \Verba\Mod\Currency::getInstance();
         $newCur = $Currency->getCurrency($new_value);
         $newCurId = $newCur->getId();
         $_bid = \Verba\_oh('bid');
@@ -80,7 +80,7 @@ class StoreCurrencyChange extends After
             }
         }
 
-        $mStore = \Mod\Store::getInstance();
+        $mStore = \Verba\Mod\Store::getInstance();
         $mStore->refreshStoreCPK($this->ah->getActualData());
 
         return true;

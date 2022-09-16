@@ -21,7 +21,7 @@ class page_eInteractive extends page_element
     public $data;
     public $rq_data;
     /**
-     * @var \Html\Element
+     * @var \Verba\Html\Element
      */
     public $ui;
 
@@ -69,10 +69,10 @@ class page_eInteractive extends page_element
         if ($this->rq_data && !empty($this->rq_data)) {
             $wrapECfg['attr'][$this->attr_prefix . '-rq'] = json_encode($this->rq_data, JSON_FORCE_OBJECT);
         }
-        $eWrap = new \Html\Div($wrapECfg);
+        $eWrap = new \Verba\Html\Div($wrapECfg);
 
         // Если UI передан как Объект
-        if (is_object($this->ui) && $this->ui instanceof \Html\Element) {
+        if (is_object($this->ui) && $this->ui instanceof \Verba\Html\Element) {
 
             $uiHtml = $this->ui->parse();
 

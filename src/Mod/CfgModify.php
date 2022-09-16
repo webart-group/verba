@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod;
+namespace Verba\Mod;
 
 class CfgModify extends \Verba\Mod
 {
@@ -176,7 +176,7 @@ class CfgModify extends \Verba\Mod
 
     function cfg_handle_float($value, $strict = true, $precision = 2)
     {
-        $value = reductionToFloat($value, $strict, $precision);
+        $value = \Verba\reductionToFloat($value, $strict, $precision);
         return $value;
     }
 

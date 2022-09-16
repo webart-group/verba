@@ -7,7 +7,7 @@
  * Time: 16:24
  */
 
-namespace Mod\Order;
+namespace Verba\Mod\Order;
 
 
 class Transaction extends \Verba\Base

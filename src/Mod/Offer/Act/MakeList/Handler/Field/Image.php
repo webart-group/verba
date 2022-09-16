@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Offer\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Offer\Act\MakeList\Handler\Field;
 
 use \Act\MakeList\Handler\Field;
 
@@ -8,13 +8,13 @@ class Image extends Field
 {
 
     /**
-     * @var \Mod\Image\Act\Look\Handler\ImageTag
+     * @var \Verba\Mod\Image\Act\Look\Handler\ImageTag
      */
     protected $avh;
 
     function init()
     {
-        $this->avh = new \Mod\Image\Act\Look\Handler\ImageTag($this->ah->oh(),
+        $this->avh = new \Verba\Mod\Image\Act\Look\Handler\ImageTag($this->ah->oh(),
             $this->A,
             [
                 'attr_code' => $this->attr_code,

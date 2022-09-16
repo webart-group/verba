@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Paysys\Unitpay\Transaction;
+namespace Verba\Mod\Paysys\Unitpay\Transaction;
 
 class CreateBill extends \Verba\Mod\Payment\Transaction\Send
 {
@@ -35,7 +35,7 @@ class CreateBill extends \Verba\Mod\Payment\Transaction\Send
             $paymentType = 'card';
         }
 
-        $this->request = new \Mod\Payment\Request\Send($this, array(
+        $this->request = new \Verba\Mod\Payment\Request\Send($this, array(
                 'method' => 'initPayment',
                 'params[paymentType]' => $paymentType,
                 'params[desc]' => urlencode($this->Order->getBillTitle()),

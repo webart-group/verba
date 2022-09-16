@@ -31,7 +31,7 @@ class Mod extends Configurable
     {
         $code = explode('\\',get_class($this));
         array_shift($code);
-
+        array_shift($code);
 
         $this->setName(implode('\\', $code));
 

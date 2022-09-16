@@ -1,7 +1,7 @@
 <?php
-namespace Mod\Profile\Block\Toolbar\Dropdown\Body;
+namespace Verba\Mod\Profile\Block\Toolbar\Dropdown\Body;
 
-use Mod\Profile\Block\Toolbar\Dropdown\Menu\Common;
+use Verba\Mod\Profile\Block\Toolbar\Dropdown\Menu\Common;
 
 class User extends \Verba\Mod\Profile\Block\Toolbar\Dropdown\Body {
     function init(){

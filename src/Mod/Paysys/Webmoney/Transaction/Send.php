@@ -1,13 +1,13 @@
 <?php
 
-namespace Mod\Paysys\Webmoney\Transaction;
+namespace Verba\Mod\Paysys\Webmoney\Transaction;
 
 class Send extends \Verba\Mod\Payment\Transaction\Send
 {
     protected $_paysysCode = 'webmoney';
 
     /**
-     * @var \Mod\Paysys\Webmoney
+     * @var \Verba\Mod\Paysys\Webmoney
      */
     protected $mod;
 
@@ -28,7 +28,7 @@ class Send extends \Verba\Mod\Payment\Transaction\Send
             $this->testMode = 1;
         }
 
-        $this->request = new \Mod\Payment\Request\Send($this, $this->genRequestData());
+        $this->request = new \Verba\Mod\Payment\Request\Send($this, $this->genRequestData());
 
         $this->validate();
         $this->status = $this->genStatus();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Review\Act\Delete\Handler;
+namespace Verba\Mod\Review\Act\Delete\Handler;
 
 use Act\Delete\Handler;
 

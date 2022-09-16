@@ -1,8 +1,8 @@
 <?php
 
-namespace Mod\Search\Block\Result;
+namespace Verba\Mod\Search\Block\Result;
 
-use \Mod\Search\Block\Agent\Input as AgentInput;
+use \Verba\Mod\Search\Block\Agent\Input as AgentInput;
 
 class Page extends \Verba\Block\Html
 {

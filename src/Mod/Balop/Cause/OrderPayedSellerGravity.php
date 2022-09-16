@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Balop\Cause;
+namespace Verba\Mod\Balop\Cause;
 
 class OrderPayedSellerGravity extends Ordered
 {
@@ -17,7 +17,7 @@ class OrderPayedSellerGravity extends Ordered
 
     function calcSum()
     {
-        if(!$this->Order || !$this->Order instanceof \Mod\Order\Model\Order){
+        if(!$this->Order || !$this->Order instanceof \Verba\Mod\Order\Model\Order){
             return 0;
         }
 

@@ -17,8 +17,8 @@ class PaysysRemoveCpprUpdate extends Handler
     function run()
     {
         /**
-         * @var $Store \Mod\Store
-         * @var $Shop \Mod\Shop
+         * @var $Store \Verba\Mod\Store
+         * @var $Shop \Verba\Mod\Shop
          */
         $Store = \Verba\_mod('store');
         $Shop = \Verba\_mod('shop');

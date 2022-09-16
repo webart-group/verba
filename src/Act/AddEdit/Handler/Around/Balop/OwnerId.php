@@ -11,7 +11,7 @@ class OwnerId extends Around
         if($this->action != 'new'){
             return null;
         }
-        $Acc = new \Mod\Account\Model\Account($this->ah->getTempValue('accountId'));
+        $Acc = new \Verba\Mod\Account\Model\Account($this->ah->getTempValue('accountId'));
 
         if(!$Acc || !$Acc->getId()){
             return false;

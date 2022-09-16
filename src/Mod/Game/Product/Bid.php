@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\Product;
+namespace Verba\Mod\Game\Product;
 
 
 class Bid extends \Verba\Mod\Product\Types\Product {

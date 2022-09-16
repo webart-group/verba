@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Cart\Item;
+namespace Verba\Mod\Cart\Item;
 
 class Resource extends \Verba\Mod\Cart\Item
 {

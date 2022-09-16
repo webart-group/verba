@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Notifier\Block;
+namespace Verba\Mod\Notifier\Block;
 
 class Instance extends \Verba\Block\Html{
 
@@ -17,7 +17,7 @@ class Instance extends \Verba\Block\Html{
 
     function build()
     {
-        $U = User();
+        $U = \Verba\User();
         if(!$U->getAuthorized()){
             return '';
         }

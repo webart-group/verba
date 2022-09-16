@@ -12,7 +12,7 @@ class game_catalog extends game_pageContent
     {
 
         if (!is_object($this->gsr) || !$this->gsr->isValid()) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         if ($this->gsr->isServiceOblivious()) {

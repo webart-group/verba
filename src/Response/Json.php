@@ -21,14 +21,14 @@ class Json extends \Verba\Response {
         if(count($this->items) > 0 ){
             $r = [];
             foreach($this->items as $i){
-                if($i instanceof \Block\Json){
+                if($i instanceof \Verba\Block\Json){
                     $opstatus = $i->getOperationStatus();
                     if($opstatus !== null){
                         $this->setOperationStatus($opstatus);
                     }
                 }
                 if($i->content === null
-                    && !($i instanceof \Block\Json)){
+                    && !($i instanceof \Verba\Block\Json)){
                     continue;
                 }
                 $r[] = $i->content;

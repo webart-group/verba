@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Game\Act\MakeList\Handler\Field;
+namespace Verba\Mod\Game\Act\MakeList\Handler\Field;
 
 use \Act\MakeList\Handler\Field;
 

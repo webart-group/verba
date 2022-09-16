@@ -16,9 +16,9 @@ class ProfileOrders extends Row {
       $this->list->rowExtended['first_item_extra'] = json_decode($this->list->row['first_item_extra'], true);
     }
 
-    $this->list->rowExtended['Order'] = new \Mod\Order\Model\Order($this->list->row);
+    $this->list->rowExtended['Order'] = new \Verba\Mod\Order\Model\Order($this->list->row);
 
-    $this->list->rowExtended['Cur'] =  \Mod\Currency::getInstance()->getCurrency($this->list->row['currencyId']);
+    $this->list->rowExtended['Cur'] =  \Verba\Mod\Currency::getInstance()->getCurrency($this->list->row['currencyId']);
 
 
     return true;

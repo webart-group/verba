@@ -1,5 +1,5 @@
 <?php
-namespace Mod\Paysys_Webmoney\Blocks;
+namespace Verba\Mod\Paysys_Webmoney\Blocks;
 class TestRequest extends \Verba\Block\Html{
 
   public $content = '';

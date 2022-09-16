@@ -11,7 +11,7 @@ class AttrHandlerTypeValues extends Extension{
   }
 
   function loadValues(){
-    $r = \Mod\Otype::getInstance()->getOAttrAhsTypes();
+    $r = \Verba\Mod\Otype::getInstance()->getOAttrAhsTypes();
     $this->fe()->setValues($r);
   }
 }

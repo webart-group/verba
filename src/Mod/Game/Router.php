@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Game;
+namespace Verba\Mod\Game;
 
 class Router extends \Verba\Request\Http\Router {
 
@@ -25,7 +25,7 @@ class Router extends \Verba\Request\Http\Router {
                 break;
             case 'sell':
                 $rq = $this->rq->shift();
-                $gsr = new \Mod\Game\ServiceRequest($rq);
+                $gsr = new \Verba\Mod\Game\ServiceRequest($rq);
                 $gsr->gameAction = 'sell';
                 $b = new \game_pageSell($rq, ['gsr' => $gsr]);
                 break;
@@ -35,7 +35,7 @@ class Router extends \Verba\Request\Http\Router {
         }
 
         if (!isset($b)) {
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         $routed = $b->route();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Sitemap\Block;
+namespace Verba\Mod\Sitemap\Block;
 
 class GenerateMenuFaq extends GenerateMenu {
 

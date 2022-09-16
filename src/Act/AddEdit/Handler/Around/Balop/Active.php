@@ -15,7 +15,7 @@ class Active extends Around
 
         $ownerId = $this->ah->getTempValue('owner');
 
-        $Acc = new \Mod\Account\Model\Account($this->ah->getTempValue('accountId'));
+        $Acc = new \Verba\Mod\Account\Model\Account($this->ah->getTempValue('accountId'));
         $_user = \Verba\_oh('user');
         $ownerUser = new \Verba\Model\Item($_user->getData($ownerId, 1));
         $cause = $this->ah->getExtendedData('cause');

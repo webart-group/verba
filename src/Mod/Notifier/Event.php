@@ -1,6 +1,6 @@
 <?php
 
-namespace Mod\Notifier;
+namespace Verba\Mod\Notifier;
 
 
 class Event extends \Verba\Configurable

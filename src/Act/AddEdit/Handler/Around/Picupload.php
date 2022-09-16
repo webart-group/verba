@@ -14,7 +14,7 @@ class Picupload extends Around
         if (!$configName) {
             return null;
         }
-        $imgCfg = \Mod\Image::getImageConfig($configName);
+        $imgCfg = \Verba\Mod\Image::getImageConfig($configName);
 
         $fsh = new  \Verba\FileSystem\Local();
 
@@ -117,7 +117,7 @@ class Picupload extends Around
             )
         ) {
             if (!\Mod\Image::isRemotePicURL($exists_value)) { // предыдущее значение не url
-                $iu = new \Mod\Image\Cleaner($imgCfg, basename($exists_value));
+                $iu = new \Verba\Mod\Image\Cleaner($imgCfg, basename($exists_value));
                 $removed = $iu->delete();
             } else {
                 $c_value = '';

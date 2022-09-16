@@ -1,11 +1,11 @@
 <?php
 
-namespace Mod\Chatik\Model;
+namespace Verba\Mod\Chatik\Model;
 
 class Message extends \Verba\Model\Item
 {
     /**
-     * @var $U \Verba\User\Model\User
+     * @var $U \Verba\Mod\User\Model\User
      */
     protected $U;
 
@@ -21,7 +21,7 @@ class Message extends \Verba\Model\Item
     {
 
         if ($this->U === null) {
-            $this->U = new \Verba\User\Model\User($this->owner);
+            $this->U = new \Verba\Mod\User\Model\User($this->owner);
         }
 
         return $this->U;
@@ -29,7 +29,7 @@ class Message extends \Verba\Model\Item
 
     function setU($U)
     {
-        if (!$U instanceof \Verba\User\Model\User
+        if (!$U instanceof \Verba\Mod\User\Model\User
             || !$U->getId() != $this->owner) {
             return false;
         }

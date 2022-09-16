@@ -7,7 +7,7 @@
  * Time: 12:53
  */
 
-namespace Mod\CoMail;
+namespace Verba\Mod\CoMail;
 
 class PHPMailer extends \PHPMailer{
 

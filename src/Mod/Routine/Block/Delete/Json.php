@@ -7,7 +7,7 @@
  * Time: 16:12
  */
 
-namespace Mod\Routine\Block\Delete;
+namespace Verba\Mod\Routine\Block\Delete;
 
 class Json extends \Verba\Mod\Routine\Block\Delete
 {

@@ -7,9 +7,9 @@
  * Time: 3:06
  */
 
-namespace Mod\Otype\Router\ACP\API;
+namespace Verba\Mod\Otype\Router\ACP\API;
 
-use Mod\ACP\Router\ObjectType;
+use Verba\Mod\Acp\Router\ObjectType;
 
 class Props extends \Verba\Request\Http\Router
 {
@@ -27,9 +27,9 @@ class Props extends \Verba\Request\Http\Router
                 $action = 'list';
                 $ot_iid = $this->rq->iid;
                 if(!$ot_iid){
-                    throw new \Exception\Routing('Ot iid required');
+                    throw new \Verba\Exception\Routing('Ot iid required');
                 }
-                $rq['pot'] = potToArray($_otype->getID(), $ot_iid);
+                $rq['pot'] = \Verba\potToArray($_otype->getID(), $ot_iid);
                 break;
             default:
                 $action = $this->request->action;
@@ -42,7 +42,7 @@ class Props extends \Verba\Request\Http\Router
         $h = $router->route();
 
         if(!isset($h)){
-            throw new \Exception\Routing();
+            throw new \Verba\Exception\Routing();
         }
 
         return $h;

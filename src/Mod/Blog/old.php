@@ -1,5 +1,5 @@
 <?php
-namespace Mod;
+namespace Verba\Mod;
 
 class BlogPublic extends \Verba\Mod{
 
@@ -113,8 +113,8 @@ class BlogPublic extends \Verba\Mod{
         }
 
         $txt = isset($item['text']) && !empty($item['text']) ? $item['text'] : '';
-        $socImage = \Mod\Seo::extractImageUrlFromText($txt);
-        \Mod\Seo::addOtags($item['title'], $socImage);
+        $socImage = \Verba\Mod\Seo::extractImageUrlFromText($txt);
+        \Verba\Mod\Seo::addOtags($item['title'], $socImage);
 
         $url = new \Url(\Mod\Seo::idToSeoStr($item));
         $tpl->assign(array(
@@ -174,7 +174,7 @@ class BlogPublic extends \Verba\Mod{
             $imgCfg = \Verba\_mod('image')->getImageConfig($item['_picture_config']);
             $imageSrc = $imgCfg->getFullUrl(basename($item['picture']));
         }else{
-            $imageSrc = \Mod\Seo::extractImageUrlFromText($item['text']);
+            $imageSrc = \Verba\Mod\Seo::extractImageUrlFromText($item['text']);
         }
 
         $imageClassSign = '';
@@ -188,7 +188,7 @@ class BlogPublic extends \Verba\Mod{
             'PN_ITEM_PICTURE' => $imageSrc,
             'PN_ITEM_PICTURE_CLASS_SIGN' => $imageClassSign,
         ));
-        return \Mod\Seo::idToSeoStr($item, $urlVars);
+        return \Verba\Mod\Seo::idToSeoStr($item, $urlVars);
     }
 
 
@@ -202,7 +202,7 @@ class BlogPublic extends \Verba\Mod{
         global $S;
         $tpl = $this->tpl();
         $date = strtotime($row['date']);
-        $url = \Mod\Seo::idToSeoStr($row,array('seq'=>$list->getCurrentPos(), 'slID'=>$list->getID()));
+        $url = \Verba\Mod\Seo::idToSeoStr($row,array('seq'=>$list->getCurrentPos(), 'slID'=>$list->getID()));
         $tpl->assign(array(
             'ITEM_PAGE_URL' => $url,
             'ITEM_TITLE' => $row['title_'.SYS_LOCALE],
@@ -215,7 +215,7 @@ class BlogPublic extends \Verba\Mod{
             $imgCfg = \Verba\_mod('image')->getImageConfig($row['_picture_config']);
             $imageSrc = $imgCfg->getFullUrl(basename($row['picture']));
         }else{
-            $imageSrc = \Mod\Seo::extractImageUrlFromText($row['text']);
+            $imageSrc = \Verba\Mod\Seo::extractImageUrlFromText($row['text']);
         }
         if($imageSrc){
             $tpl->assign(array(

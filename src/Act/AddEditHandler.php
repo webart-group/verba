@@ -215,11 +215,9 @@ class AddEditHandler extends Action
 
             if (is_numeric($c_attr_id)) {
                 if ($A->get_lcd() && is_array(\Verba\Lang::getUsedLC())) {
-                    $this->exists_values[$c_attr_code] = array();
+                    $this->exists_values[$c_attr_code] = [];
                     foreach (\Verba\Lang::getUsedLC() as $c_lc_code) {
-                        $this->exists_values[$c_attr_code][$c_lc_code] = isset($row[$c_attr_code . '_' . $c_lc_code])
-                        ? $row[$c_attr_code . '_' . $c_lc_code]
-                        : null;
+                        $this->exists_values[$c_attr_code][$c_lc_code] = $row[$c_attr_code . '_' . $c_lc_code] ?? null;
                     }
                 } else {
                     $this->exists_values[$c_attr_code] = $c_attr_value;
@@ -246,6 +244,10 @@ class AddEditHandler extends Action
 
     function getExistsValue($attr)
     {
+        if (is_null($this->exists_values)) {
+            $this->exists_values = false;
+            $this->loadExistsValues();
+        }
         if (!is_array($this->exists_values)) {
             return null;
         }

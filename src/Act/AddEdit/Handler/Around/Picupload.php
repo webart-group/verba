@@ -12,7 +12,10 @@ class Picupload extends Around
         $attr_code = $this->A->getCode();
         $configName = $this->oh->p($attr_code . '_config');
         if (!$configName) {
-            return null;
+            $cfgAttrCode = '_'.$attr_code . '_config';
+            if (!$this->oh->isA($cfgAttrCode) || empty($configName = $this->ah->getGettedValue($cfgAttrCode))) {
+                return null;
+            }
         }
         $imgCfg = \Verba\Mod\Image::getImageConfig($configName);
 

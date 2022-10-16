@@ -237,7 +237,7 @@ class Action extends Parents
 
     function addHidden($name, $value = false)
     {
-        if (is_object($name) && $name instanceof \Html\Hidden) {
+        if (is_object($name) && $name instanceof \Verba\Html\Hidden) {
             $this->hidden_elements[$name->getName()] = $name;
         } elseif (is_string($name)) {
             $this->hidden_elements[$name] = $value;

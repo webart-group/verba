@@ -42,7 +42,7 @@ class Model extends Base implements \Verba\ModelInterface
     {
         $meths = get_class_methods($this->OT);
         if (!in_array($method, $meths)) {
-            throw new Exception('Undefined class method called: ' . __CLASS__ . ':' . $method . '()');
+            throw new \Exception('Undefined class method called: ' . __CLASS__ . ':' . $method . '()');
         }
 
         return call_user_func_array(array($this->OT, $method), $args);

@@ -78,12 +78,15 @@ class Attribute  extends \Verba\Base
      * @param $data
      * @return \Verba\ObjectType\Attribute
      */
-    static function create($OT, $data){
+    static function create($OT, $data)
+    {
 
         $className = null;
 
         if ($data['predefined']) {
             $className = \Verba\ObjectType\Attribute\Predefined::class;
+        } elseif ($data['attr_code'] == 'picture' && $data['form_element'] == 'picupload') {
+            $className = \Verba\ObjectType\Attribute\PictureWithConfig::class;
         } else {
             $type = ucfirst($data['data_type']);
             $className = '\Verba\ObjectType\Attribute\\'

@@ -53,8 +53,12 @@
         {
             $cfgName = $this->aef->oh()->p($this->A->getCode() . '_config');
             if (!$cfgName) {
-                return false;
+                $property = '_'.$this->A->getCode() . '_config';
+                if (empty($cfgName =  $this->aef->getAefByAttr($property)->value)) {
+                    return false;
+                }
             }
+
             \Verba\_mod('image');
             $this->imgCfg = \Verba\Mod\Image::getImageConfig($cfgName);
             $this->imgCfgName = $cfgName;

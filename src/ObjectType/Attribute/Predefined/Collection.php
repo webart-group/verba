@@ -23,11 +23,6 @@ class Collection
         if (!$ot_id) {
             return $this->items;
         }
-        if (!array_key_exists($ot_id, $this->items)) {
-            if ($ot_id != $this->A->oh()->getID()) {
-                $ot_id = $this->A->oh()->getID();
-            }
-        }
 
         $ants = $this->A->oh()->getAncestors();
         array_push($ants, $this->A->oh()->getID());

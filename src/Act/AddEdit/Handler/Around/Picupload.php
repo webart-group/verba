@@ -119,7 +119,7 @@ class Picupload extends Around
                 || is_string($c_value) && $exists_value != $c_value // или изменилось значение
             )
         ) {
-            if (!\Mod\Image::isRemotePicURL($exists_value)) { // предыдущее значение не url
+            if (!\Verba\Mod\Image::isRemotePicURL($exists_value)) { // предыдущее значение не url
                 $iu = new \Verba\Mod\Image\Cleaner($imgCfg, basename($exists_value));
                 $removed = $iu->delete();
             } else {

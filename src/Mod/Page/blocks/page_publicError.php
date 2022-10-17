@@ -24,7 +24,7 @@ class page_publicError extends \Verba\Block\Html
     function build()
     {
         if ($this->e) {
-            if (constant('SYS_IS_PRODUCTION') === false) {
+            if (constant('SYS_IS_PRODUCTION') === false || \Verba\User()->in_group(USR_ADMIN_GROUP_ID)) {
                 $this->content = "<pre>" . $this->e->getMessage() . "\n\n" . $this->e->getTraceAsString() . "</pre>";
             }
         }

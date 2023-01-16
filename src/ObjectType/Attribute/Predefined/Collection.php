@@ -18,7 +18,7 @@ class Collection
         $this->items[$data['ot_id']] = new Set($data, $this);
     }
 
-    function get($ot_id = false)
+    function get($ot_id = false): Set
     {
         if (!$ot_id) {
             return $this->items;
@@ -32,6 +32,9 @@ class Collection
                 return $this->items[$cot_id];
             }
         }
-        return false;
+
+        $this->items[$ot_id] = Set::createDummy($this);
+
+        return $this->items[$ot_id];
     }
 }

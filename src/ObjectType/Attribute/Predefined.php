@@ -10,7 +10,9 @@
 namespace Verba\ObjectType\Attribute;
 
 
-class Predefined extends \Verba\ObjectType\Attribute
+use Verba\ObjectType\Attribute;
+
+class Predefined extends Attribute
 {
 
     protected $values = null;

@@ -3,8 +3,9 @@
 namespace Verba\Mod\Acp\Tab\TabList;
 
 
+use Verba\Mod\Acp\Tab\TabList;
 
-class ProductsList extends \Verba\Mod\Acp\Tab\TabList
+class ProductsList extends TabList
 {
     public $button = array(
         'title' => 'products acp tab list'
@@ -38,5 +39,3 @@ class ProductsList extends \Verba\Mod\Acp\Tab\TabList
         return $r;
     }
 }
-
-?>

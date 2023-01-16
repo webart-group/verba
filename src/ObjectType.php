@@ -1,5 +1,9 @@
 <?php
+
 namespace Verba;
+
+use Verba\ObjectType\Attribute;
+use Verba\ObjectType\Property;
 
 class ObjectType extends Base
 {
@@ -28,8 +32,8 @@ class ObjectType extends Base
     public $links_alias = array();
     public $vaults = array();
     public $behaviors = array(
-        'not_searchable' => array(),
-        'obligatory' => array(),
+        'not_searchable' => [],
+        'obligatory' => [],
         'avtofield' => array(),
         'predefined' => array(),
         'not_editable' => array(),
@@ -56,7 +60,7 @@ class ObjectType extends Base
         $this->set_id($ot_id);
         if (is_numeric($baseId)) {
             $this->baseId = intval($baseId);
-            $this->baseOT = \Verba\_oh($baseId)->OT;
+            $this->baseOT = _oh($baseId)->OT;
         }
         $this->loadOTypeData();
 
@@ -150,7 +154,7 @@ WHERE  `ot`.`id` = " . $this->id . "
 GROUP BY ot.id";
 
         if (!($oRes = $this->DB()->query($query)) || ($oRes->getNumRows() < 1)) {
-            throw new Exception('Cant load OT data');
+            throw new \Exception('Cant load OT data');
         }
 
         $data = $oRes->fetchRow();
@@ -212,19 +216,15 @@ ORDER BY `a`.`priority`
             $row['_ot_iid'] = $row['ot_iid'];
             $row['ot_iid'] = $this->id;
 
-            if(array_key_exists($row['attr_code'], $rows))
-            {
+            if (array_key_exists($row['attr_code'], $rows)) {
                 $rows[$row['attr_code']] = array_replace_recursive($rows[$row['attr_code']], $row);
-            }
-            else
-            {
+            } else {
                 $rows[$row['attr_code']] = $row;
             }
         }
 
-        foreach($rows as $row)
-        {
-            $this->attributes[$row['attr_id']] = \Verba\ObjectType\Attribute::create($this, $row);
+        foreach ($rows as $row) {
+            $this->attributes[$row['attr_id']] = Attribute::create($this, $row);
             $this->attr_binds[$row['attr_code']] = $row['attr_id'];
 
             // формирование бихавиоров
@@ -375,7 +375,7 @@ ORDER BY `a`.`priority`";
         }
 
         while ($row = $oRes->fetchRow()) {
-            $this->props[$row['id']] =  \Verba\ObjectType\Property::createProperty($row, $this);
+            $this->props[$row['id']] = Property::createProperty($row, $this);
             $this->props_binds[$row['code']] = $row['id'];
             // формирование бихавиоров
         }
@@ -576,14 +576,14 @@ ORDER BY `priority` DESC";
     /**
      * Возвращает объект атрибута
      * @param mixed $attr_id код или id атрибута
-     * @return bool|\Verba\ObjectType\Attribute
+     * @return bool|Attribute
      * @see \Verba\ObjectType\Attribute
      */
 
     function A($attr, $own = false)
     {
         $A = null;
-        if (is_object($attr) && $attr instanceof \Verba\ObjectType\Attribute) {
+        if (is_object($attr) && $attr instanceof Attribute) {
 
             $A = $this->isA($attr->getID(), $own) ? $attr : false;
 
@@ -609,7 +609,7 @@ ORDER BY `priority` DESC";
 
     function isA($needle, $own = false)
     {
-        if (is_object($needle) && $needle instanceof \Verba\ObjectType\Attribute) {
+        if (is_object($needle) && $needle instanceof Attribute) {
             $needle = $needle->getID();
         }
         if (is_string($needle) && array_key_exists($needle, $this->attr_binds)) {
@@ -646,7 +646,7 @@ ORDER BY `priority` DESC";
             $attr_list = array($attr_list);
         }
 
-        if (\Verba\reductionToArray($attr_list)) {
+        if (reductionToArray($attr_list)) {
             $r = array();
 
             foreach ($attr_list as $attr_code) {
@@ -670,18 +670,18 @@ ORDER BY `priority` DESC";
             return false;
         }
 
-        if (\Verba\reductionToArray($denied_behaviors)
+        if (reductionToArray($denied_behaviors)
             && count($denied = $this->getAttrsByBehaviors($denied_behaviors, true))) {
             $attr_list = array_diff_key($attr_list, $denied);
         }
-        if (\Verba\reductionToArray($allowed_behaviors)
+        if (reductionToArray($allowed_behaviors)
             && count($allowed = $this->getAttrsByBehaviors($allowed_behaviors, true))) {
             $attr_list = array_intersect_key($attr_list, $allowed);
         }
 
         // Доступ к атрибуту по правам
-        if (\Verba\reductionToArray($rights) && count($attr_list)) {
-            $U = \Verba\User();
+        if (reductionToArray($rights) && count($attr_list)) {
+            $U = User();
             foreach ($attr_list as $attr_id => $attr_code) {
                 $A = $this->A($attr_id, true);
                 if ($A->restrict_key != 0 && is_int($A->restrict_key) && !$U->chr($A->restrict_key, $rights)) {

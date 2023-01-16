@@ -5,6 +5,8 @@ namespace Verba\Mod\Acp\Tabset;
 
 use Verba\Mod\Acp\Tab\Form\CatalogAef;
 use Verba\Mod\Acp\Tab\Form\MetaAef;
+use Verba\Model\Product;
+use function Verba\_oh;
 
 class Catalog extends \Verba\Mod\Acp\Tabset
 {
@@ -17,36 +19,11 @@ class Catalog extends \Verba\Mod\Acp\Tabset
         $extraTabs = [];
         if ($productOt) {
             $productsTab['ProductsList'] = ['ot' => $productOt];
-            $_prod = \Verba\_oh($productOt);
-            if ($_prod instanceof \Verba\Model\Product\Resource) {
-                $_cat = \Verba\_oh('catalog');
-                $_game = \Verba\_oh('game');
-                $vltUri = \Verba\_oh('game')->vltURI($_cat);
-                $q = "SELECT `p_iid` as `gameId` FROM " . $vltUri . " 
-                    WHERE 
-                    p_ot_id ='" . $_game->getID() . "' 
-                    && `ch_ot_id` = '" . $_cat->getID() . "'
-                    && `ch_iid` = '" . $this->node->id . "' 
-                    LIMIT 1";
-
-                if (false !== ($sqlr = $this->DB()->query($q))
-                    && $sqlr->getNumRows()
-                    && is_array($row = $sqlr->fetchRow())
-                    && is_numeric($row['gameId'])
-                ) {
-                    $extraTabs['LinkedGameServers'] = array(
-                        'pot' => array(
-                            $_cat->getID() => array($this->node->id => $this->node->id),
-                            $_game->getID() => array($row['gameId'] => $row['gameId']),
-                        ),
-                        'linkedTo' => array('type' => 'tab', 'id' => 'CatalogAef')
-                    );
-                }
-            }
+            $_prod = _oh($productOt);
         }
 
         $commonTabs = [
-            CatalogAef::class,
+            'CatalogAef',
             'CatalogGoodsProps' => [
                 'button' => [
                     'title' => 'catalog acp tab goodsProps'
@@ -67,8 +44,7 @@ class Catalog extends \Verba\Mod\Acp\Tabset
                     'type' => 'node'
                 ],
             ],
-
-            MetaAef::class => [
+            'MetaAef' => [
                 'linkedTo' => [
                     'id' => CatalogAef::class
                 ]

@@ -10,13 +10,16 @@
 namespace Verba\Mod\Otype\Block\ACP;
 
 
-class Form extends \Verba\Block\Json
+use Verba\Block\Json;
+use function Verba\_oh;
+
+class Form extends Json
 {
     public $prod = 0;
 
     function build()
     {
-        $oh = \Verba\_oh('otype');
+        $oh = _oh('otype');
         $bp = $this->request->asArray();
         $bp['cfg'] = 'acp acp-otype';
 

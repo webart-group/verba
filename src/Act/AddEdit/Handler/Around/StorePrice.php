@@ -2,7 +2,6 @@
 
 namespace Verba\Act\AddEdit\Handler\Around;
 
-use \Verba\Act\AddEdit\Handler\Around\Price;
 use Verba\Mod\SnailMail\Exception;
 
 class StorePrice extends Price
@@ -41,7 +40,7 @@ class StorePrice extends Price
                 : $this->ah->getGettedValue('currencyId');
         }
 
-        if(!\Mod\Currency::i()->getCurrency($currencyIdFrom)){
+        if(!\Verba\Mod\Currency::i()->getCurrency($currencyIdFrom)){
             $currencyIdFrom = $currencyIdTo;
         }
 

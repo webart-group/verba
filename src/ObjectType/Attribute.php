@@ -2,7 +2,18 @@
 namespace Verba\ObjectType;
 
 
-class Attribute  extends \Verba\Base
+use Verba\Base;
+use Verba\Hive;
+use Verba\Lang;
+use Verba\Model;
+use Verba\ObjectType;
+use Verba\ObjectType\Attribute\PictureWithConfig;
+use Verba\ObjectType\Attribute\Predefined;
+use Verba\ObjectType\Attribute\Predefined\Collection;
+use Verba\ObjectType\Attribute\Predefined\Set;
+use function Verba\_oh;
+
+class Attribute  extends Base
 {
 
     public $attr_code = false;
@@ -27,19 +38,19 @@ class Attribute  extends \Verba\Base
     private $foreignOtId;
     private $foreignAttrId;
     /**
-     * @var \Verba\Model
+     * @var Model
      */
     protected $oh;
     /**
-     * @var \Verba\ObjectType
+     * @var ObjectType
      */
     protected $OT;
     /**
-     * @var \Verba\ObjectType\Attribute\Predefined\Collection
+     * @var Collection
      */
     protected $PdCollection = null;
     /**
-     * @var \Verba\Model
+     * @var Model
      */
     protected $call_context;
 
@@ -67,7 +78,7 @@ class Attribute  extends \Verba\Base
         $this->setIsForeignId($data);
         $this->set_lcd($data);
         $this->setRoles($data['roles']);
-        \Verba\Lang::substPlaneLcdAttrByLcArray($data, 'annotation');
+        Lang::substPlaneLcdAttrByLcArray($data, 'annotation');
         $this->setAnnotation($data['annotation']);
 
         return true;
@@ -76,7 +87,7 @@ class Attribute  extends \Verba\Base
     /**
      * @param $OT
      * @param $data
-     * @return \Verba\ObjectType\Attribute
+     * @return Attribute
      */
     static function create($OT, $data)
     {
@@ -84,9 +95,9 @@ class Attribute  extends \Verba\Base
         $className = null;
 
         if ($data['predefined']) {
-            $className = \Verba\ObjectType\Attribute\Predefined::class;
+            $className = Predefined::class;
         } elseif ($data['attr_code'] == 'picture' && $data['form_element'] == 'picupload') {
-            $className = \Verba\ObjectType\Attribute\PictureWithConfig::class;
+            $className = PictureWithConfig::class;
         } else {
             $type = ucfirst($data['data_type']);
             $className = '\Verba\ObjectType\Attribute\\'
@@ -191,7 +202,7 @@ class Attribute  extends \Verba\Base
 
     function getHandlerByType()
     {
-        return in_array(strtolower($this->data_type), \Verba\Hive::$reservedNames)
+        return in_array(strtolower($this->data_type), Hive::$reservedNames)
             ? ucfirst($this->data_type).'Data'
             : ucfirst($this->data_type);
     }
@@ -224,7 +235,7 @@ class Attribute  extends \Verba\Base
     }
 
     /**
-     * @return \Verba\ObjectType\Attribute\Predefined\Set|false
+     * @return Set|false
      */
     function PdSet($ot_ctx = false)
     {
@@ -235,7 +246,7 @@ class Attribute  extends \Verba\Base
                 $ot_id = $this->oh->getID();
             }
         } else {
-            $ot_id = \Verba\_oh($ot_ctx)->getID();
+            $ot_id = _oh($ot_ctx)->getID();
         }
         return $this->PdCollection()->get($ot_id);
     }

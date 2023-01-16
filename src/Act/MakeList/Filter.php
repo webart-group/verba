@@ -164,6 +164,14 @@ class Filter extends \Verba\Configurable
 
     }
 
+    function asJson()
+    {
+        $r = [
+            'value' => $this->getValue()
+        ];
+        return $r;
+    }
+
     function getE()
     {
         return $this->E;

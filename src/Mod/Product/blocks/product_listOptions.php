@@ -8,13 +8,16 @@ class product_listOptions extends \Verba\Block\Html{
   );
 
   function build(){
+      /**
+       * @var \Verba\Act\MakeList $list
+       */
     $list = $this->getParent()->list;
 
     $this->tpl->assign(array(
       'RONP_SELECTOR' => '',
     ));
 
-    if($list->isRonpSelectorUpper()){
+    if($list->is()){
       $this->tpl->assign(array(
         'SR_RONP_SELECTOR_UPPER' => $list->tpl()->getVar('SR_RONP_SELECTOR_UPPER'),
       ));

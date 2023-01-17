@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Mod\Store\Act\MakeList\Worker;
 
-use Act\MakeList\Worker;
+use Verba\Act\MakeList\Worker;
 
 class RatingColumn extends Worker {
 

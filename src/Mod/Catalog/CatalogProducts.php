@@ -16,14 +16,18 @@ class CatalogProducts extends Json
     function init()
     {
         $_catalog = _oh('catalog');
+
         $mCat = _mod('catalog');
         $this->catsData = $this->request->getParam('catsData');
+
         if (!$this->catsData) {
             $this->catsData = $mCat->getCatsChain($this->request->uf, 0);
         }
+
         if (!$this->catsData) {
             throw new Routing();
         }
+
         $this->currentCat = end($this->catsData);
         if (!$this->currentCat['active']) {
             throw new Routing();
@@ -67,7 +71,7 @@ class CatalogProducts extends Json
         $this->content = [
             'code' => $this->currentCat['code'],
             'title' => isset($this->currentCat['exttitle']) && !empty($this->currentCat['exttitle']) ? $this->currentCat['exttitle'] : $this->currentCat['title'],
-            'items' => $this->items['CATALOG_PRODUCTS']
+            'products_list' => $this->items['CATALOG_PRODUCTS']->getContent()
         ];
 
 //        if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {

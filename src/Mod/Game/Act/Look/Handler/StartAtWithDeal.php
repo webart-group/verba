@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Mod\Game\Act\Look\Handler;
 
-use Act\Look\Handler;
+use Verba\Act\Look\Handler;
 
 class StartAtWithDeal extends Handler
 {

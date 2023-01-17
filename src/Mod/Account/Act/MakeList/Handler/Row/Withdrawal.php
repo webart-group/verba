@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Account\Act\MakeList\Handler\Row;
 
-use Act\MakeList\Handler\Row;
+use Verba\Act\MakeList\Handler\Row;
 
 class Withdrawal extends Row {
 

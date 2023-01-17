@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Image\Act\Look\Handler;
 
-use Act\Look\Handler;
+use Verba\Act\Look\Handler;
 
 class ImageTag extends Handler
 {

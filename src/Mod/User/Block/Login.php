@@ -10,7 +10,7 @@ class Login extends \Verba\Block\Html{
 
     function route()
     {
-        $handler = new \Layout\Minimal($this->request);
+        $handler = new \App\Layout\Minimal($this->request);
         $handler->addItems(array(
             'CONTENT' => $this
         ));

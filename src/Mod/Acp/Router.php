@@ -17,6 +17,7 @@ use Verba\Exception\Routing;
 use Verba\Hive;
 use Verba\Mod\ACP;
 use Verba\Mod\Routine\Block\CUNow;
+use Verba\Mod\User\Block\Login;
 use Verba\Response;
 use Verba\Response\Json;
 use function Verba\_mod;
@@ -33,7 +34,7 @@ class Router extends \Verba\Request\Http\Router
         if (!$mAcp->checkAccess())
         {
             $layout = new Core();
-            $layout->addItems(['CONTENT' => new Block\Login($this)]);
+            $layout->addItems(['CONTENT' => new Login($this)]);
 
             return $layout->route();
         }

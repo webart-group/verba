@@ -1199,7 +1199,7 @@ class MakeList extends Action
 
     function asJson()
     {
-        $this->fire('beforeParseAsJson');
+        $this->fire('beforeParse');
         $this->setForwardUrl(
             $this->makeForwardUrl(
                 !is_string($this->getForwardUrl())
@@ -1209,7 +1209,7 @@ class MakeList extends Action
         );
 
         $r = [
-            'rows' => null,
+            'items' => null,
         ];
 
         //Filters
@@ -1223,7 +1223,7 @@ class MakeList extends Action
 
         if ($this->_rowsArray && $this->Selection->c_founded_rows > 0) {
             $this->prepareToParse();
-            $r['rows'] = $this->parseRowsAsJson();
+            $r['items'] = $this->parseRowsAsJson();
         }
 
         // Options blocks

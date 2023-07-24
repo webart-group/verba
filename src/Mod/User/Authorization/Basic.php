@@ -2,16 +2,20 @@
 
 namespace Verba\Mod\User\Authorization;
 
+use Verba\Mod\User;
+use Verba\QueryMaker;
+use function Verba\_mod;
+use function Verba\_oh;
+
 class Basic
 {
     function authorize($authData)
     {
-
-        $_user = \Verba\_oh('user');
+        $_user = _oh('user');
         /**
-         * @var $mUser \Verba\Mod\User
+         * @var $mUser User
          */
-        $mUser = \Verba\_mod('User');
+        $mUser = _mod('User');
         $login = isset($authData['login']) ? trim(strtolower($authData['login'])) : false;
         $password = isset($authData['password']) ? $authData['password'] : false;
         if (!is_string($login) || !is_string($password)) {
@@ -19,7 +23,7 @@ class Basic
         }
         $field = $mUser->gC('login_field');
 
-        $qm = new \Verba\QueryMaker($_user, false, true);
+        $qm = new QueryMaker($_user, false, true);
         $qm->addSelectPastFrom($_user->getPAC(), null, 'id');
         $qm->addWhere($login, $field);
         $qm->addWhere(1, 'active');

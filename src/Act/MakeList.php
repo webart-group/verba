@@ -1212,6 +1212,35 @@ class MakeList extends Action
             'items' => null,
         ];
 
+        $this->prepareToParse();
+
+        if ($this->_rowsArray && $this->Selection->c_founded_rows > 0) {
+            $r['rows'] = $this->parseRowsAsJson();
+        }
+
+        $r['meta'] = $this->parseMetaJson();
+
+        //Save state to session
+        $this->save2session();
+
+//        $this->tpl->parse('LIST_WRAP_CONTENT', 'searchResult_body');
+//        if ($this->nowrap) {
+//            return $this->tpl->getVar('LIST_WRAP_CONTENT');
+//        }
+
+//        $this->tpl->assign(array(
+//            'LIST_WRAP_CLASS' => count($this->_wrapClasses) ? implode(' ', $this->_wrapClasses) : '',
+//        ));
+
+        return $r;
+    }
+
+    function parseMetaJson()
+    {
+        $r = [];
+
+        $r['fields'] = $this->getFieldsMeta();
+
         //Filters
         $this->fire('beforeFilters');
         $r['filters'] = $this->Filters->asJson();
@@ -1220,11 +1249,6 @@ class MakeList extends Action
         //Feats
         $this->refreshFeats();
         $r['feats'] = $this->config['feats'];
-
-        if ($this->_rowsArray && $this->Selection->c_founded_rows > 0) {
-            $this->prepareToParse();
-            $r['items'] = $this->parseRowsAsJson();
-        }
 
         // Options blocks
         $r['panels'] = $this->getOptionsPannelsAsJson();
@@ -1259,23 +1283,30 @@ class MakeList extends Action
         //$this->mergeHtmlIncludesWithTiedBlock();
 
         // парсинг хидденов
-        //$this->parseToHiddens();
+        $r['hiddens'] = $this->parseHiddensJson();
 
         // клиентские шаблоны
         //$this->parseClientTemplates();
 
-        //Save state to session
-        $this->save2session();
 
-//        $this->tpl->parse('LIST_WRAP_CONTENT', 'searchResult_body');
-//        if ($this->nowrap) {
-//            return $this->tpl->getVar('LIST_WRAP_CONTENT');
-//        }
+        return $r;
+    }
 
-//        $this->tpl->assign(array(
-//            'LIST_WRAP_CLASS' => count($this->_wrapClasses) ? implode(' ', $this->_wrapClasses) : '',
-//        ));
+    private function getFieldsMeta()
+    {
+        $r = [];
 
+        foreach($this->fieldsToParse as $field_code) {
+            $field_cfg = $this->_prepared['fields'][$field_code] ?? [];
+            $r[$field_code] = [
+                'code' => $field_code,
+                'data-type' => $field_cfg['data-type'],
+                'priority' => $field_cfg['priority'] ?? 0,
+                'html' => [
+                    'class' => $field_cfg['class'],
+                ],
+            ];
+        }
         return $r;
     }
 
@@ -1380,7 +1411,7 @@ class MakeList extends Action
             $this->_prepared['row']['handler'] = $this->extractRowHandlerFromCfg($cfg['row']['handler']);
         }
 
-        $toDefine = array();
+        $toDefine = [];
 
         $this->defaultFieldCfg = $cfg['field_default'];
 
@@ -1659,7 +1690,6 @@ class MakeList extends Action
         return $all_rows;
     }
 
-
     ## Fields
 
     function parseRowFields()
@@ -1750,20 +1780,10 @@ class MakeList extends Action
         }
 
         foreach ($this->fieldsToParse as $attr_code) {
-            $this->fieldResult = false;
+            $this->fieldResult = null;
             $this->fieldCode = $attr_code;
 
             $this->fieldCfg = $this->_prepared['fields'][$attr_code];
-
-            $this->fieldClass = 'list-field lf-datatype-' . $this->fieldCfg['data-type'] . ' lf-' . $attr_code;
-
-            if (is_string($this->fieldCfg['class'])) {
-                $this->fieldClass .= $this->fieldCfg['class_merge'] && !empty($this->defaultFieldCfg['class'])
-                    ? $this->defaultFieldCfg['class'] . ' ' . $this->fieldCfg['class']
-                    : $this->fieldCfg['class'];
-            } elseif (!empty($this->defaultFieldCfg['class'])) {
-                $this->fieldClass .= $this->defaultFieldCfg['class'];
-            }
 
             $this->fire('fieldBefore');
 
@@ -1780,19 +1800,9 @@ class MakeList extends Action
                 }
             }
 
-            $html = [
-                'class' => $this->fieldClass,
-                'attrs' => null
-            ];
-
-            if (!empty($this->fieldCfg['attr'])) {
-                $html['attrs'] = $this->fieldCfg['attr'];
-            }
-
             $r[$this->fieldCode] =
                 [
-                    'content' => $this->fieldResult,
-                    'html' => $html
+                    'value' => $this->fieldResult,
                 ];
         }
 

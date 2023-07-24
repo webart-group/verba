@@ -53,6 +53,9 @@ class ObjectType extends \Verba\Request\Http\Router
             case 'editnow':
             case 'newnow' :
                 $h = new \Verba\Mod\Routine\Block\CUNow($rq);
+                if (!$h->responseAs) {
+                    $h->responseAs = 'data';
+                }
                 break;
 
             case 'remove' :

@@ -98,17 +98,21 @@ class Element extends \Verba\Configurable
         return call_user_func_array($realWorker, $args);
     }
 
-    protected function _findSetter($k)
+    protected function _findSetter($key, $context = null)
     {
-        $callable = parent::_findSetter($k);
+        $callable = parent::_findSetter($key);
 
         if (is_array($callable)) {
             return $callable;
         }
 
-        $method = $k;
-        if (is_object($this->AEFExtender) && is_callable([$this->AEFExtender, $method])) {
-            return array($this->AEFExtender, $method);
+        $method = $key;
+        if (is_object($this->AEFExtender)) {
+            if(is_callable([$this->AEFExtender, $method])){
+                return array($this->AEFExtender, $method);
+            }elseif($callable = parent::_findSetter($key, $this->AEFExtender)){
+                return $callable;
+            }
         }
 
         return false;

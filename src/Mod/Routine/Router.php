@@ -15,10 +15,10 @@ class Router extends \Verba\Request\Http\Router {
     public $valid_otype;
 
     public $_handlers = [
-        'update' => '\Mod\Routine\Block\CUNow',
-        'create' => '\Mod\Routine\Block\CUNow',
-        'cuform' => '\Mod\Routine\Block\Form',
-        'remove' => '\Mod\Routine\Block\Delete',
+        'update' => \Verba\Mod\Routine\Block\CUNow::class,
+        'create' => \Verba\Mod\Routine\Block\CUNow::class,
+        'cuform' => \Verba\Mod\Routine\Block\Form::class,
+        'remove' => \Verba\Mod\Routine\Block\Delete::class,
     ];
 
     function route(){

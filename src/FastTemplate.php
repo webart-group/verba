@@ -357,7 +357,7 @@ class FastTemplate
     function error($errorMsg)
     {
         $this->ERROR = $errorMsg;
-        throw new Exception($this->ERROR);
+        throw new \Exception($this->ERROR);
     }
 
     function isDefined($TplTag)

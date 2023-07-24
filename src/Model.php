@@ -148,6 +148,11 @@ class Model extends Base implements \Verba\ModelInterface
         return $this->ot_id;
     }
 
+    public function getOtId()
+    {
+        return $this->ot_id;
+    }
+
     public function getCode()
     {
         return $this->code;

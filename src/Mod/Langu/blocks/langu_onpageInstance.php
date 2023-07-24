@@ -2,12 +2,10 @@
 
 class langu_onpageInstance extends \Verba\Block\Html
 {
-
     public $sendToClient;
 
     function build()
     {
-
         if (!empty($this->sendToClient)) {
             \Verba\Lang::sendToClient($this->sendToClient);
         }
@@ -17,6 +15,7 @@ class langu_onpageInstance extends \Verba\Block\Html
         if (!is_array($filedetails) || !is_string($filedetails[1])) {
             return '';
         }
+
         $this->addScripts(
             array($filedetails[1], \Verba\Lang::getJsPathRel())
             , 1000

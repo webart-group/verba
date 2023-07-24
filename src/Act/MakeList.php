@@ -63,7 +63,7 @@ class MakeList extends Action
     public $attrs_to_handle;
     public $attrs_to_blank;
     /**
-     * @var \Selection
+     * @var \Verba\Selection
      */
     public $Selection;
     public $title = '';
@@ -84,7 +84,7 @@ class MakeList extends Action
 
     public $fieldsToShow = array();
     public $fieldsToHide = array();
-    protected $fieldsToParse = array();
+    public $fieldsToParse = array();
     public $virtualFields = array();
 
     public $control_block_parsed = false;
@@ -116,6 +116,7 @@ class MakeList extends Action
      * @var \DBDriver\Result
      */
     public $sqlr = null;
+    protected $order_substs = array();
     protected $client_templates = array();
     protected $_cachedHtml = array();
     protected $_wrapClasses = array();
@@ -128,6 +129,11 @@ class MakeList extends Action
     protected $validOwner = array();
 
     public const CSS_PRIORITY = 700;
+
+    /**
+     * @var \Verba\FastTemplate
+     */
+    protected $tpl;
 
     function __call($mth, $args)
     {
@@ -416,10 +422,20 @@ class MakeList extends Action
         $this->addHidden('slID', $this->Selection->getID());
         $this->addHidden(session_name(), session_id());
         $this->addScripts(
-            ['list-tools', 'engine/act/makelist'],
-            ['workers', 'engine/act/makelist'],
+            array('form', 'form'),
+            array('list-tools', 'engine/act/makelist'),
+            array('workers', 'engine/act/makelist'),
             200
         );
+    }
+
+    /**
+     * put your comment there...
+     * @return \Verba\FastTemplate
+     */
+    function tpl()
+    {
+        return $this->tpl;
     }
 
     function setReloadMethod($val)
@@ -662,6 +678,15 @@ class MakeList extends Action
         }
     }
 
+    function setOrder_substs($val)
+    {
+        if (!is_array($val)) {
+            return false;
+        }
+        $this->order_substs = $val;
+        return $this->order_substs;
+    }
+
     /**
      * @return object \Selection
      */
@@ -780,6 +805,11 @@ class MakeList extends Action
         if (count($normal)) {
             $this->addAttr($normal);
         }
+    }
+
+    function genAttrsList()
+    {
+        $this->fieldsToParse = array_merge($this->fieldsToShow, $this->virtualFields);
     }
 
     function parseRowControls($row)
@@ -1185,7 +1215,7 @@ class MakeList extends Action
         }
 
         // Make main query
-
+        $this->genAttrsList();
         $this->fire('beforeQuery');
         $this->Selection->refresh_querys();
         $this->sqlr = $this->Selection->exec_query();

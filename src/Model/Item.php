@@ -79,7 +79,6 @@ class Item extends \Verba\Configurable
 
     function __call($mth, $args)
     {
-
         $action = strtolower(substr($mth, 0, 3));
         $propertie = lcfirst(substr($mth, 3));
 
@@ -87,6 +86,10 @@ class Item extends \Verba\Configurable
             && is_string($propertie)
             && array_key_exists($propertie, $this->{$this->_confPropName})) {
             return $this->p($propertie);
+        }
+
+        if ($action == 'set') {
+            return $this->__set($propertie, $args[0]);
         }
 
         throw new \Exception('Call undefined method - ' . __CLASS__ . '::' . $mth . '()');
@@ -108,12 +111,15 @@ class Item extends \Verba\Configurable
             return $this->$mtd($val);
         }
 
-//    if(is_object($A = $this->oh->A($propName))){
-//       $datatypeMthd = '__set_datatype_'.$A->getDataType();
-//       if(method_exists($this, $datatypeMthd)){
-//         return $this->$datatypeMthd($val);
-//       }
-//    }
+        if(is_object($A = $this->oh->A($propName))) {
+            $datatypeMthd = '__set_datatype_'.$A->getDataType();
+            if(method_exists($this, $datatypeMthd)){
+                return $this->$datatypeMthd($val);
+            } else {
+                $this->data[$propName] = $val;
+                return $this;
+            }
+        }
 
         /*else(array_key_exists($propName,$this->data)){
           $this->data[$propName] = $val;

@@ -15,12 +15,16 @@ class Configurable extends Eventer
 
     public static $_config_default = array();
 
-    protected function _findSetter($key)
+    protected function _findSetter($key, $context = null)
     {
         $mtd = 'set' . ucfirst($key);
 
-        if (method_exists($this, $mtd)) {
-            return [$this, $mtd];
+        if(is_null($context)){
+            $context = $this;
+        }
+
+        if (method_exists($context, $mtd)) {
+            return [$context, $mtd];
         }
 
         if (false !== strpos($key, '_')) {
@@ -32,8 +36,8 @@ class Configurable extends Eventer
                 }
                 $mtd .= ucfirst($f);
             }
-            if (method_exists($this, $mtd)) {
-                return [$this, $mtd];
+            if (method_exists($context, $mtd)) {
+                return [$context, $mtd];
             }
         }
         return false;

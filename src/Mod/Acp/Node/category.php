@@ -20,7 +20,7 @@ class Category extends \Verba\Mod\Acp\Node
 
     function menu()
     {
-        return [];/* array(
+        return [
             'addnewnode' => array(
                 'title' => \Verba\Lang::get('acp nodemenu addnew'),
                 'type' =>'tabset',
@@ -32,7 +32,7 @@ class Category extends \Verba\Mod\Acp\Node
                     'url_sfx' => '/catalog/remove'
                 )
             )
-        );*/
+        ];
     }
 }
 

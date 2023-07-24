@@ -81,4 +81,3 @@ class Blog extends \Verba\Mod{
     return count($iids) < 2 ? $r[$_blog->getPAC()] : $r;
   }
 }
-?>

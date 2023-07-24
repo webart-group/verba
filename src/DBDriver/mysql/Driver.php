@@ -98,7 +98,14 @@ class Driver implements \Verba\DBDriver\Driver
 
     public function connect($connectData)
     {
-        $this->miObj = new \mysqli($connectData['host'], $connectData['user'], $connectData['password'], $connectData['database']);
+        $this->miObj = new \mysqli(
+            $connectData['host'],
+            $connectData['user'],
+            $connectData['password'],
+            $connectData['database'],
+            $connectData['port']
+        );
+
         if (\mysqli_connect_errno()) {
             $this->miObj = false;
         }
@@ -224,5 +231,4 @@ class Driver implements \Verba\DBDriver\Driver
         }
         return date('Y-m-d H:i:s', $ts);
     }
-
 }

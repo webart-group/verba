@@ -28,7 +28,7 @@ class Selection extends Base
     protected $isOrderRefreshed = false;
     protected $compiledParts = false;
     private $_ssp = array(); // session save point;
-
+    protected $calcRows = true;
     public $nav_out = '';
     public $seq = false;
 
@@ -87,6 +87,16 @@ class Selection extends Base
         $this->getSSP();
     }
 
+    /**
+     * @param bool $val
+     * @return $this
+     */
+    function setCalcRows(bool $val)
+    {
+        $this->calcRows = $val;
+        return $this;
+    }
+
     function setId($var) {
         if(!$this->validateId($var)) {
             return false;
@@ -136,17 +146,18 @@ class Selection extends Base
 
     function __sleep()
     {
-        $a = \Verba\get_object_vars_public($this);
+        $a = get_object_vars_public($this);
         unset(
-            $a['QM'], $a['cache_used'], $a['_existsOrder']
+            $a['QM'], $a['cache_used']
         );
+        $a['_existsOrder'] = '';
         return array_keys($a);
     }
 
     function __wakeup()
     {
         if(!self::register($this)) {
-            throw new \Exception('Error - Selection registration failed. id ['.var_export($this->getId(), true).']');
+            throw new \Exception('Unable to restore Selection - registration failed. id ['.var_export($this->getId(), true).']');
         }
 
         $this->getSSP();
@@ -221,9 +232,7 @@ class Selection extends Base
 
     function formated()
     {
-        return is_string($this->slID) && !empty($this->slID)
-        && is_object($this->QM)
-            ? true : false;
+        return is_string($this->slID) && !empty($this->slID) && is_object($this->QM);
     }
 
     function refresh_sets()
@@ -238,13 +247,26 @@ class Selection extends Base
         $this->refreshOrder();
     }
 
+    /**
+     * @param string $query
+     * @return $this
+     */
+    function setSearchQuery(string $query)
+    {
+        $this->search_q = $query;
+        return $this;
+    }
+
     function refresh_querys()
     {
-
-        $this->QM->addSelectProp('SQL_CALC_FOUND_ROWS');
+        if(!is_string($this->search_q) || empty($this->search_q)){
+            if($this->calcRows){
+                $this->QM->addSelectProp('SQL_CALC_FOUND_ROWS');
+            }
+            $this->QM->makeQuery();
+            $this->search_q = $this->QM->getQuery();
+        }
         $this->count = true;
-        $this->QM->makeQuery();
-        $this->search_q = $this->QM->getQuery();
 
         if (!$this->formated())
             return false;
@@ -255,13 +277,17 @@ class Selection extends Base
 
     function exec_query()
     {
-        $sqlr = $this->QM->run();
+        $sqlr = $this->DB()->query($this->search_q);
         if (!$sqlr) {
             return false;
         }
+        $SQL_CALC_FOUND_ROWS = 0;
+        if ($this->calcRows) {
+            $SQL_CALC_FOUND_ROWS = $this->DB()->query('SELECT FOUND_ROWS()')->getFirstValue();
+        }
         $this->set_c_founded_rows($sqlr->getNumRows());
         $this->set_last_row($this->get_last_row());
-        $this->set_count_v($sqlr->SQL_CALC_FOUND_ROWS);
+        $this->set_count_v($SQL_CALC_FOUND_ROWS);
         $this->set_total_pages($this->calc_total_pages());
 
         return $sqlr;

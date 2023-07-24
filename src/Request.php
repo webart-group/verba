@@ -364,4 +364,11 @@ class Request
 
         return array_key_exists($key, $this->__post) ? $this->__post[$key] : null;
     }
+
+    function urlFragmentsToClass(): string
+    {
+        $ufs = $this->uf;
+        array_walk($ufs, function (&$v){ $v = ucfirst($v);});
+        return implode('\\', $ufs);
+    }
 }

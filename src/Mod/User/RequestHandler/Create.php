@@ -62,17 +62,17 @@ class Create extends \Verba\Block\Json
                 $mUser->sendEmailConfirmationLink($ae->getActualData(), false, false);
 
             } else {
-                if ($ae instanceof Exception) {
+                if ($ae instanceof \Exception) {
                     $msg = $ae->getMessage();
                 } elseif ($ae instanceof \Verba\Act\AddEdit) {
                     $msg = $ae->log()->getMessagesAsStr('error');
                 } else {
                     $msg = \Verba\Lang::get('user registration general_error');
                 }
-                throw new Exception($msg);
+                throw new \Exception($msg);
             }
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->failed($e->getMessage());
         }
         return $this->content;

@@ -17,10 +17,11 @@ class Basic
         if (!is_string($login) || !is_string($password)) {
             return false;
         }
+        $field = $mUser->gC('login_field');
 
         $qm = new \Verba\QueryMaker($_user, false, true);
         $qm->addSelectPastFrom($_user->getPAC(), null, 'id');
-        $qm->addWhere($login, $mUser->gC('login_field'));
+        $qm->addWhere($login, $field);
         $qm->addWhere(1, 'active');
 
         $sqlr = $qm->run();

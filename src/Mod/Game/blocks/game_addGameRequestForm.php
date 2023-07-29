@@ -1,4 +1,7 @@
 <?php
+
+use Verba\Mod\FeedBack\Block\feedback_publicForm;
+
 class game_addGameRequestForm extends feedback_publicForm {
 
   public $contentType = 'json';

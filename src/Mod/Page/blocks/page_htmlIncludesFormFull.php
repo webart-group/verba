@@ -9,7 +9,6 @@ class page_htmlIncludesFormFull extends \Verba\Block\Html{
       array('jquery-ui-timepicker-addon', '/js/jquery/timepicker-addon'),
       array('colorpicker', '/js/jquery/plugins/colorpicker/css'),
       array('select2.min', '/js/jquery/select2/css'),
-      array('form'),
       array('picupload', 'form/fe'),
     ), 900);
 

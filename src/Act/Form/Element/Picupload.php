@@ -3,6 +3,8 @@
 namespace Verba\Act\Form\Element;
 
 use \Verba\Html\Element;
+use Verba\Model;
+use Verba\Model\Item;
 
 class Picupload extends Element {
     public $imgCfgName;
@@ -45,11 +47,24 @@ class Picupload extends Element {
         $this->listen('prepare', 'addImgCfgFromAttr', $this, 'handleImageConfig');
     }
 
-    function addImgCfgFromAttr(){
-        $cfgName = $this->aef->oh()->p($this->A->getCode().'_config');
-        if(!$cfgName){
+    function addImgCfgFromAttr() {
+        /**
+         * @var $oh Model
+         */
+        $oh = $this->aef->oh();
+
+        // try to take from attr
+        $cfgAttrName = '_'.$this->A->getCode().'_config';
+        if($oh->isA($cfgAttrName)){
+            $cfgName = $this->aef->getAefByAttr($cfgAttrName)->getValue();
+        }else{
+            $cfgName = $this->aef->oh()->p($this->A->getCode().'_config');
+        }
+
+        if (!$cfgName) {
             return false;
         }
+
         \Verba\_mod('image');
         $this->imgCfg = \Verba\Mod\Image::getImageConfig($cfgName);
         $this->imgCfgName = $cfgName;

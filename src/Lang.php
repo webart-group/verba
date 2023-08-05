@@ -11,9 +11,24 @@ class Lang extends Base
     private static $compileJsPathRel;
     private static $debug = null;
     public static $languages = [
-        'en' => [['en_US.utf8',], ['eng'], 'eng', 'English'],
-        'ua' => array(['ru_UA.utf8'], ['ukrainian'], 'укр', 'Українська'),
-        'ru' => array(['ru_RU', 'ru_RU.utf8'], ['russian_Russia'], 'рус', 'Русский')
+        'en' => [
+            ['en_US.utf8',],
+            ['eng'],
+            'eng',
+            'English'
+        ],
+        'ua' => [
+            ['uk_UA','ru_UA.utf8'],
+            ['ukrainian'],
+            'укр',
+            'Українська'
+        ],
+        'ru' => [
+            ['ru_RU', 'ru_RU.utf8'],
+            ['russian_Russia'],
+            'рус',
+            'Русский'
+        ]
     ];
     public static $config;
     public static $_config_default;

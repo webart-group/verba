@@ -1,9 +1,8 @@
 <?php
 
-namespace Verba\App\System\Import;
+namespace Verba\Mod\System\Import;
 
 use Verba\Block\Json;
-use Verba\Branch;
 use Verba\Hive;
 use Verba\Model;
 use Verba\QueryMaker;

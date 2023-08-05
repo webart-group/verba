@@ -1,5 +1,6 @@
 <?php
 
+namespace Verba\Mod\System\blocks;
 class system_tools extends \Verba\Block\Html
 {
 
@@ -546,19 +547,20 @@ class system_toolBidsRefresh extends \Verba\Block\Html
     }
 }
 
-class system_toolM1 extends \Verba\Block\Json {
+class system_toolM1 extends \Verba\Block\Json
+{
 
     public function route()
     {
-        if(!$this->rq->node){
+        if (!$this->rq->node) {
             $this->addItems([
                 new system_toolM1Catalog($this)
             ]);
             return $this;
         }
 
-        $router = get_class($this).'_'.ucfirst($this->rq->node);
-        if(!class_exists($router)){
+        $router = get_class($this) . '_' . ucfirst($this->rq->node);
+        if (!class_exists($router)) {
             throw new \Verba\Exception\Routing();
         }
 
@@ -580,12 +582,12 @@ class system_toolM1Catalog extends \Verba\Block\Json
         $this->content = '';
         //echo 1; exit;
         //$q = "SELECT * FROM `".SYS_DATABASE."`.`catalog` WHERE id = '12659'";
-        $q = "SELECT * FROM `".SYS_DATABASE."`.`catalog`";
+        $q = "SELECT * FROM `" . SYS_DATABASE . "`.`catalog`";
         $sqlr = $this->DB()->query($q);
         $all_subs = [];
         $all_f = [];
-        while ( $row = $sqlr->fetchRow() ) {
-            if(!$row['config']){
+        while ($row = $sqlr->fetchRow()) {
+            if (!$row['config']) {
                 continue;
             }
 
@@ -597,21 +599,21 @@ class system_toolM1Catalog extends \Verba\Block\Json
             $listsKeys = ['public_fields', 'store_fields', 'offer_fields', 'order_info', 'order_description'];
 
             // списки
-            foreach($listsKeys as $listKey) {
+            foreach ($listsKeys as $listKey) {
                 if (isset($cfg['groups'][$listKey])) {
-                    if(isset($cfg['groups'][$listKey]['items']) && is_array($cfg['groups'][$listKey]['items'])){
-                        foreach($cfg['groups'][$listKey]['items'] as $i => $fieldCfg){
+                    if (isset($cfg['groups'][$listKey]['items']) && is_array($cfg['groups'][$listKey]['items'])) {
+                        foreach ($cfg['groups'][$listKey]['items'] as $i => $fieldCfg) {
                             $fieldUpdate = [];
-                            if($fieldCfg['headerText']) {
+                            if ($fieldCfg['headerText']) {
 
                                 $headerText = $fieldCfg['headerText'];
 
-                                if($fieldCfg['headerText'] && preg_match("/Handlers\\\HList\\\Headers/i", $fieldCfg['headerText'],$_buff)) {
+                                if ($fieldCfg['headerText'] && preg_match("/Handlers\\\HList\\\Headers/i", $fieldCfg['headerText'], $_buff)) {
                                     $headerText = preg_replace("/Handlers\\\HList\\\Headers/i", 'Act\MakeList\Handler\Header', $fieldCfg['headerText']);
                                 }
 
-                                if(preg_match("/\\\Mods\\\(.*)?$/i", $fieldCfg['headerText'],$_buff)) {
-                                    $headerText = '\Mod\\'.ucfirst($_buff[1]);
+                                if (preg_match("/\\\Mods\\\(.*)?$/i", $fieldCfg['headerText'], $_buff)) {
+                                    $headerText = '\Mod\\' . ucfirst($_buff[1]);
                                 }
 
                                 if ($headerText !== $fieldCfg['headerText']) {
@@ -626,30 +628,30 @@ class system_toolM1Catalog extends \Verba\Block\Json
                             }
 
 
-                            if($fieldCfg['handler']) {
+                            if ($fieldCfg['handler']) {
                                 $handler = $fieldCfg['handler'];
 
-                                if(preg_match("/(.*)_listHandler(.*)/i", $handler,$_buff)) {
-                                    $handler = '\Verba\Mod\\'.ucfirst($_buff[1]).'\Act\MakeList\Handler\Field\\'.ucfirst($_buff[2]);
+                                if (preg_match("/(.*)_listHandler(.*)/i", $handler, $_buff)) {
+                                    $handler = '\Verba\Mod\\' . ucfirst($_buff[1]) . '\Act\MakeList\Handler\Field\\' . ucfirst($_buff[2]);
                                 }
 
-                                if(preg_match("/\\\Mods\\\([a-z]+)\\\Handlers\\\HList\\\([a-z0-9_]+)(\(.*)?$/i", $handler,$_buff)) {
-                                    $handler = '\Verba\Mod\\'.ucfirst($_buff[1]).'\Act\MakeList\Handler\Field\\'.ucfirst($_buff[2]).$_buff[3];
+                                if (preg_match("/\\\Mods\\\([a-z]+)\\\Handlers\\\HList\\\([a-z0-9_]+)(\(.*)?$/i", $handler, $_buff)) {
+                                    $handler = '\Verba\Mod\\' . ucfirst($_buff[1]) . '\Act\MakeList\Handler\Field\\' . ucfirst($_buff[2]) . $_buff[3];
                                 }
 
-                                if(preg_match("/\\\Mods\\\Image\\\Handlers\\\Present\\\([a-z0-9_]+)$/i", $handler,$_buff)) {
-                                    $handler = '\Mod\\Image\Act\Look\Handler\\'.ucfirst($_buff[1]);
+                                if (preg_match("/\\\Mods\\\Image\\\Handlers\\\Present\\\([a-z0-9_]+)$/i", $handler, $_buff)) {
+                                    $handler = '\Mod\\Image\Act\Look\Handler\\' . ucfirst($_buff[1]);
                                 }
 
-                                if(preg_match("/\\\Mods\\\Image\\\Act\\\Look\\\Handler\\\([a-z0-9_]+)$/i", $handler,$_buff)) {
-                                    $handler = '\Mod\\Image\Act\Look\Handler\\'.ucfirst($_buff[1]);
+                                if (preg_match("/\\\Mods\\\Image\\\Act\\\Look\\\Handler\\\([a-z0-9_]+)$/i", $handler, $_buff)) {
+                                    $handler = '\Mod\\Image\Act\Look\Handler\\' . ucfirst($_buff[1]);
                                 }
 
-                                if(preg_match("/\\\Mods\\\(.*)?$/i", $handler,$_buff)) {
-                                    $handler = '\Mod\\'.ucfirst($_buff[1]);
+                                if (preg_match("/\\\Mods\\\(.*)?$/i", $handler, $_buff)) {
+                                    $handler = '\Mod\\' . ucfirst($_buff[1]);
                                 }
 
-                                if($handler != $fieldCfg['handler']){
+                                if ($handler != $fieldCfg['handler']) {
                                     $fieldUpdate['handler'] = $handler;
                                     $all_subs[] = array(
                                         $listKey,
@@ -662,7 +664,7 @@ class system_toolM1Catalog extends \Verba\Block\Json
                             }
 
 
-                            if(count($fieldUpdate)) {
+                            if (count($fieldUpdate)) {
                                 $updateRequired = true;
 
                                 $cfg['groups'][$listKey]['items'][$i] =
@@ -678,28 +680,28 @@ class system_toolM1Catalog extends \Verba\Block\Json
 
             //формы
             $formKeys = ['form_fields', 'tform', 'update_form_fields'];
-            foreach($formKeys as $formKey) {
+            foreach ($formKeys as $formKey) {
                 if (isset($cfg['groups'][$formKey])) {
                     if (isset($cfg['groups'][$formKey]['items']) && is_array($cfg['groups'][$formKey]['items'])) {
                         foreach ($cfg['groups'][$formKey]['items'] as $i => $fieldCfg) {
                             $fieldUpdate = [];
-                            if($fieldCfg['handler']){
+                            if ($fieldCfg['handler']) {
                                 $all_f[] = $fieldCfg['handler'];
 
-                                if( preg_match("/(\\\Mods\\\([a-z]+)\\\Handlers)?\\\Form\\\E\\\Ext\\\([a-z0-9_]+)(\(.*)?$/i", $fieldCfg['handler'],$_buff)) {
+                                if (preg_match("/(\\\Mods\\\([a-z]+)\\\Handlers)?\\\Form\\\E\\\Ext\\\([a-z0-9_]+)(\(.*)?$/i", $fieldCfg['handler'], $_buff)) {
                                     // Verba\Mod
-                                    if($_buff[2] ){
-                                        $fieldUpdate['handler'] = '\Verba\Mod\\'.ucfirst($_buff[2]).'\Act\Form\Element\Extension\\'.ucfirst($_buff[3]).$_buff[4];
+                                    if ($_buff[2]) {
+                                        $fieldUpdate['handler'] = '\Verba\Mod\\' . ucfirst($_buff[2]) . '\Act\Form\Element\Extension\\' . ucfirst($_buff[3]) . $_buff[4];
                                     } else {
-                                        $fieldUpdate['handler'] = '\Verba\Act\Form\Element\Extension\\'.ucfirst($_buff[3]).$_buff[4];
+                                        $fieldUpdate['handler'] = '\Verba\Act\Form\Element\Extension\\' . ucfirst($_buff[3]) . $_buff[4];
                                     }
                                     $all_subs[] = array(
                                         $formKey,
                                         $fieldCfg['handler'],
                                         $fieldUpdate['handler']
                                     );
-                                }else if(preg_match("/\\\Mods\\\(.*)?$/i", $fieldCfg['handler'],$_buff)) {
-                                    $fieldUpdate['handler'] = '\Mod\\'.ucfirst($_buff[1]);
+                                } else if (preg_match("/\\\Mods\\\(.*)?$/i", $fieldCfg['handler'], $_buff)) {
+                                    $fieldUpdate['handler'] = '\Mod\\' . ucfirst($_buff[1]);
                                     $all_subs[] = array(
                                         $formKey,
                                         'handler',
@@ -710,7 +712,7 @@ class system_toolM1Catalog extends \Verba\Block\Json
                             }
 
 
-                            if(count($fieldUpdate)) {
+                            if (count($fieldUpdate)) {
                                 $updateRequired = true;
 
                                 $cfg['groups'][$formKey]['items'][$i] =
@@ -726,7 +728,7 @@ class system_toolM1Catalog extends \Verba\Block\Json
 
             if ($updateRequired) {
                 //$a = 1;
-                $this->DB()->query("UPDATE `".SYS_DATABASE."`.`catalog` SET `config` = '".$this->DB()->escape(serialize($cfg))."' WHERE `id` = '".$row['id']."'");
+                $this->DB()->query("UPDATE `" . SYS_DATABASE . "`.`catalog` SET `config` = '" . $this->DB()->escape(serialize($cfg)) . "' WHERE `id` = '" . $row['id'] . "'");
             }
         }
 
@@ -737,7 +739,8 @@ class system_toolM1Catalog extends \Verba\Block\Json
 class system_toolM1_1 extends \Verba\Block\Json
 {
 
-    function init(){
+    function init()
+    {
         $this->addItems([
             # new system_toolBidsRefresh($this->rq->shift(), ['contentType' => 'json']),
             new \Verba\Mod\Review\Block\Tool\RecalcAllStoresRatings($this),
@@ -749,7 +752,8 @@ class system_toolM1_1 extends \Verba\Block\Json
 class system_toolM1_2 extends \Verba\Block\Json
 {
 
-    function init(){
+    function init()
+    {
         $this->addItems([
             new system_toolRefreshStoresPc($this->rq->shift(), ['contentType' => 'json']),
         ]);

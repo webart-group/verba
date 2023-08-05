@@ -83,7 +83,7 @@ class Lang extends Base
 
         $lcPropMtd = \Verba\Hive::getPlatform() == 'win' ? 'getLCWinCode' : 'getLCUnixCode';
         $args = self::$lcPropMtd($try2apply);
-        //array_unshift($args, LC_ALL);
+        array_unshift($args, LC_ALL);
         $r = call_user_func_array('setlocale', $args);
         if ($r !== false) {
             $locale = $try2apply;

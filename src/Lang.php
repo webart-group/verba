@@ -11,9 +11,24 @@ class Lang extends Base
     private static $compileJsPathRel;
     private static $debug = null;
     public static $languages = [
-        'en' => [['en_US.utf8',], ['eng'], 'eng', 'English'],
-        'ua' => array(['ru_UA.utf8'], ['ukrainian'], 'укр', 'Українська'),
-        'ru' => array(['ru_RU', 'ru_RU.utf8'], ['russian_Russia'], 'рус', 'Русский')
+        'en' => [
+            ['en_US.utf8',],
+            ['eng'],
+            'eng',
+            'English'
+        ],
+        'ua' => [
+            ['uk_UA','ru_UA.utf8'],
+            ['ukrainian'],
+            'укр',
+            'Українська'
+        ],
+        'ru' => [
+            ['ru_RU', 'ru_RU.utf8'],
+            ['russian_Russia'],
+            'рус',
+            'Русский'
+        ]
     ];
     public static $config;
     public static $_config_default;
@@ -68,7 +83,7 @@ class Lang extends Base
 
         $lcPropMtd = \Verba\Hive::getPlatform() == 'win' ? 'getLCWinCode' : 'getLCUnixCode';
         $args = self::$lcPropMtd($try2apply);
-        array_unshift($args, LC_ALL);
+        //array_unshift($args, LC_ALL);
         $r = call_user_func_array('setlocale', $args);
         if ($r !== false) {
             $locale = $try2apply;

@@ -7,41 +7,6 @@ class FeedBack extends \Verba\Mod
 
     use \Verba\ModInstance;
 
-    function addEntry()
-    {
-
-        $oh = \Verba\_oh('feedback');
-        $ae = $oh->initAddEdit(array('action' => 'new'));
-        if (!isset($_REQUEST['NewObject'][$oh->getID()])
-            || !is_array($_REQUEST['NewObject'][$oh->getID()])
-            || !isset($_REQUEST['NewObject'][$oh->getID()]['name'])
-            || empty($_REQUEST['NewObject'][$oh->getID()]['name'])
-            || !isset($_REQUEST['NewObject'][$oh->getID()]['email'])
-            || empty($_REQUEST['NewObject'][$oh->getID()]['email'])
-            || !isset($_REQUEST['NewObject'][$oh->getID()]['text'])
-            || empty($_REQUEST['NewObject'][$oh->getID()]['text'])
-        ) {
-            $e = new \Exception(Lang::get('feedback add error badIncoming'));
-            $e->ae = $ae;
-            throw $e;
-        }
-        $data = array(
-            'name' => $_REQUEST['NewObject'][$oh->getID()]['name'],
-            'email' => $_REQUEST['NewObject'][$oh->getID()]['email'],
-            'text' => $_REQUEST['NewObject'][$oh->getID()]['text'],
-            //'title' => $_REQUEST['NewObject'][$oh->getID()]['title'],
-        );
-        $ae->setGettedObjectData($data);
-        $ae->addedit_object();
-        if (!$ae->getIID()) {
-            $e = new \Exception(Lang::get('feedback add error badOperation'));
-            $e->ae = $ae;
-            throw $e;
-        }
-
-        return $ae;
-    }
-
     function sendCreationNonifyEmail($item)
     {
         $tpl = $this->tpl();

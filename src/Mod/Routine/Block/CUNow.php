@@ -51,8 +51,9 @@ class CUNow extends \Verba\Block\Json
         }
 
         if (!is_array($this->data)) {
-            if (isset($_REQUEST['NewObject'][$this->oh->getID()])) {
-                $this->data = $_REQUEST['NewObject'][$this->oh->getID()];
+            $this->data = $this->rq->post();
+            if (isset($this->data['NewObject'][$this->oh->getID()])) {
+                $this->data = $this->data['NewObject'][$this->oh->getID()];
             }
         }
     }

@@ -9,7 +9,7 @@ class ServicePromo
     public function transform($item)
     {
         return [
-            'title' => $item['title'] ?? null,
+            'title_preview' => $item['title_preview'] ?? null,
             'text_preview' => $item['text_preview'] ?? null,
         ];
     }

@@ -1,9 +1,8 @@
 <?php
-namespace Verba\App\System;
+namespace Verba\Mod\System;
 
 use Verba\Exception\Routing;
 use Verba\Request\Http\Router as VerbaRouter;
-use Verba\Response\Json;
 
 class Router extends VerbaRouter
 {

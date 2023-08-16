@@ -2,6 +2,7 @@
 
 namespace Verba\Mod\Page\Block;
 
+use Verba\Lang;
 use Verba\Mod\Menu;
 
 class Meta extends \Verba\Block\Json
@@ -19,10 +20,17 @@ class Meta extends \Verba\Block\Json
     {
         /**
          * @var $mMenu Menu
+         * @var $mMeta \Verba\Mod\Meta
          */
         $r = [];
         $mMenu = \Verba\_mod('menu');
         $mMeta = \Verba\_mod('meta');
+
+        $locale = $this->rq->post('locale');
+        if($locale) {
+            $initialLocale = SYS_LOCALE;
+            Lang::setLocale($locale);
+        }
 
         $url2handle = $this->rq->post('url');
         $url2handle = explode('/', $url2handle);

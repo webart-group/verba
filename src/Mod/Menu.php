@@ -9,6 +9,8 @@ class Menu extends \Verba\Mod
     protected $currentItemParents = array();
     protected $isChainLoaded = null;
 
+    protected $urlFragments = null;
+
     public $chain_nodes = null;
 
     function addMenuChain()
@@ -19,6 +21,16 @@ class Menu extends \Verba\Mod
         for ($i = 0; $i < func_num_args(); $i++) {
             $this->chain_nodes[] = func_get_arg($i);
         }
+    }
+
+    function setUrlFragments(array $urlFragments)
+    {
+        $this->urlFragments = $urlFragments;
+    }
+
+    function setChainIsLoaded(bool $val)
+    {
+        $this->isChainLoaded = $val;
     }
 
     function getChain()
@@ -124,15 +136,20 @@ class Menu extends \Verba\Mod
 
     function findAndLoadCurrentItem($urlFragmentsNum = false)
     {
-        global $response;
+
         $this->currentItem = false;
-        $this->currentItemParents = array();
+        $this->currentItemParents = [];
         $_menu = \Verba\_oh('menu');
-        $urlFragments = $response->request->uf;
+
+        if(!is_array($this->urlFragments)) {
+            global $response;
+            $this->urlFragments = $response->request->uf;
+        }
+
         $urlFragmentsNum = (int)$urlFragmentsNum;
         $url = $urlFragmentsNum > 0
-            ? array_slice($urlFragments, 0, $urlFragmentsNum)
-            : $urlFragments;
+            ? array_slice($this->urlFragments, 0, $urlFragmentsNum)
+            : $this->urlFragments;
 
         $q = "SELECT ";
         $attrs = $_menu->getAttrs(true);

@@ -4,6 +4,8 @@ namespace Verba\Mod;
 
 class Menu extends \Verba\Mod
 {
+    const MAIN_MENU_ROOT_ID = 1;
+
     use \Verba\ModInstance;
     protected $currentItem;
     protected $currentItemParents = array();

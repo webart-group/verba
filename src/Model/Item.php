@@ -544,7 +544,7 @@ class Item extends \Verba\Configurable
 
     function exportAsValues($keys)
     {
-        $r = array();
+        $r = [];
 
         if (!is_array($keys)) {
             if (!is_string($keys)) {

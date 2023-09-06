@@ -55,7 +55,9 @@ class Picupload extends Element {
 
         // try to take from attr
         $cfgAttrName = '_'.$this->A->getCode().'_config';
-        if($oh->isA($cfgAttrName)){
+        if(!empty($fromCfg = $this->aef->gC('fields ' . $cfgAttrName . ' value'))){
+            $cfgName = $fromCfg;
+        }elseif($oh->isA($cfgAttrName)){
             $cfgName = $this->aef->getAefByAttr($cfgAttrName)->getValue();
         }else{
             $cfgName = $this->aef->oh()->p($this->A->getCode().'_config');

@@ -14,6 +14,8 @@ class Ot extends Json
     {
         GLOBAL $S;
 
+        $keepOriginalOtId = (bool)$this->request->getParams('keep_original_id');
+
         $source = $this->request->getParams('source');
         $destination = $this->request->getParams('destination');
         $log = [];
@@ -94,9 +96,12 @@ class Ot extends Json
             }
 
             $otAe = $otype->initAddEdit();
-            unset(
-                $srcOtypeData['id'],
-            );
+
+            if(false === $keepOriginalOtId){
+                unset(
+                    $srcOtypeData['id'],
+                );
+            }
 
             if($srcOtypeData['handler'] == 'baseObject' || $srcOtypeData['handler'] == '\Model'){
                 $srcOtypeData['handler'] = '';

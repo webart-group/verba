@@ -11,7 +11,7 @@ use Verba\Request\Http\Router;
 use function Verba\_mod;
 use function Verba\_oh;
 
-class ProductAcpRouter extends Router
+class Product extends Router
 {
     function route()
     {
@@ -60,7 +60,7 @@ class ProductAcpRouter extends Router
         }
 
         if (!isset($router)) {
-            $h = parent::route();
+            $h = (new ObjectType($this->request))->route();
         } else {
 
             if ($router instanceof CatalogActionConfigInterface) {

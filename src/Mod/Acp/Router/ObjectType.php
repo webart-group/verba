@@ -11,14 +11,19 @@ namespace Verba\Mod\Acp\Router;
 
 
 use Verba\Exception\Routing;
+use Verba\Mod\Routine\Block\CUNow;
+use Verba\Mod\Routine\Block\Delete;
+use Verba\Mod\Routine\Block\Delete\Json;
+use Verba\Mod\Routine\Block\Form;
+use Verba\Request\Http\Router;
 
-class ObjectType extends \Verba\Request\Http\Router
+class ObjectType extends Router
 {
 
     function route()
     {
         if(!$this->request->ot_code){
-            throw new \Verba\Exception\Routing('Unknown otype');
+            throw new Routing('Unknown otype');
         }
 
         if (!isset($this->request->action) && count($this->request->uf))
@@ -44,7 +49,7 @@ class ObjectType extends \Verba\Request\Http\Router
                 if (!isset($cfg) || empty($cfg)) {
                     $rq->addParam(array('cfg' => 'acp acp-' . $rq->ot_code . ' acp/ots/' . $rq->ot_code));
                 }
-                $h = new \Verba\Mod\Routine\Block\Form($rq);
+                $h = new Form($rq);
                 $h->contentType = 'json';
                 break;
 
@@ -52,22 +57,19 @@ class ObjectType extends \Verba\Request\Http\Router
             case 'update' :
             case 'editnow':
             case 'newnow' :
-                $h = new \Verba\Mod\Routine\Block\CUNow($rq);
-                if (!$h->responseAs) {
-                    $h->responseAs = 'data';
-                }
+                $h = new CUNow($rq);
                 break;
 
             case 'remove' :
-                $h = new \Verba\Mod\Routine\Block\Delete\Json($rq);
+                $h = new Json($rq);
                 break;
             case 'delete' :
-                $h = new \Verba\Mod\Routine\Block\Delete($rq);
+                $h = new Delete($rq);
                 break;
         }
 
         if(!isset($h)){
-            throw new \Verba\Exception\Routing();
+            throw new Routing();
         }
 
         return $h->route();

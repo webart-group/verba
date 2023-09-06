@@ -56,11 +56,6 @@ class Router extends \Verba\Request\Http\Router
             $h = new $autoclass($rq->shift());
 
         // если есть ACP-роутер вида <Node>AcpRouter в модуле
-        } elseif(($autoclass = '\\'.__NAMESPACE__.'\\Router\\'.ucfirst($rq->node).'AcpRouter') && class_exists($autoclass)) {
-
-            $h = new $autoclass($rq->shift());
-
-            // если есть ACP-роутер в модуле (и модуль есть)
         } elseif(Hive::isModExists($rq->node) && ($Mod = _mod($rq->node)) && ($modRouter = '\\Verba\\Mod\\'.$Mod->getName().'\\Router\\ACP') && class_exists($modRouter)) {
 
             $h = new $modRouter($rq->shift());

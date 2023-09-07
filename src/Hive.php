@@ -193,7 +193,7 @@ class Hive extends Configurable
 
         // текущий хост
         define('SYS_THIS_HOST', $cfg['this_host']);
-        define('SYS_REQUEST_PROTO', isset($GLOBALS['SCRIPT_URI_PARSED']['scheme']) ?? $_SERVER['REQUEST_SCHEME'] ?? 'http');
+        define('SYS_REQUEST_PROTO', $GLOBALS['SCRIPT_URI_PARSED']['scheme'] ?? ($_SERVER['REQUEST_SCHEME'] ?? 'http'));
 
         define('SYS_VERSION', $cfg['version']);
         define('SYS_DATABASE', $cfg['db']['database']);

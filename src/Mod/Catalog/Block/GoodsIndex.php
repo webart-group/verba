@@ -1,13 +1,14 @@
 <?php
 
-namespace Verba\Mod\Catalog;
+namespace Verba\Mod\Catalog\Block;
 
 use Verba\Block\Json;
 use Verba\Lang;
 use function Verba\_mod;
 use function Verba\_oh;
+use function Verba\Mod\Catalog\make_padej_ru;
 
-class Index extends Json
+class GoodsIndex extends Json
 {
     public $templates = array(
         'tpl' => 'catalog/indexContnet/block.tpl',

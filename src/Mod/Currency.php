@@ -207,7 +207,7 @@ class Currency extends \Verba\Mod
             return 0;
         }
         $reqCur = $this->getCurrency($curId);
-        $rate = $reqCur->p('rate_val');
+        $rate = $reqCur->getValue('rate_val');
         return $rate < 0
             ? $price / $rate
             : $price * $rate;

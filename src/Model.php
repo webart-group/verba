@@ -2,7 +2,18 @@
 
 namespace Verba;
 
-class Model extends Base implements \Verba\ModelInterface
+use Exception;
+use Verba\Act\AddEdit;
+use Verba\Act\Delete;
+use Verba\Act\Form;
+use Verba\Act\MakeList;
+use Verba\Data\Boolean;
+use Verba\Model\Item;
+use Verba\ObjectType\Attribute;
+use Verba\ObjectType\DataVault;
+use Verba\ObjectType\Property;
+
+class Model extends Base implements ModelInterface
 {
     const RELATION_TYPE_PARENT = 2;
     const RELATION_TYPE_CHILD = 1;
@@ -30,7 +41,7 @@ class Model extends Base implements \Verba\ModelInterface
         $this->OT = new ObjectType($this, $ot_id, $base_ot);
 
         if ($base_ot) {
-            $this->_base = \Verba\_oh($base_ot);
+            $this->_base = _oh($base_ot);
             $this->baseId = $this->_base->getID();
         }
 
@@ -42,7 +53,7 @@ class Model extends Base implements \Verba\ModelInterface
     {
         $meths = get_class_methods($this->OT);
         if (!in_array($method, $meths)) {
-            throw new \Exception('Undefined class method called: ' . __CLASS__ . ':' . $method . '()');
+            throw new Exception('Undefined class method called: ' . __CLASS__ . ':' . $method . '()');
         }
 
         return call_user_func_array(array($this->OT, $method), $args);
@@ -277,7 +288,7 @@ class Model extends Base implements \Verba\ModelInterface
     }
 
     /**
-     * @return \Verba\Act\AddEdit
+     * @return AddEdit
      */
     function initAddEdit($cfg = false)
     {//$action, $ot_id = false, $object_index = 0, $key_id = false, $iid = false, $p_ot = false, $piid=false){
@@ -290,20 +301,20 @@ class Model extends Base implements \Verba\ModelInterface
         }
         $cfg['ot_id'] = $this->getID();
 
-        return new \Verba\Act\AddEdit($cfg);
+        return new AddEdit($cfg);
     }
 
     function initForm($cfg)
     {
-        \Verba\Hive::loadFormMakerClass();
+        Hive::loadFormMakerClass();
         $cfg['ot_id'] = $this->getID();
-        $aef = new \Verba\Act\Form($cfg);
+        $aef = new Form($cfg);
         return $aef;
     }
 
     function initDelete($processId = false)
     {
-        $dh = new \Verba\Act\Delete($processId);
+        $dh = new Delete($processId);
         $dh->setOtId($this->getID());
         return $dh;
     }
@@ -312,7 +323,7 @@ class Model extends Base implements \Verba\ModelInterface
      * Инициализация объекта списка.
      * @param array $cfg конфиг для обработчика действия
      *
-     * @return \Verba\Act\MakeList объект списка.
+     * @return MakeList объект списка.
      */
     function initList($cfg)
     {
@@ -321,7 +332,7 @@ class Model extends Base implements \Verba\ModelInterface
         }
 
         $cfg['ot_id'] = $this->getID();
-        $list = new \Verba\Act\MakeList($cfg);
+        $list = new MakeList($cfg);
 
         return $list;
     }
@@ -422,7 +433,7 @@ class Model extends Base implements \Verba\ModelInterface
         $invertedTry = (bool)$invertedTry;
         $originalOTypeInput = false;
 
-        $_sec = \Verba\_oh($ot_id);
+        $_sec = _oh($ot_id);
         $ot_id = $_sec->getID();
 
         $rule = $this->getLocalRule($ot_id, $alias);
@@ -485,8 +496,8 @@ class Model extends Base implements \Verba\ModelInterface
             if ($rule['rule'] === 'fid') {
                 if ($rule['db'] === -1) {
                     $_vltRef = empty($rule['table'])
-                        ? \Verba\_oh($rule['sec'])
-                        : \Verba\_oh($rule['table']);
+                        ? _oh($rule['sec'])
+                        : _oh($rule['table']);
                     $rule['db'] = $_vltRef->vltDB();
                     $rule['table'] = $_vltRef->vltT();
                     $rule['uri'] = $_vltRef->vltURI();
@@ -553,7 +564,7 @@ class Model extends Base implements \Verba\ModelInterface
     /**
      * @param mixed $key_id
      *
-     * @return bool|\Verba\ObjectType\DataVault Объект с данными по хранилищу
+     * @return bool|DataVault Объект с данными по хранилищу
      */
     function getVault($key_id = 0)
     {
@@ -580,7 +591,7 @@ class Model extends Base implements \Verba\ModelInterface
             return $this->getVault($key_id)->getObject();
         }
 
-        $bundleOtId = \Verba\_oh($bundleOtId)->getID();
+        $bundleOtId = _oh($bundleOtId)->getID();
         $rule = $this->getRule($bundleOtId);
 
         return is_array($rule) && array_key_exists('table', $rule)
@@ -601,7 +612,7 @@ class Model extends Base implements \Verba\ModelInterface
             return $this->getVault($key_id)->getRoot();
         }
 
-        $bundleOtId = \Verba\_oh($bundleOtId)->getID();
+        $bundleOtId = _oh($bundleOtId)->getID();
         $rule = $this->getRule($bundleOtId);
 
         return is_array($rule) && array_key_exists('db', $rule)
@@ -621,7 +632,7 @@ class Model extends Base implements \Verba\ModelInterface
         if (!$bundleOtId) {
             return $this->getVault($key_id)->getURI();
         }
-        $bundleOtId = \Verba\_oh($bundleOtId)->getID();
+        $bundleOtId = _oh($bundleOtId)->getID();
         $rule = $this->getRule($bundleOtId);
 
         return is_array($rule) && array_key_exists('uri', $rule)
@@ -632,7 +643,7 @@ class Model extends Base implements \Verba\ModelInterface
     /**
      * Возвращает объект атрибута
      * @param mixed $attr_id код или id атрибута
-     * @return bool|\Verba\ObjectType\Attribute
+     * @return bool|Attribute
      * @see \Verba\ObjectType\Attribute
      */
     function A($attr, $own = false)
@@ -652,7 +663,7 @@ class Model extends Base implements \Verba\ModelInterface
 
     function add_behavior_group($attrs_list, $behavior)
     {
-        if (!array_key_exists($behavior, $this->OT->behaviors) || !count($this->OT->behaviors[$behavior]) || !\Verba\reductionToArray($attrs_list)) {
+        if (!array_key_exists($behavior, $this->OT->behaviors) || !count($this->OT->behaviors[$behavior]) || !reductionToArray($attrs_list)) {
             return $attrs_list;
         }
 
@@ -750,7 +761,7 @@ class Model extends Base implements \Verba\ModelInterface
 
     function inChilds($ot, $own = false)
     {
-        $ot = \Verba\_oh($ot);
+        $ot = _oh($ot);
         if (isset($this->OT->family['childs'][$ot->getID()])) {
             return true;
         }
@@ -764,7 +775,7 @@ class Model extends Base implements \Verba\ModelInterface
 
     function inParents($ot, $own = false)
     {
-        $ot = \Verba\_oh($ot);
+        $ot = _oh($ot);
         if (isset($this->OT->family['parents'][$ot->getID()])) {
             return true;
         }
@@ -795,7 +806,7 @@ class Model extends Base implements \Verba\ModelInterface
      */
     function getFamilyRelations($secOt, $secondTry = false)
     {
-        $_sec = \Verba\_oh($secOt);
+        $_sec = _oh($secOt);
         $secOt = $_sec->getID();
         $secondTry = (bool)$secondTry;
         $in_ch = array_key_exists($secOt, $this->OT->family['childs']);
@@ -957,7 +968,7 @@ class Model extends Base implements \Verba\ModelInterface
             )
         );
 
-        if (!in_array($action, array('m', 'd', 'upd')) || !\Verba\convertToIdList($prim_iid)
+        if (!in_array($action, array('m', 'd', 'upd')) || !convertToIdList($prim_iid)
             || ($action == 'upd' && empty($extData))) {
             return false;
         }
@@ -994,7 +1005,7 @@ class Model extends Base implements \Verba\ModelInterface
         }
 
         foreach ($sec_array as $c_aot => $sec_iids) {
-            \Verba\convertToIdList($sec_iids, true);
+            convertToIdList($sec_iids, true);
 
             $family_relations = $fr ? $fr : $this->getFamilyRelations($c_aot);
 
@@ -1188,7 +1199,7 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
 
     function ph_logic_handler($attr_id, &$row)
     {
-        $values = \Verba\Data\Boolean::getValues();
+        $values = Boolean::getValues();
         $attr_code = $this->A($attr_id)->getCode();
         return array_key_exists($row[$attr_code], $values) ? $values[$row[$attr_code]] : $row[$attr_code];
     }
@@ -1275,24 +1286,26 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
     /**
      * @param $prop
      * @param bool $own
-     * @return bool| \Verba\ObjectType\Property
+     * @return bool| Property
      */
     function Prop($prop, $own = false)
     {
 
-        if (is_object($prop) && $prop instanceof  \Verba\ObjectType\Property) {
+        if (is_object($prop) && $prop instanceof  Property) {
             return $this->isProp($prop->getId(), $own) ? $prop : false;
         }
         if (!is_numeric($prop) && is_string($prop)) {
-            $prop = $this->propCode2Id($prop);
+            $propId = $this->propCode2Id($prop);
+        }else{
+            $propId = $prop;
         }
-        if ($prop && array_key_exists($prop, $this->OT->props)) {
-            return $this->OT->props[$prop];
+        if ($propId && array_key_exists($propId, $this->OT->props)) {
+            return $this->OT->props[$propId];
         }
         if (!$own && $this->_base) {
-            $prop = $this->_base->Prop($prop, $own);
-            if (is_object($prop) && $prop->inheritable) {
-                return $prop;
+            $propObject = $this->_base->Prop($prop, $own);
+            if (is_object($propObject) && $propObject->inheritable) {
+                return $propObject;
             } else {
                 return false;
             }
@@ -1322,7 +1335,7 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
     /**
      * Возвращает значение свойства или null если свойства не существует
      * @param $prop
-     * @return bool| \Verba\ObjectType\Property
+     * @return bool| Property
      */
     function p($prop)
     {
@@ -1335,9 +1348,9 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
 
     /**
      * @param $data array|integer
-     * @return \Verba\Model\Item|bool
+     * @return Item|bool
      */
-    function initItem($data, $cfg = array())
+    function initItem($data, $cfg = array()): Item
     {
 
         $OItemClass = $this->getOTItemClass();
@@ -1350,7 +1363,7 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
 
         try {
             $OItem = new $OItemClass($data, $cfg);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return false;
         }
 

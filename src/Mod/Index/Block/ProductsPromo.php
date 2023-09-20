@@ -19,6 +19,8 @@ class ProductsPromo extends Json
         ]);
         $qm = $list->QM();
         $q = $qm->getQuery();
+        $qm->addWhere(1, 'active');
+
         return $this->content = $list->generateListJson();
     }
 }

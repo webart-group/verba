@@ -1,6 +1,6 @@
 <?php
 
-namespace Verba\Mod\Catalog;
+namespace Verba\Mod\Catalog\Block;
 
 class Description extends \Verba\Block\Html
 {
@@ -8,6 +8,7 @@ class Description extends \Verba\Block\Html
     public $templates = array(
         'content' => 'catalog/show/description.tpl'
     );
+
     public $tplvars = array(
         'BLOCK_CONTENT' => '',
         'CATALOG_EMPTY_SIGN' => ' hidden',

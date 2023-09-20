@@ -93,6 +93,8 @@ class ProductBasicShow extends Json
             }
         }
 
+        $productData['images'] = $variantsImages;
+
         return $this->content = [
             'product' => $productData,
             'comments' => $this->items['comments']->getContent(),

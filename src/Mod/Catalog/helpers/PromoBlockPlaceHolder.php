@@ -1,6 +1,6 @@
 <?php
 
-namespace Verba\Mod\Catalog;
+namespace Verba\Mod\Catalog\helpers;
 
 class PromoBlockPlaceHolder extends \Verba\Block\Html
 {

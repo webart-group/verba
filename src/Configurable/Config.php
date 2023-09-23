@@ -6,7 +6,7 @@
  * Date: 20.08.19
  * Time: 18:18
  */
-namespace Configurable;
+namespace Verba\Configurable;
 
 class Config extends \Verba\Configurable
 {

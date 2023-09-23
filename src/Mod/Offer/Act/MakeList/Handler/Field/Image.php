@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Offer\Act\MakeList\Handler\Field;
 
-use \Act\MakeList\Handler\Field;
+use \Verba\Act\MakeList\Handler\Field;
 
 class Image extends Field
 {

@@ -407,7 +407,7 @@ class MakeList extends Action
             'LIST_WRAP_ID' => $this->wrapId,
             'SLID' => $this->Selection->getID(),
             'OBJECT_OT' => $this->ot_id,
-            'LIST_CONFIGS_STR' => str_replace('/', '|', implode(' ', $this->_confAppliedNames)),
+            'LIST_CONFIGS_STR' => $this->getAppliedConfigsAsString(),
             'CLIENT_TEMPLATES' => '',
         ));
 
@@ -1261,6 +1261,7 @@ class MakeList extends Action
         ];
 
         $r['fields'] = $this->getFieldsMeta();
+        $r['configs'] = $this->getAppliedConfigsAsString();
 
         //Filters
         $this->fire('beforeFilters');
@@ -2729,6 +2730,11 @@ class MakeList extends Action
         $this->{$pn}['headers'] = array_replace_recursive($this->{$pn}['headers'], $var);
 
         return $this->{$pn}['headers'];
+    }
+
+    function getAppliedConfigsAsString()
+    {
+        return str_replace('/', '|', implode(' ', $this->_confAppliedNames));
     }
 }
 

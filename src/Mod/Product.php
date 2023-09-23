@@ -2,9 +2,8 @@
 
 namespace Verba\Mod;
 
-use Configurable;
 use Exception;
-use ObjectType\Attribute;
+use Verba\ObjectType\Attribute;
 use Verba\Branch;
 use Verba\Hive;
 use Verba\Mod;
@@ -16,7 +15,8 @@ use function Verba\_oh;
 class Product extends Mod
 {
     use ModInstance;
-    protected $productHandlers = array();
+
+    protected $productHandlers = [];
     protected $phCfg = null;
 
 
@@ -27,16 +27,20 @@ class Product extends Mod
      */
     function getCatsByProduct($ot, $iid)
     {
+        /**
+         * @var Catalog $mCat
+         */
+
         $oh = _oh($ot);
         $prodOtId = $oh->getID();
         $_catalog = _oh('catalog');
         $catOtId = $_catalog->getID();
         $mCat = _mod('catalog');
 
-        $brn = Branch::get_branch(array($oh->getID() => array('aot' => array($catOtId), 'iids' => $iid)), 'up', 5);
-        $threads = array();
+        $brn = Branch::get_branch([$prodOtId => ['aot' => [$catOtId], 'iids' => $iid]], 'up', 5);
+        $threads = [];
         foreach ($brn['pare'][$prodOtId][$iid][$catOtId] as $ccatId) {
-            $threads[$ccatId] = Branch::build_tree($brn, 2, array($catOtId => array($ccatId => $ccatId)));
+            $threads[$ccatId] = Branch::build_tree($brn, 2, [$catOtId => [$ccatId => $ccatId]]);
         }
         //$plainChain = \Verba\Branch::build_tree($brn, 2);
         if (!$threads) {
@@ -44,15 +48,16 @@ class Product extends Mod
         }
         $foundedParentId = false;
         if (count($threads) == 1) {
-            reset($threads);
-            $tread = current($threads);
-            //rm #1 кат // вообще не оч понятно зачем это нужно
-            //array_pop($tread);
-            $items = $mCat->getItems($tread, true);
+            $threads = current($threads);
+            $foundedItems = $_catalog->getData($threads, true);
+            $items = [];
+            foreach ($threads as $cat_id){
+                $items[$cat_id] = $foundedItems[$cat_id] ?? null;
+            }
 
         } elseif (count($threads) > 1) {
             $all_cat_iids = array_unique(call_user_func_array('array_merge', $threads));
-            $all_items = $mCat->getItems($all_cat_iids, true);
+            $all_items = $_catalog->getData($all_cat_iids, true);
 
             if (isset($_REQUEST['slID'])
                 && preg_match("/c" . $_catalog->getID() . "_(\d+)/i", $_REQUEST['slID'], $_)
@@ -101,7 +106,7 @@ class Product extends Mod
 
     function loadItem($ot, $iid, $catalogId = false, $isVariants = false)
     {
-        $r = array();
+        $r = [];
         $iid = $this->DB()->escape_string($iid);
         $_product = _oh($ot);
         $_catalog = _oh('catalog');
@@ -116,7 +121,7 @@ class Product extends Mod
 
         $qm->addGroupBy(array($_product->getPAC()));
         if ($isVariants) {
-            $qm->addWhere($iid, 'parentId', 'parentId', array(null, null, $ptalias));
+            $qm->addWhere($iid, 'parentId', 'parentId', [null, null, $ptalias]);
         } else {
             $qm->addCJoin(array(array('a' => $lcA)),
                 array(
@@ -193,7 +198,7 @@ class Product extends Mod
         if (!is_array($cfg) || empty($cfg)) {
             throw new Exception('Unable to find product handler cfg');
         }
-        $this->phCfg = Configurable::substNumIdxAsStringValues($cfg);
+        $this->phCfg = \Verba\Configurable::substNumIdxAsStringValues($cfg);
         if (!is_array($this->phCfg)) {
             $this->phCfg = array();
         }
@@ -297,8 +302,8 @@ class Product extends Mod
     function sortVariants($a, $b)
     {
         $v = array(
-            'a' => reductionToFloat($a['size']),
-            'b' => reductionToFloat($b['size']),
+            'a' => \Verba\reductionToFloat($a['size']),
+            'b' => \Verba\reductionToFloat($b['size']),
         );
         $units = array(
             'a' => $a['size_unit'],

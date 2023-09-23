@@ -1,19 +1,71 @@
 <?php
 
-namespace Verba\Mod\Catalog;
+namespace Verba\Mod\Catalog\routes;
 
 use Verba\Block\Json;
 use Verba\Exception\Routing;
+use Verba\Exception\Routing as RoutingException;
+use Verba\Mod\Catalog\Block\Description;
+use Verba\Mod\Catalog\Block\GoodsIndex;
+use Verba\Mod\Catalog\helpers\PromoBlockPlaceHolder;
 use Verba\Mod\Product\Block\ProductsList;
+use Verba\Response\Html as HtmlResponse;
 use Verba\Url;
 use function Verba\_mod;
 use function Verba\_oh;
 
-class CatalogProducts extends Json
+class GoodsCatalogRouter extends Json
 {
     public $catsData;
     public $currentCat;
-    function init()
+
+    function route()
+    {
+        $mCat = \Verba\_mod('catalog');
+
+        $catsData = $mCat->getCatsChain($this->request->uf, 0);
+
+        if (!$catsData) {
+            throw new RoutingException();
+        }
+
+        if (count($this->request->uf) > 1 && end($this->request->uf) == '') {
+            $uf = $this->request->uf;
+            array_pop($uf);
+            $relocateUrl = new Url('/' . implode('/', $uf));
+            $h = new HtmlResponse($this);
+            $h->addHeader('HTTP/1.1 301 Moved Permanently');
+            $h->addHeader('Location: ' . $relocateUrl->get(true));
+            return $h->route();
+        }
+
+        $currentCat = end($catsData);
+
+        $this->request->addParam([
+            'catsData' => $catsData
+        ]);
+
+        $childChain = $mCat->getItemsByParent($currentCat['id']);
+        $this->request->addParam(array(
+            'childChain' => $childChain
+        ));
+
+        $mCat->addCatsToBreadcrumbs($catsData);
+
+        if (is_array($childChain)) {
+            $handler = (new GoodsIndex($this))->route();
+        } else {
+            $handler = $this;
+        }
+
+        if (!isset($handler)) {
+            throw new RoutingException();
+        }
+
+        return $handler;
+    }
+
+    function prepare()
     {
         $_catalog = _oh('catalog');
 

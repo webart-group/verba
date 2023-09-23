@@ -24,16 +24,16 @@ class Catalog extends \Verba\Mod\Acp\Tabset
 
         $commonTabs = [
             'CatalogAef',
-//            'CatalogGoodsProps' => [
-//                'button' => [
-//                    'title' => 'catalog acp tab goodsProps'
-//                ],
-//                'ot' => 'catalog',
-//                'url' => '/acp/h/catalog/cuform-configs',
-//                'instanceOf' => [
-//                    'type' => 'node'
-//                ],
-//            ],
+            'CatalogGoodsProps' => [
+                'button' => [
+                    'title' => 'catalog acp tab goodsProps'
+                ],
+                'ot' => 'catalog',
+                'url' => '/acp/h/catalog/cuform-configs',
+                'instanceOf' => [
+                    'type' => 'node'
+                ],
+            ],
 //            'CatalogGoodsTradeForm' => [
 //                'button' => [
 //                    'title' => 'catalog acp tab tradeForm'

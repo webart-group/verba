@@ -4,9 +4,12 @@ namespace Verba\Mod\Product\Block;
 use Exception;
 use Verba\Block\Json;
 use Verba\Lang;
-use Verba\Mod\Comment\Block\CommentsPublicList;
+use Verba\Mod\Image;
 use Verba\Mod\Product;
+use Verba\Mod\Review\Block\PublicList as ReviewPublicList;
 use Verba\Mod\Seo;
+use Verba\Model;
+use Verba\QueryMaker;
 use function Verba\_oh;
 use function Verba\_mod;
 use function Verba\reductionToCurrency;
@@ -39,7 +42,7 @@ class ProductBasicShow extends Json
 
         $this->cdata = current($this->cats);
 
-        $this->addItems(['comments' => new CommentsPublicList($this->request)]);
+        $this->addItems(['reviews' => new ReviewPublicList($this->request)]);
 
         return $this;
     }
@@ -68,8 +71,6 @@ class ProductBasicShow extends Json
             'description' => $this->item['description'],
             'price' => reductionToCurrency($this->item['price']),
             'price_sign' => $cur->short,
-            'picture' => '',
-            'all_variants_images' => '',
             'catalog_id' => $this->cdata['id'],
             'catalog_title' => $this->cdata['title'],
             'catalog_url' => $this->cdata['fullcode'],
@@ -82,6 +83,7 @@ class ProductBasicShow extends Json
         }
 
         // images
+        $this->item['_images'] = $this->loadImages();
         $variantsImages = [];
 
         self::imagesByVariants($variantsImages, $this->iid, $this->item);
@@ -93,11 +95,26 @@ class ProductBasicShow extends Json
             }
         }
 
+        /**
+         * @var Image $mImage
+         */
+        $mImage = _mod('image');
+        $imgConfig = $mImage::getImageConfig('product');
+
+        foreach ($variantsImages as $ckey => $images) {
+            foreach($images as $i => $image) {
+                $variantsImages[$ckey][$i] = [
+                    'src' => $imgConfig->getFullUrl($image['image']),
+                    'alt' => $image['alt']
+                ];
+            }
+        }
+
         $productData['images'] = $variantsImages;
 
         return $this->content = [
             'product' => $productData,
-            'comments' => $this->items['comments']->getContent(),
+            'reviews' => $this->items['reviews']->getContent(),
         ];
     }
 
@@ -152,17 +169,17 @@ class ProductBasicShow extends Json
         $addLinkedImages = (bool)$addLinkedImages;
 
         if (!isset($colorsImages[$key]) || !is_array($colorsImages[$key])) {
-            $colorsImages[$key] = array();
+            $colorsImages[$key] = [];
         }
 
         if ($item['picture']) {
-            $colorsImages[$key][] = array(
+            $colorsImages[$key][] = [
                 'image' => basename($item['picture']),
-                //'cfg' => $item['_picture_config'],
+                'cfg' => $item['_picture_config'],
                 'alt' => isset($item['color']) && !empty($item['color'])
                     ? $item['title'] . ' ' . $item['color']
                     : $item['title']
-            );
+            ];
         }
 
         if (!$addLinkedImages || !is_array($item['_images']) || !count($item['_images'])) {
@@ -173,13 +190,46 @@ class ProductBasicShow extends Json
                 continue;
             }
 
-            $colorsImages[$key][] = array(
+            $colorsImages[$key][] = [
                 'image' => $img['storage_file_name'],
                 'cfg' => $img['_storage_file_name_config'],
                 'alt' => isset($item['color']) && !empty($item['color'])
                     ? $item['title'] . ' ' . $item['color']
                     : $item['title'],
-            );
+            ];
         }
+    }
+
+    function loadImages()
+    {
+        /**
+         * @var Image $mImage
+         * @var Model $_image
+         */
+
+        $_image = _oh('image');
+
+        $mImage = _mod('image');
+
+        $qm = new QueryMaker($_image);
+
+        $qm->addWhere(1, 'active');
+        $qm->addOrder(['priority' => 'd']);
+
+        $qm->addConditionByLinkedOT($this->oh, $this->iid);
+
+        $q = $qm->getQuery();
+
+        $sqlr = $qm->run();
+
+        if(!$sqlr || !$sqlr->getNumRows()){
+            return [];
+        }
+        $r = [];
+        while($row = $sqlr->fetchRow()) {
+            $r[] = $row;
+        }
+
+        return $r;
     }
 }

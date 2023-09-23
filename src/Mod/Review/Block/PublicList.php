@@ -1,15 +1,13 @@
 <?php
 
 namespace Verba\Mod\Review\Block;
-class PublicList extends \Verba\Block\Html
+
+use Verba\Block\Json;
+use Verba\Lang;
+use function Verba\_oh;
+
+class PublicList extends Json
 {
-
-    public $templates = array(
-        'content' => 'review/list/wrap.tpl',
-        'item' => 'review/list/item.tpl',
-        'empty' => 'review/list/empty.tpl'
-    );
-
 
     function build()
     {
@@ -17,35 +15,27 @@ class PublicList extends \Verba\Block\Html
         $qm = new \Verba\QueryMaker($_rw, false, true);
         $qm->addWhere(1, 'active');
         $qm->addOrder(array($_rw->getPAC() => 'd'));
+        $qm->addConditionByLinkedOT(_oh($this->request->ot_id), $this->request->iid);
         $q = $qm->getQuery();
+
         $sqlr = $qm->run();
+        $this->content = [];
 
-        if ($sqlr && $sqlr->getNumRows()) {
-            $iCfg = \Verba\_mod('image')->getImageConfig('review');
-            while ($row = $sqlr->fetchRow()) {
-                if (!empty($row['picture'])) {
-                    $pic = $row['picture'];
-                    $pic_sign = '';
-                } else {
-                    $pic = '/images/1px.gif';
-                    $pic_sign = 'no-image';
-                }
-                $this->tpl->assign(array(
-                    'ITEM_NAME' => htmlspecialchars($row['name']),
-                    'ITEM_TEXT' => htmlspecialchars($row['review']),
-                    'ITEM_IMAGE_SIGN' => $pic_sign,
-                    'ITEM_PICTURE' => $pic,
-                ));
-                $this->tpl->parse('REVIEWS_ITEMS', 'item', true);
-            }
-        } else {
-            $this->tpl->parse('REVIEWS_ITEMS', 'empty');
+        if (!$sqlr || !$sqlr->getNumRows()) {
+            return $this->content;
         }
-        $this->addCSS(array('review'));
 
-        $this->content = $this->tpl->parse(false, 'content');
+        while ($row = $sqlr->fetchRow()) {
+            $time = strtotime($row['created']);
+            $mname = Lang::get('date m ' . date('n', $time));
+
+            $this->content[] = [
+                'created_at' => date('d ' . $mname . ' Y', $time),
+                'author' => htmlspecialchars($row['name']),
+                'text' => htmlspecialchars($row['review']),
+            ];
+        }
+
         return $this->content;
     }
 }
-
-?>

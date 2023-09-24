@@ -12,6 +12,14 @@ class FormElement extends Around
             return $this->getExistsValue('form_element');
         }
 
+        if(strpos($this->value, '.') !== false){
+            $this->value = explode('.', $this->value)[0];
+        }
+
+        switch($this->value) {
+            case 'datetimeselector': $this->value = 'datetime'; break;
+        }
+
         $mOtype = \Verba\Mod\Otype::getInstance();
         //list($type, $lenght, $default) = $mOtype->getColumnTypeForAttr();
         $fes = $mOtype->gC('avaibleFormElements');

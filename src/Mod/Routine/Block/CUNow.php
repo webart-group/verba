@@ -18,7 +18,7 @@ class CUNow extends \Verba\Block\Json
     /**
      * @var bool|string
      */
-    public $responseAs = false;
+    public $responseAs = 'data';
 
     public $responseAsKeys;
 

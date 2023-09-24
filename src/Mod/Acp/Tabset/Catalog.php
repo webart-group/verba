@@ -34,19 +34,19 @@ class Catalog extends \Verba\Mod\Acp\Tabset
                     'type' => 'node'
                 ],
             ],
-            'CatalogGoodsTradeForm' => [
-                'button' => [
-                    'title' => 'catalog acp tab tradeForm'
-                ],
-                'ot' => 'catalog',
-                'url' => '/acp/h/catalog/cuform/tform',
-                'instanceOf' => [
-                    'type' => 'node'
-                ],
-            ],
+//            'CatalogGoodsTradeForm' => [
+//                'button' => [
+//                    'title' => 'catalog acp tab tradeForm'
+//                ],
+//                'ot' => 'catalog',
+//                'url' => '/acp/h/catalog/cuform/tform',
+//                'instanceOf' => [
+//                    'type' => 'node'
+//                ],
+//            ],
             'MetaAef' => [
                 'linkedTo' => [
-                    'id' => CatalogAef::class
+                    'id' => 'CatalogAef'
                 ]
             ]
         ];

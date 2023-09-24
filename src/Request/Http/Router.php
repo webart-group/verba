@@ -9,8 +9,13 @@
 
 namespace Verba\Request\Http;
 use \App;
+use Verba\Exception\Routing;
 use Verba\Hive;
 use Verba\Request;
+use Verba\Response;
+use Verba\Response\Exception;
+use Verba\Response\Exception\NotFound;
+use Verba\Response\Json;
 
 class Router extends \Verba\Block {
 
@@ -48,30 +53,30 @@ class Router extends \Verba\Block {
         catch (\Exception $e)
         {
             $this->log()->error($e);
-            if($e instanceof \Verba\Exception\Routing)
+            if($e instanceof Routing)
             {
-                $RoutResult = (new \Verba\Response\Exception\NotFound($this))
+                $RoutResult = (new NotFound($this))
                     ->setException($e);
             }
             else
             {
-                $RoutResult = (new \Verba\Response\Exception())
+                $RoutResult = (new Exception())
                     ->setException($e);
             }
         }
 
         if (empty($RoutResult)) {
             ROUTE_NOT_FOUND:
-            $RoutResult = new \Verba\Response\Exception\NotFound($this);
+            $RoutResult = new NotFound($this);
 
         }
 
-        if ($RoutResult instanceof \Verba\Response) {
+        if ($RoutResult instanceof Response) {
             return $RoutResult;
         }
 
         if ($RoutResult->contentType == 'json') { // if routed is json-block
-            $Response = new \Verba\Response\Json($RoutResult);
+            $Response = new Json($RoutResult);
             $Response->addItems($RoutResult);
 
         } else { // default - html block wraped by default page

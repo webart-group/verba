@@ -542,15 +542,16 @@ class Item extends \Verba\Configurable
         return $r;
     }
 
-    function exportAsValues($keys)
+    function exportAsValues($keys = null)
     {
-        $r = array();
+        $r = [];
 
-        if (!is_array($keys)) {
-            if (!is_string($keys)) {
-                return $r;
-            }
+        if (is_string($keys)) {
             $keys = (array)$keys;
+        }
+
+        if (is_null($keys)) {
+            $keys = $this->oh()->getAttrs(true);
         }
 
         foreach ($keys as $key) {

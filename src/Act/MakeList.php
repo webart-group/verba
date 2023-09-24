@@ -407,7 +407,7 @@ class MakeList extends Action
             'LIST_WRAP_ID' => $this->wrapId,
             'SLID' => $this->Selection->getID(),
             'OBJECT_OT' => $this->ot_id,
-            'LIST_CONFIGS_STR' => str_replace('/', '|', implode(' ', $this->_confAppliedNames)),
+            'LIST_CONFIGS_STR' => $this->getAppliedConfigsAsString(),
             'CLIENT_TEMPLATES' => '',
         ));
 
@@ -857,28 +857,14 @@ class MakeList extends Action
         return $this->tpl->parse(false, 'row_control_block');
     }
 
-    function rowControlsAsJson($row)
+    function rowControlsAsJson($row): array
     {
-        $html_class = 'list-item-controls' . (
-            is_string($this->_c['control_block']['class']) && !empty($this->_c['control_block']['class'])
-            ? ' ' . $this->_c['control_block']['class']
-            : '');
-
-        $r = [
-            'rights' => [
+        return [
                 null,
                 null,
                 (int)($this->isEditable() && User()->chrItem($row['key_id'], 'u', $row)),
                 (int)User()->chrItem($row['key_id'], 'd', $row)
-            ],
-            'sequence_pos' => $this->currentPos,
-            'selected' => $this->Selection->isSelected($row[$this->oh->getPAC()], $row['ot_id']),
-            'html' => [
-                'class' => $html_class
-            ]
         ];
-
-        return $r;
     }
 
     function setRowsOnPage($val)
@@ -1138,6 +1124,8 @@ class MakeList extends Action
 
     function generateListJson()
     {
+
+        $this->sC(1, 'parseAsJson');
         $this->fire('beforeStart');
         $this->prepareAndRunQueries();
 
@@ -1245,7 +1233,7 @@ class MakeList extends Action
         $this->prepareToParse();
 
         if ($this->_rowsArray && $this->Selection->c_founded_rows > 0) {
-            $r['rows'] = $this->parseRowsAsJson();
+            $r['items'] = $this->parseRowsAsJson();
         }
 
         $r['meta'] = $this->parseMetaJson();
@@ -1267,9 +1255,13 @@ class MakeList extends Action
 
     function parseMetaJson()
     {
-        $r = [];
+        $r = [
+            'ot_id' => $this->oh->getID(),
+            'ot_code' => $this->oh->getCode()
+        ];
 
         $r['fields'] = $this->getFieldsMeta();
+        $r['configs'] = $this->getAppliedConfigsAsString();
 
         //Filters
         $this->fire('beforeFilters');
@@ -1476,7 +1468,7 @@ class MakeList extends Action
 
             // field's custom template
             if (isset($cfg['fields'][$attr_code]['tpl'])
-                && is_string($cfg['fields'][$attr_code]['tpl']) && strlen(['tpl'])) {
+                && is_string($cfg['fields'][$attr_code]['tpl']) && strlen($cfg['fields'][$attr_code]['tpl'])) {
                 $this->_prepared['fields'][$attr_code]['tpl_hash'] = 'field_tpl_' . md5($cfg['fields'][$attr_code]['tpl']);
                 $toDefine[$this->_prepared['fields'][$attr_code]['tpl_hash']] = $cfg['fields'][$attr_code]['tpl'];
             }
@@ -1489,7 +1481,9 @@ class MakeList extends Action
             //Field handlers
             $this->_prepared['fields'][$attr_code]['handlers'] = array();
             // generating value by default present handlers
-            if ($this->oh->isA($attr_code) && !$cfg['fields'][$attr_code]['preventDefaultHandlers']) {
+            if ($this->oh->isA($attr_code)
+                && !$cfg['fields'][$attr_code]['preventDefaultHandlers']
+            ) {
                 $A = $this->oh->A($attr_code);
                 $attr_code = $A->getCode();
 
@@ -1690,26 +1684,19 @@ class MakeList extends Action
 
             $this->_currentRowNumber++;
 
+            $fields = $this->parseRowFieldsAsJson();
+
             $iid = $this->row[$this->oh->getPAC()];
 
-            $this->rowClass[] = 'list-item list-itemid-' . $this->row['ot_id'] . '-' . $iid . ' list-item-page-pos-' . $this->_currentRowNumber . ' list-item-pos-' . $this->currentPos;
-
-            if (!empty($this->rowCfg['class'])) {
-                $this->rowClass[] = $this->rowCfg['class'];
-            }
-
-            if (!$this->rowCfg['handler'] || !$this->rowCfg['preventDefaultFieldParseIfHandler']) {
-                $fields = $this->parseRowFieldsAsJson();
-            }
-            $html = [
-                'class' => implode(' ', $this->rowClass),
-                'attrs' => $this->rowAttrs
-            ];
-
             $all_rows[] = [
-                'fields' => $fields,
-                'controls' => $this->rowControlsAsJson($this->row),
-                'html' => $html,
+                'data' => $fields,
+                'meta' => [
+                    'id' => $iid,
+                    'ot_id' => $this->row['ot_id'],
+                    'sequence_pos' => $this->currentPos,
+                    'selected' => $this->Selection->isSelected($iid, $this->row['ot_id']),
+                    'rights' => $this->rowControlsAsJson($this->row)
+                ]
             ];
 
             $this->currentPos++;
@@ -1830,10 +1817,15 @@ class MakeList extends Action
                 }
             }
 
-            $r[$this->fieldCode] =
-                [
-                    'value' => $this->fieldResult,
-                ];
+            $r[$this->fieldCode] = [
+                'value' => [
+                    'rendered' => $this->fieldResult,
+                ]
+            ];
+            $natural_value = $this->rowItem->getNatural($attr_code);
+            if($natural_value !== $this->fieldResult) {
+                $r[$this->fieldCode]['value']['natural'] = $natural_value;
+            }
         }
 
         return $r;
@@ -2739,6 +2731,11 @@ class MakeList extends Action
 
         return $this->{$pn}['headers'];
     }
+
+    function getAppliedConfigsAsString()
+    {
+        return str_replace('/', '|', implode(' ', $this->_confAppliedNames));
+    }
 }
 
 MakeList::$_config_default = array(
@@ -3022,6 +3019,7 @@ MakeList::$_config_default = array(
     'reloadMethod' => 'ajax',
     'dialogsModal' => false,
     'itemClickAction' => false,
+    'parseAsJson' => 0,
 );
 /*
 'fields'  => array(

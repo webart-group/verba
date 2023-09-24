@@ -10,12 +10,19 @@ class Picupload extends Around
     {
         $mImage = \Verba\_mod('image');
         $attr_code = $this->A->getCode();
-        $configName = $this->oh->p($attr_code . '_config');
+
+        $cfgAttrCode = '_'.$attr_code . '_config';
+
+        if(!empty($fromRequestedData = $this->ah->getGettedValue($cfgAttrCode))) {
+            $configName = $fromRequestedData;
+        } elseif($this->oh->isA($cfgAttrCode)) {
+            $configName = $this->ah->getExistsValue($cfgAttrCode);
+        } else {
+            $configName = $this->oh->p($this->A->getCode().'_config');
+        }
+
         if (!$configName) {
-            $cfgAttrCode = '_'.$attr_code . '_config';
-            if (!$this->oh->isA($cfgAttrCode) || empty($configName = $this->ah->getGettedValue($cfgAttrCode))) {
-                return null;
-            }
+            return null;
         }
         $imgCfg = \Verba\Mod\Image::getImageConfig($configName);
 

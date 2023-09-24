@@ -1,11 +1,12 @@
 <?php
 
-namespace Verba\Mod\Catalog;
+namespace Verba\Mod\Catalog\Block;
 
 use Verba\Block\Json;
 use Verba\Exception\Routing;
+use Verba\Mod\Catalog\Description;
+use Verba\Mod\Catalog\PromoBlockPlaceHolder;
 use Verba\Mod\Product\Block\ProductsList;
-use Verba\Url;
 use function Verba\_mod;
 use function Verba\_oh;
 

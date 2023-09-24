@@ -1,6 +1,10 @@
 <?php
 namespace Verba;
 
+use Exception;
+use Verba\FileSystem\Local;
+use function setlocale;
+
 class Lang extends Base
 {
     public static $lang;
@@ -47,10 +51,10 @@ class Lang extends Base
         }
 
         if (empty(self::$config['locale']['used']))
-            throw new \Exception('No one language locale specified. Check system config');
+            throw new Exception('No one language locale specified. Check system config');
 
         if (empty(self::$config['locale']['default']) || !self::isLCValid(self::$config['locale']['default'])) {
-            throw new \Exception('Default language not specified. Check system config');
+            throw new Exception('Default language not specified. Check system config');
         }
         //define('SYS_LC_DEFAULT', self::$config['locale']['default']);
 
@@ -81,14 +85,14 @@ class Lang extends Base
         if (!self::isLCValid($try2apply))
             $try2apply = SYS_LC_DEFAULT;
 
-        $lcPropMtd = \Verba\Hive::getPlatform() == 'win' ? 'getLCWinCode' : 'getLCUnixCode';
+        $lcPropMtd = Hive::getPlatform() == 'win' ? 'getLCWinCode' : 'getLCUnixCode';
         $args = self::$lcPropMtd($try2apply);
         array_unshift($args, LC_ALL);
         $r = call_user_func_array('setlocale', $args);
         if ($r !== false) {
             $locale = $try2apply;
         } else {
-            \Verba\Loger::create(__CLASS__)->error('Unable to set locale [' . var_export($try2apply, true) . ']');
+            Loger::create(__CLASS__)->error('Unable to set locale [' . var_export($try2apply, true) . ']');
             $locale = SYS_LC_DEFAULT;
         }
 
@@ -97,7 +101,7 @@ class Lang extends Base
 
         setlocale(LC_NUMERIC, 'C');
 
-        return \setlocale(LC_ALL, 0);
+        return setlocale(LC_ALL, 0);
     }
 
     static function getUsedLC()
@@ -168,16 +172,18 @@ class Lang extends Base
     private static function loadLang($lang)
     {
         if (!self::addLangCode($lang)) {
+            self::$data[$lang] = false;
             return false;
         }
         $path = self::getDctFilepath(self::getDctFilename($lang));
-        if (\Verba\Hive::$cacheEnable && is_readable($path)) {
+        if (Hive::$cacheEnable && is_readable($path)) {
             self::$data[$lang] = require_once($path);
             return true;
         }
         self::$data[$lang] = self::compileLangFile($lang);
 
         if (!self::$data[$lang]) {
+            self::$data[$lang] = false;
             return false;
         }
 
@@ -194,12 +200,12 @@ class Lang extends Base
         if (!is_array($LangArr) || !count($LangArr)) return false;
 
         $compiledLangPath = self::getDctFilepath(self::getDctFilename($lang));
-        if (!\Verba\FileSystem\Local::needDir(self::getDctFilepath())) {
-            \Verba\Loger::create(__CLASS__)->error('Unable to create php-lang dir [' . var_export($compiledLangPath, true) . ']');
+        if (!Local::needDir(self::getDctFilepath())) {
+            Loger::create(__CLASS__)->error('Unable to create php-lang dir [' . var_export($compiledLangPath, true) . ']');
             return false;
         }
         if (!file_put_contents($compiledLangPath, "<?php return " . var_export($LangArr, true) . "?>", LOCK_EX)) {
-            \Verba\Loger::create(__CLASS__)->error('Unable to write php-lang file. [' . var_export($compiledLangPath, true) . ']');
+            Loger::create(__CLASS__)->error('Unable to write php-lang file. [' . var_export($compiledLangPath, true) . ']');
             return false;
         }
 
@@ -214,7 +220,7 @@ class Lang extends Base
 
         $LANG = [];
 
-        $langSrcFiles =  \Verba\FileSystem\Local::scandir($srcPath, 1, true, '\Verba\Lang::filterFilesList');
+        $langSrcFiles =  Local::scandir($srcPath, 1, true, '\Verba\Lang::filterFilesList');
         if (!is_array($langSrcFiles) || !count($langSrcFiles)) {
             return $LANG;
         }
@@ -339,38 +345,45 @@ class Lang extends Base
         return self::$_toClient;
     }
 
-    static function compileJsLangFile($lang = false)
+    /**
+     * @param $lang
+     * @param bool|array $parts
+     * @return TranslationsGeneratedResult
+     */
+    static function generateTranslationsContent($lang, $parts = true): TranslationsGeneratedResult
     {
-        $lang = !$lang ? self::$lang : $lang;
+        $result = new TranslationsGeneratedResult();
 
-        if (!is_array(self::$data[$lang]) || !count(self::$data[$lang])) {
-            return false;
+        if(!isset(self::$data[$lang])) {
+            self::loadLang($lang);
         }
 
-        if (is_bool(self::$_toClient) && self::$_toClient) {
+        if (!is_array(self::$data[$lang]) || !count(self::$data[$lang])) {
+            return $result;
+        }
 
-            $content = &self::$data[$lang];
-            $allKeysStr = '~fullcontent~';
+        if (is_bool($parts) && $parts) {
 
-        } elseif (is_array(self::$_toClient) && count(self::$_toClient)) {
+            $result->content = &self::$data[$lang];
+            $result->key = TranslationsGeneratedResult::KEY_ALL_CONTENT;
 
-            $content = array();
-            $allKeysStr = '';
-            foreach (self::$_toClient as $path => $nomatter) {
+        } elseif (is_array($parts) && count($parts)) {
+
+            foreach ($parts as $path => $nomatter) {
                 $pathArr = explode(' ', $path);
                 if (!is_array($pathArr) || !count($pathArr)) {
                     continue;
                 }
-                $allKeysStr .= "\t" . $path;
+                $result->key .= "\t" . $path;
                 $v = &self::$data[$lang];
-                $cv = &$content;
+                $cv = &$result->content;
                 foreach ($pathArr as $c_node) {
                     if (!array_key_exists($c_node, $v)) {
                         break;
                     }
 
                     if (!array_key_exists($c_node, $cv)) {
-                        $cv[$c_node] = array();
+                        $cv[$c_node] = [];
                     }
 
                     $cv = &$cv[$c_node];
@@ -378,17 +391,24 @@ class Lang extends Base
                 }
                 $cv = $v;
             }
-        } else {
-            return null;
         }
 
-        $filenamebody = $lang . '-' . md5($allKeysStr);
+        return $result;
+    }
+
+    static function compileJsLangFile($lang = false)
+    {
+        $lang = !$lang ? self::$lang : $lang;
+
+        $result = self::generateTranslationsContent($lang, self::$_toClient);
+
+        $filenamebody = $lang . '-' . md5($result->key);
         $filename = $filenamebody . '.js';
 
         $filepath = self::getJsDctFilepath($filename);
 
         if (!file_put_contents($filepath, 'window._init_lang_data = {' . $lang . ': ' . json_encode($content) . '};')) {
-            \Verba\Loger::create(__CLASS__)->error('Unable to write compiled js-lang file [' . var_export($filepath, true) . ']');
+            Loger::create(__CLASS__)->error('Unable to write compiled js-lang file [' . var_export($filepath, true) . ']');
             return false;
         }
         return array($filename, $filenamebody, $filepath);
@@ -406,12 +426,12 @@ class Lang extends Base
         }
         $filepath = self::getJsDctFilepath(self::getJsDctFilename($lang));
         $dname = dirname($filepath);
-        if (!\Verba\FileSystem\Local::needDir(self::getJsDctFilepath())) {
-            \Verba\Loger::create(__CLASS__)->error('Unable to create js-lang dir [' . var_export($filepath, true) . ']');
+        if (!Local::needDir(self::getJsDctFilepath())) {
+            Loger::create(__CLASS__)->error('Unable to create js-lang dir [' . var_export($filepath, true) . ']');
             return false;
         }
         if (!file_put_contents($filepath, 'Lang.data.' . $lang . ' = ' . json_encode($content) . ';Lang.avaible = ' . json_encode(self::getUsedLC()))) {
-            \Verba\Loger::create(__CLASS__)->error('Unable to write compiled js-lang file [' . var_export($filepath, true) . ']');
+            Loger::create(__CLASS__)->error('Unable to write compiled js-lang file [' . var_export($filepath, true) . ']');
             return false;
         }
         return true;

@@ -169,14 +169,14 @@ class ProductsList extends Json
             $qm->addSelectPastFrom('reviews_count', $storeA, 'store_reviews_count');
             $qm->addSelectPastFrom('reviews_stars', $storeA, 'store_reviews_stars');
 
-            $qm->addCJoin([['a' => $storeA]],
-                [
-                    [
-                        'p' => ['a' => $storeA, 'f' => 'id'],
-                        's' => ['a' => $tA, 'f' => 'storeId'],
-                    ],
-                ]
-            );
+//            $qm->addCJoin([['a' => $storeA]],
+//                [
+//                    [
+//                        'p' => ['a' => $storeA, 'f' => 'id'],
+//                        's' => ['a' => $tA, 'f' => 'storeId'],
+//                    ],
+//                ]
+//            );
 
             $this->content = $list->generateListJson();
 

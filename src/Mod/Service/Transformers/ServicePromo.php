@@ -22,7 +22,7 @@ class ServicePromo
         return [
             'title_preview' => $item['title_preview'] ?? null,
             'text_preview' => $item['text_preview'] ?? null,
-            'pucture' => $picture,
+            'picture' => $picture,
         ];
     }
 }

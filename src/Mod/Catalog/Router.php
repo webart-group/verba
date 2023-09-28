@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Mod\Catalog;
 
-use Verba\Mod\Catalog\routes\GoodsCatalogRouter;
+use Verba\Mod\Catalog\Block\GoodsCatalog;
 
 
 class Router extends \Verba\Request\Http\Router
@@ -13,7 +13,7 @@ class Router extends \Verba\Request\Http\Router
                 $b = new \Verba\Mod\Catalog\Map($this->rq->shift());
                 break;
             default:
-                $b = new GoodsCatalogRouter($this->rq);
+                $b = new GoodsCatalog($this->rq);
         }
 
         return $b->route();

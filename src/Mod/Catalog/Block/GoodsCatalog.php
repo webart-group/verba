@@ -3,9 +3,11 @@
 namespace Verba\Mod\Catalog\Block;
 
 use Verba\Block\Json;
-use Verba\Exception\Routing;
+use Verba\Exception\Routing as RoutingException;
 use Verba\Mod\Catalog\helpers\PromoBlockPlaceHolder;
 use Verba\Mod\Product\Block\ProductsList;
+use Verba\Response\Html as HtmlResponse;
+use Verba\Url;
 use function Verba\_mod;
 use function Verba\_oh;
 
@@ -14,31 +16,54 @@ class GoodsCatalog extends Json
     public $catsData;
     public $currentCat;
 
-    function prepare()
+    function route()
     {
+        if (count($this->request->uf) > 1 && end($this->request->uf) == '') {
+            $uf = $this->request->uf;
+            array_pop($uf);
+            $relocateUrl = new Url('/' . implode('/', $uf));
+            $h = new HtmlResponse($this);
+            $h->addHeader('HTTP/1.1 301 Moved Permanently');
+            $h->addHeader('Location: ' . $relocateUrl->get(true));
+            return $h->route();
+        }
+
         $_catalog = _oh('catalog');
 
         $mCat = _mod('catalog');
+
         $this->catsData = $this->request->getParam('catsData');
 
         if (!$this->catsData) {
             $this->catsData = $mCat->getCatsChain($this->request->uf, 0);
+            $this->request->addParam([
+                'catsData' => $this->catsData
+            ]);
         }
 
         if (!$this->catsData) {
-            throw new Routing();
+            throw new RoutingException();
         }
 
         $this->currentCat = end($this->catsData);
         if (!$this->currentCat['active']) {
-            throw new Routing();
+            throw new RoutingException();
         }
+
+        $childChain = $mCat->getItemsByParent($this->currentCat['id']);
+
+        $this->request->addParam(array(
+            'childChain' => $childChain
+        ));
 
         $this->request->addParam(array(
             'pot' => $_catalog->getID(),
             'piid' => $this->currentCat[$_catalog->getPAC()],
             'cfg' => 'public products'
         ));
+
+        //$mCat->addCatsToBreadcrumbs($this->catsData);
+
         if (is_string($this->currentCat['config']) && !empty($this->currentCat['config'])
             && is_array($ccfg = unserialize($this->currentCat['config']))
             && isset($ccfg['filters'])
@@ -65,6 +90,8 @@ class GoodsCatalog extends Json
                 )),
             ));
         }
+
+        return $this;
     }
 
     function build()

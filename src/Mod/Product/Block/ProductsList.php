@@ -2,6 +2,7 @@
 
 namespace Verba\Mod\Product\Block;
 
+use Verba\Lang;
 use Verba\Mod\Cart;
 use Throwable;
 use Verba\Act\MakeList;
@@ -42,6 +43,10 @@ class ProductsList extends Json
 
             $cfgNames = ['public'];
 
+            if($this->request->getParam('listConfig')){
+                $cfgNames[] =  $this->request->getParam('listConfig');
+            }
+
             $dcfg = [
                 'fields' => [],
                 'order' => [
@@ -56,9 +61,6 @@ class ProductsList extends Json
              */
             $mLister = _mod('lister');
             $mLister->extendCfgByUiConfigurator($_product, $dcfg, $catCfg['groups']['public_fields'], $catCfg['groups']['public_filters']);
-
-//            $dcfg['url']['forward'] = '/buy/list/' . $this->gsr->game->code . '/' . $this->gsr->service->code;
-//            $dcfg['url']['new'] = '/sell/' . $this->gsr->game->code . '/' . $this->gsr->service->code;
 
             // добавляем обработчик на поле price если оно есть.
             if (isset($dcfg['fields']['price'])) {
@@ -114,6 +116,12 @@ class ProductsList extends Json
             list($lcA, $lcT, $lcD) = $qm->createAlias($_product->vltT($_catalog));
             //$qm->addGroupBy(['id']);
             //подключение таблицы связей каталог-продукты
+
+            $catIds = [$catData['id']];
+            $childCats = $this->rq->getParam('childChain');
+            if($childCats) {
+                $catIds = array_merge($catIds, array_keys($childCats['data']));
+            }
             $qm->addCJoin(
                 [
                     [
@@ -127,13 +135,26 @@ class ProductsList extends Json
                     ],
                     [
                         'p' => ['a'=> $lcA, 'f' => 'p_iid'],
-                        's' => $catData['id']
+                        's' => '('.implode(', ', $catIds).')',
+                        'o' => 'IN',
+                        'asis' => true
                     ],
                     [
                         'p' => ['a'=> $lcA, 'f' => 'ch_iid'],
                         's' => ['a' => $palias, 'f' => $_product->getPAC()],
                     ],
                 ], false, null, 'RIGHT', 'obligatory'
+            );
+            // подключение таблицы каталога для выборки данных каталога
+            $qm->addSelectPastFrom('title_'.Lang::$lang, $ctalias, 'cat_title');
+            $qm->addSelectPastFrom('code', $ctalias, 'cat_code');
+            $qm->addSelectPastFrom($_catalog->getPAC(), $ctalias, 'cat_id');
+            $qm->addCJoin(array(array('a' => $ctalias)),
+                array(
+                    array('p' => array('a'=> $lcA, 'f' => 'p_iid'),
+                        's' => array('a'=> $ctalias, 'f' => $_catalog->getPAC()),
+                    ),
+                ), true, null
             );
 
             // подключение таблицы коэфициентов валют магазинов
@@ -169,14 +190,14 @@ class ProductsList extends Json
             $qm->addSelectPastFrom('reviews_count', $storeA, 'store_reviews_count');
             $qm->addSelectPastFrom('reviews_stars', $storeA, 'store_reviews_stars');
 
-//            $qm->addCJoin([['a' => $storeA]],
-//                [
-//                    [
-//                        'p' => ['a' => $storeA, 'f' => 'id'],
-//                        's' => ['a' => $tA, 'f' => 'storeId'],
-//                    ],
-//                ]
-//            );
+            $qm->addCJoin([['a' => $storeA]],
+                [
+                    [
+                        'p' => ['a' => $storeA, 'f' => 'id'],
+                        's' => ['a' => $tA, 'f' => 'storeId'],
+                    ],
+                ]
+            );
 
             $this->content = $list->generateListJson();
 

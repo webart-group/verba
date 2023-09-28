@@ -34,6 +34,7 @@ class ServicesList extends Json
         $qm->addWhere(1, 'active');
         $cnd = $qm->addConditionByLinkedOT($_menu->getOtId(), $menu['id']);
         $cnd->setRelation(2);
+        $q = $qm->getQuery();
         $sqlr = $qm->run();
 
         if(!$sqlr || !$sqlr->getNumRows()){

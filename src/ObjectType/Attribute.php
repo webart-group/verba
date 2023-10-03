@@ -277,7 +277,8 @@ class Attribute  extends Base
 
     function set_display($data)
     {
-        $this->display = isset($data['display']) ? $data['display'] : '';
+        $key = 'title_'.Lang::$lang;
+        $this->display = $data[$key] ?? '';
     }
 
     function set_lcd($data)

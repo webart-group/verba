@@ -201,7 +201,7 @@ GROUP BY ot.id";
         $query =
             "SELECT 
   `a`.*
-  , `a`.`title_ru` as `display`
+# , `a`.`title_ru` as `display`
 FROM `" . SYS_DATABASE . "`.`_obj_attributes` as `a`
 WHERE `a`.`ot_iid` IN('" . implode("','", $ots) . "')
 GROUP BY `a`.`attr_id`

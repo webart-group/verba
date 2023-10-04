@@ -752,6 +752,25 @@ class QueryMaker extends Base
         }
     }
 
+    function isJoined($alias): bool
+    {
+        foreach ($this->join as $joinType => $joins) {
+            foreach ($joins as $joinKey => $join) {
+                if($join['jTAlias'] === $alias) {
+                    return true;
+                }
+            }
+        }
+
+        foreach ($this->complex_join as $joinKey => $join) {
+            if($join['jtable']['alias'] === $alias) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     function compileCJoinEntry($c_join)
     {
         return

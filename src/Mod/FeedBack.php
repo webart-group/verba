@@ -15,7 +15,7 @@ class FeedBack extends \Verba\Mod
             return false;
         }
 
-        $mcfg = \Verba\_mod('order')->gC('mailing');
+        $mcfg = $this->gC('mailing');
 
         $tpl->define(array(
             'body' => 'feedback/create/notify/body.tpl',

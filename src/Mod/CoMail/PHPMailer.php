@@ -1,15 +1,16 @@
 <?php
 /**
  * @author webart.group
- * @author Кудрявцев Максим (Kudriavtsev Maksym), <kmv@webart.group>
- * @copyright See copyright.md
  * Date: 26.08.19
  * Time: 12:53
  */
 
 namespace Verba\Mod\CoMail;
 
-class PHPMailer extends \PHPMailer{
+use PHPMailer\PHPMailer\PHPMailer as OriginPHPMailer;
+
+
+class PHPMailer extends OriginPHPMailer{
 
     public $subjectPrefix;
 

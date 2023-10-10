@@ -13,7 +13,7 @@ class Telegram extends \Verba\Mod
     {
         // Список всех пользователей, для которых идет рассылка
         $subscribers = [
-              [$this->_c['admins_chat_id']], // https://t.me/+EN9gv5EGLyRjYTgy Boostify Notification Group
+            $this->_c['admins_chat_id'], // https://t.me/+EN9gv5EGLyRjYTgy Boostify Notification Group
         ];
 
         // Отправить уведомление каждому
@@ -21,7 +21,7 @@ class Telegram extends \Verba\Mod
             $apiUrl = 'https://api.telegram.org/bot' . $this->_c['token'] . '/sendMessage';
 
             $postData = [
-                'chat_id' => $subscriber['chat_id'],
+                'chat_id' => $subscriber,
                 'text' => $message,
             ];
 
@@ -36,9 +36,9 @@ class Telegram extends \Verba\Mod
             $response = curl_exec($ch);
 
             if (curl_errno($ch)) {
-                echo 'Ошибка при отправке уведомления для chat_id ' . $subscriber['chat_id'] . ': ' . curl_error($ch) . PHP_EOL;
+                echo 'Ошибка при отправке уведомления для chat_id ' . $subscriber . ': ' . curl_error($ch) . PHP_EOL;
             } else {
-                print_r('Уведомление успешно отправлено для chat_id ' . $subscriber['chat_id'] . "\n");
+                print_r('Уведомление успешно отправлено для chat_id ' . $subscriber . "\n");
             }
 
             curl_close($ch);

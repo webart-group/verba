@@ -44,5 +44,4 @@ class Telegram extends \Verba\Mod
             curl_close($ch);
         }
     }
-
 }

@@ -1,5 +1,7 @@
 <?php
+
 namespace Verba\Mod;
+
 use Verba\Mod\SnailMail\Email;
 
 class FeedBack extends \Verba\Mod
@@ -45,6 +47,41 @@ class FeedBack extends \Verba\Mod
         foreach ($mcfg['to']['creation'] as $tomail => $toname) {
             $mail->AddAddress($tomail, $toname);
         }
+        if (!$mMail->Send($mail)) {
+            $this->log()->error($mail->ErrorInfo);
+            return false;
+        }
+        return true;
+    }
+
+    function thanksMessageNotifyToAuthor($authorEmail)
+    {
+        if (!$authorEmail) {
+            return false;
+        }
+
+        $tpl = $this->tpl();
+
+        $mcfg = $this->gC('mailing');
+
+        $tpl->define(array(
+            'message' => 'feedback/thanks/message.tpl',
+            'theme' => 'feedback/thanks/theme.tpl',
+        ));
+
+        $tpl->assign(array(
+            'THANKS' => \Verba\Lang::get('feedback thanks message'),
+            'THEME' => \Verba\Lang::get('feedback thanks theme')
+        ));
+
+        $mMail = \Verba\_mod('comail');
+        $mail = $mMail->PHPMailer($mcfg['mail']);
+
+        $mail->setSubject($tpl->parse(false, 'theme'));
+        $mail->MsgHTML($tpl->parse(false, 'message'));
+
+        $mail->AddAddress($authorEmail);
+
         if (!$mMail->Send($mail)) {
             $this->log()->error($mail->ErrorInfo);
             return false;

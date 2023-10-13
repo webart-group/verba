@@ -13,7 +13,7 @@ class Telegram extends \Verba\Mod
     {
         // Список всех пользователей, для которых идет рассылка
         $subscribers = [
-            $this->_c['admins_chat_id'], // https://t.me/+EN9gv5EGLyRjYTgy Boostify Notification Group
+              $this->_c['admins_chat_id'], // https://t.me/+EN9gv5EGLyRjYTgy Boostify Notification Group
         ];
 
         // Отправить уведомление каждому
@@ -44,5 +44,4 @@ class Telegram extends \Verba\Mod
             curl_close($ch);
         }
     }
-
 }

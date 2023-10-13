@@ -21,7 +21,7 @@ class PHPMailer extends OriginPHPMailer{
 
     function setSubject($val){
         if(is_string($this->subjectPrefix)){
-            $val = $this->subjectPrefix.$val;
+            $val = $this->subjectPrefix . " " . $val;
         }
         $this->Subject = $val;
     }

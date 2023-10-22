@@ -13,7 +13,7 @@ class langu_onpageInstance extends \Verba\Block\Html
         // Компиляция языковой книги для клиента
         $filedetails = \Verba\Lang::compileJsLangFile(null);
         if (!is_array($filedetails) || !is_string($filedetails[1])) {
-            return '';
+            throw new Exception('Unable to open lang file.');
         }
 
         $this->addScripts(

@@ -18,6 +18,7 @@ class FormElement extends Around
 
         switch($this->value) {
             case 'datetimeselector': $this->value = 'datetime'; break;
+            case 'paysys': $this->value = 'text'; break;
         }
 
         $mOtype = \Verba\Mod\Otype::getInstance();

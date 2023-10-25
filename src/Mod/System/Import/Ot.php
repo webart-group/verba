@@ -111,7 +111,7 @@ class Ot extends Json
             $srcOtypeData['vlt_id'] = $vlt_id;
 
             if(!isset($ot_id)){
-                $log[] = "OT exists";
+                $log[] = "OT is missed";
                 $otAe->setGettedData($srcOtypeData);
                 $otAe->addedit_object();
                 $ot_id = $otAe->getIID();

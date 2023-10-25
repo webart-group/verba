@@ -1692,7 +1692,8 @@ function init_selection($ot_id, $key_id = false, $slID = false)
         && is_array($_SESSION['selections'][$selectionID])
         && array_key_exists('data', $_SESSION['selections'][$selectionID])
         && is_object($selection = unserialize($_SESSION['selections'][$selectionID]['data']))
-        && $selection instanceof Selection) {
+        && $selection instanceof Selection
+    ) {
         $_SESSION['selections'][$selectionID]['time'] = time();
         $selection->setCacheUsed(true);
     } elseif ($ot_id) {

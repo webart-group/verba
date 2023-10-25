@@ -1,9 +1,7 @@
 <?php
 namespace Verba\Mod;
 
-require_once(SYS_EXTERNALS_DIR.'/PHPMailer/class.phpmailer.php');
-
-class CoMail extends \Verba\Mod{
+class CoMail extends \Verba\Mod {
 
     use \Verba\ModInstance;
   /*Wrapper for PHPMail class. https://github.com/PHPMailer */

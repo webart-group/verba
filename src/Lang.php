@@ -407,7 +407,7 @@ class Lang extends Base
 
         $filepath = self::getJsDctFilepath($filename);
 
-        if (!file_put_contents($filepath, 'window._init_lang_data = {' . $lang . ': ' . json_encode($content) . '};')) {
+        if (!file_put_contents($filepath, 'window._init_lang_data = {' . $lang . ': ' . json_encode($result->content) . '};')) {
             Loger::create(__CLASS__)->error('Unable to write compiled js-lang file [' . var_export($filepath, true) . ']');
             return false;
         }

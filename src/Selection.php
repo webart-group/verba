@@ -148,7 +148,7 @@ class Selection extends Base
     {
         $a = get_object_vars_public($this);
         unset(
-            $a['QM'], $a['cache_used']
+            $a['QM'], $a['cache_used'], $a['search_q']
         );
         $a['_existsOrder'] = '';
         return array_keys($a);

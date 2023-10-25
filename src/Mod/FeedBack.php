@@ -1,11 +1,21 @@
 <?php
-namespace Verba\Mod;
-use Verba\Mod\SnailMail\Email;
 
-class FeedBack extends \Verba\Mod
+namespace Verba\Mod;
+
+use Verba\Hive;
+use Verba\Lang;
+use Verba\Mod;
+use Verba\Mod\SnailMail\Email;
+use Verba\ModInstance;
+use Verba\Url;
+use function Verba\_mod;
+use function Verba\_oh;
+use function Verba\utf8fix;
+
+class FeedBack extends Mod
 {
 
-    use \Verba\ModInstance;
+    use ModInstance;
 
     function sendCreationNonifyEmail($item)
     {
@@ -15,13 +25,13 @@ class FeedBack extends \Verba\Mod
             return false;
         }
 
-        $mcfg = \Verba\_mod('order')->gC('mailing');
+        $mcfg = $this->gC('mailing');
 
         $tpl->define(array(
             'body' => 'feedback/create/notify/body.tpl',
             'subject' => 'feedback/create/notify/subject.tpl',
         ));
-        $acpUrl = new \Verba\Url(SYS_THIS_HOST . \Verba\_mod('acp')->gC('url'));
+        $acpUrl = new Url(SYS_THIS_HOST . _mod('acp')->gC('url'));
         $acpUrl = $acpUrl->get(true);
         $tpl->assign(array(
             'ACP_URL' => $acpUrl,
@@ -29,11 +39,11 @@ class FeedBack extends \Verba\Mod
             'EMAIL' => htmlspecialchars($item['email']),
             //'TITLE' => htmlspecialchars($item['title']),
             'TEXT' => htmlspecialchars($item['text']),
-            'CREATED' => \Verba\utf8fix(strftime("%d %b %Y %H:%M", strtotime($item['created']))),
-            'SHOP_NAME' => \Verba\Lang::get('shop name'),
+            'CREATED' => utf8fix(strftime("%d %b %Y %H:%M", strtotime($item['created']))),
+            'SHOP_NAME' => Lang::get('shop name'),
         ));
 
-        $mMail = \Verba\_mod('comail');
+        $mMail = _mod('comail');
         $mail = $mMail->PHPMailer($mcfg['mail']);
 
         $mail->setSubject($tpl->parse(false, 'subject'));
@@ -52,15 +62,52 @@ class FeedBack extends \Verba\Mod
         return true;
     }
 
+    function thanksMessageNotifyToAuthor($authorEmail)
+    {
+        if (!$authorEmail) {
+            return false;
+        }
+
+        $tpl = $this->tpl();
+
+        $mcfg = $this->gC('mailing');
+
+        $tpl->define(array(
+            'message' => 'feedback/thanks/message.tpl',
+            'theme' => 'feedback/thanks/theme.tpl',
+        ));
+
+        $tpl->assign(array(
+            'THANKS' => Lang::get('feedback thanks message', [
+                'show_name' => Lang::get('shop name')
+            ]),
+            'THEME' => Lang::get('feedback thanks theme')
+        ));
+
+        $mMail = _mod('comail');
+        $mail = $mMail->PHPMailer($mcfg['mail']);
+
+        $mail->setSubject($tpl->parse(false, 'theme'));
+        $mail->MsgHTML($tpl->parse(false, 'message'));
+
+        $mail->AddAddress($authorEmail);
+
+        if (!$mMail->Send($mail)) {
+            $this->log()->error($mail->ErrorInfo);
+            return false;
+        }
+        return true;
+    }
+
     function sendAnswerToUser($bp, $action, $ot, $iid, $extData, $data)
     {
         if (!$_REQUEST['user-email-send']) {
             return false;
         }
-        $tpl = \Verba\Hive::initTpl();
-        $mail = \Verba\_mod('SnailMail');
-        $letter = new \Verba\Mod\SnailMail\Email();
-        $_feedback = \Verba\_oh('feedback');
+        $tpl = Hive::initTpl();
+        $mail = _mod('SnailMail');
+        $letter = new Email();
+        $_feedback = _oh('feedback');
 
         $tpl->define(array(
             'letter-body' => '/feedback/email/to-user/body.tpl',
@@ -101,7 +148,7 @@ class FeedBack extends \Verba\Mod
         $tpl->assign(array(
             'NAME' => $name,
             'DATE' => $creationDate,
-            'ORIGINAL_MESSAGE' => \Verba\Mod\SnailMail\Email::removeHTMLtags($messageFromUser),
+            'ORIGINAL_MESSAGE' => Email::removeHTMLtags($messageFromUser),
             'ANSWER' => $answer,
             'HOST' => SYS_THIS_HOST,
             'SUBJECT' => $subject
@@ -125,10 +172,10 @@ class FeedBack extends \Verba\Mod
     {
         global $S;
         $tpl = $this->tpl();
-        $_feedback = \Verba\_oh('feedback');
+        $_feedback = _oh('feedback');
 
-        $mail = \Verba\_mod('SnailMail');
-        $letter = new \Verba\Mod\SnailMail\Email();
+        $mail = _mod('SnailMail');
+        $letter = new Email();
         $cfg = $this->gC('emailToAdmin');
         $tpl->define(array(
             'template' => 'feedback/email/toAdminTemplate.tpl',
@@ -162,7 +209,7 @@ class FeedBack extends \Verba\Mod
         }
         $tpl->assign(array(
             'NAME' => $name,
-            'MESSAGE' => \Verba\Mod\SnailMail\Email::removeHTMLtags($messageFromUser),
+            'MESSAGE' => Email::removeHTMLtags($messageFromUser),
             'SUBJECT' => $subject,
             'HOST' => SYS_THIS_HOST,
         ));

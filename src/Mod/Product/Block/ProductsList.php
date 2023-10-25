@@ -183,21 +183,23 @@ class ProductsList extends Json
             ###  Данные по магазину
             $_store = _oh('store');
             // store table, extract store picture
-            list($storeA) = $qm->createAlias($_store->vltT(), SYS_DATABASE);
+            list($storeA) = $qm->createAlias($_store->vltT());
             $qm->addSelectPastFrom('picture', $storeA, 'store_picture');
             $qm->addSelectPastFrom('last_activity', $storeA, 'store_last_activity');
             $qm->addSelectPastFrom('rating', $storeA, 'store_rating');
             $qm->addSelectPastFrom('reviews_count', $storeA, 'store_reviews_count');
             $qm->addSelectPastFrom('reviews_stars', $storeA, 'store_reviews_stars');
 
-            $qm->addCJoin([['a' => $storeA]],
-                [
+            if(!$qm->isJoined($storeA)) {
+                $qm->addCJoin([['a' => $storeA]],
                     [
-                        'p' => ['a' => $storeA, 'f' => 'id'],
-                        's' => ['a' => $tA, 'f' => 'storeId'],
-                    ],
-                ]
-            );
+                        [
+                            'p' => ['a' => $storeA, 'f' => 'id'],
+                            's' => ['a' => $tA, 'f' => 'storeId'],
+                        ],
+                    ]
+                );
+            }
 
             $this->content = $list->generateListJson();
 

@@ -85,7 +85,7 @@ class Picupload extends Around
                 foreach ($imgCfg->getCopiesIndexes() as $copyIdx) {
                     if ($copyIdx == 'primary') continue;
                     if (!\Verba\FileSystem\Local::needDir($imgCfg->getPath($copyIdx))) {
-                        $this->log()->error('Unable to access to image copy dir. Dir:[' . var_export($imgCfg->getPath($copyIdx), true) . '] Copy params:[' . var_export($imgCfg->getCopy($copyIdx)) . ']');
+                        $this->log()->error('Unable to access to image copy dir. Dir:[' . var_export($imgCfg->getPath($copyIdx), true) . '] Copy params:[' . var_export($imgCfg->getCopy($copyIdx), true) . ']');
                         continue;
                     }
                     $icon = $mImage->repackImage($tmp_upl_name, $imgCfg->getFullPath($pic_FileName, $copyIdx), $imgCfg->getWidth($copyIdx), $imgCfg->getHeight($copyIdx), false, false, false, $imgCfg->getResizeBySmallerSide($copyIdx), $imgCfg->getQuality($copyIdx));

@@ -25,7 +25,7 @@ class Telegram extends \Verba\Mod
             // Проверка команды
             if ($text === "/start") {
                 // Обновление колонки
-                $updateQuery = "INSERT INTO admin_contacts (telegram) VALUES ('".$this->DB()->escape_string($chat_id)."')";
+                $updateQuery = "INSERT INTO ".SYS_DATABASE.".admin_contacts (telegram) VALUES ('".$this->DB()->escape_string($chat_id)."')";
                 $this->DB()->query($updateQuery);
             }
         }
@@ -34,7 +34,7 @@ class Telegram extends \Verba\Mod
 
     function notifyAdmins($message)
     {
-        $query = "SELECT * FROM admin_contacts WHERE telegram IS NOT NULL";
+        $query = "SELECT * FROM ".SYS_DATABASE.".admin_contacts WHERE telegram IS NOT NULL";
         $sqlr = $this->DB()->query($query);
 
         if (!$sqlr || !$sqlr->getNumRows()) {
@@ -53,10 +53,12 @@ class Telegram extends \Verba\Mod
 
         // Отправить уведомление каждому
         foreach ($subscribers as $subscriber) {
+            $subscriberId = $subscriber['telegram'];
+
             $apiUrl = 'https://api.telegram.org/bot' . $this->_c['token'] . '/sendMessage';
 
             $postData = [
-                'chat_id' => $subscriber,
+                'chat_id' => $subscriberId,
                 'text' => $message,
             ];
 
@@ -71,9 +73,9 @@ class Telegram extends \Verba\Mod
             $response = curl_exec($ch);
 
             if (curl_errno($ch)) {
-                echo 'Ошибка при отправке уведомления для chat_id ' . $subscriber . ': ' . curl_error($ch) . PHP_EOL;
+                echo 'Ошибка при отправке уведомления для chat_id ' . $subscriberId . ': ' . curl_error($ch) . PHP_EOL;
             } else {
-                print_r('Уведомление успешно отправлено для chat_id ' . $subscriber . "\n");
+                print_r('Уведомление успешно отправлено для chat_id ' . $subscriberId . "\n");
             }
 
             curl_close($ch);

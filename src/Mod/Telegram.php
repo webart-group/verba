@@ -14,6 +14,7 @@ class Telegram extends \Verba\Mod
     {
         // Получаем данные из входящего запроса
         $input = file_get_contents("php://input");
+        file_put_contents("telegram_requests.log", $input . PHP_EOL, FILE_APPEND);
         $update = json_decode($input, TRUE);
 
         // Обработка команды

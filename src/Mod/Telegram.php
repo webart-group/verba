@@ -24,32 +24,6 @@ class Telegram extends \Verba\Mod
 
             // Проверка команды
             if ($text === "/start") {
-                // Поздравления
-                $apiUrl = 'https://api.telegram.org/bot' . $this->_c['token'] . '/sendMessage';
-
-                $postData = [
-                    'chat_id' => $chat_id,
-                    'text' => 'Subscribed successfully!',
-                ];
-
-                $ch = curl_init($apiUrl);
-                curl_setopt_array($ch, [
-                    CURLOPT_POST => TRUE,
-                    CURLOPT_RETURNTRANSFER => TRUE,
-                    CURLOPT_TIMEOUT => 10,
-                    CURLOPT_POSTFIELDS => $postData,
-                ]);
-
-                $response = curl_exec($ch);
-
-                if (curl_errno($ch)) {
-                    echo 'Ошибка при отправке поздравлений для chat_id ' . $chat_id . ': ' . curl_error($ch) . PHP_EOL;
-                } else {
-                    print_r('Поздравление успешно отправлено для chat_id ' . $chat_id . "\n");
-                }
-
-                curl_close($ch);
-
                 // Обновление колонки
                 $updateQuery = "INSERT INTO " . SYS_DATABASE . ".admin_contacts (telegram) VALUES ('" . $this->DB()->escape_string($chat_id) . "')";
                 $this->DB()->query($updateQuery);
@@ -96,7 +70,6 @@ class Telegram extends \Verba\Mod
             ]);
 
             $response = curl_exec($ch);
-
 
             if (curl_errno($ch)) {
                 echo 'Ошибка при отправке уведомления для chat_id ' . $subscriberId . ': ' . curl_error($ch) . PHP_EOL;

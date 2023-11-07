@@ -24,13 +24,29 @@ class Telegram extends \Verba\Mod
 
             // Проверка команды
             if ($text === "/start") {
-                // Обновление колонки
-                $updateQuery = "INSERT INTO " . SYS_DATABASE . ".admin_contacts (telegram) VALUES ('" . $this->DB()->escape_string($chat_id) . "')";
-                $this->DB()->query($updateQuery);
+                // Проверяем, было ли уже отправлено поздравление
+                $congratulationsSent = $this->checkCongratulationsSent($chat_id);
+
+                if ($congratulationsSent) {
+                    return;
+                } else {
+                    // Поздравление
+                    $congratulations = 'Subscribed successfully!';
+                    $this->sendMessage($chat_id, $congratulations);
+
+                    // Отмечаем в базе данных, что поздравление было отправлено
+                    $this->markCongratulationsSent($chat_id);
+
+                    // Обновление колонки
+                    $updateQuery = "INSERT IGNOR INTO " . SYS_DATABASE . ".admin_contacts (telegram, congratulations_sent) VALUES ('" . $this->DB()->escape_string($chat_id) . "', 1)";
+                    $this->DB()->query($updateQuery);
+                }
+            } else {
+                $error_message = 'Не правильная команда, введите /start';
+                $this->sendMessage($chat_id, $error_message);
             }
         }
     }
-
 
     function notifyAdmins($message)
     {
@@ -50,34 +66,53 @@ class Telegram extends \Verba\Mod
             $subscribers[] = $row;
         }
 
-
         // Отправить уведомление каждому
         foreach ($subscribers as $subscriber) {
             $subscriberId = $subscriber['telegram'];
-            $apiUrl = 'https://api.telegram.org/bot' . $this->_c['token'] . '/sendMessage';
-
-            $postData = [
-                'chat_id' => $subscriberId,
-                'text' => $message,
-            ];
-
-            $ch = curl_init($apiUrl);
-            curl_setopt_array($ch, [
-                CURLOPT_POST => TRUE,
-                CURLOPT_RETURNTRANSFER => TRUE,
-                CURLOPT_TIMEOUT => 10,
-                CURLOPT_POSTFIELDS => $postData,
-            ]);
-
-            $response = curl_exec($ch);
-
-            if (curl_errno($ch)) {
-                echo 'Ошибка при отправке уведомления для chat_id ' . $subscriberId . ': ' . curl_error($ch) . PHP_EOL;
-            } else {
-                print_r('Уведомление успешно отправлено для chat_id ' . $subscriberId . "\n");
-            }
-
-            curl_close($ch);
+            $this->sendMessage($subscriberId, $message);
         }
+    }
+
+    function checkCongratulationsSent($chat_id)
+    {
+        // Проверка в базе данных, было ли уже отправлено поздравление для данного chat_id
+        $query = "SELECT congratulations_sent FROM " . SYS_DATABASE . ".admin_contacts WHERE telegram = '" . $this->DB()->escape_string($chat_id) . "'";
+        $result = $this->DB()->query($query);
+
+        if ($result && $row = $result->fetch_assoc()) {
+            return (bool)$row['congratulations_sent'];
+        }
+
+        return false;
+    }
+
+    function markCongratulationsSent($chat_id)
+    {
+        // Отмечаем в базе данных, что поздравление было отправлено для данного chat_id
+        $updateQuery = "UPDATE " . SYS_DATABASE . ".admin_contacts SET congratulations_sent = 1 WHERE telegram = '" . $this->DB()->escape_string($chat_id) . "'";
+        $this->DB()->query($updateQuery);
+    }
+
+    function sendMessage($chat_id, $message)
+    {
+        $apiToken = $this->_c['token']; // Замените на свой токен бота
+        $apiUrl = "https://api.telegram.org/bot" . $apiToken . "/sendMessage";
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $message
+        ];
+
+        // Отправка запроса к Telegram API
+        $ch = curl_init($apiUrl);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Обработка ответа от Telegram API
+        $result = json_decode($response, true);
+        return $result;
     }
 }

@@ -14,7 +14,6 @@ class Telegram extends \Verba\Mod
     {
         // Получаем данные из входящего запроса
         $input = file_get_contents("php://input");
-        file_put_contents("telegram_requests.log", $input . PHP_EOL, FILE_APPEND);
         $update = json_decode($input, TRUE);
 
         // Обработка команды
@@ -25,8 +24,26 @@ class Telegram extends \Verba\Mod
 
             // Проверка команды
             if ($text === "/start") {
+                // Поздравления
+                $apiUrl = 'https://api.telegram.org/bot' . $this->_c['token'] . '/sendMessage';
+
+                $postData = [
+                    'chat_id' => $chat_id,
+                    'text' => 'Subscribed successfully!',
+                ];
+
+                $ch = curl_init($apiUrl);
+                curl_setopt_array($ch, [
+                    CURLOPT_POST => TRUE,
+                    CURLOPT_RETURNTRANSFER => TRUE,
+                    CURLOPT_TIMEOUT => 10,
+                    CURLOPT_POSTFIELDS => $postData,
+                ]);
+
+                $response = curl_exec($ch);
+
                 // Обновление колонки
-                $updateQuery = "INSERT INTO ".SYS_DATABASE.".admin_contacts (telegram) VALUES ('".$this->DB()->escape_string($chat_id)."')";
+                $updateQuery = "INSERT INTO " . SYS_DATABASE . ".admin_contacts (telegram) VALUES ('" . $this->DB()->escape_string($chat_id) . "')";
                 $this->DB()->query($updateQuery);
             }
         }
@@ -35,7 +52,7 @@ class Telegram extends \Verba\Mod
 
     function notifyAdmins($message)
     {
-        $query = "SELECT * FROM ".SYS_DATABASE.".admin_contacts WHERE telegram IS NOT NULL";
+        $query = "SELECT * FROM " . SYS_DATABASE . ".admin_contacts WHERE telegram IS NOT NULL";
         $sqlr = $this->DB()->query($query);
 
         if (!$sqlr || !$sqlr->getNumRows()) {
@@ -55,7 +72,6 @@ class Telegram extends \Verba\Mod
         // Отправить уведомление каждому
         foreach ($subscribers as $subscriber) {
             $subscriberId = $subscriber['telegram'];
-
             $apiUrl = 'https://api.telegram.org/bot' . $this->_c['token'] . '/sendMessage';
 
             $postData = [
@@ -72,6 +88,7 @@ class Telegram extends \Verba\Mod
             ]);
 
             $response = curl_exec($ch);
+
 
             if (curl_errno($ch)) {
                 echo 'Ошибка при отправке уведомления для chat_id ' . $subscriberId . ': ' . curl_error($ch) . PHP_EOL;

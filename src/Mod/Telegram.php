@@ -42,6 +42,14 @@ class Telegram extends \Verba\Mod
 
                 $response = curl_exec($ch);
 
+                if (curl_errno($ch)) {
+                    echo 'Ошибка при отправке поздравлений для chat_id ' . $chat_id . ': ' . curl_error($ch) . PHP_EOL;
+                } else {
+                    print_r('Поздравление успешно отправлено для chat_id ' . $chat_id . "\n");
+                }
+
+                curl_close($ch);
+
                 // Обновление колонки
                 $updateQuery = "INSERT INTO " . SYS_DATABASE . ".admin_contacts (telegram) VALUES ('" . $this->DB()->escape_string($chat_id) . "')";
                 $this->DB()->query($updateQuery);

@@ -28,7 +28,7 @@ class CommentsPublicList extends Json
             $time = strtotime($row['created']);
             $mname = Lang::get('date m ' . date('n', $time));
             $this->content[] = [
-                'created_at' => date('d ' . $mname . ' Y', $time),
+                'created_at' => strftime('%d ' . $mname . ' %Y', $time),
                 'author' => htmlspecialchars($row['name']),
                 'comment' => htmlspecialchars($row['comment']),
             ];

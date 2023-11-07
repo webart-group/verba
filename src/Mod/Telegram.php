@@ -3,18 +3,53 @@
 namespace Verba\Mod;
 
 use Verba\Mod\SnailMail\Email;
+use function Verba\_oh;
 
 class Telegram extends \Verba\Mod
 {
 
     use \Verba\ModInstance;
 
+    function saveChatId()
+    {
+        // Получаем данные из входящего запроса
+        $input = file_get_contents("php://input");
+        $update = json_decode($input, TRUE);
+
+        // Обработка команды
+        if (isset($update["message"])) {
+            $message = $update["message"];
+            $chat_id = $message["chat"]["id"];
+            $text = $message["text"];
+
+            // Проверка команды
+            if ($text === "/start") {
+                // Обновление колонки
+                $updateQuery = "INSERT INTO admin_contacts (telegram) VALUES ('".$this->DB()->escape_string($chat_id)."')";
+                $this->DB()->query($updateQuery);
+            }
+        }
+    }
+
+
     function notifyAdmins($message)
     {
-        // Список всех пользователей, для которых идет рассылка
-        $subscribers = [
-              $this->_c['admins_chat_id'], // https://t.me/+EN9gv5EGLyRjYTgy Boostify Notification Group
-        ];
+        $query = "SELECT * FROM admin_contacts WHERE telegram IS NOT NULL";
+        $sqlr = $this->DB()->query($query);
+
+        if (!$sqlr || !$sqlr->getNumRows()) {
+            return $this->content;
+        }
+
+        $subscribers = [];
+
+        while ($item = $sqlr->fetchRow()) {
+            $row = [
+                'telegram' => $item['telegram'] ?? null,
+            ];
+            $subscribers[] = $row;
+        }
+
 
         // Отправить уведомление каждому
         foreach ($subscribers as $subscriber) {

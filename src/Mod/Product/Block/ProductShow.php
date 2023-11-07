@@ -348,6 +348,9 @@ class ProductShow extends Json
                     }
                 }
             } else {
+                if ($A->isLcd()) {
+                    $pkey = $pkey . '_' . Lang::$lang;
+                }
                 $pvalue = $this->item[$pkey];
             }
             if ($pvalue === false || $pvalue === null || is_string($pvalue) && !is_numeric($pvalue) && !$pvalue) {

@@ -14,11 +14,10 @@ class Telegram extends \Verba\Mod
     {
         // Получаем данные из входящего запроса
         $input = file_get_contents("php://input");
-        $update = json_decode($input, TRUE);
 
         // Обработка команды
-        if (isset($update["message"])) {
-            $message = $update["message"];
+        if (isset($input["message"])) {
+            $message = $input["message"];
             $chat_id = $message["chat"]["id"];
             $text = $message["text"];
 
@@ -28,20 +27,20 @@ class Telegram extends \Verba\Mod
                 $checkQuery = "SELECT congratulations_sent FROM " . SYS_DATABASE . ".admin_contacts WHERE telegram = '" . $this->DB()->escape_string($chat_id) . "'";
                 $congratulationsResult = $this->DB()->query($checkQuery);
 
-                if ($congratulationsResult && $row = $congratulationsResult->fetch_assoc()) {
+                if ($congratulationsResult && $row = $congratulationsResult->fetchRow()) {
                     // Если запись существует и поздравление уже отправлено, не делаем ничего
                     if ($row["congratulations_sent"] == 1) {
                         return;
                     }
                 }
 
+                // Обновление колонки
+                $updateQuery = "INSERT INTO " . SYS_DATABASE . ".admin_contacts (telegram, congratulations_sent) VALUES ('" . $this->DB()->escape_string($chat_id) . "', 1)";
+                $this->DB()->query($updateQuery);
                 // Поздравление
                 $congratulationsMessage = 'Subscribed successfully!';
                 $this->sendMessage($chat_id, $congratulationsMessage);
 
-                // Обновление колонки
-                $updateQuery = "INSERT INTO " . SYS_DATABASE . ".admin_contacts (telegram, congratulations_sent) VALUES ('" . $this->DB()->escape_string($chat_id) . "', 1)";
-                $this->DB()->query($updateQuery);
             } else {
                 $error_message = 'Не правильная команда, введите /start';
                 $this->sendMessage($chat_id, $error_message);

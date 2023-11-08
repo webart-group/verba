@@ -24,29 +24,31 @@ class Telegram extends \Verba\Mod
 
             // Проверка команды
             if ($text === "/start") {
-                // Проверяем, было ли уже отправлено поздравление
-                $congratulationsSent = $this->checkCongratulationsSent($chat_id);
+                // Проверяем, есть ли запись в базе данных для данного chat_id
+                $checkQuery = "SELECT congratulations_sent FROM " . SYS_DATABASE . ".admin_contacts WHERE telegram = '" . $this->DB()->escape_string($chat_id) . "'";
+                $congratulationsResult = $this->DB()->query($checkQuery);
 
-                if ($congratulationsSent) {
-                    return;
-                } else {
-                    // Поздравление
-                    $congratulations = 'Subscribed successfully!';
-                    $this->sendMessage($chat_id, $congratulations);
-
-                    // Отмечаем в базе данных, что поздравление было отправлено
-                    $this->markCongratulationsSent($chat_id);
-
-                    // Обновление колонки
-                    $updateQuery = "INSERT IGNOR INTO " . SYS_DATABASE . ".admin_contacts (telegram, congratulations_sent) VALUES ('" . $this->DB()->escape_string($chat_id) . "', 1)";
-                    $this->DB()->query($updateQuery);
+                if ($congratulationsResult && $row = $congratulationsResult->fetch_assoc()) {
+                    // Если запись существует и поздравление уже отправлено, не делаем ничего
+                    if ($row["congratulations_sent"] == 1) {
+                        return;
+                    }
                 }
+
+                // Поздравление
+                $congratulationsMessage = 'Subscribed successfully!';
+                $this->sendMessage($chat_id, $congratulationsMessage);
+
+                // Обновление колонки
+                $updateQuery = "INSERT INTO " . SYS_DATABASE . ".admin_contacts (telegram, congratulations_sent) VALUES ('" . $this->DB()->escape_string($chat_id) . "', 1)";
+                $this->DB()->query($updateQuery);
             } else {
                 $error_message = 'Не правильная команда, введите /start';
                 $this->sendMessage($chat_id, $error_message);
             }
         }
     }
+
 
     function notifyAdmins($message)
     {
@@ -71,26 +73,6 @@ class Telegram extends \Verba\Mod
             $subscriberId = $subscriber['telegram'];
             $this->sendMessage($subscriberId, $message);
         }
-    }
-
-    function checkCongratulationsSent($chat_id)
-    {
-        // Проверка в базе данных, было ли уже отправлено поздравление для данного chat_id
-        $query = "SELECT congratulations_sent FROM " . SYS_DATABASE . ".admin_contacts WHERE telegram = '" . $this->DB()->escape_string($chat_id) . "'";
-        $result = $this->DB()->query($query);
-
-        if ($result && $row = $result->fetch_assoc()) {
-            return (bool)$row['congratulations_sent'];
-        }
-
-        return false;
-    }
-
-    function markCongratulationsSent($chat_id)
-    {
-        // Отмечаем в базе данных, что поздравление было отправлено для данного chat_id
-        $updateQuery = "UPDATE " . SYS_DATABASE . ".admin_contacts SET congratulations_sent = 1 WHERE telegram = '" . $this->DB()->escape_string($chat_id) . "'";
-        $this->DB()->query($updateQuery);
     }
 
     function sendMessage($chat_id, $message)

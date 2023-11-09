@@ -14,10 +14,11 @@ class Telegram extends \Verba\Mod
     {
         // Получаем данные из входящего запроса
         $input = file_get_contents("php://input");
+        $update = json_decode($input, true);
 
         // Обработка команды
-        if (isset($input["message"])) {
-            $message = $input["message"];
+        if (isset($update["message"])) {
+            $message = $update["message"];
             $chat_id = $message["chat"]["id"];
             $text = $message["text"];
 

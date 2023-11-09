@@ -11,6 +11,6 @@ class SaveChatId extends Json
 {
     function build()
     {
-        return _mod('viber')->saveChatId();
+        return _mod('viber')->saveChatId($this->rq);
     }
 }

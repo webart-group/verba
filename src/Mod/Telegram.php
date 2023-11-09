@@ -3,6 +3,7 @@
 namespace Verba\Mod;
 
 use Verba\Mod\SnailMail\Email;
+use Verba\Request;
 use function Verba\_oh;
 
 class Telegram extends \Verba\Mod
@@ -10,15 +11,14 @@ class Telegram extends \Verba\Mod
 
     use \Verba\ModInstance;
 
-    function saveChatId()
+    function saveChatId(Request $request)
     {
         // Получаем данные из входящего запроса
-        $input = file_get_contents("php://input");
-        $update = json_decode($input, true);
+        $input = $request->post();
 
         // Обработка команды
-        if (isset($update["message"])) {
-            $message = $update["message"];
+        if (isset($input["message"])) {
+            $message = $input["message"];
             $chat_id = $message["chat"]["id"];
             $text = $message["text"];
 

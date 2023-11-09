@@ -11,6 +11,6 @@ class SaveChatId extends Json
 {
     function build()
     {
-        return _mod('telegram')->saveChatId();
+        return _mod('telegram')->saveChatId($this->rq);
     }
 }

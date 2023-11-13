@@ -7,10 +7,10 @@ use Verba\QueryMaker;
 use function Verba\_oh;
 use function Verba\_mod;
 
-class SaveChatId extends Json
+class HandleViberBot extends Json
 {
     function build()
     {
-        return _mod('viber')->saveChatId();
+        return _mod('viber')->handleViberBot();
     }
 }

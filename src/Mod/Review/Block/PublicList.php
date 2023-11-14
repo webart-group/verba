@@ -30,7 +30,7 @@ class PublicList extends Json
             $mname = Lang::get('date m ' . date('n', $time));
 
             $this->content[] = [
-                'created_at' => strftime('d ' . $mname . ' Y', $time),
+                'created_at' => strftime('%d ' . $mname . ' %Y', $time),
                 'author' => htmlspecialchars($row['name']),
                 'text' => htmlspecialchars($row['review']),
             ];

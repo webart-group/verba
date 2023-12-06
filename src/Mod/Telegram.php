@@ -11,6 +11,10 @@ class Telegram extends \Verba\Mod
 
     use \Verba\ModInstance;
 
+    public $templates = array(
+        'answer' => '/telegram/answer.tpl',
+    );
+
     function saveChatId(Request $request)
     {
         // Получаем данные из входящего запроса

@@ -14,7 +14,7 @@ class Assistant extends \Verba\Mod
     function sendMessageToChatGPT(Request $request)
     {
         $input = $request->post();
-        $message = $input['message'] . " Ответь от лица компании по продвижению Boostify UA {$this->_c['company_name']}"; // message to bot
+        $message = $input['message'] . " Ответь от лица компании по продвижению {$this->_c['company_name']}"; // message to bot
 
         $sid = $_REQUEST['sid']; // id session
 
@@ -46,7 +46,7 @@ class Assistant extends \Verba\Mod
 
         // if nothing in DB return []
         if (!$answer_result || !$answer_result->getNumRows()) {
-            return $lastAnswers;
+            return $this->content;
         }
 
         // write answer into $lastAnswers
@@ -97,6 +97,8 @@ class Assistant extends \Verba\Mod
 
         curl_close($ch);
 
-        return $assistant_answer;
+        return array(
+            'answer' => $assistant_answer
+        );
     }
 }

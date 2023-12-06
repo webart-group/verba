@@ -56,10 +56,12 @@ class GoodsCatalog extends Json
             'childChain' => $childChain
         ));
 
+        $existCfg = $this->request->getParam('cfg');
+
         $this->request->addParam(array(
             'pot' => $_catalog->getID(),
             'piid' => $this->currentCat[$_catalog->getPAC()],
-            'cfg' => 'public products'
+            'cfg' => $existCfg ?? 'public products'
         ));
 
         //$mCat->addCatsToBreadcrumbs($this->catsData);

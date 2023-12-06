@@ -41,10 +41,10 @@ class ProductsList extends Json
                 throw  new Building('Bad prod type');
             }
 
-            $cfgNames = ['public'];
+            $cfgNames = [];
 
-            if($this->request->getParam('listConfig')){
-                $cfgNames[] =  $this->request->getParam('listConfig');
+            if($this->request->getParam('cfg')){
+                $cfgNames[] =  $this->request->getParam('cfg');
             }
 
             $dcfg = [

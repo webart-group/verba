@@ -81,4 +81,34 @@ SELECT
         return $sqlr->getAffectedRows();
     }
 
+    function createAccountsForUser(int $user_id)
+    {
+        $_account = \Verba\_oh('account');
+
+        $mCurr = \Verba\Mod\Currency::getInstance();
+        $currs = $mCurr->getCurrencies();
+
+        try {
+
+            foreach ($currs as $curId => $Cur) {
+
+                $ae_acc = $_account->initAddEdit();
+
+                $ae_acc->setGettedData(array(
+                    'owner' => $user_id,
+                    'currencyId' => $curId,
+                    'mode' => 1158,
+                    'active' => 1,
+                ));
+
+                $ae_acc->addedit_object();
+
+            }
+
+        } catch (\Exception $e) {
+            $this->log()->error($e);
+            $this->log()->error('User creation error: user accounts creation process error');
+        }
+    }
+
 }

@@ -810,13 +810,16 @@ class Hive extends Configurable
      */
     function oh($ot_id)
     {
+        $input_ot_id = $ot_id;
+
         if (!is_numeric($ot_id)) {
             $ot_id = $this->otCodeToId($ot_id);
         }
 
         if (!isset($this->ots['items'][$ot_id])) {
-            throw new Exception('Unknown OT - (' . ((string)func_get_arg(0)) . ')');
+            throw new Exception('Unknown OT - (' . $input_ot_id . ')');
         }
+
         $otcache = $this->gC('otCasheEnable');
 //        $classPath = is_string($this->ots['items'][$ot_id]['class'])
 //            ? SYS_OTYPES_DIR . '/' . $this->ots['items'][$ot_id]['class'] . '.php'

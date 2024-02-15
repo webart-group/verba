@@ -2,12 +2,12 @@
 
 namespace Verba\Mod\User\RequestHandler;
 
-class EmailConfirm extends \Verba\Block\Html
+class EmailConfirm extends \Verba\Block\Json
 {
 
     public function build()
     {
-
+        $request = $this->request->post();
         $code = isset($_REQUEST['code'])
             ? $_REQUEST['code']
             : false;
@@ -34,7 +34,7 @@ class EmailConfirm extends \Verba\Block\Html
         $QM->addWhere($code, 'confirmation_code');
         $sqlr = $QM->run();
         if (!$sqlr || $sqlr->getNumRows() != 1) {
-            throw  new \Verba\Exception\Building('Not found');
+            throw  new \Verba\Exception\Building('Requested code not found');
         }
 
         $userData = $sqlr->fetchRow();
@@ -54,15 +54,7 @@ class EmailConfirm extends \Verba\Block\Html
             $cUser->planeToReload();
         }
 
-        $b = new \textblock_alert($this, array(
-            'type' => 'success',
-            'text' => \Verba\Lang::get('user email_confirm success'),
-        ));
-
-        $b->prepare();
-        $b->build();
-
-        $this->content = $b->content;
+        $this->content = true;
 
         return $this->content;
     }

@@ -45,9 +45,10 @@ class Create extends \Verba\Block\Json
             $loginField = $mUser->gC('login_field');
 
             if (!is_string($this->data[$loginField])) {
-                $this->data[$loginField] = isset($_REQUEST['login']) && is_string($_REQUEST['login']) ? $_REQUEST['login'] : false;
-                $this->data['password'][0] = isset($_REQUEST['password']) && is_string($_REQUEST['password']) ? $_REQUEST['password'] : false;
-                $this->data['password'][1] = isset($_REQUEST['password_confirm']) && is_string($_REQUEST['password_confirm']) ? $_REQUEST['password_confirm'] : false;
+                $request = $this->rq->post();
+                $this->data[$loginField] = $request['login'] ?? null;
+                $this->data['password'][0] = $request['password'] ?? null;
+                $this->data['password'][1] = $request['password_confirm'] ?? null;
             }
 
             if (!is_string($this->data[$loginField]) || !is_string($this->data['password'][0]) || !is_string($this->data['password'][1])) {
@@ -55,9 +56,10 @@ class Create extends \Verba\Block\Json
             }
 
             list($userId, $ae) = $mUser->createUser($this->data);
+
             if ($userId) {
                 $mUser->authNow(false, $this->data[$loginField], $this->data['password'][0]);
-                $this->content = $url;
+                $this->content = true;
 
                 $mUser->sendEmailConfirmationLink($ae->getActualData(), false, false);
 

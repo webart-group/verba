@@ -265,6 +265,13 @@ class User extends \Verba\Mod
             : $this->gC('auth loginfaild_path');
     }
 
+    function getEmailConfirmationUrl($global = true)
+    {
+        return $global
+            ? (defined('SYS_REQUEST_PROTO') && !empty(SYS_REQUEST_PROTO) ? SYS_REQUEST_PROTO . '://' : '') . SYS_THIS_HOST . $this->gC('auth email_confirmation')
+            : $this->gC('auth email_confirmation');
+    }
+
     function createUser($data = null, $extendedData = null)
     {
 
@@ -316,34 +323,6 @@ class User extends \Verba\Mod
             $iid = $ae->addedit_object();
             if (!$iid) {
                 throw new \Exception(\Verba\Lang::get('user registration general_error'));
-            }
-
-            // Accounts create
-            $_account = \Verba\_oh('account');
-
-            $mCurr = \Verba\Mod\Currency::getInstance();
-            $currs = $mCurr->getCurrencies();
-
-            try {
-
-                foreach ($currs as $curId => $Cur) {
-
-                    $ae_acc = $_account->initAddEdit();
-
-                    $ae_acc->setGettedData(array(
-                        'owner' => $iid,
-                        'currencyId' => $curId,
-                        'mode' => 1158,
-                        'active' => 1,
-                    ));
-
-                    $ae_acc->addedit_object();
-
-                }
-
-            } catch (\Exception $e) {
-                $this->log()->error($e);
-                $this->log()->error('User creation error: user accounts creation process error');
             }
 
         } catch (\Exception $e) {
@@ -405,7 +384,7 @@ class User extends \Verba\Mod
 
         $email_template = $_text->getData('email_confirm');
 
-        $url = SYS_REQUEST_PROTO . '://' . SYS_THIS_HOST . '/user/email-confirm?code=' . urlencode($code);
+        $url = $this->getEmailConfirmationUrl() . '?code=' . urlencode($code);
         $this->tpl->assign(array(
             'EMAIL_CONFIRM_URL' => $url,
             'THIS_HOST' => SYS_THIS_HOST,

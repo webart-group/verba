@@ -35,7 +35,7 @@ class MediaPictures extends \Verba\Mod
         $imageName = uniqid() . '.jpg';
 
         // Path to save
-        $savePath = 'userfiles/media/' . $imageName; // Путь можно изменить по вашему усмотрению
+        $savePath = 'userfiles/media/' . $imageName;
 
         // Save on server
         if (!file_put_contents($savePath, $imageContent)) {
@@ -44,20 +44,26 @@ class MediaPictures extends \Verba\Mod
 
         $updateQuery = "
         INSERT INTO " . SYS_DATABASE . ".media_pictures (
-            url,
-            origin_url,
-            width,
-            high) 
+            user_id,
+            image_name,
+            download_url,
+            source_url,
+            image_url,
+            high,
+            width) 
         VALUES (
+            '" . $this->DB()->escape_string($this->media_data['user_id']) . "',
             '" . $this->DB()->escape_string($imageName) . "',
-            '" . $this->DB()->escape_string($media_data['origin_url']) . "',
-            '" . $this->DB()->escape_string($media_data['high']) . "',
-            '" . $this->DB()->escape_string($media_data['width']) . "'
+            '" . $this->DB()->escape_string($savePath) . "',
+            '" . $this->DB()->escape_string($this->media_data['source_url']) . "',
+            '" . $this->DB()->escape_string($this->media_data['image_url']) . "',
+            '" . $this->DB()->escape_string($this->media_data['high']) . "',
+            '" . $this->DB()->escape_string($this->media_data['width']) . "'
             )";
         $this->DB()->query($updateQuery);
 
-        $result = json_encode(['imageDownloadUrl' => $savePath]);
+        $this->content = ['imageDownloadUrl' => $savePath];
 
-        return $result;
+        return $this->content;
     }
 }

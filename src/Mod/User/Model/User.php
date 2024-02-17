@@ -102,8 +102,18 @@ class User extends \Verba\Model\Item
     function makeFileStoreKeyHash()
     {
         return is_string($this->hash) && $this->getAuthorized()
-            ? $this->getId() . '_' . substr($this->hash, 8, 12)
+            ? $this->hash
             : false;
+    }
+
+    function getFileStorePath()
+    {
+        return SYS_UPLOAD_DIR . '/' . $this->getFileStoreKeyHash();
+    }
+
+    function getFileStoreUrl()
+    {
+        return SYS_UPLOAD_URL . '/' . $this->getFileStoreKeyHash();
     }
 
     function setGroups($val)

@@ -3,10 +3,10 @@
 namespace Verba\Mod;
 
 use Verba\Request;
+use Verba\Mod\User\Model\User;
 
 class MediaPictures extends \Verba\Mod
 {
-
     use \Verba\ModInstance;
 
     public $media_data = [];
@@ -15,7 +15,6 @@ class MediaPictures extends \Verba\Mod
     {
         $req = $request->post();
 
-        $this->media_data['user_id'] =  '547'; // \Verba\getUser()->getID();
         $this->media_data['image_url'] = isset($req['image_url']) ? $req['image_url'] : null;
         $this->media_data['source_url'] = isset($req['source_url']) ? $req['source_url'] : null;
         $this->media_data['high'] = isset($req['high']) ? $req['high'] : null;
@@ -35,10 +34,16 @@ class MediaPictures extends \Verba\Mod
         $imageName = uniqid() . '.jpg';
 
         // Path to save
-        $savePath = 'userfiles/media/' . $imageName;
+        $U = \Verba\getUser();
+
+        $savePath = $this->getMediaPictureStorePath($U);
+
+        \Verba\FileSystem\Local::needDir($savePath);
+
+        $saveFilename = $savePath . '/' . $imageName;
 
         // Save on server
-        if (!file_put_contents($savePath, $imageContent)) {
+        if (!file_put_contents($saveFilename, $imageContent)) {
             throw  new \Verba\Exception\Building('Failed to save image on server');
         }
 
@@ -52,7 +57,7 @@ class MediaPictures extends \Verba\Mod
             high,
             width) 
         VALUES (
-            '" . $this->DB()->escape_string($this->media_data['user_id']) . "',
+            '" . $this->DB()->escape_string($U->getId()) . "',
             '" . $this->DB()->escape_string($imageName) . "',
             '" . $this->DB()->escape_string($savePath) . "',
             '" . $this->DB()->escape_string($this->media_data['source_url']) . "',
@@ -62,8 +67,27 @@ class MediaPictures extends \Verba\Mod
             )";
         $this->DB()->query($updateQuery);
 
-        $this->content = ['imageDownloadUrl' => $savePath];
+        return ['imageDownloadUrl' => $this->getMediaPictureDownloadUrl($U, $imageName)];
+    }
 
-        return $this->content;
+    public function getMediaPictureStorePath(User $user, string $filename = null): string
+    {
+        $path = $user->getFileStorePath() . '/media_pictures';
+
+        if($filename) {
+            $path .= '/' . $filename;
+        }
+
+        return $path;
+    }
+
+    public function getMediaPictureDownloadUrl(User $user, string $filename = null): string
+    {
+        $url = $user->getFileStoreUrl() . '/media_pictures';
+        if($filename) {
+            $url .= '/' . $filename;
+        }
+
+        return $url;
     }
 }

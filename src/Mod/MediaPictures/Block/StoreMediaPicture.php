@@ -11,6 +11,6 @@ class StoreMediaPicture extends Json
 {
     function build()
     {
-        return _mod('MediaPictures')->handleMediaPicture($this->rq);
+        return ($this->content = _mod('MediaPictures')->handleMediaPicture($this->rq));
     }
 }

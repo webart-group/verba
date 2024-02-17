@@ -433,7 +433,7 @@ class Hive extends Configurable
 
     function initUser()
     {
-
+        $id = session_id();
         if (isset($_SESSION['hive']['U'])) {
             $U = unserialize($_SESSION['hive']['U']);
             if (is_object($U) && $U instanceof User) {

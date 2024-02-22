@@ -25,7 +25,7 @@ class Morf extends \Verba\Block\Raw
 
         $S->setUser($udata);
         $mUser = \Verba\_mod('user');
-        $mUser->updateSessionId(null);
+        //$mUser->updateSessionId(null);
 
         $this->addHeader('Location', '/');
 

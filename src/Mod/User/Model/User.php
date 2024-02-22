@@ -571,4 +571,10 @@ WHERE $keys_where $group_where $ot_id_where";
     {
         return (int)$this->data['storeId'];
     }
+
+    function updateLastLoginAt()
+    {
+        $this->DB()->query('UPDATE ' . $this->oh->vltURI() . " SET last_login = '" . date('Y-m-d H:i:s')
+            . "' WHERE " . $this->oh->getPAC() . "='" . $this->getId() . "' LIMIT 1");
+    }
 }

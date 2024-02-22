@@ -2,7 +2,12 @@
 
 namespace Verba\Mod;
 
+use Verba\Mod\User\Authorization\AuthResult;
+use Verba\Mod\User\Authorization\BearerTokenAuthenticator;
+use Verba\Mod\User\Model\GuestUser;
 use Verba\Url;
+use function Verba\_oh;
+use function Verba\getUser;
 
 class User extends \Verba\Mod
 {
@@ -12,37 +17,6 @@ class User extends \Verba\Mod
     {
         settype($val, 'string');
         return password_hash($val, PASSWORD_BCRYPT);
-    }
-
-    function pwdVerify($val, $hash)
-    {
-        settype($val, 'string');
-        settype($hash, 'string');
-        return password_verify($val, $hash);
-    }
-
-    function authorize($authData, $nostore = false)
-    {
-        global $S;
-        $_user = \Verba\_oh('user');
-        if (!is_array($authData)) {
-            $authData = [];
-        }
-
-        $Authorizator = new \Verba\Mod\User\Authorization\Basic;
-
-        $udata = $Authorizator->authorize($authData);
-
-        if (is_array($udata) && !empty($udata)) {
-            $S->setUser($udata);
-            $nostore = (bool)$nostore;
-
-            $this->updateSessionId($nostore ? 0 : null);
-
-            $this->DB()->query('UPDATE ' . $_user->vltURI() . " SET last_login = '" . date('Y-m-d H:i:s') . "' WHERE " . $_user->getPAC() . "='" . $S->U()->getID() . "' LIMIT 1");
-        }
-
-        return $udata;
     }
 
     function authorizeAsSystem($nostore = false)
@@ -92,13 +66,23 @@ class User extends \Verba\Mod
     function logout()
     {
         global $S;
-        $_SESSION = array();
-        $_COOKIE[session_name()] = [];
+
+        $U = $S->U();
+        if($U->getAuthorized()){
+            $_user_auth_token = _oh('user_auth_token');
+
+            $q = "UPDATE ". $_user_auth_token->vltURI() ." 
+                SET status = ".BearerTokenAuthenticator::STATUS_INACTIVE." 
+                WHERE user_id = ".$U->getId();
+
+            $this->DB()->query($q);
+        }
+
+        $_SESSION = [];
+        session_abort();
         session_destroy();
         $S->destroyUser();
         session_start();
-        $this->updateSessionId(0);
-
     }
 
     function updateSessionId($time = null)
@@ -177,26 +161,29 @@ class User extends \Verba\Mod
         exit;
     }
 
-    function authNow($bp = null, $login = false, $password = false)
+    /**
+     * @param string $login
+     * @param string $password
+     * @return GuestUser|User\Model\User
+     */
+    function authByLoginAndPass(string $login, string $password)
     {
+        global $S;
         $_user = \Verba\_oh('user');
 
-        $authData = array(
-            'login' => $login
-                ? (string)$login
-                : (isset($_REQUEST['login']) ? (string)$_REQUEST['login'] : false),
-            'password' => $password
-                ? (string)$password
-                : (isset($_REQUEST['password']) ? (string)$_REQUEST['password'] : false)
-        );
-        $nostore = isset($_REQUEST['nostore']) && $_REQUEST['nostore'] == 'on';
-        $user_data = $this->authorize($authData, $nostore);
+        $Authenticator = new \Verba\Mod\User\Authorization\LoginPasswordAuthenticator($login, $password);
 
-        if (!is_array($user_data) || !isset($user_data[$_user->getPAC()]) || $user_data[$_user->getPAC()] < 1) {
-            return false;
+        $U = $Authenticator->authorize();
+
+        if (!$U) {
+            $U = new GuestUser();
         }
 
-        return true;
+        $U->updateLastLoginAt();
+
+        $S->setUser($U);
+
+        return $U;
     }
 
     function getAuthorizationUrl($global = true)

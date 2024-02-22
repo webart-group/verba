@@ -5,6 +5,8 @@ use DBDriver\mysql\Driver;
 use Exception;
 use Verba\Data\Boolean;
 use Verba\FileSystem\Local;
+use Verba\Mod\User\Authorization\BearerTokenAuthenticator;
+use Verba\Mod\User\Model\GuestUser;
 use Verba\Mod\User\Model\User;
 use Verba\ObjectType\DataVault;
 
@@ -433,23 +435,41 @@ class Hive extends Configurable
 
     function initUser()
     {
-        $id = session_id();
-        if (isset($_SESSION['hive']['U'])) {
-            $U = unserialize($_SESSION['hive']['U']);
-            if (is_object($U) && $U instanceof User) {
-                // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
-                if ($U->getAuthorized() || $U->requireRefresh()) {
-                    $U = $U->getID();
-                }
-            } elseif (!is_int($U)) {
-                $U = null;
-            }
-        } else {
-            $U = new User();
+        $authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
+
+        $U = null;
+
+        if($authorizationHeader){
+            $bt = new BearerTokenAuthenticator($authorizationHeader);
+            $U = $bt->authorize();
+
+            $userAuthToken = $bt->getUserAuthToken();
         }
+
+        if(isset($userAuthToken) && !empty($userAuthToken->session_id)
+            && session_id() !== $userAuthToken->session_id) {
+            session_abort();
+            session_id($userAuthToken->session_id);
+            session_start();
+        }
+
         $this->setUser($U);
 
         return $this->U;
+
+//        if (isset($_SESSION['hive']['U'])) {
+//            $U = unserialize($_SESSION['hive']['U']);
+//            if (is_object($U) && $U instanceof User) {
+//                // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
+//                if ($U->getAuthorized() || $U->requireRefresh()) {
+//                    $U = $U->getID();
+//                }
+//            } elseif (!is_int($U)) {
+//                $U = null;
+//            }
+//        } else {
+//            $U = new User();
+//        }
     }
 
     function initAutoloadModules(){
@@ -464,7 +484,7 @@ class Hive extends Configurable
 
     function destroyUser()
     {
-        $this->U = new User();
+        $this->U = new GuestUser();
     }
 
     /**
@@ -477,7 +497,7 @@ class Hive extends Configurable
             $this->U = $udata;
 
         } else {
-            $this->U = new User($udata);
+            $this->U = new GuestUser();
         }
 
         return $this->U;

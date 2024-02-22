@@ -58,9 +58,7 @@ class Create extends \Verba\Block\Json
             list($userId, $ae) = $mUser->createUser($this->data);
 
             if ($userId) {
-                $mUser->authNow(false, $this->data[$loginField], $this->data['password'][0]);
                 $this->content = true;
-
                 $mUser->sendEmailConfirmationLink($ae->getActualData(), false, false);
 
             } else {
@@ -77,8 +75,8 @@ class Create extends \Verba\Block\Json
         } catch (\Exception $e) {
             $this->failed($e->getMessage());
         }
-        return $this->content;
 
+        return $this->content;
     }
 
 }

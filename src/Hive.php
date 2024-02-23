@@ -1,6 +1,15 @@
 <?php
 namespace Verba;
 
+use DBDriver\mysql\Driver;
+use Exception;
+use Verba\Data\Boolean;
+use Verba\FileSystem\Local;
+use Verba\Mod\User\Authorization\BearerTokenAuthenticator;
+use Verba\Mod\User\Model\GuestUser;
+use Verba\Mod\User\Model\User;
+use Verba\ObjectType\DataVault;
+
 /**
  * Системное ядро. Основная функция - инициализация движка, системных компонент,
  * формирование конфигурации - системных констант и путей, установка локали, установка соединения с БД.
@@ -186,7 +195,7 @@ class Hive extends Configurable
 
         // текущий хост
         define('SYS_THIS_HOST', $cfg['this_host']);
-        define('SYS_REQUEST_PROTO', isset($GLOBALS['SCRIPT_URI_PARSED']['scheme']) ? $GLOBALS['SCRIPT_URI_PARSED']['scheme'] : 'http');
+        define('SYS_REQUEST_PROTO', $GLOBALS['SCRIPT_URI_PARSED']['scheme'] ?? ($_SERVER['REQUEST_SCHEME'] ?? 'http'));
 
         define('SYS_VERSION', $cfg['version']);
         define('SYS_DATABASE', $cfg['db']['database']);
@@ -253,7 +262,7 @@ class Hive extends Configurable
         }
 
         //FS handler
-        $this->FSLocal = new \Verba\FileSystem\Local;
+        $this->FSLocal = new Local;
         //  \Verba\Lang class
         Lang::init(isset($_REQUEST['lc']) ? $_REQUEST['lc'] : false, $cfg['lang']);
 
@@ -307,7 +316,7 @@ class Hive extends Configurable
      * Результат выборки сохраняется в свойство \Verba\Hive::$modules
      * @param int $mod_id id модуля.
      * @return boolean
-     * @see \Verba\Hive::$modules
+     * @see Hive
      */
     protected function loadModulesList()
     {
@@ -360,7 +369,7 @@ class Hive extends Configurable
             if(!class_exists($modClass)){
                 $modClass = '\Verba\\Mod\\' . self::$modules[$code]['code'];
                 if(!class_exists($modClass)) {
-                    throw new \Exception('Unknow mod - '.self::$modules[$code]['code']);
+                    throw new Exception('Unknow mod - '.self::$modules[$code]['code']);
                 }
             }
 
@@ -382,7 +391,7 @@ class Hive extends Configurable
 
     static function isModExists($code)
     {
-        if (is_object($code) && $code instanceof \Verba\Mod) {
+        if (is_object($code) && $code instanceof Mod) {
             $code = $code->getCode();
         }else{
             $code = strtolower($code);
@@ -419,30 +428,48 @@ class Hive extends Configurable
         }
         $U = $this->U();
         if (!$U->getAuthorized()) {
-            $mUser = \Verba\_mod('User');
+            $mUser = _mod('User');
             $newU = $mUser->authorizeAsSystem();
         }
     }
 
     function initUser()
     {
+        $authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
-        if (isset($_SESSION['hive']['U'])) {
-            $U = unserialize($_SESSION['hive']['U']);
-            if (is_object($U) && $U instanceof \Verba\Mod\User\Model\User) {
-                // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
-                if ($U->getAuthorized() || $U->requireRefresh()) {
-                    $U = $U->getID();
-                }
-            } elseif (!is_int($U)) {
-                $U = null;
-            }
-        } else {
-            $U = new \Verba\Mod\User\Model\User();
+        $U = null;
+
+        if($authorizationHeader){
+            $bt = new BearerTokenAuthenticator($authorizationHeader);
+            $U = $bt->authorize();
+
+            $userAuthToken = $bt->getUserAuthToken();
         }
+
+        if(isset($userAuthToken) && !empty($userAuthToken->session_id)
+            && session_id() !== $userAuthToken->session_id) {
+            session_abort();
+            session_id($userAuthToken->session_id);
+            session_start();
+        }
+
         $this->setUser($U);
 
         return $this->U;
+
+//        if (isset($_SESSION['hive']['U'])) {
+//            $U = unserialize($_SESSION['hive']['U']);
+//            if (is_object($U) && $U instanceof User) {
+//                // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
+//                if ($U->getAuthorized() || $U->requireRefresh()) {
+//                    $U = $U->getID();
+//                }
+//            } elseif (!is_int($U)) {
+//                $U = null;
+//            }
+//        } else {
+//            $U = new User();
+//        }
     }
 
     function initAutoloadModules(){
@@ -457,20 +484,20 @@ class Hive extends Configurable
 
     function destroyUser()
     {
-        $this->U = new \Verba\Mod\User\Model\User();
+        $this->U = new GuestUser();
     }
 
     /**
-     * @param $udata \Verba\Mod\User\Model\User|integer|array
+     * @param $udata User|integer|array
      */
     function setUser($udata)
     {
 
-        if (is_object($udata) && $udata instanceof \Verba\Mod\User\Model\User) {
+        if (is_object($udata) && $udata instanceof User) {
             $this->U = $udata;
 
         } else {
-            $this->U = new \Verba\Mod\User\Model\User($udata);
+            $this->U = new GuestUser();
         }
 
         return $this->U;
@@ -482,7 +509,7 @@ class Hive extends Configurable
             return false;
         }
 
-        $_user = \Verba\_oh('user');
+        $_user = _oh('user');
         $q = "UPDATE " . $_user->vltURI() . " SET `last_activity` = '" . $this->DB()->formatDateTime() . "' 
     WHERE `" . $_user->getPAC() . "` = " . $this->U->getId() . " LIMIT 1";
 
@@ -524,7 +551,7 @@ class Hive extends Configurable
 
         $mt = '\Verba\DBDriver\\'.$driverType.'\Driver';
         if (!class_exists($mt)) {
-            throw new \Exception('Unable to load DB driver [' . var_export($driverType, true) . ']');
+            throw new Exception('Unable to load DB driver [' . var_export($driverType, true) . ']');
         }
         $conObj = new $mt($connectData, $this->gC('debug'));
 
@@ -541,7 +568,7 @@ class Hive extends Configurable
     /**
      * Возвращает интерфейс работы с БД
      *
-     * @return \DBDriver\mysql\Driver
+     * @return Driver
      */
     function DB()
     {
@@ -578,7 +605,7 @@ class Hive extends Configurable
      * Инициализирует если еще не было вызовов в ходе работы движка и возвращает
      * объект работы с файловой системой.
      *
-     * @return  \Verba\FileSystem\Local объект  \Verba\FileSystem\Local или false
+     * @return  Local объект  \Verba\FileSystem\Local или false
      * @see  \Verba\FileSystem\Local
      */
     function getFS()
@@ -634,7 +661,7 @@ class Hive extends Configurable
     /**
      * Возвращает текущий объект  U
      *
-     * @return \Verba\Mod\User\Model\User
+     * @return User
      * @see \Verba\Mod\User\Model\User
      */
     function U()
@@ -689,13 +716,13 @@ class Hive extends Configurable
         if (array_key_exists($vlt_id, $this->data_vaults) && is_object($this->data_vaults[$vlt_id])) {
             return true;
         }
-        $this->data_vaults[$vlt_id] = new \Verba\ObjectType\DataVault($row);
+        $this->data_vaults[$vlt_id] = new DataVault($row);
         return is_object($this->data_vaults[$vlt_id]);
     }
 
     static function getRealIncludeLocation($path)
     {
-        if (\Verba\Hive::getPlatform() == 'win') $path = str_replace('/', '\\', $path);
+        if (Hive::getPlatform() == 'win') $path = str_replace('/', '\\', $path);
         foreach (array_reverse(get_included_files()) as $k => $v) {
             if (strpos($v, $path) !== false) {
                 return $v;
@@ -798,18 +825,21 @@ class Hive extends Configurable
     /**
      * Возвращает объект ObjectHadler-а. Если в ходе работы это первый вызов OH для этого id - пытается инициализировать его.
      * @param int|string $ot_id id или код ОТ.
-     * @return \Verba\Model
-     * @see \Verba\Model
+     * @return Model
+     * @see Model
      */
     function oh($ot_id)
     {
+        $input_ot_id = $ot_id;
+
         if (!is_numeric($ot_id)) {
             $ot_id = $this->otCodeToId($ot_id);
         }
 
         if (!isset($this->ots['items'][$ot_id])) {
-            throw new \Exception('Unknown OT - (' . ((string)func_get_arg(0)) . ')');
+            throw new Exception('Unknown OT - (' . $input_ot_id . ')');
         }
+
         $otcache = $this->gC('otCasheEnable');
 //        $classPath = is_string($this->ots['items'][$ot_id]['class'])
 //            ? SYS_OTYPES_DIR . '/' . $this->ots['items'][$ot_id]['class'] . '.php'
@@ -823,23 +853,20 @@ class Hive extends Configurable
 
             return ($this->ots['items'][$ot_id]['instance'] = $oh);
 
-        } else {
-
-            $loader = empty($this->ots['items'][$ot_id]['class'])
-                ? \Verba\Model::class : $this->ots['items'][$ot_id]['class'];
-
-            $base_ot = $this->ots['items'][$ot_id]['base']
-                ? $this->ots['items'][$ot_id]['base'] : false;
-
-            $this->ots['items'][$ot_id]['instance'] = new $loader($ot_id, $base_ot);
-
-            if ($otcache) {
-                $this->otToCache($this->ots['items'][$ot_id]['instance']);
-            }
-            return $this->ots['items'][$ot_id]['instance'];
         }
 
-        throw new \Exception('OT is not exists');
+        $loader = empty($this->ots['items'][$ot_id]['class'])
+            ? Model::class : $this->ots['items'][$ot_id]['class'];
+
+        $base_ot = $this->ots['items'][$ot_id]['base']
+            ? $this->ots['items'][$ot_id]['base'] : false;
+
+        $this->ots['items'][$ot_id]['instance'] = new $loader($ot_id, $base_ot);
+
+        if ($otcache) {
+            $this->otToCache($this->ots['items'][$ot_id]['instance']);
+        }
+        return $this->ots['items'][$ot_id]['instance'];
     }
 
     function isOt($otsome)
@@ -848,7 +875,7 @@ class Hive extends Configurable
             return false;
         }
 
-        if (is_object($otsome) && $otsome instanceof \Verba\Model) {
+        if (is_object($otsome) && $otsome instanceof Model) {
             $otsome = $otsome->getID();
         }
 
@@ -881,7 +908,7 @@ class Hive extends Configurable
 
         if (!is_file($cachefile = $this->getOtCacheFilename($this->otIdToCode($ot_id)))
             || !is_object($oh = unserialize(file_get_contents($cachefile)))
-            || !($oh instanceof \Verba\Model)) {
+            || !($oh instanceof Model)) {
             return false;
         }
         return $oh;
@@ -892,14 +919,14 @@ class Hive extends Configurable
         $cachefile = $this->getOtCacheFilename($oh->getCode());
         $str = serialize($oh);
         if (false === @file_put_contents($cachefile, $str)) {
-             \Verba\FileSystem\Local::needDir(dirname($cachefile));
+             Local::needDir(dirname($cachefile));
             file_put_contents($cachefile, $str);
         }
     }
 
     function clearOtCache()
     {
-         \Verba\FileSystem\Local::dirDeleteRecursive($this->getOtCacheDirname(), false, false, false);
+         Local::dirDeleteRecursive($this->getOtCacheDirname(), false, false, false);
     }
 
     function clearCache()
@@ -1006,7 +1033,7 @@ class Hive extends Configurable
     }
 }
 
-\Verba\Hive::$default_config = array(
+Hive::$default_config = array(
     'debug' => array(
         'sqlQueriesLog' => 0,
         'email' => 'pitonio@gmail.com',
@@ -1070,14 +1097,14 @@ class Hive extends Configurable
 /**
  * Возвращает экземпляр класса обработчика объектов для соответствующего $oh
  * @param int|string $oh id или символьный код Типа Объектов
- * @return \Verba\Model
- * @see \Verba\Model
+ * @return Model
+ * @see Model
  */
 function _oh($oh)
 {
     global $S;
 
-    return is_object($oh) && $oh instanceof \Verba\Model
+    return is_object($oh) && $oh instanceof Model
         ? $oh
         : $S->oh($oh);
 }
@@ -1102,16 +1129,16 @@ function _mod($mod)
 
 /**
  * Returns current user object.
- * @return \Verba\Mod\User\Model\User
+ * @return User
  */
 function User()
 {
-    return \Verba\getUser();
+    return getUser();
 }
 
 /**
  * Returns current user object.
- * @return \Verba\Mod\User\Model\User
+ * @return User
  */
 function getUser()
 {
@@ -1165,7 +1192,7 @@ function Xredirect($location = '')
     global $S;
     switch ($location) {
         default:
-            $location = empty($location) ? \Verba\Hive::getBackURL() : $location;
+            $location = empty($location) ? Hive::getBackURL() : $location;
             header("Location: $location");
     }
     if (isset($S) && is_object($S)) {
@@ -1500,15 +1527,15 @@ function exp_predefined($c_attr_code, $row)
 function resultReport($url = false, $timeout = 6, $message = false, $template = 'common/action_result.tpl')
 {
 
-    $tpl = \Verba\Hive::initTpl();
-    $url = is_string($url) && !empty($url) ? $url : \Verba\Hive::getBackURL();
+    $tpl = Hive::initTpl();
+    $url = is_string($url) && !empty($url) ? $url : Hive::getBackURL();
     if ($timeout !== null) {
         $timeout = intval($timeout);
 
         $tpl->define(array('exp_action_result' => $template));
 
         $tpl->assign(array(
-            'AR_MAIN_MESSAGES' => is_string($message) ? $message : \Verba\Loger::getAllMessages(false, 'event', false),
+            'AR_MAIN_MESSAGES' => is_string($message) ? $message : Loger::getAllMessages(false, 'event', false),
             'JS_RELOCATE_TIME_SECONDS' => $timeout,
             'JS_RELOCATE_TIME_URL' => $url,
             'SESSION_ID_HIDDEN' => '<input type="hidden" name="' . session_name() . '" value="' . session_id() . '" />',
@@ -1650,7 +1677,7 @@ function translit($str, $subst = array(), $lang = 'ru')
 
 function strConvertToSeo($str, $lang = 'ru')
 {
-    $r = \Verba\translit($str, array(' ' => '-'), $lang);
+    $r = translit($str, array(' ' => '-'), $lang);
     $r = preg_replace(array('/\W+/', '/\-+/'), array('-', '-'), $r);
     $r = strtolower(trim($r, '-'));
     return $r;
@@ -1688,7 +1715,8 @@ function init_selection($ot_id, $key_id = false, $slID = false)
         && is_array($_SESSION['selections'][$selectionID])
         && array_key_exists('data', $_SESSION['selections'][$selectionID])
         && is_object($selection = unserialize($_SESSION['selections'][$selectionID]['data']))
-        && $selection instanceof Selection) {
+        && $selection instanceof Selection
+    ) {
         $_SESSION['selections'][$selectionID]['time'] = time();
         $selection->setCacheUsed(true);
     } elseif ($ot_id) {
@@ -1706,10 +1734,10 @@ function potToArray($pot, $piid = null)
 {
     $r = array();
     if (!is_array($pot)) {
-        $pot = \Verba\_oh($pot);
+        $pot = _oh($pot);
         if ($pot && $pot = $pot->getID()) {
             $r[$pot] = array();
-            if ($piid && !\Verba\Data\Boolean::isStrBool($piid)) {
+            if ($piid && !Boolean::isStrBool($piid)) {
                 $r[$pot][$piid] = $piid;
             }
         }

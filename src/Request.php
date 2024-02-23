@@ -18,8 +18,6 @@ class Request
 
     protected $request_uri = null;
 
-    protected $__post = null;
-
     function __construct($action = null, $iid = null, $ot_id = null, $key = null, $pot = null, $piid = null, $uf = null)
     {
         if (is_array($action)) {
@@ -353,15 +351,22 @@ class Request
     function post($key = null)
     {
         if(isset($_POST) && is_array($_POST) && count($_POST)){
-            $this->__post = &$_POST;
-        }elseif(is_array($post = json_decode(file_get_contents("php://input"), true))){
-            $this->__post = $post;
+            $post = &$_POST;
+        }elseif(!empty($input = file_get_contents("php://input"))){
+            $post = json_decode($input, true);
         }
 
         if($key === null){
-            return $this->__post;
+            return $post;
         }
 
-        return array_key_exists($key, $this->__post) ? $this->__post[$key] : null;
+        return array_key_exists($key, $post) ? $post[$key] : null;
+    }
+
+    function urlFragmentsToClass(): string
+    {
+        $ufs = $this->uf;
+        array_walk($ufs, function (&$v){ $v = ucfirst($v);});
+        return implode('\\', $ufs);
     }
 }

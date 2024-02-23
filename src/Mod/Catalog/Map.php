@@ -2,8 +2,6 @@
 
 namespace Verba\Mod\Catalog;
 
-use Verba\Mod\Catalog\MapTransformer;
-
 class Map extends \Verba\Block\Json
 {
 

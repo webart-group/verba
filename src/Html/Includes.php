@@ -4,7 +4,7 @@ namespace Verba\Html;
 
 trait Includes
 {
-    public $headers = array();
+    public $headers = [];
     public $namedMeta = array();
     public $headTags = array();
     public $metaProperties = array();

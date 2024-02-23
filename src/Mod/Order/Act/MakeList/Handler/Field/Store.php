@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Mod\Order\Act\MakeList\Handler\Field;
 
-use Act\MakeList\Handler\Field;
+use Verba\Act\MakeList\Handler\Field;
 use Verba\Mod\Image;
 
 class Store extends Field

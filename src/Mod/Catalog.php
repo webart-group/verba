@@ -74,15 +74,15 @@ class Catalog extends \Verba\Mod
             $rootId = 1;
             $catalogCodes = array($rootId);
         }
-        return $this->getItemsByCodesChain($catalogCodes);
+        return $this->getItemsByCodesChain($catalogCodes, ['catalog']);
     }
 
-    function getItemsByCodesChain($catsChain)
+    function getItemsByCodesChain(array $catsChain, ?array $preitems = [])
     {
-        if (!is_array($catsChain) || empty($catsChain)) {
-            false;
-        }
         $chr = '';
+        if($preitems){
+            $catsChain = array_merge($preitems, $catsChain);
+        }
         foreach ($catsChain as $cf) {
             $chr = $chr . '/' . $cf;
             $where[] = $this->DB()->escape($chr);

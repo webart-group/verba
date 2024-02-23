@@ -259,4 +259,49 @@ class Controller extends \Verba\Configurable
         return $this->tpl->parse(false, 'list_filters');
     }
 
+    function asJson()
+    {
+        $wrap_class = 'list-' . $this->list->getListId() . '-filters list-filters-area';
+        if (is_string($this->fcfg['wrap']['class']) && strlen($this->fcfg['wrap']['class'])) {
+            $wrap_class .= ' ' . $this->fcfg['wrap']['class'];
+        }
+
+        $r = [
+            'imems' => [],
+            'buttons' => [],
+            'wrap' => [
+                'css_class' => $wrap_class
+            ]
+        ];
+
+        if (!count($this->filters)) {
+            return $r;
+        }
+
+        foreach ($this->filters as $fe) {
+            $fe->prepare();
+        }
+
+        foreach ($this->filters as $F) {
+            $r['items'][] = array_merge(
+                ['caption' => $F->getCaption()],
+                $F->asJson()
+            );
+        }
+
+        //FILERS BUTTONS
+        $this->tpl->assign('FILTERS_BUTTONS_PANEL', '');
+        if (is_array($this->fcfg['buttons'])) {
+            if (is_array($this->fcfg['buttons']['items']) && count($this->fcfg['buttons']['items'])) {
+                foreach ($this->fcfg['buttons']['items'] as $bkey => $blangkey) {
+                    $r['buttons']['items'][] = [
+                        'name' => $bkey,
+                        'title' => \Verba\Lang::get($blangkey)
+                    ];
+                }
+            }
+        }
+
+        return $r;
+    }
 }

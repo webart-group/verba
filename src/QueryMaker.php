@@ -114,7 +114,7 @@ class QueryMaker extends Base
             $this->lc = $val;
         } else {
             $this->all_lc = (bool)$val;
-            $this->lc = SYS_LOCALE;
+            $this->lc = Lang::$lang;
         }
 
         return $this->lc;
@@ -378,11 +378,11 @@ class QueryMaker extends Base
                             ),
                         ), true
                     );
-                    $this->addSelect("GROUP_CONCAT(DISTINCT `" . $jalias . "`.`pred_id`,':',`" . $jalias . "`.`value_" . SYS_LOCALE . "` SEPARATOR '#')", false, $attr_code . "__value", true);
+                    $this->addSelect("GROUP_CONCAT(DISTINCT `" . $jalias . "`.`pred_id`,':',`" . $jalias . "`.`value_" . Lang::$lang . "` SEPARATOR '#')", false, $attr_code . "__value", true);
                     // add join for single-value predefined
                 } else {
                     $this->addJoin($jtable, $jdb, $jalias, 'pred_id', $alias, $attr_code, true);
-                    $this->addSelectPastFrom('value_' . SYS_LOCALE, array($jtable, $jdb, $jalias), $attr_code . '__value');
+                    $this->addSelectPastFrom('value_' . Lang::$lang, array($jtable, $jdb, $jalias), $attr_code . '__value');
                 }
             }
 
@@ -752,6 +752,25 @@ class QueryMaker extends Base
         }
     }
 
+    function isJoined($alias): bool
+    {
+        foreach ($this->join as $joinType => $joins) {
+            foreach ($joins as $joinKey => $join) {
+                if($join['jTAlias'] === $alias) {
+                    return true;
+                }
+            }
+        }
+
+        foreach ($this->complex_join as $joinKey => $join) {
+            if($join['jtable']['alias'] === $alias) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     function compileCJoinEntry($c_join)
     {
         return
@@ -1081,7 +1100,7 @@ class QueryMaker extends Base
         $A = $this->oh->A($field);
 
         if ($A && $A->get_lcd()) {
-            $field = $A->getCode() . '_' . SYS_LOCALE;
+            $field = $A->getCode() . '_' . Lang::$lang;
         } elseif ($A && $A->isPredefined()) {
             $field = $A->getCode() . '__value';
             $vault = false;

@@ -62,7 +62,7 @@ class paysys_ProcessPage extends \Verba\Block\Html
             $this->handleProcessException($e);
         }
 
-        $handler = new \Layout\Local($this->request);
+        $handler = new \App\Layout\Local($this->request);
         $handler->addItems(array(
             'CONTENT' => $this
         ));

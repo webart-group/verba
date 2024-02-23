@@ -1,19 +1,30 @@
 <?php
+
 namespace Verba\Mod\Banner\Act\MakeList\Handler\Field;
 
-class Pic extends \Act\MakeList\Handler\Field {
+use Verba\Mod\Image;
 
-  function run(){
+class Pic extends \Verba\Act\MakeList\Handler\Field
+{
 
-    if(empty($this->list->row['picture'])){
-      return '';
+    function run()
+    {
+        if (empty($this->list->row[$this->attr_code])) {
+            return '';
+        }
+        $oh = $this->list->oh();
+        $cfgName = $oh->p($this->attr_code.'_config');
+        if(!$cfgName) {
+            $cfgAttrCode = '_'.$this->attr_code.'_config';
+            if(!$oh->isA($cfgAttrCode) || empty($cfgName = $this->list->row[$cfgAttrCode])) {
+                return '';
+            }
+        }
+
+        $imgCfg = Image::getImageConfig($cfgName);
+        if (!($src = $imgCfg->getFullUrl(basename($this->list->row[$this->attr_code]), 'acp-list'))) {
+            return '';
+        }
+        return '<div style="max-width:300px;max-height:200px; overflow: hidden;"><img src="' . $src . '" class="acp-banner-preview-thumb"/></div>';
     }
-
-    $mImage = \Verba\_mod('image');
-    $imgCfg = $mImage->getImageConfig($this->list->oh()->p('picture_config'));
-    if(!($src = $imgCfg->getFullUrl(basename($this->list->row['picture']), 'acp-list'))){
-      return '';
-    }
-    return '<div style="max-width:300px;max-height:200px; overflow: hidden;"><img src="'.$src.'" class="acp-banner-preview-thumb"/></div>';
-  }
 }

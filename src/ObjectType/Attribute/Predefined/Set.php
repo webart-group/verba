@@ -2,7 +2,13 @@
 namespace Verba\ObjectType\Attribute\Predefined;
 
 
-class Set extends \Verba\Base
+use Verba\Base;
+use Verba\Lang;
+use Verba\ObjectType\DataVault;
+use function Verba\_oh;
+use function Verba\User;
+
+class Set extends Base
 {
 
     public $ot_id;
@@ -34,14 +40,14 @@ class Set extends \Verba\Base
             ? $cfg['default_value']
             : null;
 
-        $this->vault['root'] = \Verba\ObjectType\DataVault::convertRoot($cfg['root']);
+        $this->vault['root'] = DataVault::convertRoot($cfg['root']);
         $this->vault['object'] = (string)$cfg['object'];
     }
 
     function getValueById($id, $lang = false)
     {
         $this->getValues();
-        $lang = is_string($lang) && \Verba\Lang::isLCValid($lang)
+        $lang = is_string($lang) && Lang::isLCValid($lang)
             ? $lang
             : SYS_LOCALE;
 
@@ -56,7 +62,7 @@ class Set extends \Verba\Base
     function getValues()
     {
         if ($this->_rawValues === null) {
-            $this->_rawValues = array();
+            $this->_rawValues = [];
             $this->loadValues();
         }
         return $this->values;
@@ -71,7 +77,7 @@ class Set extends \Verba\Base
             return array();
         }
 
-        if (!is_string($lang) || $lang == SYS_LOCALE || !\Verba\Lang::isLCValid($lang)) {
+        if (!is_string($lang) || $lang == SYS_LOCALE || !Lang::isLCValid($lang)) {
             return $this->values;
         }
 
@@ -89,7 +95,7 @@ class Set extends \Verba\Base
     protected function loadValues()
     {
 
-        $_pred = \Verba\_oh('predefined');
+        $_pred = _oh('predefined');
         $predPAC = $_pred->getPAC();
 
         if (!$this->vault['root'] || !$this->vault['object']) {
@@ -133,10 +139,10 @@ ORDER BY sets.priority DESC, `pred`.`pred_id`";
         if (!is_array($this->_rawValues) || !count($this->_rawValues)) {
             return false;
         }
-        $U = \Verba\User();
+        $U = User();
 
 
-        $lang = !is_string($lang) || !\Verba\Lang::isLCValid($lang) ? SYS_LOCALE : $lang;
+        $lang = !is_string($lang) || !Lang::isLCValid($lang) ? SYS_LOCALE : $lang;
 
         // все возможные фильтры применяются здесь
 
@@ -176,5 +182,17 @@ ORDER BY sets.priority DESC, `pred`.`pred_id`";
         }
 
         return isset($r) ? $r : array();
+    }
+
+    static function createDummy(Collection $collection)
+    {
+        return new self([
+            'ot_id' => 0,
+            'id' => 0,
+            'title' => '- missed -',
+            'default_value' => '',
+            'root' => '',
+            'object' => 'pd_default',
+        ], $collection);
     }
 }

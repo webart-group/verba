@@ -1,5 +1,7 @@
 <?php
 namespace Verba\Mod;
+use Verba\Model;
+
 class Lister extends \Verba\Mod
 {
     use \Verba\ModInstance;
@@ -50,7 +52,7 @@ class Lister extends \Verba\Mod
     }
 
     /**
-     * @param $oh \Model
+     * @param $oh Model
      * @param $dcfg
      * @param $cfgFields
      * @param $cfgFilters
@@ -125,5 +127,4 @@ class Lister extends \Verba\Mod
             }
         }
     }
-
 }

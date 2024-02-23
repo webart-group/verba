@@ -2,10 +2,21 @@
 
 namespace Verba\Mod;
 
-class Product extends \Verba\Mod
+use Exception;
+use Verba\ObjectType\Attribute;
+use Verba\Branch;
+use Verba\Hive;
+use Verba\Mod;
+use Verba\ModInstance;
+use Verba\QueryMaker;
+use function Verba\_mod;
+use function Verba\_oh;
+
+class Product extends Mod
 {
-    use \Verba\ModInstance;
-    protected $productHandlers = array();
+    use ModInstance;
+
+    protected $productHandlers = [];
     protected $phCfg = null;
 
 
@@ -16,16 +27,20 @@ class Product extends \Verba\Mod
      */
     function getCatsByProduct($ot, $iid)
     {
-        $oh = \Verba\_oh($ot);
-        $prodOtId = $oh->getID();
-        $_catalog = \Verba\_oh('catalog');
-        $catOtId = $_catalog->getID();
-        $mCat = \Verba\_mod('catalog');
+        /**
+         * @var Catalog $mCat
+         */
 
-        $brn = \Verba\Branch::get_branch(array($oh->getID() => array('aot' => array($catOtId), 'iids' => $iid)), 'up', 5);
-        $threads = array();
+        $oh = _oh($ot);
+        $prodOtId = $oh->getID();
+        $_catalog = _oh('catalog');
+        $catOtId = $_catalog->getID();
+        $mCat = _mod('catalog');
+
+        $brn = Branch::get_branch([$prodOtId => ['aot' => [$catOtId], 'iids' => $iid]], 'up', 5);
+        $threads = [];
         foreach ($brn['pare'][$prodOtId][$iid][$catOtId] as $ccatId) {
-            $threads[$ccatId] = \Verba\Branch::build_tree($brn, 2, array($catOtId => array($ccatId => $ccatId)));
+            $threads[$ccatId] = Branch::build_tree($brn, 2, [$catOtId => [$ccatId => $ccatId]]);
         }
         //$plainChain = \Verba\Branch::build_tree($brn, 2);
         if (!$threads) {
@@ -33,15 +48,16 @@ class Product extends \Verba\Mod
         }
         $foundedParentId = false;
         if (count($threads) == 1) {
-            reset($threads);
-            $tread = current($threads);
-            //rm #1 кат // вообще не оч понятно зачем это нужно
-            //array_pop($tread);
-            $items = $mCat->getItems($tread, true);
+            $threads = current($threads);
+            $foundedItems = $_catalog->getData($threads, true);
+            $items = [];
+            foreach ($threads as $cat_id){
+                $items[$cat_id] = $foundedItems[$cat_id] ?? null;
+            }
 
         } elseif (count($threads) > 1) {
             $all_cat_iids = array_unique(call_user_func_array('array_merge', $threads));
-            $all_items = $mCat->getItems($all_cat_iids, true);
+            $all_items = $_catalog->getData($all_cat_iids, true);
 
             if (isset($_REQUEST['slID'])
                 && preg_match("/c" . $_catalog->getID() . "_(\d+)/i", $_REQUEST['slID'], $_)
@@ -90,13 +106,13 @@ class Product extends \Verba\Mod
 
     function loadItem($ot, $iid, $catalogId = false, $isVariants = false)
     {
-        $r = array();
+        $r = [];
         $iid = $this->DB()->escape_string($iid);
-        $_product = \Verba\_oh($ot);
-        $_catalog = \Verba\_oh('catalog');
-        $_image = \Verba\_oh('image');
-        $mImage = \Verba\_mod('image');
-        $qm = new \Verba\QueryMaker($_product, false, true);
+        $_product = _oh($ot);
+        $_catalog = _oh('catalog');
+        $_image = _oh('image');
+        $mImage = _mod('image');
+        $qm = new QueryMaker($_product, false, true);
         list($ptalias) = $qm->createAlias($_product->vltT(), $_product->vltDB());
         list($ctalias) = $qm->createAlias($_catalog->vltT(), $_catalog->vltDB());
         list($ialias, $itable) = $qm->createAlias($_image->vltT());
@@ -105,7 +121,7 @@ class Product extends \Verba\Mod
 
         $qm->addGroupBy(array($_product->getPAC()));
         if ($isVariants) {
-            $qm->addWhere($iid, 'parentId', 'parentId', array(null, null, $ptalias));
+            $qm->addWhere($iid, 'parentId', 'parentId', [null, null, $ptalias]);
         } else {
             $qm->addCJoin(array(array('a' => $lcA)),
                 array(
@@ -180,9 +196,9 @@ class Product extends \Verba\Mod
         }
         $cfg = $this->gC('productHandler');
         if (!is_array($cfg) || empty($cfg)) {
-            throw new \Exception('Unable to find product handler cfg');
+            throw new Exception('Unable to find product handler cfg');
         }
-        $this->phCfg = \Configurable::substNumIdxAsStringValues($cfg);
+        $this->phCfg = \Verba\Configurable::substNumIdxAsStringValues($cfg);
         if (!is_array($this->phCfg)) {
             $this->phCfg = array();
         }
@@ -191,7 +207,7 @@ class Product extends \Verba\Mod
 
     function getProductHandler($oh)
     {
-        $oh = \Verba\_oh($oh);
+        $oh = _oh($oh);
         $code = $oh->getCode();
         if (array_key_exists($code, $this->productHandlers)
             && is_object($this->productHandlers[$code])) {
@@ -217,12 +233,12 @@ class Product extends \Verba\Mod
             unset($hCfg['_class']);
         }
         if (!isset($classSfx)) {
-            throw new \Exception('Unable to detect Product Handler class');
+            throw new Exception('Unable to detect Product Handler class');
         }
 
         $className = $classSfx;
         if (!class_exists($className)) {
-            throw new \Exception('Unable load Product Type class [' . $code . ']');
+            throw new Exception('Unable load Product Type class [' . $code . ']');
         }
 
         $this->productHandlers[$code] = new $className($oh, $hCfg);
@@ -232,14 +248,14 @@ class Product extends \Verba\Mod
     function getProductGroupAttrFilterType($item, $A)
     {
         $r = '';
-        \Verba\Hive::loadMakeListClass();
+        Hive::loadMakeListClass();
         if (isset($item['filtertype']) && is_string($item['filtertype'])
             && !empty($item['filtertype'])
             && class_exists('ListFilter_' . ucfirst($item['filtertype']))) {
             return $item['filtertype'];
         }
 
-        if (!$A instanceof \ObjectType\Attribute) {
+        if (!$A instanceof Attribute) {
             return $r;
         }
 
@@ -286,8 +302,8 @@ class Product extends \Verba\Mod
     function sortVariants($a, $b)
     {
         $v = array(
-            'a' => reductionToFloat($a['size']),
-            'b' => reductionToFloat($b['size']),
+            'a' => \Verba\reductionToFloat($a['size']),
+            'b' => \Verba\reductionToFloat($b['size']),
         );
         $units = array(
             'a' => $a['size_unit'],

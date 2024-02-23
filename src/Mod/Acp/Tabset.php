@@ -18,7 +18,10 @@ class Tabset extends \Verba\Configurable
         if ($node instanceof Node) {
             $this->node = $node;
         }
-        $cn = \explode('_', get_class($this));
+
+        $thisReflection = new \ReflectionClass($this);
+
+        $cn = \explode('_', $thisReflection->getShortName());
         $this->name = \array_pop($cn);
 
         // tabs

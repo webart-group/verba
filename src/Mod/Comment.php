@@ -19,22 +19,22 @@ class Comment extends \Verba\Mod
             || !isset($_REQUEST['NewObject'][$oh->getID()]['comment'])
             || empty($_REQUEST['NewObject'][$oh->getID()]['comment'])
         ) {
-            $e = new \Exception(\Lang::get('comment add error badIncoming'));
+            $e = new \Exception(\Verba\Lang::get('comment add error badIncoming'));
             $e->ae = $ae;
             throw $e;
         }
-        $data = array(
+        $data = [
             'name' => $_REQUEST['NewObject'][$oh->getID()]['name'],
             'email' => $_REQUEST['NewObject'][$oh->getID()]['email'],
             'comment' => $_REQUEST['NewObject'][$oh->getID()]['comment'],
             'active' => 0,
             'visible' => 0,
-        );
+        ];
         $ae->addMultipleParents($_REQUEST['pot']);
         $ae->setGettedObjectData($data);
         $ae->addedit_object();
         if (!$ae->getIID()) {
-            $e = new \Exception(\Lang::get('comment add error badOperation'));
+            $e = new \Exception(\Verba\Lang::get('comment add error badOperation'));
             $e->ae = $ae;
             throw $e;
         }

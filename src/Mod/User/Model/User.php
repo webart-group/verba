@@ -102,8 +102,18 @@ class User extends \Verba\Model\Item
     function makeFileStoreKeyHash()
     {
         return is_string($this->hash) && $this->getAuthorized()
-            ? $this->getId() . '_' . substr($this->hash, 8, 12)
+            ? $this->hash
             : false;
+    }
+
+    function getFileStorePath()
+    {
+        return SYS_UPLOAD_DIR . '/' . $this->getFileStoreKeyHash();
+    }
+
+    function getFileStoreUrl()
+    {
+        return SYS_UPLOAD_URL . '/' . $this->getFileStoreKeyHash();
     }
 
     function setGroups($val)
@@ -560,5 +570,11 @@ WHERE $keys_where $group_where $ot_id_where";
     function getStoreId()
     {
         return (int)$this->data['storeId'];
+    }
+
+    function updateLastLoginAt()
+    {
+        $this->DB()->query('UPDATE ' . $this->oh->vltURI() . " SET last_login = '" . date('Y-m-d H:i:s')
+            . "' WHERE " . $this->oh->getPAC() . "='" . $this->getId() . "' LIMIT 1");
     }
 }

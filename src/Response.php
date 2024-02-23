@@ -20,18 +20,18 @@ class Response extends \Verba\Block\Html
         }
     }
 
-//    function handleException($e)
-//    {
-//        $this->content = $e->getMessage();
-//        $this->log()->error($e);
-//        if (array_key_exists('Location', $this->headers)) {
-//            unset($this->headers['Location']);
-//        }
-//    }
-
     function output()
     {
+        $this->addSystemHeaders();
+
         $this->sendHeaders();
         print($this->content);
+    }
+
+    function addSystemHeaders()
+    {
+        if(session_status() === PHP_SESSION_ACTIVE) {
+            $this->headers['Verba-Session-Id'] = session_id();
+        }
     }
 }

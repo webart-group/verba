@@ -1,7 +1,7 @@
 <?php
 namespace Verba\Mod\Game\Act\Form\Element\Extension;
 
-use Act\Form\Element\Extension;
+use Verba\Act\Form\Element\Extension;
 
 class CustomizePlaceholderResource extends Extension{
 

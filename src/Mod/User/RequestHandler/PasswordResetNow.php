@@ -67,7 +67,7 @@ class PasswordResetNow extends \Verba\Block\Json{
       if ($ae->haveErrors()){
         throw new Exception($ae->log()->getMessagesAsString('error'));
       }
-      $mUser->authNow(false, $email, $pwd);
+      $mUser->authNow($email, $pwd);
       $this->content = \Verba\Hive::getBackURL();
 
     }catch(Exception $e){

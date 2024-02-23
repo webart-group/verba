@@ -2,6 +2,10 @@
 
 namespace Verba\Act;
 
+use Verba\Configurable;
+use function Verba\_oh;
+use function Verba\User;
+
 /**
  * Class MakeList
  *
@@ -59,7 +63,7 @@ class MakeList extends Action
     public $attrs_to_handle;
     public $attrs_to_blank;
     /**
-     * @var \Selection
+     * @var \Verba\Selection
      */
     public $Selection;
     public $title = '';
@@ -80,7 +84,7 @@ class MakeList extends Action
 
     public $fieldsToShow = array();
     public $fieldsToHide = array();
-    protected $fieldsToParse = array();
+    public $fieldsToParse = array();
     public $virtualFields = array();
 
     public $control_block_parsed = false;
@@ -112,6 +116,7 @@ class MakeList extends Action
      * @var \DBDriver\Result
      */
     public $sqlr = null;
+    protected $order_substs = array();
     protected $client_templates = array();
     protected $_cachedHtml = array();
     protected $_wrapClasses = array();
@@ -124,6 +129,11 @@ class MakeList extends Action
     protected $validOwner = array();
 
     public const CSS_PRIORITY = 700;
+
+    /**
+     * @var \Verba\FastTemplate
+     */
+    protected $tpl;
 
     function __call($mth, $args)
     {
@@ -159,7 +169,7 @@ class MakeList extends Action
             throw new \Exception('OType is empty');
         }
 
-        $this->oh = \Verba\_oh($this->ot_id);
+        $this->oh = _oh($this->ot_id);
         $this->OT = $this->oh->getOT();
 
         if (!$this->keyId) {
@@ -397,7 +407,7 @@ class MakeList extends Action
             'LIST_WRAP_ID' => $this->wrapId,
             'SLID' => $this->Selection->getID(),
             'OBJECT_OT' => $this->ot_id,
-            'LIST_CONFIGS_STR' => str_replace('/', '|', implode(' ', $this->_confAppliedNames)),
+            'LIST_CONFIGS_STR' => $this->getAppliedConfigsAsString(),
             'CLIENT_TEMPLATES' => '',
         ));
 
@@ -412,10 +422,20 @@ class MakeList extends Action
         $this->addHidden('slID', $this->Selection->getID());
         $this->addHidden(session_name(), session_id());
         $this->addScripts(
-            ['list-tools', 'engine/act/makelist'],
-            ['workers', 'engine/act/makelist'],
+            array('form', 'form'),
+            array('list-tools', 'engine/act/makelist'),
+            array('workers', 'engine/act/makelist'),
             200
         );
+    }
+
+    /**
+     * put your comment there...
+     * @return \Verba\FastTemplate
+     */
+    function tpl()
+    {
+        return $this->tpl;
     }
 
     function setReloadMethod($val)
@@ -658,6 +678,15 @@ class MakeList extends Action
         }
     }
 
+    function setOrder_substs($val)
+    {
+        if (!is_array($val)) {
+            return false;
+        }
+        $this->order_substs = $val;
+        return $this->order_substs;
+    }
+
     /**
      * @return object \Selection
      */
@@ -686,7 +715,7 @@ class MakeList extends Action
         if (!is_array($fields)) {
             $fields = array();
         } else {
-            $fields = \Verba\Configurable::substNumIdxAsStringValues($fields);
+            $fields = Configurable::substNumIdxAsStringValues($fields);
         }
 
         foreach ($fields as $f_code => $f_cfg) {
@@ -713,11 +742,11 @@ class MakeList extends Action
         if (!is_array($c)) {
             $c = array();
         } else {
-            $c = \Verba\Configurable::substNumIdxAsStringValues($c);
+            $c = Configurable::substNumIdxAsStringValues($c);
         }
         if ($this->gC('only_config_fields') == false) {
             $attrs = $this->oh->getAttrs(true);
-            $attrs = \Verba\Configurable::substNumIdxAsStringValues($attrs);
+            $attrs = Configurable::substNumIdxAsStringValues($attrs);
             $attrs = array_replace_recursive($attrs, $c);
         } else {
             $attrs = $c;
@@ -778,9 +807,13 @@ class MakeList extends Action
         }
     }
 
+    function genAttrsList()
+    {
+        $this->fieldsToParse = array_merge($this->fieldsToShow, $this->virtualFields);
+    }
+
     function parseRowControls($row)
     {
-
         $cfg = $this->gC('control_block');
         $iid = $row[$this->oh->getPAC()];
 
@@ -794,7 +827,7 @@ class MakeList extends Action
             'CELL_CLASS_ATTR' => ' class="' . $class . '"',
         ));
 
-        $U = \Verba\User();
+        $U = User();
 
         $editUrlPrefix = $this->gC('url edit');
         //Edit Element
@@ -822,6 +855,16 @@ class MakeList extends Action
 
         $this->control_block_parsed = true;
         return $this->tpl->parse(false, 'row_control_block');
+    }
+
+    function rowControlsAsJson($row): array
+    {
+        return [
+                null,
+                null,
+                (int)($this->isEditable() && User()->chrItem($row['key_id'], 'u', $row)),
+                (int)User()->chrItem($row['key_id'], 'd', $row)
+        ];
     }
 
     function setRowsOnPage($val)
@@ -941,7 +984,7 @@ class MakeList extends Action
     // RootOt, RuleAlias
     function setRootOt($val)
     {
-        $this->rootOt = \Verba\_oh($val)->getID();
+        $this->rootOt = _oh($val)->getID();
     }
 
     function getRootOt()
@@ -1079,6 +1122,16 @@ class MakeList extends Action
         return $parseHtml ? $this->parseHtml() : true;
     }
 
+    function generateListJson()
+    {
+
+        $this->sC(1, 'parseAsJson');
+        $this->fire('beforeStart');
+        $this->prepareAndRunQueries();
+
+        return $this->asJson();
+    }
+
     function prepareAndRunQueries()
     {
         if (!$this->validateAccess()) {
@@ -1116,7 +1169,7 @@ class MakeList extends Action
         if (count($this->parents)) {
             $parentQMCondAliasBase = 'listParent';
             foreach ($this->parents as $cpot => $cpiids) {
-                $_cpoh = \Verba\_oh($cpot);
+                $_cpoh = _oh($cpot);
                 $parentQMCondAlias = $parentQMCondAliasBase . '_' . $_cpoh->getCode();
                 if ($this->QM()->isConditionExists($parentQMCondAlias)) {
                     continue;
@@ -1131,7 +1184,7 @@ class MakeList extends Action
                 }
 
                 if ($this->rootOt) {
-                    $_rootOh = \Verba\_oh($this->rootOt);
+                    $_rootOh = _oh($this->rootOt);
                     if ($_rootOh->getID() == $_cpoh->getID()) {
                         $parentCond->setRootOt($this->rootOt);
                         if ($this->rootRuleAlias) {
@@ -1150,7 +1203,7 @@ class MakeList extends Action
         }
 
         // Make main query
-
+        $this->genAttrsList();
         $this->fire('beforeQuery');
         $this->Selection->refresh_querys();
         $this->sqlr = $this->Selection->exec_query();
@@ -1160,6 +1213,123 @@ class MakeList extends Action
         $this->fire('sqlrConvertedToArray');
 
         return $this->_rowsArray;
+    }
+
+    function asJson()
+    {
+        $this->fire('beforeParse');
+        $this->setForwardUrl(
+            $this->makeForwardUrl(
+                !is_string($this->getForwardUrl())
+                    ? $_SERVER['REQUEST_URI']
+                    : $this->getForwardUrl()
+            )
+        );
+
+        $r = [
+            'items' => null,
+        ];
+
+        $this->prepareToParse();
+
+        if ($this->_rowsArray && $this->Selection->c_founded_rows > 0) {
+            $r['items'] = $this->parseRowsAsJson();
+        }
+
+        $r['meta'] = $this->parseMetaJson();
+
+        //Save state to session
+        $this->save2session();
+
+//        $this->tpl->parse('LIST_WRAP_CONTENT', 'searchResult_body');
+//        if ($this->nowrap) {
+//            return $this->tpl->getVar('LIST_WRAP_CONTENT');
+//        }
+
+//        $this->tpl->assign(array(
+//            'LIST_WRAP_CLASS' => count($this->_wrapClasses) ? implode(' ', $this->_wrapClasses) : '',
+//        ));
+
+        return $r;
+    }
+
+    function parseMetaJson()
+    {
+        $r = [
+            'ot_id' => $this->oh->getID(),
+            'ot_code' => $this->oh->getCode()
+        ];
+
+        $r['fields'] = $this->getFieldsMeta();
+        $r['configs'] = $this->getAppliedConfigsAsString();
+
+        //Filters
+        $this->fire('beforeFilters');
+        $r['filters'] = $this->Filters->asJson();
+        $this->fire('afterFilters');
+
+        //Feats
+        $this->refreshFeats();
+        $r['feats'] = $this->config['feats'];
+
+        // Options blocks
+        $r['panels'] = $this->getOptionsPannelsAsJson();
+
+        // Pager Panels
+        $r['selection'] = $this->getSelectionParams();
+
+        // Headlines (table view - column headers, free view - order fields row)
+        $r['headers'] = $this->isHeaders() ? $this->getHeadersAsJson() : null;
+
+        //List Title
+        $r['title'] = $this->isListTitle() ? $this->parseListTitle() : '';
+
+        //External CSS
+//        if ($cfg['css']) {
+//            $this->addCSS($cfg['css']);
+//        }
+//        //External Scripts
+//        if ($cfg['scripts']) {
+//            $this->addScripts($cfg['scripts']);
+//        }
+
+        // Add Client List Workers and initialization code
+        //$this->addWorkersToJs();
+
+        //парсинг предидущего JavaScript-кода
+        //$this->prepareAndParseJsBefore();
+
+        //парсинг последующего JavaScript-кода
+        //$this->prepareAndParseJsAfter();
+
+        //$this->mergeHtmlIncludesWithTiedBlock();
+
+        // парсинг хидденов
+        $r['hiddens'] = $this->parseHiddensJson();
+
+        // клиентские шаблоны
+        //$this->parseClientTemplates();
+
+
+        return $r;
+    }
+
+    private function getFieldsMeta()
+    {
+        $r = [];
+
+        foreach($this->fieldsToParse as $field_code) {
+            $field_cfg = $this->_prepared['fields'][$field_code] ?? [];
+            $r[$field_code] = [
+                'code' => $field_code,
+                'data-type' => $field_cfg['data-type'],
+                'priority' => $field_cfg['priority'] ?? 0,
+                'html' => [
+                    'class' => $field_cfg['class'],
+                ],
+            ];
+        }
+        return $r;
     }
 
     function parseHtml()
@@ -1263,7 +1433,7 @@ class MakeList extends Action
             $this->_prepared['row']['handler'] = $this->extractRowHandlerFromCfg($cfg['row']['handler']);
         }
 
-        $toDefine = array();
+        $toDefine = [];
 
         $this->defaultFieldCfg = $cfg['field_default'];
 
@@ -1298,7 +1468,7 @@ class MakeList extends Action
 
             // field's custom template
             if (isset($cfg['fields'][$attr_code]['tpl'])
-                && is_string($cfg['fields'][$attr_code]['tpl']) && strlen(['tpl'])) {
+                && is_string($cfg['fields'][$attr_code]['tpl']) && strlen($cfg['fields'][$attr_code]['tpl'])) {
                 $this->_prepared['fields'][$attr_code]['tpl_hash'] = 'field_tpl_' . md5($cfg['fields'][$attr_code]['tpl']);
                 $toDefine[$this->_prepared['fields'][$attr_code]['tpl_hash']] = $cfg['fields'][$attr_code]['tpl'];
             }
@@ -1311,7 +1481,9 @@ class MakeList extends Action
             //Field handlers
             $this->_prepared['fields'][$attr_code]['handlers'] = array();
             // generating value by default present handlers
-            if ($this->oh->isA($attr_code) && !$cfg['fields'][$attr_code]['preventDefaultHandlers']) {
+            if ($this->oh->isA($attr_code)
+                && !$cfg['fields'][$attr_code]['preventDefaultHandlers']
+            ) {
                 $A = $this->oh->A($attr_code);
                 $attr_code = $A->getCode();
 
@@ -1395,7 +1567,7 @@ class MakeList extends Action
                 $this->log()->error('Invalid list entry - bad OT');
                 continue;
             }
-            $_oh = \Verba\_oh($this->row['ot_id']);
+            $_oh = _oh($this->row['ot_id']);
             if (!$this->row[$_oh->getPAC()]) {
                 $this->log()->error('Invalid list entry ID, ot[' . $_oh->getCode() . ']');
                 continue;
@@ -1468,6 +1640,65 @@ class MakeList extends Action
             ));
 
             $all_rows .= $this->tpl->parse(false, 'row');
+            $this->currentPos++;
+
+            $this->fire('rowAfter');
+        }
+
+        return $all_rows;
+    }
+
+    function parseRowsAsJson()
+    {
+        global $S;
+
+        $this->rowCfg = $this->_prepared['row'];
+
+        $this->tpl->define(array(
+            'row' => $this->rowCfg['tpl']
+        ));
+
+        $all_rows = [];
+
+        foreach ($this->_rowsArray as $this->row) {
+            $this->rowAttrs = [];
+            $this->rowClass = [];
+            $this->rowExtended = [];
+
+            if (!$this->row['ot_id']) {
+                $this->log()->error('Invalid list entry - bad OT');
+                continue;
+            }
+            $_oh = _oh($this->row['ot_id']);
+            if (!$this->row[$_oh->getPAC()]) {
+                $this->log()->error('Invalid list entry ID, ot[' . $_oh->getCode() . ']');
+                continue;
+            }
+            $this->rowItem = $_oh->initItem($this->row);
+
+            $this->fire('rowBefore');
+
+            if (!is_numeric($this->row['key_id']) || !$S->U()->chrItem($this->row['key_id'], 's', $this->row)) {
+                continue;
+            }
+
+            $this->_currentRowNumber++;
+
+            $fields = $this->parseRowFieldsAsJson();
+
+            $iid = $this->row[$this->oh->getPAC()];
+
+            $all_rows[] = [
+                'data' => $fields,
+                'meta' => [
+                    'id' => $iid,
+                    'ot_id' => $this->row['ot_id'],
+                    'sequence_pos' => $this->currentPos,
+                    'selected' => $this->Selection->isSelected($iid, $this->row['ot_id']),
+                    'rights' => $this->rowControlsAsJson($this->row)
+                ]
+            ];
+
             $this->currentPos++;
 
             $this->fire('rowAfter');
@@ -1558,7 +1789,176 @@ class MakeList extends Action
         return $fields_content;
     }
 
+    function parseRowFieldsAsJson()
+    {
+        $r = [];
+        if (!is_array($this->fieldsToParse) || count($this->fieldsToParse) < 1 || !is_array($this->row)) {
+            return $r;
+        }
+
+        foreach ($this->fieldsToParse as $attr_code) {
+            $this->fieldResult = null;
+            $this->fieldCode = $attr_code;
+
+            $this->fieldCfg = $this->_prepared['fields'][$attr_code];
+
+            $this->fire('fieldBefore');
+
+            $this->fieldResult = $this->row[$attr_code];
+
+            // generating value by assigned handlers
+            if (is_array($this->fieldCfg['handlers']) && count($this->fieldCfg['handlers'])) {
+                foreach ($this->fieldCfg['handlers'] as $ch) {
+                    if (!is_object($ch)) {
+                        $this->log()->error('Bad field ' . $attr_code . '(' . $this->oh()->getCode() . ') handler ' . var_export($ch, true));
+                        continue;
+                    }
+                    $this->fieldResult = $ch->run();
+                }
+            }
+
+            $r[$this->fieldCode] = [
+                'value' => [
+                    'rendered' => $this->fieldResult,
+                ]
+            ];
+            $natural_value = $this->rowItem->getNatural($attr_code);
+            if($natural_value !== $this->fieldResult) {
+                $r[$this->fieldCode]['value']['natural'] = $natural_value;
+            }
+        }
+
+        return $r;
+    }
+
     ## Headers
+    function getHeadersAsJson()
+    {
+        $r = [];
+        if ($this->Selection->c_founded_rows < 1) {
+            return $r;
+        }
+
+        $this->headersCfg = $this->gC('headers');
+
+        $this->fire('headersRowBefore');
+
+        if (is_array($this->headersCfg['fields'])
+            && count($this->headersCfg['fields'])
+            && $this->headersCfg['onlyConfigHeaders']) {
+
+            $this->headersToParse = array_keys($this->headersCfg['fields']);
+
+        } elseif (is_array($this->fieldsToParse) && !empty($this->fieldsToParse)) {
+            $this->headersToParse = $this->fieldsToParse;
+        } else {
+            $this->headersToParse = [];
+        }
+
+        if (is_array($this->headersToParse) && is_array($this->fieldsToHide)) {
+            $this->headersToParse = array_diff($this->headersToParse, $this->fieldsToHide);
+        }
+
+        if (!is_array($this->headersToParse) || !count($this->headersToParse)) {
+            return $r;
+        }
+
+        $hdrs_row_class = 'list-headers-items';
+        if ($this->headersCfg['row']['class']) {
+            $hdrs_row_class = ' ' . (is_array($this->headersCfg['row']['class'])
+                    ? implode(' ', $this->headersCfg['row']['class'])
+                    : $this->headersCfg['row']['class']);
+        }
+
+        $html = [
+            'class' => $hdrs_row_class
+        ];
+
+        $cell_class_base = 'list-header';
+
+        $order_allowed = $this->headersCfg['order']['allowed'];
+        $order_denied = $this->headersCfg['order']['denied'];
+        $fields = [];
+        // headers fields parse
+        foreach ($this->headersToParse as $this->headerCode) {
+            $this->headerCfg = $this->headersCfg['cell'];
+            $this->headerFieldCfg = array_key_exists($this->headerCode, $this->_prepared['fields'])
+                ? $this->_prepared['fields'][$this->headerCode]
+                : [];
+            $this->fire('headerCellBefore');
+
+            $this->headerText = $this->generateHeaderText($this->headerCode);
+            $A = $this->oh->isA($this->headerCode) ? $this->oh->A($this->headerCode) : $this->headerCode;
+            if (isset($this->headerFieldCfg['header']['textHandler']) && is_array($this->headerFieldCfg['header']['textHandler'])
+                && !empty($this->headerFieldCfg['header']['textHandler'])) {
+                foreach ($this->headerFieldCfg['header']['textHandler'] as $thClassName => $thClassCfg) {
+                    if (!class_exists($thClassName)) {
+                        $this->log()->error('Unexists List Header Text Generator ' . $thClassName . ' for headerCode: ' . $this->headerCode . ', ot: ' . $this->oh()->getID());
+                        continue;
+                    }
+                    /**
+                     * @var $Th \Verba\Act\MakeList\Handler\Header
+                     */
+                    $Th = new $thClassName($this->oh, $A, $thClassCfg, $this);
+                    $this->headerText = $Th->run();
+                }
+            }
+
+            $cell_class = $cell_class_base . ' lh-' . $this->headerCode;
+            if (isset($this->headerCfg['class']) && !empty($this->headerCfg['class'])) {
+                $cell_class .= ' ' . (is_array($this->headerCfg['class'])
+                        ? implode(' ', $this->headerCfg['class'])
+                        : $this->headerCfg['class']);
+            }
+
+            $fields[] = [
+                'code' => $this->headerCode,
+                'text' => $this->headerText,
+                'html' => [
+                    'class' => $cell_class
+                ]
+            ];
+
+            $this->fire('headerCellAfter');
+        }
+
+        $this->headerCfg = $this->headersCfg['cell'];
+        $control_cell_class = $cell_class_base . ' ' . (is_array($this->headerCfg['class'])
+                ? implode(' ', $this->headerCfg['class'])
+                : $this->headerCfg['class']);
+
+        // rows control-block cell
+        $controls = [
+            'html' => [
+                'class' => $control_cell_class
+            ]
+        ];
+        // rows numbering cell
+        if ($this->isRowNumbering()) {
+            $numbering = [
+                'html' => [
+                    'class' => $control_cell_class . ' lh-row-nums'
+                ]
+            ];
+        }else{
+            $numbering = null;
+        }
+
+        $this->fire('headersRowAfter');
+
+        $r = array_merge($r,
+            [
+                'order_allowed' => $order_allowed,
+                'order_denied' => $order_denied,
+                'fields' => $fields,
+                'html' => $html,
+                'controls' => $controls,
+                'numbering' => $numbering,
+            ]);
+
+        return $r;
+    }
+
     function parseHeaders()
     {
         if ($this->Selection->c_founded_rows < 1) {
@@ -1759,6 +2159,25 @@ class MakeList extends Action
         }
     }
 
+    function getOptionsPannelsAsJson()
+    {
+        $featKey = 'options';
+        $featCfg = $this->gC('options');
+
+        $r = [];
+
+        foreach (['top', 'bottom'] as $side) {
+            $isFeatMth = 'isFeatAvaible' . ucfirst($side);
+            if (!$this->$isFeatMth($featKey)) {
+                continue;
+            }
+
+            $r[$side] = $featCfg[$side]; // ->getPanelAsJson()
+        }
+
+        return $r;
+    }
+
     /**
      * $side 'bottom' | 'top' | null
      */
@@ -1801,6 +2220,39 @@ class MakeList extends Action
         return $this->tpl->parse(false, 'panel');
     }
 
+    /**
+     * $side 'bottom' | 'top' | null
+     */
+//    function getPanelAsJson($panelCfg, $side = null)
+//    {
+//        if ($side === null) {
+//            $sideInt = null;
+//        } else {
+//            $sideInt = $side == 'bottom' ? 2 : 1;
+//        }
+//        $itemsFromCfg = Configurable::substNumIdxAsStringValues($panelCfg['items']);
+//
+//        $r = [];
+//        $items = [];
+//
+//        foreach ($itemsFromCfg as $itemKey => $itemCfg) {
+//            if (!$this->isFeat($itemKey, $sideInt)) {
+//                continue;
+//            }
+//            $items[] = [
+//                'name' => $itemKey,
+//                'cfg' => $itemCfg,
+//                'content' => $this->getBlockHtmlByCode($itemKey, $side)
+//            ];
+//        }
+//
+//        if (empty($r) && !$panelCfg['forcedParse']) {
+//            return $r;
+//        }
+//
+//        return $this->tpl->parse(false, 'panel');
+//    }
+
     function getBlockHtmlByCode($key, $side = false)
     {
         $key = (string)$key;
@@ -1810,6 +2262,20 @@ class MakeList extends Action
             $this->_cachedHtml[$key] = (string)$this->$mthd($side);
         }
         return $this->_cachedHtml[$key];
+    }
+
+    function getSelectionParams()
+    {
+        return [
+            'first_row' => $this->Selection->start_row + 1,
+            'last_row' => $this->Selection->last_row ??  null,
+            'found' => $this->Selection->count_v,
+            'rows_on_page' => $this->Selection->ronp,
+            'pages' => [
+                'total' => (int)$this->Selection->getTotalPages(),
+                'current' => $this->Selection->getPage(),
+            ]
+        ];
     }
 
     function parseCurrentRange()
@@ -1990,7 +2456,7 @@ class MakeList extends Action
             'button_wrap' => $cfg['button_wrap'],
         ));
         $isFeatMthd = 'isFeatAvaible' . ucfirst($side);
-        $U = \Verba\User();
+        $U = User();
         $this->tpl->assign('BUTTONS_ROW', '');
         if (is_array($cfg['items'])) {
             $default_class = isset($cfg['default_button_class']) ? (array)$cfg['default_button_class'] : array();
@@ -2119,7 +2585,7 @@ class MakeList extends Action
     function validateAccess()
     {
 
-        $U = \Verba\User();
+        $U = User();
 
         $mode = $this->gC('access_mode');
 
@@ -2264,6 +2730,11 @@ class MakeList extends Action
         $this->{$pn}['headers'] = array_replace_recursive($this->{$pn}['headers'], $var);
 
         return $this->{$pn}['headers'];
+    }
+
+    function getAppliedConfigsAsString()
+    {
+        return str_replace('/', '|', implode(' ', $this->_confAppliedNames));
     }
 }
 
@@ -2548,6 +3019,7 @@ MakeList::$_config_default = array(
     'reloadMethod' => 'ajax',
     'dialogsModal' => false,
     'itemClickAction' => false,
+    'parseAsJson' => 0,
 );
 /*
 'fields'  => array(

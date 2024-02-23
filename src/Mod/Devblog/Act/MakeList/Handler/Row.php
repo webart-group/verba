@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Devblog\Act\MakeList\Handler;
 
-use Act\MakeList\Handler\Row as RowDefault;
+use Verba\Act\MakeList\Handler\Row as RowDefault;
 
 class Row extends RowDefault
 {

@@ -26,7 +26,10 @@ class Tab extends \Verba\Configurable
         if (!is_array($cfg)) {
             $cfg = array();
         }
-        $a = explode('_', get_class($this));
+
+        $reflection = new \ReflectionClass($this);
+        $thisClassName = $reflection->getShortName();
+        $a = explode('_', $thisClassName);
         $this->name = array_pop($a);
 
         if (array_key_exists('states', $cfg)) {

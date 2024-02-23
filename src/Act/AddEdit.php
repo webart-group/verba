@@ -32,7 +32,7 @@ class AddEdit extends AddEditHandler
     /**
      * @var bool|string
      */
-    protected $responseAs = false;
+    protected $responseAs;
     protected $responseAsKeys;
     protected $validResponseFormats = array(
         'item',
@@ -46,7 +46,7 @@ class AddEdit extends AddEditHandler
         'json-item-keys',
         'json-item-updated-keys',
     );
-    protected $validResponseDefaultFormat = 'bool';
+
     /**
      * @var \Verba\Model\Item
      */
@@ -61,15 +61,11 @@ class AddEdit extends AddEditHandler
             $keys = $this->responseAsKeys;
         }
 
-        if (!is_string($format) || !in_array($format, $this->validResponseFormats)) {
-            $format = $this->validResponseDefaultFormat;
-        }
-
         if ($format == 'item') {
 
             $r = $this->getActualItem();
         } elseif ($format == 'data') {
-            $r = $this->getActualData();
+            $r = $this->getActualItem()->exportAsValues();
         } elseif ($format == 'data-getted') {
             $data = $this->getActualData();
             $getted = $this->getGettedObjectData();
@@ -114,18 +110,12 @@ class AddEdit extends AddEditHandler
         return isset($r) ? $r : false;
     }
 
-    function setResponseAs($val)
+    function setResponseAs($val): self
     {
-        if (!is_string($val) || !$val) {
-            $this->responseAs = $this->validResponseDefaultFormat;
-            return false;
+        if (is_string($val) && in_array($val, $this->validResponseFormats)) {
+            $this->responseAs = $val;
         }
-        $val = strtolower($val);
-        if (!in_array($val, $this->validResponseFormats)) {
-            return false;
-        }
-        $this->responseAs = $val;
-        return $this->responseAs;
+        return $this;
     }
 
     function setResponseAsKeys($val)
@@ -136,7 +126,6 @@ class AddEdit extends AddEditHandler
         $this->responseAsKeys = $val;
         return $this->responseAsKeys;
     }
-
 
     static $config_default;
 

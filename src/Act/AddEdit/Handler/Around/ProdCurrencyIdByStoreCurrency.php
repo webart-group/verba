@@ -2,8 +2,10 @@
 
 namespace Verba\Act\AddEdit\Handler\Around;
 
-use \Verba\Act\AddEdit\Handler\Around;
+use Verba\Act\AddEdit\Handler\Around;
 use Verba\Mod\SnailMail\Exception;
+use Verba\Model\Store;
+use function Verba\_oh;
 
 /**
  * Class ProdCurrencyIdByStoreCurrency
@@ -17,21 +19,9 @@ class ProdCurrencyIdByStoreCurrency extends Around
 {
     function run()
     {
-
         $store = $this->ah->getExtendedData('store');
-
-        if(!$store){
-            $store = \Verba\_oh('store')->initItem(
-                $this->action == 'new'
-                    ? $this->ah->getTempValue('storeId')
-                    : $this->ah->getExistsValue('storeId')
-            );
-
-            $this->ah->setExtendedData(['store' => $store]);
-        }
-
-        if(!$store){
-            throw new Exception('Store error');
+        if(!$store instanceof Store){
+            throw new \Exception('Store error');
         }
 
         $this->value = $store->getNatural('currencyId');

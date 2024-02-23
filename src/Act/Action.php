@@ -237,7 +237,7 @@ class Action extends Parents
 
     function addHidden($name, $value = false)
     {
-        if (is_object($name) && $name instanceof \Html\Hidden) {
+        if (is_object($name) && $name instanceof \Verba\Html\Hidden) {
             $this->hidden_elements[$name->getName()] = $name;
         } elseif (is_string($name)) {
             $this->hidden_elements[$name] = $value;
@@ -259,6 +259,22 @@ class Action extends Parents
             }
         }
         $this->tpl->assign('EXTENDED_HIDDEN_ELEMENTS', $str, true);
+    }
+
+    function parseHiddensJson()
+    {
+        if (!is_array($this->hidden_elements) || !count($this->hidden_elements)){
+            return null;
+        }
+        $hiddens = [];
+        foreach ($this->hidden_elements as $name => $value) {
+            if (is_string($value) || is_numeric($value)) {
+                $hiddens[$name] = (string)$value;
+            } elseif (is_object($value)) {
+                $hiddens[$value->name] = $value->build();
+            }
+        }
+        return $hiddens;
     }
 
     function parseBackToList()

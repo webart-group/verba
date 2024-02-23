@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Review\Act\Delete\Handler;
 
-use Act\Delete\Handler;
+use Verba\Act\Delete\Handler;
 
 class StoreRatingDown extends Handler
 {

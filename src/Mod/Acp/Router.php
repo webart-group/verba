@@ -11,19 +11,30 @@ namespace Verba\Mod\Acp;
 
 use App\Layout\Acp as AcpLayout;
 use App\Layout\Core;
+use Verba\Block;
+use Verba\Block\Html;
+use Verba\Exception\Routing;
+use Verba\Hive;
+use Verba\Mod\ACP;
+use Verba\Mod\Routine\Block\CUNow;
+use Verba\Mod\User\Block\Login;
+use Verba\Response;
+use Verba\Response\Json;
+use function Verba\_mod;
+use function Verba\isOt;
 
 class Router extends \Verba\Request\Http\Router
 {
     function route()
     {
         /**
-         * @var $mAcp \Verba\Mod\ACP
+         * @var $mAcp ACP
          */
-        $mAcp = \Verba\_mod('acp');
+        $mAcp = _mod('acp');
         if (!$mAcp->checkAccess())
         {
             $layout = new Core();
-            $layout->addItems(['CONTENT' => new Block\Login($this)]);
+            $layout->addItems(['CONTENT' => new Login($this)]);
 
             return $layout->route();
         }
@@ -44,12 +55,14 @@ class Router extends \Verba\Request\Http\Router
 
             $h = new $autoclass($rq->shift());
 
-        // если есть ACP-роутер в модуле (и модуль есть)
-        } elseif(\Verba\Hive::isModExists($rq->node) && ($Mod = \Verba\_mod($rq->node)) && ($modRouter = '\\Verba\\Mod\\'.$Mod->getName().'\\Router\\ACP') && class_exists($modRouter)) {
+        // если есть ACP-роутер вида <Node>AcpRouter в модуле
+        } elseif(Hive::isModExists($rq->node) && ($Mod = _mod($rq->node)) && ($modRouter = '\\Verba\\Mod\\'.$Mod->getName().'\\Router\\ACP') && class_exists($modRouter)) {
 
             $h = new $modRouter($rq->shift());
 
-        } elseif(\Verba\isOt($rq->node)) {
+        } elseif(($autoclass = '\\Verba\\App\\'.ucfirst($rq->node).'\\Router') && class_exists($autoclass)) {
+            $h = new $autoclass($rq->shift());
+        } elseif(isOt($rq->node)) {
 
             $rq->setOt($rq->node);
             $h = new Router\ObjectType($rq);
@@ -73,8 +86,8 @@ class Router extends \Verba\Request\Http\Router
         }
         */
 
-        if(!isset($h) || !$h instanceof \Verba\Block){
-            throw new \Verba\Exception\Routing();
+        if(!isset($h) || !$h instanceof Block){
+            throw new Routing();
         }
 
         $response = $h->route();
@@ -82,20 +95,20 @@ class Router extends \Verba\Request\Http\Router
         // Обертки на вывод
 
         // Если возвращен не фактический объект Ответа, оборачиваем по возможности
-        if(!$response instanceof \Verba\Response && $response instanceof \Verba\Block)
+        if(!$response instanceof Response && $response instanceof Block)
         {
             //если ae-процесс и не указан режим возврата, по умолчания для acp формат json-item-updated
-            if($response instanceof \Verba\Mod\Routine\Block\CUNow && $response->getResponseAs() === false){
+            if($response instanceof CUNow && $response->getResponseAs() === false){
                 $response->setResponseAs('json-item-updated');
             }
             // для всех html-блоков принудительное изменение типа на json
-            if($response instanceof \Verba\Block\Html) {
+            if($response instanceof Html) {
                 $response->contentType = 'json';
             }
 
             // для json-блока обертка в объект json-ответа
             if($response->contentType == 'json'){
-                $newResponse = new \Verba\Response\Json($this);
+                $newResponse = new Json($this);
                 $newResponse->addItems($response);
                 $response = $newResponse->route();
             }

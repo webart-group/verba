@@ -80,7 +80,6 @@ class CatalogConfigUI extends Element
                 && array_key_exists('ot_id', $existsCfg['groups'][$gcode]) && !empty($existsCfg['groups'][$gcode]['ot_id'])
                     ? $existsCfg['groups'][$gcode]['ot_id']
                     : false;
-
             }
 
             if ($cot) {

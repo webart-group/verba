@@ -2,7 +2,11 @@
 
 namespace Verba\Act\Form\Element;
 
-use \Verba\Html\Element;
+use Verba\Branch;
+use Verba\Cache;
+use Verba\Html\Element;
+use Verba\QueryMaker;
+use function Verba\_oh;
 
 class LinkingSelect extends Element
 {
@@ -28,13 +32,13 @@ class LinkingSelect extends Element
             return $this->values;
         }
         $this->values = array();
-        $_linked = \Verba\_oh($this->lot);
+        $_linked = _oh($this->lot);
         $l_ot = $_linked->getID();
         $pac = $_linked->getPAC();
 
         if (!$this->rootId) {
 
-            $qm = new \Verba\QueryMaker($_linked, false, $this->attrs);
+            $qm = new QueryMaker($_linked, false, $this->attrs);
 
             if (is_array($this->where) && count($this->where))
             {
@@ -56,12 +60,12 @@ class LinkingSelect extends Element
                 }
             }
         } else {
-            $cache = new \cache('byOt/' . $_linked->getCode() . '/linkingSelectValues/' . $this->aef->oh->getCode() . '_' . $this->acode . '-' . $_linked->getCode());
+            $cache = new Cache('byOt/' . $_linked->getCode() . '/linkingSelectValues/' . $this->aef->oh->getCode() . '_' . $this->acode . '-' . $_linked->getCode());
             if ($cache->validateDataCache(6000)) {
                 $this->values = $cache->getAsRequire();
             } else {
 
-                $this->br = \Verba\Branch::get_branch(array(
+                $this->br = Branch::get_branch(array(
                     $l_ot => array(
                         'iids' => $this->rootId,
                         'aot' => $l_ot
@@ -89,7 +93,7 @@ class LinkingSelect extends Element
 
     function parseLeveledValues($iids, $lvl)
     {
-        $_linked = \Verba\_oh($this->lot);
+        $_linked = _oh($this->lot);
         $l_ot = $_linked->getID();
         $pac = $_linked->getPAC();
         foreach ($iids as $iid) {
@@ -115,8 +119,8 @@ class LinkingSelect extends Element
             return $this->selected;
         }
 
-        $loh = \Verba\_oh($this->lot);
-        $br = \Verba\Branch::get_branch(array(
+        $loh = _oh($this->lot);
+        $br = Branch::get_branch(array(
             $this->aef->oh->getID() => array(
                 'iids' => $this->aef->getIID(),
                 'aot' => $loh->getID()
@@ -149,7 +153,7 @@ class LinkingSelect extends Element
         $this->loadValues();
         $this->loadSelected();
 
-        $loh = \Verba\_oh($this->lot);
+        $loh = _oh($this->lot);
 
         $this->tpl->assign(array(
             'LS_JS_CFG' => json_encode(array(

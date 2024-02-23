@@ -52,4 +52,18 @@ class Articul extends \Verba\Act\MakeList\Filter
 
         return $this->tpl->parse(false, 'content');
     }
+
+    function asJson()
+    {
+        $r = parent::asJson();
+        if (count($this->attrs)) {
+            $r['attrs'] = [];
+            foreach ($this->attrs as $attr){
+                $r['attrs'][] = $attr;
+            }
+            return $r;
+        }
+
+        return $r;
+    }
 }

@@ -1,13 +1,17 @@
 <?php
-class otype_index extends \Verba\Block\Html{
 
-  public $templates = array(
-    'content' => 'otype/index/wrap.tpl',
-  );
+namespace Verba\Mod\System\blocks;
+class otype_index extends \Verba\Block\Html
+{
 
-  function build(){
-    parent::build();
-  }
+    public $templates = array(
+        'content' => 'otype/index/wrap.tpl',
+    );
+
+    function build()
+    {
+        parent::build();
+    }
 
 }
 

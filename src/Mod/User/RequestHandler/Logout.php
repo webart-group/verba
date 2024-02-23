@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\User\RequestHandler;
 
-class Logout extends \Verba\Block\Html
+class Logout extends \Verba\Block\Json
 {
 
     function build()
@@ -13,6 +13,8 @@ class Logout extends \Verba\Block\Html
         $mUser = \Verba\_mod('User');
         $mUser->logout();
 
-        $this->addHeader('Location', '/'); //$mUser->getHistoryBackUrl()
+        $this->content = true;
+
+        return $this->content;
     }
 }

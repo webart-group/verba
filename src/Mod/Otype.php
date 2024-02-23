@@ -366,7 +366,7 @@ class Otype extends \Verba\Mod
         if ($ahData
             && isset($ahData['check_params']) && $ahData['check_params'] == 1
         ) {
-            $ah_props_table_name = '_athp_' . str_replace('\\', '_', $ahData['ah_name']);
+            $ah_props_table_name = strtolower('_athp_' . str_replace('\\', '_', $ahData['ah_name']));
             $rmq = "DELETE FROM `" . SYS_DATABASE . "`.`" . $this->DB()->escape($ah_props_table_name) . "`
       WHERE set_id = '" . $set_id . "'";
             $sqlrr = $this->DB()->query($rmq, false);

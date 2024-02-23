@@ -1,8 +1,5 @@
 <?php
-
 namespace Verba\Mod;
-
-use Model\Item;
 
 class Image extends \Verba\Mod
 {
@@ -11,92 +8,6 @@ class Image extends \Verba\Mod
     static public $media_types = array('jpg' => 2, 'jpeg' => 2, 'png' => 3, 'gif' => 1);
     protected $tmp_zip_dir = false;
     static protected $imageConfigs = array();
-
-    /*
-      function makeAction(&$bp){
-        switch($bp['action']){
-          case 'addedit_form_json':
-                  $handler = 'addEditFormJson';
-                   break;
-          case 'addeditnow_result':
-                  $handler = 'addEditNowResult';
-                   break;
-          case 'new'  :
-          case 'edit'  :
-                  $handler = 'addEditForm';
-                  break;
-          case 'delete'  :
-                  $handler = 'deleteNow';
-                  break;
-
-          case 'newnow' :
-          case 'editnow':
-          case 'uae':
-                  $handler = 'AddEditNow';
-                  break;
-
-          case 'uaef':
-                  $handler = 'UniAddEditForm';
-                  break;
-        }
-        return $handler;
-      }
-
-      function manageImagesList($BParams = null, $cfg = false, $access = true, $all_locales = false){
-        $_image = \Verba\_oh('image');
-        $tpl = $this->tpl();
-        $bp = $this->extractBParams($BParams);
-
-        //Images List
-        $list = init_list_free($_image->getID());
-        $list->applyConfig($cfg);
-        $list->addAttr(true);
-
-        if($all_locales === true && count($attrs = $_image->getOT()->behaviors['lcd'])){
-          $locales = \Verba\Lang::getUsedLC();
-          $table = $list->QM()->getTable();
-          foreach($attrs as $attr_id => $attr_code){
-            foreach($locales as $lc){
-              $list->QM()->addSelect($attr_code.'_'.$lc);
-            }
-          }
-        }
-        //lightbox
-        $list->addCSS(array('lightbox', '/js/jquery/plugins/lightbox/css'));
-        $list->addScripts(array('jquery.lightbox-0.5.min', 'jquery/plugins/lightbox/js'));
-        $list->addJSAfter('$(function() {$("img[rel=lightbox-'.$list->getListID().']").lightBox({
-      imageLoading: "/js/jquery/plugins/lightbox/images/'.SYS_LOCALE.'/lightbox-ico-loading.gif",
-      imageBtnClose: "/js/jquery/plugins/lightbox/images/'.SYS_LOCALE.'/lightbox-btn-close.gif",
-      imageBtnPrev: "/js/jquery/plugins/lightbox/images/'.SYS_LOCALE.'/lightbox-btn-prev.gif",
-      imageBtnNext: "/js/jquery/plugins/lightbox/images/'.SYS_LOCALE.'/lightbox-btn-next.gif"});});');
-
-        //Parent conditions
-        if($bp['pot'] && $bp['piid'] && !$list->Selection()->valid_query()){
-          $uCond = $list->QM()->addConditionByLinkedOT();
-          $uCond->setLinkedOT($bp['pot']);
-          $uCond->setLinkedIIDs($bp['piid']);
-        }
-
-        return $list->generateList();
-      }
-
-      function addEditForm($BParams = null, $cfg = false){
-        $oh = \Verba\_oh('image');
-        $key = $oh->getBaseKey();
-
-        list($action, $Faction) = AddEditHandlers::extractAEFActionsFromURL($BParams['action']);
-        $iid = $this->extractID($BParams);
-
-        //Инициализация формы
-        $form = $oh->initForm($action, $iid, $cfg, $BParams['pot'], $BParams['piid'], $key);
-
-        return $form->makeForm();
-      }
-    */
-    function addFromZipNow($BParams, $data = false)
-    {
-
-    }
 
     function addEditNow($bp = null)
     {
@@ -711,12 +622,14 @@ class Image extends \Verba\Mod
     /**
      * @param $val string
      * @param $attr string
-     * @param $oh \Model
+     * @param $oh \Verba\Model
      * @return string
      * @throws \Exception
      */
     static function pictureToImgTag($val, $attr, $oh, $urlOnly = false)
     {
+        //$A = $oh->A($attr);
+
         if (!($iCfg = Image::getImageConfig($oh->p($attr . '_config')))) {
             return '';
         }

@@ -10,7 +10,17 @@ class Picupload extends Around
     {
         $mImage = \Verba\_mod('image');
         $attr_code = $this->A->getCode();
-        $configName = $this->oh->p($attr_code . '_config');
+
+        $cfgAttrCode = '_'.$attr_code . '_config';
+
+        if(!empty($fromRequestedData = $this->ah->getGettedValue($cfgAttrCode))) {
+            $configName = $fromRequestedData;
+        } elseif($this->oh->isA($cfgAttrCode)) {
+            $configName = $this->ah->getExistsValue($cfgAttrCode);
+        } else {
+            $configName = $this->oh->p($this->A->getCode().'_config');
+        }
+
         if (!$configName) {
             return null;
         }
@@ -75,7 +85,7 @@ class Picupload extends Around
                 foreach ($imgCfg->getCopiesIndexes() as $copyIdx) {
                     if ($copyIdx == 'primary') continue;
                     if (!\Verba\FileSystem\Local::needDir($imgCfg->getPath($copyIdx))) {
-                        $this->log()->error('Unable to access to image copy dir. Dir:[' . var_export($imgCfg->getPath($copyIdx), true) . '] Copy params:[' . var_export($imgCfg->getCopy($copyIdx)) . ']');
+                        $this->log()->error('Unable to access to image copy dir. Dir:[' . var_export($imgCfg->getPath($copyIdx), true) . '] Copy params:[' . var_export($imgCfg->getCopy($copyIdx), true) . ']');
                         continue;
                     }
                     $icon = $mImage->repackImage($tmp_upl_name, $imgCfg->getFullPath($pic_FileName, $copyIdx), $imgCfg->getWidth($copyIdx), $imgCfg->getHeight($copyIdx), false, false, false, $imgCfg->getResizeBySmallerSide($copyIdx), $imgCfg->getQuality($copyIdx));
@@ -116,7 +126,7 @@ class Picupload extends Around
                 || is_string($c_value) && $exists_value != $c_value // или изменилось значение
             )
         ) {
-            if (!\Mod\Image::isRemotePicURL($exists_value)) { // предыдущее значение не url
+            if (!\Verba\Mod\Image::isRemotePicURL($exists_value)) { // предыдущее значение не url
                 $iu = new \Verba\Mod\Image\Cleaner($imgCfg, basename($exists_value));
                 $removed = $iu->delete();
             } else {

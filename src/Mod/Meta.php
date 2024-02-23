@@ -74,7 +74,7 @@ class Meta extends \Verba\Mod{
       $cc->addLinkedIIDs($item[$oh->getPAC()]);
     }
     $qm->makeQuery();
-    //$q = $qm->getQuery();
+    $q = $qm->getQuery();
     if(!count($uCond)
     || !is_object($sqlr = $qm->run()) || $sqlr->getNumRows() < 1){
       return false;

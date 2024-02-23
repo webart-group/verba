@@ -2,25 +2,29 @@
 
 namespace Verba\Mod\User\RequestHandler;
 
+use Verba\Mod\User\Authorization\BearerTokenAuthenticator;
+
 class Login extends \Verba\Block\Json
 {
 
     function build()
     {
-        $mUser = \Verba\_mod('User');
+        $mUser = \Verba\Mod\User::i();
         try {
-
-            /**
-             * @var $mUser Verba\Mod\User
-             * @var $mGame Verba\Mod\Game
-             */
-
-            if ($mUser->authNow()) {
-                $this->content = $mUser->getHistoryBackUrl();
-            } else {
-                throw new Exception(Lang::get('user auth common_error'));
+            $post = $this->rq->post();
+            $U = $mUser->authByLoginAndPass(
+                $post['login'] ?? null,
+                $post['password'] ?? null
+            );
+            if (!$U) {
+                throw new \Exception(\Verba\Lang::get('user auth common_error'));
             }
-        } catch (Exception $e) {
+
+            $this->content = [
+                'token' => BearerTokenAuthenticator::generateAccessToken($U)
+            ];
+
+        } catch (\Exception $e) {
             $this->setOperationStatus(false);
             $this->content = $e->getMessage();
         }

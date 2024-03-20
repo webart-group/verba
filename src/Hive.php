@@ -447,7 +447,8 @@ class Hive extends Configurable
         }
 
         if(isset($userAuthToken) && !empty($userAuthToken->session_id)
-            && session_id() !== $userAuthToken->session_id) {
+            && session_id() !== $userAuthToken->session_id
+        ) {
             session_abort();
             session_id($userAuthToken->session_id);
             session_start();

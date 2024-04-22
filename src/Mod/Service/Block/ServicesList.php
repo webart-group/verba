@@ -20,8 +20,7 @@ class ServicesList extends Json
         $_menu = _oh('menu');
 
         $qm = new QueryMaker($_menu, false, true);
-        $qm->addWhere('/services','url');
-        //$qm->addWhere('/#services','url');
+        $qm->addWhere("url = '/services'");
         $qm->addLimit(1);
 
         $menuSqlr = $qm->run();

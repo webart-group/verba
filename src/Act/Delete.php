@@ -153,7 +153,7 @@ class Delete extends Action
                                 $this->log()->error('Bad handler data for ahl set_id:' . var_export($set_id, true));
                                 continue;
                             }
-                            if($set_data['ah_name']{0} === '\\'){
+                            if($set_data['ah_name'][0] === '\\'){
                                 $handlerClass = $set_data['ah_name'];
                             }else{
                                 $handlerClass = '\Verba\Act\Delete\Handler\\'.$set_data['ah_name'];

@@ -513,7 +513,7 @@ class Action extends Parents
             if (is_string($jsScriptFile = $worker->getJsScriptFile()) && strlen($jsScriptFile)) {
                 $pi = pathinfo($jsScriptFile);
                 if ($pi['dirname'] != '.') {
-                    $dirname = $pi['dirname']{0} == '/' ? $pi['dirname'] : $this->_workersJsScriptsUrlBase . '/' . $pi['dirname'];
+                    $dirname = $pi['dirname'][0] == '/' ? $pi['dirname'] : $this->_workersJsScriptsUrlBase . '/' . $pi['dirname'];
                 } else {
                     $dirname = $this->_workersJsScriptsUrlBase;
                 }

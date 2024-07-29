@@ -211,7 +211,7 @@ class Head extends \Verba\Block\Html
         $c_url = $c_inc['url'];
 
         if(!empty($query_str)){
-            $query_str{0} = '?';
+            $query_str[0] = '?';
             $c_url .= $query_str;
         }
 

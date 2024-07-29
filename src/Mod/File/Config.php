@@ -67,7 +67,7 @@ class Config extends \Verba\Configurable{
             }
             $dir = call_user_func_array($call, $call_args);
         }elseif(is_string($val)){
-            $dir = '/' == $val{0}
+            $dir = '/' == $val[0]
                 ? SYS_ROOT.$val
                 : $dir.'/'.$val;
         }
@@ -99,7 +99,7 @@ class Config extends \Verba\Configurable{
             }
             $url = call_user_func_array($call, $call_args);
         }elseif(is_string($val) && strlen($val) != 0){
-            $url = ('/' == $val{0}
+            $url = ('/' == $val[0]
                 ? $val
                 : $url.'/'.$val);
         }
@@ -128,7 +128,7 @@ class Config extends \Verba\Configurable{
             }
             $this->downloadUrl = array('h' => $call, 'args' => $call_args);
         }elseif(is_string($val) && strlen($val) != 0){
-            $url = (('/' == $val{0}
+            $url = (('/' == $val[0]
                 ? $val
                 : SYS_UPLOAD_URL.'/'.$val));
             $this->downloadUrl = rtrim($url,'/');
@@ -170,7 +170,7 @@ class Config extends \Verba\Configurable{
 
             $this->uploadUrl = call_user_func_array($call, $call_args);
         }elseif(is_string($val) && strlen($val) != 0){
-            $url = (('/' == $val{0}
+            $url = (('/' == $val[0]
                 ? $val
                 : SYS_UPLOAD_URL.'/'.$val));
             $this->uploadUrl = rtrim($url,'/');

@@ -190,7 +190,7 @@ class ImportExport extends User{
             $field = $fields[$i];
             $val = (string)$row[$field];
 
-            if(!empty($val) && $val{0} == '='){
+            if(!empty($val) && $val[0] == '='){
               $val = "'".$val."'";
             }
             $aSheet->SetCellValue($alpha[$i].$Y, $val);

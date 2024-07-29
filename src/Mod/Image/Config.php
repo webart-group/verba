@@ -178,7 +178,7 @@ class Config extends \Verba\Base
         }
         $r = null;
         if (is_string($iids)) {
-            if ($without = ($iids{0} == '!')) {
+            if ($without = ($iids[0] == '!')) {
                 $iids = substr($iids, 1);
             }
             $iids = preg_split('/[,;\s]/', $iids);
@@ -241,7 +241,7 @@ class Config extends \Verba\Base
             }
             $dir = call_user_func_array($call, $call_args);
         } elseif (is_string($cfg['path'])) {
-            $dir = '/' == $cfg['path']{0}
+            $dir = '/' == $cfg['path'][0]
                 ? SYS_ROOT . $cfg['path']
                 : $dir . '/' . $cfg['path'];
         }

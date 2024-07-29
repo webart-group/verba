@@ -504,7 +504,7 @@ class AddEdit extends AddEditHandler
                         continue;
                     }
 
-                    if($set_data['ah_name']{0} === '\\'){
+                    if($set_data['ah_name'][0] === '\\'){
                         $handlerClass = $set_data['ah_name'];
                     }else{
                         $handlerClass = '\Verba\Act\AddEdit\Handler\Around\\' . ucfirst($set_data['ah_name']);
@@ -939,7 +939,7 @@ class AddEdit extends AddEditHandler
         }
 
         foreach ($aths as $set_id => $set_data) {
-            if(is_string($set_data['ah_name']) && $set_data['ah_name']{0} === '\\'){
+            if(is_string($set_data['ah_name']) && $set_data['ah_name'][0] === '\\'){
                 $className = $set_data['ah_name'];
             }else{
                 $className = '\Verba\Act\AddEdit\Handler\\' . ucfirst($case). '\\' .ucfirst($set_data['ah_name']);

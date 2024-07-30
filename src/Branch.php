@@ -223,7 +223,7 @@ class Branch extends Base
         if (!is_array($separated_query) || count($separated_query) < 1) {
             return $result;
         }
-        $union_query = "(" . implode($separated_query, ") \nUNION\n (") . ")";
+        $union_query = "(" . implode(") \nUNION\n (", $separated_query) . ")";
 
         list($px1, $px2) = self::get_branch_direction($direction);
         $db = $S->DbConnect();

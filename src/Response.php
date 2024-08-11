@@ -31,7 +31,7 @@ class Response extends \Verba\Block\Html
     function addSystemHeaders()
     {
         if(session_status() === PHP_SESSION_ACTIVE) {
-            $this->headers['Verba-Session-Id'] = session_id();
+            $this->headers['X-Session-Id'] = session_id();
         }
     }
 }

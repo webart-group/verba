@@ -446,11 +446,15 @@ class Hive extends Configurable
             $userAuthToken = $bt->getUserAuthToken();
         }
 
-        if(isset($userAuthToken) && !empty($userAuthToken->session_id)
-            && session_id() !== $userAuthToken->session_id
-        ) {
+        if(isset($userAuthToken) && !empty($userAuthToken->session_id)) {
+            $sessionId = $userAuthToken->session_id;
+        }elseif ($_SERVER['HTTP_X_SESSION_ID']) {
+            $sessionId = $_SERVER['HTTP_X_SESSION_ID'];
+        }
+
+        if(isset($sessionId) && session_id() !== $userAuthToken->session_id) {
             session_abort();
-            session_id($userAuthToken->session_id);
+            session_id($sessionId);
             session_start();
         }
 

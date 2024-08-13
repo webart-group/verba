@@ -220,10 +220,10 @@ class Customer extends \Verba\Mod
     }
 
     /**
-     * @param $U \Verba\Mod\User
+     * @param $U \Verba\Mod\User\Model\User
      * @return \Verba\Act\AddEdit|bool
      */
-    function createUserCustomerProfile($U)
+    function createUserCustomerProfile(\Verba\Mod\User\Model\User $U)
     {
         if (!$U instanceof \Verba\Mod\User\Model\User
             || !$U->getID()) {
@@ -333,6 +333,7 @@ class Customer extends \Verba\Mod
                         $userIdMsm = $sqlruf[$_user->getPAC()];
                     } else {
                         $userIdMsm = $mUser->createUser(array('email' => $profile->getEmail()));
+                        $userIdMsm = $userIdMsm->getId();
                     }
 
                     if (!$userIdMsm) {
@@ -361,7 +362,8 @@ class Customer extends \Verba\Mod
                 $sqlruf = $sqlruf->fetchRow();
                 $userId = $sqlruf[$_user->getPAC()];
             } else {
-                $userId = $mUser->createUser(array('email' => $email));
+                $user = $mUser->createUser(array('email' => $email));
+                $userId = $user->getId();
             }
             if (!$userId) {
                 throw new \Exception('Unable to create User for Customer Profile. email: ' . var_export($email, true));
@@ -374,11 +376,11 @@ class Customer extends \Verba\Mod
         if (!$profile) {
             if ($create) {
 
-                $userId = $mUser->createUser(array('email' => $email));
+                $U = $mUser->createUser(array('email' => $email));
                 if (!$userId) {
                     throw new \Exception('Unable to create User for Customer Profile. email: ' . var_export($email, true));
                 }
-                $U = new \U($userId);
+
                 $ae = $this->createUserCustomerProfile($U);
                 $profile = $this->loadProfile($ae->getIID());
             } else {

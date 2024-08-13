@@ -2,6 +2,8 @@
 
 namespace Verba\Mod\User\RequestHandler;
 
+use Verba\Mod\User;
+
 class Create extends \Verba\Block\Json
 {
 
@@ -54,22 +56,15 @@ class Create extends \Verba\Block\Json
             if (!is_string($this->data[$loginField]) || !is_string($this->data['password'][0]) || !is_string($this->data['password'][1])) {
                 throw  new \Verba\Exception\Building('Bad data');
             }
-
-            list($userId, $ae) = $mUser->createUser($this->data);
-
-            if ($userId) {
+            /**
+             * @var $mUser User
+             */
+            try{
+                $user = $mUser->createUser($this->data);
                 $this->content = true;
                 $mUser->sendEmailConfirmationLink($ae->getActualData(), false, false);
-
-            } else {
-                if ($ae instanceof \Exception) {
-                    $msg = $ae->getMessage();
-                } elseif ($ae instanceof \Verba\Act\AddEdit) {
-                    $msg = $ae->log()->getMessagesAsStr('error');
-                } else {
-                    $msg = \Verba\Lang::get('user registration general_error');
-                }
-                throw new \Exception($msg);
+            }catch(\Exception $e){
+                throw $e;
             }
 
         } catch (\Exception $e) {

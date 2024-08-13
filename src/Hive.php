@@ -492,6 +492,12 @@ class Hive extends Configurable
         $this->U = new GuestUser();
     }
 
+    function login(User $U)
+    {
+        $this->setUser($U);
+        $U->updateLastLoginAt();
+    }
+
     /**
      * @param $udata User|integer|array
      */

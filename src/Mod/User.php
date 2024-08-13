@@ -4,6 +4,7 @@ namespace Verba\Mod;
 
 use Verba\Mod\User\Authorization\AuthResult;
 use Verba\Mod\User\Authorization\BearerTokenAuthenticator;
+use Verba\Mod\User\Authorization\LoginPasswordAuthenticator;
 use Verba\Mod\User\Model\GuestUser;
 use Verba\Url;
 use function Verba\_oh;
@@ -171,7 +172,7 @@ class User extends \Verba\Mod
         global $S;
         $_user = \Verba\_oh('user');
 
-        $Authenticator = new \Verba\Mod\User\Authorization\LoginPasswordAuthenticator($login, $password);
+        $Authenticator = new LoginPasswordAuthenticator($login, $password);
 
         $U = $Authenticator->authorize();
 
@@ -179,9 +180,7 @@ class User extends \Verba\Mod
             $U = new GuestUser();
         }
 
-        $U->updateLastLoginAt();
-
-        $S->setUser($U);
+        $S->login($U);
 
         return $U;
     }
@@ -259,64 +258,61 @@ class User extends \Verba\Mod
             : $this->gC('auth email_confirmation');
     }
 
-    function createUser($data = null, $extendedData = null)
+    function createUser($data = null, $extendedData = null): \Verba\Mod\User\Model\User
     {
 
-        try {
-            $_user = \Verba\_oh('user');
-            $ae = $_user->initAddEdit('new');
-            if (!is_array($data)) {
-                throw new \Exception(\Verba\Lang::get('error bad_data'));
-            }
-
-            $loginField = $this->gC('login_field');
-            if (!array_key_exists($loginField, $data)) {
-                throw new \Exception(\Verba\Lang::get('error bad_data'));
-            }
-
-            $qm = new \Verba\QueryMaker($_user, false, false);
-            $qm->addWhere($data[$loginField], $loginField);
-            $sqlr = $qm->run();
-            if ($sqlr->getNumRows()) {
-                throw new \Exception(\Verba\Lang::get('user registration profile_exists', array(
-                    'restore_url' => $this->getLostpasswordUrl()
-                )));
-            }
-
-            if (is_array($extendedData)) {
-                $ae->addExtendedData($extendedData);
-            }
-
-            $userOtId = $_user->getID();
-            $picAttrCode = 'picture';
-            $idx = 'upl';
-            // Случайная ава юзера
-            if (!isset($_FILES['NewObject']['tmp_name']['picture'][$idx])) {
-                $themes = array('Film', 'Glass', 'Mosaic', 'Neon');
-                $selectedTheme = $themes[array_rand($themes)];
-                $num = rand(1, 100);
-                $num = $num < 10 ? '0' . $num : (string)$num;
-                $ava_name = '_' . $num . '.png';
-
-                $_FILES['NewObject']['tmp_name'][$userOtId][$picAttrCode][$idx] = SYS_UPLOAD_DIR . '/random_ava/users/' . $selectedTheme . '/' . $ava_name;
-                $_FILES['NewObject']['type'][$userOtId][$picAttrCode][$idx] = 'images/png';
-                $_FILES['NewObject']['name'][$userOtId][$picAttrCode][$idx] = $ava_name;
-                //$_FILES['NewObject']['size'][$userOtId][$picAttrCode][$idx],
-                $_FILES['NewObject']['error'][$userOtId][$picAttrCode][$idx] = 0;
-            }
-
-            $ae->setGettedObjectData($data);
-
-            $iid = $ae->addedit_object();
-            if (!$iid) {
-                throw new \Exception(\Verba\Lang::get('user registration general_error'));
-            }
-
-        } catch (\Exception $e) {
-            return array(false, $e);
+        $_user = \Verba\_oh('user');
+        $ae = $_user->initAddEdit('new');
+        if (!is_array($data)) {
+            throw new \Exception(\Verba\Lang::get('error bad_data'));
         }
 
-        return array($iid, $ae);
+        $loginField = $this->gC('login_field');
+        if (!array_key_exists($loginField, $data)) {
+            throw new \Exception(\Verba\Lang::get('error bad_data'));
+        }
+
+        $qm = new \Verba\QueryMaker($_user, false, false);
+        $qm->addWhere($data[$loginField], $loginField);
+        $sqlr = $qm->run();
+        if ($sqlr->getNumRows()) {
+            throw new \Exception(\Verba\Lang::get('user registration profile_exists', array(
+                'restore_url' => $this->getLostpasswordUrl()
+            )));
+        }
+
+        if (is_array($extendedData)) {
+            $ae->addExtendedData($extendedData);
+        }
+
+        $userOtId = $_user->getID();
+        $picAttrCode = 'picture';
+        $idx = 'upl';
+        // Случайная ава юзера
+        if (!isset($_FILES['NewObject']['tmp_name']['picture'][$idx])) {
+            $themes = array('Film', 'Glass', 'Mosaic', 'Neon');
+            $selectedTheme = $themes[array_rand($themes)];
+            $num = rand(1, 100);
+            $num = $num < 10 ? '0' . $num : (string)$num;
+            $ava_name = '_' . $num . '.png';
+
+            $_FILES['NewObject']['tmp_name'][$userOtId][$picAttrCode][$idx] = SYS_UPLOAD_DIR . '/random_ava/users/' . $selectedTheme . '/' . $ava_name;
+            $_FILES['NewObject']['type'][$userOtId][$picAttrCode][$idx] = 'images/png';
+            $_FILES['NewObject']['name'][$userOtId][$picAttrCode][$idx] = $ava_name;
+            //$_FILES['NewObject']['size'][$userOtId][$picAttrCode][$idx],
+            $_FILES['NewObject']['error'][$userOtId][$picAttrCode][$idx] = 0;
+        }
+
+        $ae->setGettedObjectData($data);
+
+        $iid = $ae->addedit_object();
+
+        if (!$iid) {
+            throw new \Exception(\Verba\Lang::get('user registration general_error')
+                . PHP_EOL . $ae->log()->getMessagesAsStr('error'));
+        }
+
+        return $ae->getActualItem();
     }
 
     static function getFullName($arr)

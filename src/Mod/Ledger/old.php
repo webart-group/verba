@@ -362,7 +362,7 @@ GROUP BY DATE(`date`)";
     ));
 
     $tpl->assign(array(
-      'DATESELECT_REGION' => SYS_LOCALE,
+      'DATESELECT_REGION' => \Verba\Lang::$locale,
       'DATEPERIOD_FROM_VALUE' => $this->value['from'] ? date($this->dateFormat['display'],$this->value['from']) : '',
       'DATEPERIOD_TILL_VALUE' => $this->value['till'] ? date($this->dateFormat['display'],$this->value['till']) : '',
     ));

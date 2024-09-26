@@ -32,7 +32,7 @@ class Search extends \Verba\Block\Json
             'ot_id' => $_oh->getID(),
         );
         $ot_id = $_oh->getID();
-        $field_name = $_oh->A('title')->isLcd() ? 'title_' . SYS_LOCALE : 'title';
+        $field_name = $_oh->A('title')->isLcd() ? 'title_' . \Verba\Lang::$locale : 'title';
 
         $qm = new \Verba\QueryMaker($_oh, false, $c_cfg['attr']);
         $qm->addSelectProp('SQL_CALC_FOUND_ROWS');

@@ -937,8 +937,8 @@ class MakeList extends Action
         $name = '--';
         $hdrs = &$this->{$this->_confPropName}['headers'];
         if (isset($hdrs['fields'][$code]['title'])) {
-            $name = is_array($hdrs['fields'][$code]['title']) && isset($hdrs['fields'][$code]['title'][SYS_LOCALE])
-                ? $hdrs['fields'][$code]['title'][SYS_LOCALE]
+            $name = is_array($hdrs['fields'][$code]['title']) && isset($hdrs['fields'][$code]['title'][\Verba\Lang::$locale])
+                ? $hdrs['fields'][$code]['title'][\Verba\Lang::$locale]
                 : $hdrs['fields'][$code]['title'];
         } elseif ($A = $this->oh->A($code)) {
             $name = $A->display();

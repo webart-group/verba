@@ -141,7 +141,7 @@ class Attribute  extends Base
         if ($this->isLcd()) {
             $suffix = is_string($val) && !empty($val)
                 ? $val
-                : SYS_LOCALE;
+                : \Verba\Lang::$locale;
             return $this->attr_code . '_' . $suffix;
         } else {
             return $this->attr_code;
@@ -277,7 +277,7 @@ class Attribute  extends Base
 
     function set_display($data)
     {
-        $key = 'title_'.Lang::$lang;
+        $key = 'title_'.Lang::$locale;
         $this->display = $data[$key] ?? '';
     }
 
@@ -408,7 +408,7 @@ class Attribute  extends Base
 
     function getAnnotation()
     {
-        return $this->getAnnotationForLang(SYS_LOCALE);
+        return $this->getAnnotationForLang(\Verba\Lang::$locale);
     }
 
     function getAnnotationForLang($lc)

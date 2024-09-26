@@ -53,7 +53,7 @@ class Extender
     function __construct($fe, &$cfg, $attr = false, $ah = false)
     {
         $this->fe = $fe;
-        $this->locale = SYS_LOCALE;
+        $this->locale = \Verba\Lang::$locale;
 
         if (is_string($attr) && !empty($attr)) {
             $this->acode = $attr;

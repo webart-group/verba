@@ -66,9 +66,9 @@ class ProductShow extends Json
         );
 
         if ($this->oh->A('title')->isLcd()) {
-            $lc_val = isset($item['title_' . SYS_LOCALE]) ? $item['title_' . SYS_LOCALE] : $item['title'];
-            $meta_item['meta_' . SYS_LOCALE] =
-            $meta_item['title_' . SYS_LOCALE] = $lc_val;
+            $lc_val = isset($item['title_' . \Verba\Lang::$locale]) ? $item['title_' . \Verba\Lang::$locale] : $item['title'];
+            $meta_item['meta_' . \Verba\Lang::$locale] =
+            $meta_item['title_' . \Verba\Lang::$locale] = $lc_val;
         }
 
         $mMenu->addMenuChain($meta_item);
@@ -349,7 +349,7 @@ class ProductShow extends Json
                 }
             } else {
                 if ($A->isLcd()) {
-                    $pkey = $pkey . '_' . Lang::$lang;
+                    $pkey = $pkey . '_' . Lang::$locale;
                 }
                 $pvalue = $this->item[$pkey];
             }

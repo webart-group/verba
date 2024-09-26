@@ -157,7 +157,7 @@ class Menu extends \Verba\Mod
         $attrs = $_menu->getAttrs(true);
         foreach ($attrs as $attr) {
             if ($_menu->A($attr)->isLcd()) {
-                $attr_lc = $attr . '_' . SYS_LOCALE;
+                $attr_lc = $attr . '_' . \Verba\Lang::$locale;
                 $q .= "`$attr_lc` as `$attr`, ";
                 $q .= "`$attr_lc`, ";
             } else {

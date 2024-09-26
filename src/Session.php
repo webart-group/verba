@@ -11,34 +11,34 @@ class Session
 
     protected $storage;
 
+    function __construct()
+    {
+        $this->initStorage();
+    }
+
     function initStorage(){
         $this->storage = &$_SESSION;
-        return $this->storage;
     }
 
     function getStorage()
     {
-        return $this->storage === null
-            ? $this->initStorage()
-            : $this->storage;
+        return $this->storage;
     }
 
     function get($key)
     {
-        return array_key_exists($key, $this->getStorage())
+        return array_key_exists($key, $this->storage)
             ? $this->storage[$key]
             : null;
     }
 
     function store($key, $value = null)
     {
-        $this->getStorage();
         $this->storage[$key] = $value;
     }
 
     function remove($key)
     {
-        $this->getStorage();
         if(array_key_exists($key, $this->storage)){
             unset($this->storage[$key]);
         }
@@ -47,7 +47,6 @@ class Session
 
     function clear()
     {
-        $this->getStorage();
         $this->storage = [];
         return $this;
     }

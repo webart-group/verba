@@ -256,9 +256,9 @@ class NewsPublic extends \Verba\Mod{
         }
 
         $tpl->assign(array(
-            'ITEM_TITLE' => $item['title_'.SYS_LOCALE],
+            'ITEM_TITLE' => $item['title_'.\Verba\Lang::$locale],
             'ITEM_DATE' => $date,
-            'ITEM_TEXT' => isset($item['text_'.SYS_LOCALE]) && !empty($item['text_'.SYS_LOCALE]) ? $item['text_'.SYS_LOCALE] : '',
+            'ITEM_TEXT' => isset($item['text_'.\Verba\Lang::$locale]) && !empty($item['text_'.\Verba\Lang::$locale]) ? $item['text_'.\Verba\Lang::$locale] : '',
         ));
 
         $navCfg = array(
@@ -279,7 +279,7 @@ class NewsPublic extends \Verba\Mod{
         $mMenu->addMenuChain(array(
             'ot_id' => $_news->getID(),
             $_news->getPAC() => $item[$_news->getPAC()],
-            'title' => $item['title_'.SYS_LOCALE],
+            'title' => $item['title_'.\Verba\Lang::$locale],
         ));
 
         return $tpl->parse(false, 'news_item');
@@ -390,7 +390,7 @@ class NewsPublic extends \Verba\Mod{
             }
             $tpl->assign(array(
                 'PN_ITEM_PAGE_URL' => $url,
-                'PN_ITEM_TITLE' => $citem['title_'.SYS_LOCALE],
+                'PN_ITEM_TITLE' => $citem['title_'.\Verba\Lang::$locale],
                 'PN_ITEM_PICTURE_URL' => $imgUrl,
                 'PN_ITEM_DATE' => date("j.m.Y", $date),
             ));
@@ -426,10 +426,10 @@ class NewsPublic extends \Verba\Mod{
         }
         $tpl->assign(array(
             'ITEM_PAGE_URL' => $url,
-            'ITEM_TITLE' => $row['title_'.SYS_LOCALE],
+            'ITEM_TITLE' => $row['title_'.\Verba\Lang::$locale],
             'ITEM_PICTURE_URL' => $imgUrl,
             '_ITEM_DATE' => date("j.m.Y", $date),
-            'ITEM_PREVIEW' => isset($row['text_preview_'.SYS_LOCALE]) && !empty($row['text_preview_'.SYS_LOCALE]) ? $row['text_preview_'.SYS_LOCALE] : '',
+            'ITEM_PREVIEW' => isset($row['text_preview_'.\Verba\Lang::$locale]) && !empty($row['text_preview_'.\Verba\Lang::$locale]) ? $row['text_preview_'.\Verba\Lang::$locale] : '',
         ));
         return;
     }

@@ -183,7 +183,7 @@ class FastTemplate
 
     function parseLang($langKey, $tplVar = false, $lang = false)
     {
-        $lang = is_string($lang) ? $lang : SYS_LOCALE;
+        $lang = is_string($lang) ? $lang : \Verba\Lang::$locale;
 
         $templateBody =  \Verba\Lang::getFromLang($lang, $langKey);
         if ($templateBody === null) {

@@ -651,7 +651,7 @@ class Form extends AddEditHandler
             return;
         }
         $this->addScripts(array('form', 'form'));
-        $this->addJsAfter('$(document).ready(function() {new aefLocaleWatcher({ formWrapId: \'' . $this->getFormWrapId() . '\', formId: \'' . $this->getFormId() . '\', locale: \'' . SYS_LOCALE . '\' });});');
+        $this->addJsAfter('$(document).ready(function() {new aefLocaleWatcher({ formWrapId: \'' . $this->getFormWrapId() . '\', formId: \'' . $this->getFormId() . '\', locale: \'' . \Verba\Lang::$locale . '\' });});');
 
         $this->tpl->assign(array(
             'AEF_LOCALE_SWITCHER' => $this->makeLocaleSwitcher(),
@@ -664,7 +664,7 @@ class Form extends AddEditHandler
         $lcselect = new \Verba\Html\Select();
         $lcselect->setName($this->getFormId() . '_locale_switcher');
         $lcselect->setId($lcselect->getName());
-        $lcselect->setValue(SYS_LOCALE);
+        $lcselect->setValue(\Verba\Lang::$locale);
         $lcselect->setValues(array_combine(\Verba\Lang::getUsedLC(), \Verba\Lang::getUsedLC()));
         return $lcselect->build();
     }

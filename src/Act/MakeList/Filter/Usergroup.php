@@ -16,7 +16,7 @@ class Usergroup extends \Verba\Act\MakeList\Filter{
       $this->gvalues = array('' => \Verba\Lang::get('useradmin manage_list filters group novalue'));
       if(is_object($sqlr) && $sqlr->getNumRows()){
         while($grow = $sqlr->fetchRow()){
-          $this->gvalues[$grow[$_group->getPAC()]] = $grow['description_'.SYS_LOCALE];
+          $this->gvalues[$grow[$_group->getPAC()]] = $grow['description_'.\Verba\Lang::$locale];
         }
       }
     }

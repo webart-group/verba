@@ -625,7 +625,7 @@ class Item extends \Verba\Configurable
         $this->allLangMode = (bool)$val;
         if ($this->allLangMode) {
             if (!is_string($this->internalLang)) {
-                $this->internalLang = SYS_LOCALE;
+                $this->internalLang = \Verba\Lang::$locale;
             }
         }
         return $this->allLangMode;

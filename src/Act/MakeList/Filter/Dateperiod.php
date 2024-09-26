@@ -96,7 +96,7 @@ class Dateperiod extends \Verba\Act\MakeList\Filter
             'FLT_LIST_WRAP_ID' => $this->list->getWrapId() . '_filters',
             'DATESELECT_JS_CLASS_NAME' => 'datepicker',
             'DATESELECT_CFG' => json_encode($datepickerCfg),
-            'DATESELECT_REGION' => SYS_LOCALE,
+            'DATESELECT_REGION' => \Verba\Lang::$locale,
 
             'FLT_DATEPERIOD_FROM_NAME' => $namePrefix . '[from]',
             'FLT_DATEPERIOD_FROM_VALUE' => $this->value['from'] ? date($this->dateFormat['display'], $this->value['from']) : '',

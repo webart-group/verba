@@ -12,7 +12,7 @@ class Info extends \Verba\Block\Json
         $this->content = array('lastoptime' => '', 'dataset' => array());
         $q = "SELECT 
     cur.code as cur1, 
-    ps.title_" . SYS_LOCALE . " as ps1, 
+    ps.title_" . \Verba\Lang::$locale . " as ps1, 
     cur2.code as cur2, 
     c.*
 FROM `" . SYS_DATABASE . "`.`" . $Shop->cppr_table . "` as `c`

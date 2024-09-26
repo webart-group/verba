@@ -1181,8 +1181,8 @@ WHERE `rule_alias` = '" . $ruleAliasSql . "'
     {
         $attr_code = $this->A($attr_id)->getCode();
 
-        if (isset($row[$attr_code . '__value_' . SYS_LOCALE])) {
-            return $row[$attr_code . '__value_' . SYS_LOCALE];
+        if (isset($row[$attr_code . '__value_' . \Verba\Lang::$locale])) {
+            return $row[$attr_code . '__value_' . \Verba\Lang::$locale];
         } elseif (isset($row[$attr_code . '__value'])) {
             return $row[$attr_code . '__value'];
         }

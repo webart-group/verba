@@ -16,7 +16,7 @@ class langu_publicSelector extends \Verba\Block\Html
                 'LC_CODE' => $lc,
                 'LC_NAME' => \Verba\Lang::getLCShortName($lc),
                 'LC_NAME_TITLE' => \Verba\Lang::getLCName($lc),
-                'LC_SELECTED_SIGN' => \Verba\Lang::$lang == $lc ? ' selected' : '',
+                'LC_SELECTED_SIGN' => \Verba\Lang::$locale == $lc ? ' selected' : '',
             ));
             $this->tpl->parse('LC_ITEMS', 'item', true);
         }

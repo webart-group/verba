@@ -10,7 +10,7 @@ class Translations extends Json
     {
         $locale = $this->rq->node;
         if(!$locale || !Lang::isLCValid($locale)){
-            $locale = Lang::$lang;
+            $locale = Lang::$locale;
         }
         $result = Lang::generateTranslationsContent($locale);
         return $this->content = $result->content;

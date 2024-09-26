@@ -28,7 +28,7 @@ class Meta extends \Verba\Block\Json
 
         $locale = $this->rq->post('locale');
         if($locale) {
-            $initialLocale = SYS_LOCALE;
+            $initialLocale = \Verba\Lang::$locale;
             Lang::setLocale($locale);
         }
 

@@ -49,7 +49,7 @@ class Set extends Base
         $this->getValues();
         $lang = is_string($lang) && Lang::isLCValid($lang)
             ? $lang
-            : SYS_LOCALE;
+            : \Verba\Lang::$locale;
 
         if (!array_key_exists($id, $this->values)
             || !array_key_exists($lang, $this->values[$id])) {
@@ -77,7 +77,7 @@ class Set extends Base
             return array();
         }
 
-        if (!is_string($lang) || $lang == SYS_LOCALE || !Lang::isLCValid($lang)) {
+        if (!is_string($lang) || $lang == \Verba\Lang::$locale || !Lang::isLCValid($lang)) {
             return $this->values;
         }
 
@@ -99,7 +99,7 @@ class Set extends Base
         $predPAC = $_pred->getPAC();
 
         if (!$this->vault['root'] || !$this->vault['object']) {
-            return array('0' => array(SYS_LOCALE => 'Bad vault'));
+            return array('0' => array(\Verba\Lang::$locale => 'Bad vault'));
         }
 
         $query = "SELECT 
@@ -118,7 +118,7 @@ ORDER BY sets.priority DESC, `pred`.`pred_id`";
         while ($row = $sqlr->fetchRow()) {
             $row = $_pred->substrLcdAttrAsArrayInData($row);
             $this->_rawValues[$row[$predPAC]] = $row;
-            $this->values[$row[$predPAC]] = &$this->_rawValues[$row[$predPAC]]['value'][SYS_LOCALE];
+            $this->values[$row[$predPAC]] = &$this->_rawValues[$row[$predPAC]]['value'][\Verba\Lang::$locale];
         }
 
         return $this->_rawValues;
@@ -142,7 +142,7 @@ ORDER BY sets.priority DESC, `pred`.`pred_id`";
         $U = User();
 
 
-        $lang = !is_string($lang) || !Lang::isLCValid($lang) ? SYS_LOCALE : $lang;
+        $lang = !is_string($lang) || !Lang::isLCValid($lang) ? \Verba\Lang::$locale : $lang;
 
         // все возможные фильтры применяются здесь
 

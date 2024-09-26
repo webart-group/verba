@@ -44,10 +44,10 @@ class game_meta extends \Verba\Block\Html{
       );
       if($this->prodItem->getOh()->A('title')->isLcd()){
 
-        $meta_item['meta_'.SYS_LOCALE] =
-        $meta_item['title_'.SYS_LOCALE] = (
-        !empty($this->prodItem->getRawValue('title_'.SYS_LOCALE))
-          ? $this->prodItem->getRawValue('title_'.SYS_LOCALE)
+        $meta_item['meta_'.\Verba\Lang::$locale] =
+        $meta_item['title_'.\Verba\Lang::$locale] = (
+        !empty($this->prodItem->getRawValue('title_'.\Verba\Lang::$locale))
+          ? $this->prodItem->getRawValue('title_'.\Verba\Lang::$locale)
           : $this->prodItem->getRawValue('title')
         );
       }

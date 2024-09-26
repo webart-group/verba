@@ -119,7 +119,7 @@ class Datetimeselector extends Element
             'DATESELECT_FE_ID' => $dateInput->getId(),
             'DATESELECT_DISABLED' => $dateInput->makeDisabled(),
             'DATESELECT_CFG' => json_encode($this->cfg),
-            'DATESELECT_REGION' => SYS_LOCALE,
+            'DATESELECT_REGION' => \Verba\Lang::$locale,
             'DATESELECT_JS_CLASS_NAME' => $this->getShowHM() ? 'datetimepicker' : 'datepicker',
         ));
 
@@ -132,8 +132,8 @@ class Datetimeselector extends Element
         $this->aef()->addCSS(array(
             array('jquery-ui-timepicker-addon', '/js/jquery/timepicker-addon'),
         ));
-        if (SYS_LOCALE !== 'en') {
-            $this->aef->addScripts('jquery.ui.datepicker-' . SYS_LOCALE, 'jquery/ui');
+        if (\Verba\Lang::$locale !== 'en') {
+            $this->aef->addScripts('jquery.ui.datepicker-' . \Verba\Lang::$locale, 'jquery/ui');
         }
         $this->aef()->addScripts(array(
             array('jquery-ui-timepicker-addon', 'jquery/timepicker-addon'),

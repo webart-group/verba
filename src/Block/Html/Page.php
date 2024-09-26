@@ -47,7 +47,7 @@ class Page extends \Verba\Block\Html
 
     function prepare(){
         $this->tpl->assign(array(
-            'LANGUAGE' => SYS_LOCALE,
+            'LANGUAGE' => \Verba\Lang::$locale,
         ));
     }
 

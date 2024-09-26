@@ -49,7 +49,7 @@ class Form extends \Verba\Block\Json
         $meta_data = $mod->loadObjectMeta(array(array('ot_id' => $pot->getID(), $pot->getPAC() => $piid)));
 
         $locales = \Verba\Lang::getUsedLC();
-        $lc = SYS_LOCALE;
+        $lc = \Verba\Lang::$locale;
         $lc_count = count($locales);
         foreach ($locales as $locale) {
             if ($lc_count > 1) {

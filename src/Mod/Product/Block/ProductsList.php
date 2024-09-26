@@ -146,7 +146,7 @@ class ProductsList extends Json
                 ], false, null, 'RIGHT', 'obligatory'
             );
             // подключение таблицы каталога для выборки данных каталога
-            $qm->addSelectPastFrom('title_'.Lang::$lang, $ctalias, 'cat_title');
+            $qm->addSelectPastFrom('title_'.Lang::$locale, $ctalias, 'cat_title');
             $qm->addSelectPastFrom('code', $ctalias, 'cat_code');
             $qm->addSelectPastFrom($_catalog->getPAC(), $ctalias, 'cat_id');
             $qm->addCJoin(array(array('a' => $ctalias)),

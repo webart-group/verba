@@ -29,7 +29,7 @@ class Articul extends \Verba\Act\MakeList\Filter
             foreach ($this->attrs as $cAttr) {
                 $A = $this->oh->A($cAttr);
                 if ($A->isLcd()) {
-                    $cAttr = $cAttr . '_' . SYS_LOCALE;
+                    $cAttr = $cAttr . '_' . \Verba\Lang::$locale;
                 }
                 $GW->addWhere('%' . $this->value . '%', $wgAlias . '_' . $cAttr, $cAttr, false, 'LIKE', '||');
             }

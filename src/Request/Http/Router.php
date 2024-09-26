@@ -8,7 +8,7 @@
  */
 
 namespace Verba\Request\Http;
-use \App;
+use App;
 use Verba\Exception\Routing;
 use Verba\Hive;
 use Verba\Request;
@@ -100,7 +100,7 @@ class Router extends \Verba\Block {
         $shift = 0;
         if (!count($urlFragments)) {
             $className = '\\App\\Router\\Index';
-        }else{
+        } else {
             $chank_i = 0;
             $b = function ($val) use (&$chank_i){
                 $val = strtolower($val);
@@ -133,10 +133,7 @@ class Router extends \Verba\Block {
         }
 
         if(!isset($className)){
-            if(\Verba\Hive::isModExists($rq->uf[0])
-                    && ($className = '\\Verba\\Mod\\'.ucfirst(strtolower($rq->uf[0])).'\\Router')
-                    && class_exists($className)
-            ) {
+            if($className = self::findModRouter($rq->uf[0])) {
                 $shift = 1;
             } elseif($NotFoundRouter = App::$self->gC('not_found_router')) {
                 $className = $NotFoundRouter;
@@ -146,5 +143,26 @@ class Router extends \Verba\Block {
         }
 
         return new $className($rq->shift($shift));
+    }
+
+    public static function findModRouter($modCode): null|string
+    {
+        if(!Hive::isModExists($modCode)){
+            return null;
+        }
+
+        $className = '\\App\\Mod\\'.ucfirst(strtolower($modCode)).'\\Router';
+
+        if(class_exists($className)){
+            return $className;
+        }
+
+        $className = '\\Verba\\Mod\\'.ucfirst(strtolower($modCode)).'\\Router';
+
+        if(class_exists($className)){
+            return $className;
+        }
+
+        return null;
     }
 }

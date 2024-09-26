@@ -139,7 +139,7 @@ class Product extends Mod
                 ), false, null, 'LEFT'
             );
             $qm->addWhere('`' . $ptalias . '`.`' . $_product->getPAC() . '` = \'' . $iid . '\'');
-            $qm->addSelectPastFrom('title_' . SYS_LOCALE, $ctalias, 'ctitle');
+            $qm->addSelectPastFrom('title_' . \Verba\Lang::$locale, $ctalias, 'ctitle');
             $qm->addSelectPastFrom($_catalog->getPAC(), $ctalias, 'p_iid');
             $qm->addCJoin(array(array('a' => $ctalias)),
                 array(

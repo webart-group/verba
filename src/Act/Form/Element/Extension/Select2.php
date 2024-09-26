@@ -81,8 +81,8 @@ class Select2 extends Extension
     $this->ah()->addScripts('jselect2.min', 'jquery/select2/js');
     $this->ah()->addCSS('select2.min', 'jquery/select2/css');
 
-    if(SYS_LOCALE !== 'en'){
-      $sl = SYS_LOCALE == 'ua' ? 'uk' : SYS_LOCALE;
+    if(\Verba\Lang::$locale !== 'en'){
+      $sl = \Verba\Lang::$locale == 'ua' ? 'uk' : \Verba\Lang::$locale;
       $this->ah()->addScripts($sl, 'jquery/select2/js/i18n');
     }
 

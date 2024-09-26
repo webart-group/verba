@@ -131,7 +131,7 @@ class ObjectType extends Base
 , `ot`.`handler`
 , `ot`.`role`
 , `ot`.`OItemClassName`
-, `ot`.`title_" . SYS_LOCALE . "` as `display`
+, `ot`.`title_" . \Verba\Lang::$locale . "` as `display`
 , GROUP_CONCAT(DISTINCT
   CONCAT_WS(':'
     , CAST(`v`.`vlt_id` AS CHAR)
@@ -365,7 +365,7 @@ WHERE `pd_attr_l`.`rule_alias` IN('" . implode("','", $ots) . "')
         $query = "
 SELECT 
 `a`.*,
-`a`.`title_" . SYS_LOCALE . "` as `display`
+`a`.`title_" . \Verba\Lang::$locale . "` as `display`
 FROM `" . SYS_DATABASE . "`.`_obj_props` as `a`
 WHERE " . $where_stm . "
 ORDER BY `a`.`priority`";

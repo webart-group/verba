@@ -11,7 +11,7 @@ class SystemLocale extends Around
         if($this->action == 'edit'){
             return $this->value;
         }
-        $this->value = SYS_LOCALE;
+        $this->value = \Verba\Lang::$locale;
         return $this->value;
     }
 }

@@ -57,7 +57,7 @@ class promotion_products extends \Verba\Block\Html{
                           ), false, null, 'RIGHT'
                   );
 
-    $qm->addSelect('GROUP_CONCAT(CONCAT_WS(\'^\', CAST(`'.$promoA.'`.`id` AS CHAR), CAST(`'.$promoA.'`.`title_'.SYS_LOCALE.'` AS CHAR), CAST(`'.$promoA.'`.`annotation_'.SYS_LOCALE.'` AS CHAR)) SEPARATOR \'~\')', false, 'promos', true);
+    $qm->addSelect('GROUP_CONCAT(CONCAT_WS(\'^\', CAST(`'.$promoA.'`.`id` AS CHAR), CAST(`'.$promoA.'`.`title_'.\Verba\Lang::$locale.'` AS CHAR), CAST(`'.$promoA.'`.`annotation_'.\Verba\Lang::$locale.'` AS CHAR)) SEPARATOR \'~\')', false, 'promos', true);
     $qm->addCJoin(array(array('a' => $promoA)),
                         array(
                               array('p' => array('a'=> $promoA, 'f' => 'id'),

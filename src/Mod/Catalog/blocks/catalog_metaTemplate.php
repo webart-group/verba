@@ -39,8 +39,8 @@ class catalog_metaTemplate extends \Verba\Block\Html{
   function extractTemplate(){
 
     $raw_value = '';
-    if(isset($this->node_meta['meta_'.SYS_LOCALE])){
-      $raw_value = $this->node_meta['meta_'.SYS_LOCALE];
+    if(isset($this->node_meta['meta_'.\Verba\Lang::$locale])){
+      $raw_value = $this->node_meta['meta_'.\Verba\Lang::$locale];
     }else{
       $raw_value = $this->node_meta[$this->key];
     }
@@ -83,8 +83,8 @@ class catalog_metaTemplate extends \Verba\Block\Html{
         if(strpos($var_name, 'item_') === 0){
           $propName = substr($var_name, 5);
           if(isset($meta[$propName])){
-            if($_oh->isA($propName) && $_oh->A($propName)->isLcd() && isset($meta[$propName.'_'.SYS_LOCALE])){
-              $replaceTo = $meta[$propName.'_'.SYS_LOCALE];
+            if($_oh->isA($propName) && $_oh->A($propName)->isLcd() && isset($meta[$propName.'_'.\Verba\Lang::$locale])){
+              $replaceTo = $meta[$propName.'_'.\Verba\Lang::$locale];
             }else{
               $replaceTo = $meta[$propName];
             }

@@ -23,7 +23,7 @@ class Multifield extends \Verba\Act\MakeList\Filter{
           continue;
         }
         if($A->isLcd()){
-          $cAttr = $cAttr.'_'.SYS_LOCALE;
+          $cAttr = $cAttr.'_'.\Verba\Lang::$locale;
         }
         $GW->addWhere('%'.$this->value.'%', $wgAlias.'_'.$cAttr, $cAttr, false, 'LIKE', '||');
       }

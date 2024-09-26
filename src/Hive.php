@@ -126,6 +126,10 @@ class Hive extends Configurable
 
     public static $reservedNames = ['string', 'float'];
 
+    protected string $sessionId;
+
+    protected Session $session;
+
     /**
      * Определяет и устанавливает значение типа операционной системы на основе наличия переменной окружения сервера $_SERVER['WINDIR'].
      * В зависимости от ее присутствия свойство $platform может принимать значения win|unix.
@@ -263,16 +267,6 @@ class Hive extends Configurable
 
         //FS handler
         $this->FSLocal = new Local;
-        //  \Verba\Lang class
-        Lang::init(isset($_REQUEST['lc']) ? $_REQUEST['lc'] : false, $cfg['lang']);
-
-        //memcache
-//        if ($cfg['memcache'] == true) {
-//            $this->memcache = memcache_connect('localhost', 11211);
-//            if (!$this->memcache) {
-//                throw new Exception('Unable to init memcache');
-//            }
-//        }
     }
 
     /**
@@ -284,8 +278,8 @@ class Hive extends Configurable
         $_SESSION['hive']['current']['back_url'] = self::getBackURL();
 
         // Save current locale
-        if ($_SESSION['lang']['locale'] !== Lang::$lang) {
-            $_SESSION['lang']['locale'] = Lang::$lang;
+        if ($_SESSION['locale'] !== Lang::$locale) {
+            $_SESSION['locale'] = Lang::$locale;
         }
 
         if(is_object($this->U)){
@@ -409,15 +403,26 @@ class Hive extends Configurable
      */
     function prepare()
     {
+        $this->setLocale();
+
         $this->loadOtList();
+
         $this->loadModulesList();
 
-        $this->KK = new KeyKeeper();
         $this->initUser();
+
+        $this->sessionStart();
+
+        $this->KK = new KeyKeeper();
 
         $this->initAutoloadModules();
 
         $this->updateUserActivity();
+    }
+
+    protected function setLocale()
+    {
+        Lang::init(isset($_REQUEST['lc']) ? $_REQUEST['lc'] : false, $this->_c['lang']);
     }
 
     function cliEnv()
@@ -439,42 +444,51 @@ class Hive extends Configurable
 
         $U = null;
 
-        if($authorizationHeader){
+        if ($authorizationHeader) {
             $bt = new BearerTokenAuthenticator($authorizationHeader);
             $U = $bt->authorize();
 
             $userAuthToken = $bt->getUserAuthToken();
         }
 
-        if(isset($userAuthToken) && !empty($userAuthToken->session_id)) {
-            $sessionId = $userAuthToken->session_id;
-        }elseif ($_SERVER['HTTP_X_SESSION_ID']) {
-            $sessionId = $_SERVER['HTTP_X_SESSION_ID'];
-        }
-
-        if(isset($sessionId) && session_id() !== $userAuthToken->session_id) {
-            session_abort();
-            session_id($sessionId);
-            session_start();
+        if (isset($userAuthToken) && !empty($userAuthToken->session_id)) {
+            $this->sessionId = $userAuthToken->session_id;
         }
 
         $this->setUser($U);
 
         return $this->U;
+    }
 
-//        if (isset($_SESSION['hive']['U'])) {
-//            $U = unserialize($_SESSION['hive']['U']);
-//            if (is_object($U) && $U instanceof User) {
-//                // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
-//                if ($U->getAuthorized() || $U->requireRefresh()) {
-//                    $U = $U->getID();
-//                }
-//            } elseif (!is_int($U)) {
-//                $U = null;
-//            }
-//        } else {
-//            $U = new User();
-//        }
+    protected function sessionStart()
+    {
+        if(session_status() === PHP_SESSION_DISABLED) {
+            throw new Exception('Session disabled');
+        }
+
+        if (!$this->sessionId) {
+            if (!empty($_SERVER['HTTP_X_SESSION_ID'])) {
+                $this->sessionId = $_SERVER['HTTP_X_SESSION_ID'];
+            }
+        }
+
+        if(session_status() === PHP_SESSION_ACTIVE){
+            if(!$this->sessionId || session_id() == $this->sessionId){
+                return session_id();
+            }
+
+            session_abort();
+        }
+
+        if($this->sessionId) {
+            session_id($this->sessionId);
+        }
+
+        session_start();
+
+        $this->session = new Session();
+
+        return session_id();
     }
 
     function initAutoloadModules(){
@@ -506,7 +520,6 @@ class Hive extends Configurable
 
         if (is_object($udata) && $udata instanceof User) {
             $this->U = $udata;
-
         } else {
             $this->U = new GuestUser();
         }
@@ -910,7 +923,7 @@ class Hive extends Configurable
 
     function getOtCacheFilename($otcode)
     {
-        return $this->getOtCacheDirname() . '/' . $otcode . '.cache.' . SYS_LOCALE . '.php';
+        return $this->getOtCacheDirname() . '/' . $otcode . '.cache.' . \Verba\Lang::$locale . '.php';
     }
 
     function otFromCache($ot_id)

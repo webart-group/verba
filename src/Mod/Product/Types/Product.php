@@ -98,12 +98,12 @@ class Product extends \Verba\Configurable
         }
 
         $qm->addSelectPastFrom('code', $ctalias, 'ccode');
-        $qm->addSelectPastFrom('title_' . SYS_LOCALE, $ctalias, 'ctitle');
+        $qm->addSelectPastFrom('title_' . \Verba\Lang::$locale, $ctalias, 'ctitle');
         $qm->addSelectPastFrom($_catalog->getPAC(), $ctalias, 'p_iid');
 
         // add Parent Data
         $qm->addSelectPastFrom('parentId', $palias);
-        $parentTitleName = $_product->A('title')->isLcd() ? 'title_' . SYS_LOCALE : 'title';
+        $parentTitleName = $_product->A('title')->isLcd() ? 'title_' . \Verba\Lang::$locale : 'title';
         //$qm->addSelectPastFrom("IF(`".$palias."`.parentId > 0 && `".$palias."`.`parentId` IS NOT NULL,
         $qm->addSelectPastFrom("IF(`" . $palias . "`.parentId > 0,
 CONCAT_WS(':', CAST(`" . $prntA . "`.`" . $parentTitleName . "` AS CHAR), CAST(`" . $prntA . "`.`price` AS CHAR), cast(`" . $prntA . "`.`picture` AS CHAR)), '') AS `parentData`", null, null, true);

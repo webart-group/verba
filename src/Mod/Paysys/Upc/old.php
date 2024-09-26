@@ -179,7 +179,7 @@ class PaySend_UPC extends PayTransaction_UPC{
     }
 
     function genLocale(){
-        return SYS_LOCALE;
+        return \Verba\Lang::$locale;
     }
 
     function logRq(){

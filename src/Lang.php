@@ -7,7 +7,7 @@ use function setlocale;
 
 class Lang extends Base
 {
-    public static $lang;
+    public static $locale;
     private static $srcPath;
     private static $data = array();
     private static $compilePath;
@@ -67,7 +67,7 @@ class Lang extends Base
         self::$compileJsPath = SYS_PUB_VAR . '/languages';
         self::$compileJsPathRel = SYS_PUB_VAR_URL . '/languages';
 
-        self::loadLang(self::$lang);
+        self::loadLang(self::$locale);
     }
 
     /**
@@ -79,7 +79,7 @@ class Lang extends Base
     static function setLocale($requestedLC = false)
     {
 
-        $previous = isset($_SESSION['lang']['locale']) ? $_SESSION['lang']['locale'] : false;
+        $previous = isset($_SESSION['locale']) ? $_SESSION['locale'] : false;
         $try2apply = is_string($requestedLC) && !empty($requestedLC) && $previous !== $requestedLC ? $requestedLC : $previous;
 
         if (!self::isLCValid($try2apply))
@@ -96,8 +96,7 @@ class Lang extends Base
             $locale = SYS_LC_DEFAULT;
         }
 
-        define('SYS_LOCALE', $locale);
-        self::$lang = $locale;
+        self::$locale = $locale;
 
         setlocale(LC_NUMERIC, 'C');
 
@@ -280,8 +279,8 @@ class Lang extends Base
      */
     static function get($path, $args = null)
     {
-        $r = self::getFromLang(self::$lang, $path, $args);
-        if (!$r && self::$lang != SYS_LC_DEFAULT) {
+        $r = self::getFromLang(self::$locale, $path, $args);
+        if (!$r && self::$locale != SYS_LC_DEFAULT) {
             $r = self::getFromLang(SYS_LC_DEFAULT, $path, $args);
         }
         return $r;
@@ -290,7 +289,7 @@ class Lang extends Base
     static function dbg()
     {
         echo '<pre>';
-        echo '<b>current lang</b>: ' . self::$lang . "\n";
+        echo '<b>current lang</b>: ' . self::$locale . "\n";
         echo '<b>default lang</b>: ' . SYS_LC_DEFAULT . "\n";
         echo '<b>LangfileRoot</b>: ' . self::$srcPath . "\n";
         echo '<b>Loaded</b>: ' . print_r(self::$data, true) . "\n";
@@ -398,7 +397,7 @@ class Lang extends Base
 
     static function compileJsLangFile($lang = false)
     {
-        $lang = !$lang ? self::$lang : $lang;
+        $lang = !$lang ? self::$locale : $lang;
 
         $result = self::generateTranslationsContent($lang, self::$_toClient);
 

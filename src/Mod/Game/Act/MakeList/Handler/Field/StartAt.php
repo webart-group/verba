@@ -51,7 +51,7 @@ class StartAt extends Field
                 // больше часа но меньше 4 часов
             } elseif ($interval->h < 4) {
                 $class_sign = 'in-few-hours';
-                $mkpadejMethod = '\Verba\make_padej_' . SYS_LOCALE;
+                $mkpadejMethod = '\Verba\make_padej_' . \Verba\Lang::$locale;
                 if (!function_exists($mkpadejMethod)) {
                     $mkpadejMethod = '\Verba\make_padej_ru';
                 }
@@ -81,7 +81,7 @@ class StartAt extends Field
                 $class_sign = 'in-tomorrow';
                 $firstPart = \Verba\Lang::get('date tomorrow');
             } elseif ($intervalDate->d == 2
-                && (SYS_LOCALE == 'ru' || SYS_LOCALE == 'ua')) {
+                && (\Verba\Lang::$locale == 'ru' || \Verba\Lang::$locale == 'ua')) {
                 $class_sign = 'in-after-tomorrow';
                 $firstPart = \Verba\Lang::get('date dayAfterTomorrow');
             }

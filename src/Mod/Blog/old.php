@@ -205,7 +205,7 @@ class BlogPublic extends \Verba\Mod{
         $url = \Verba\Mod\Seo::idToSeoStr($row,array('seq'=>$list->getCurrentPos(), 'slID'=>$list->getID()));
         $tpl->assign(array(
             'ITEM_PAGE_URL' => $url,
-            'ITEM_TITLE' => $row['title_'.SYS_LOCALE],
+            'ITEM_TITLE' => $row['title_'.\Verba\Lang::$locale],
             'ITEM_PICTURE_E' => '',
             '_ITEM_DATE' => date("j.m.Y", $date),
             'ITEM_PREVIEW' => isset($row['text_preview']) && !empty($row['text_preview']) ? $row['text_preview'] : '',

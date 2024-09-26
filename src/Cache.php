@@ -38,7 +38,7 @@ class Cache
 
     function dpndLocale()
     {
-        $this->nameParts['lang'] = SYS_LOCALE;
+        $this->nameParts['lang'] = \Verba\Lang::$locale;
     }
 
     function dpndByCurrentUser()

@@ -61,7 +61,7 @@ class Element extends \Verba\Configurable
      */
     function __construct($cfg = false, $extensions = false, $attr = false, $ah = false)
     {
-        $this->locale = SYS_LOCALE;
+        $this->locale = \Verba\Lang::$locale;
 
         if (is_object($ah)) {
             $this->AEFExtender = new Extender($this, $cfg, $attr, $ah);

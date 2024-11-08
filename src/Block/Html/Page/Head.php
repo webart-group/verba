@@ -1,7 +1,5 @@
 <?php
 /**
- * @author webart.group
- * @author Кудрявцев Максим (Kudriavtsev Maksym), <kmv@webart.group>
  * @copyright See copyright.md
  * Date: 15.01.2020
  * Time: 23:13

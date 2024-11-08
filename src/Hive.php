@@ -126,7 +126,7 @@ class Hive extends Configurable
 
     public static $reservedNames = ['string', 'float'];
 
-    protected string $sessionId;
+    protected string|null $sessionId = null;
 
     protected Session $session;
 
@@ -466,7 +466,7 @@ class Hive extends Configurable
             throw new Exception('Session disabled');
         }
 
-        if (!$this->sessionId) {
+        if (!isset($this->sessionId)) {
             if (!empty($_SERVER['HTTP_X_SESSION_ID'])) {
                 $this->sessionId = $_SERVER['HTTP_X_SESSION_ID'];
             }
@@ -592,7 +592,7 @@ class Hive extends Configurable
     /**
      * Возвращает интерфейс работы с БД
      *
-     * @return Driver
+     * @return \Verba\DBDriver\mysql\Driver
      */
     function DB()
     {

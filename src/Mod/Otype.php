@@ -125,7 +125,7 @@ class Otype extends \Verba\Mod
         }
         try {
             /**
-             * @var $coh \Model
+             * @var $coh \Verba\Model
              */
             foreach ($ohs as $coh) {
                 $sqlr = $this->DB()->query(
@@ -170,10 +170,10 @@ class Otype extends \Verba\Mod
 
         $default = array(
             'dbtype' => 'varchar',
-            'index' => '',
-            'lenght' => '255',
-            'default' => false,
-            'unsigned' => false,
+            'migration' => [
+                'options' => false,
+                'index' => false,
+            ],
             'ah' => false,
         );
 

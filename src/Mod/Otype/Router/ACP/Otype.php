@@ -38,6 +38,6 @@ class Otype extends \Verba\Request\Http\Router
 
     function modifyList($makeList) {
         list($a) = $makeList->list->QM()->createAlias();
-        $makeList->list->QM()->addWhere('`' . $a . "`.`role` IN('public_product', 'public_product_base')");
+        $makeList->list->QM()->addWhere('`' . $a . "`.`role` IN('local_product', 'base_product')");
     }
 }

@@ -6,6 +6,8 @@ class Catalog extends \Verba\Mod
     use \Verba\ModInstance;
     protected $otic_ot = 'catalog';
 
+    const ROOT_ITEM_ID = 1;
+
     function makeAction($bp)
     {
         switch ($bp['action']) {

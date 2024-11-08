@@ -4,7 +4,7 @@ namespace Verba;
 class Base
 {
     /**
-     * @var \DBDriver\mysql\Driver
+     * @var \Verba\DBDriver\mysql\Driver
      */
     protected $DB;
     /**
@@ -16,7 +16,7 @@ class Base
     /**
      * Возвращает интерфейс работы с БД
      *
-     * @return \DBDriver\mysql\Driver
+     * @return \Verba\DBDriver\mysql\Driver
      */
     public function DB()
     {

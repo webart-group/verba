@@ -22,7 +22,7 @@ class MakeList extends \Verba\Mod\Routine\Block\MakeList {
 
         if($this->prod) {
             list($a) = $this->list->QM()->createAlias();
-            $this->list->QM()->addWhere('`' . $a . "`.`role` IN('public_product', 'public_product_base')");
+            $this->list->QM()->addWhere('`' . $a . "`.`role` IN('local_product', 'base_product')");
         }
     }
 }

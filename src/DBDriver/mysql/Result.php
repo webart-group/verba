@@ -44,6 +44,17 @@ class Result implements \Verba\DBDriver\Result {
         }
     }
 
+    public function fetchColumn($columnNumber = 0): mixed
+    {
+        $cur_p=$this->getCursor();
+        $this->setCursor(0);
+
+        $row=$this->fetchRow('NUM_ARRAY');
+
+        $this->setCursor($cur_p);
+        return $row[$columnNumber];
+    }
+
     public function getValue($numRow,$numField){
         $cur_p=$this->getCursor();
         if ($this->setCursor($numRow)){

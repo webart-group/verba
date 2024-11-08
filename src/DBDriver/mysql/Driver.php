@@ -2,6 +2,8 @@
 
 namespace Verba\DBDriver\mysql;
 
+use Verba\DBDriver\Table;
+
 class Driver implements \Verba\DBDriver\Driver
 {
     /**
@@ -115,9 +117,9 @@ class Driver implements \Verba\DBDriver\Driver
      * Возвращает интерфейс работы с mysql-результатом
      *
      * @param string $query
-     * @return \DBDriver\mysql\Result
+     * @return \Verba\DBDriver\mysql\Result
      */
-    public function query($query)
+    public function query($query): \Verba\DBDriver\mysql\Result
     {
         $this->queryCounter++;
         if ($this->debug) {
@@ -230,5 +232,18 @@ class Driver implements \Verba\DBDriver\Driver
             $ts = time();
         }
         return date('Y-m-d H:i:s', $ts);
+    }
+
+    public function table($tableName): Table
+    {
+        return new Table($tableName, $this);
+    }
+
+    public function sendUseDatabase(string $database = null)
+    {
+        if(!$database) {
+            $database = $this->connectData['database'];
+        }
+        $this->query('USE ' . $database);
     }
 }

@@ -20,7 +20,7 @@ class OtypeBaseTypeSelector extends Extension
         $_oh = \Verba\_oh('otype');
         $qm = new \Verba\QueryMaker($_oh, false, array('ot_code', 'title'));
         if ($this->prod) {
-            $qm->addWhere('public_product_base', 'role');
+            $qm->addWhere('base_product', 'local_product');
         }
         $sqlr = $qm->run();
         $pac = $_oh->getPAC();

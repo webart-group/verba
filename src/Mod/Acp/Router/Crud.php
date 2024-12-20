@@ -11,34 +11,33 @@ namespace Verba\Mod\Acp\Router;
 
 
 use Verba\Exception\Routing;
+use Verba\Mod\Otype;
 use Verba\Mod\Routine\Block\CUNow;
 use Verba\Mod\Routine\Block\Delete;
 use Verba\Mod\Routine\Block\Delete\Json;
 use Verba\Mod\Routine\Block\Form;
 use Verba\Request\Http\Router;
 
-class ObjectType extends Router
+class Crud extends Router
 {
-
     function route()
     {
-        if(!$this->request->ot_code){
+        $rq = $this->request;
+
+        if (!$rq->ot_code && !($rq->ot_code = Otype::otCode($rq->node))) {
             throw new Routing('Unknown otype');
         }
 
-        if (!isset($this->request->action) && count($this->request->uf))
-        {
+        if (!isset($this->request->action) && count($this->request->uf)) {
             $this->request->action = $this->request->uf[count($this->request->uf) - 1];
         }
 
-        $rq = $this->rq->shift();
-
         switch ($this->request->action) {
             case 'list':
-                $acp_cfgs = 'acp/list acp-' . $rq->ot_code . ' acp/ots/' . $rq->ot_code;
+                $acp_cfgs = 'acp/list acp/ots/' . $rq->ot_code;
                 $cfg = $rq->getParam('cfg');
                 $rq->addParam(array('cfg' => empty($cfg) ? $acp_cfgs : $acp_cfgs.' ' . $cfg));
-                $h = new \Verba\Mod\Routine\Block\MakeList($rq);
+                $h = new \Verba\Mod\Otype\CRUD\ListJson($rq);
                 $h->contentType = 'json';
                 break;
 

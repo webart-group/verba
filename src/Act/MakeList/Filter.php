@@ -114,9 +114,6 @@ class Filter extends \Verba\Configurable
 
         $this->applyConfigDirect($cfg);
 
-
-        $this->getAlias();
-
         if (!array_key_exists('name', $this->ecfg) || !$this->ecfg['name']) {
             $this->ecfg['name'] = $this->makeName();
         }
@@ -167,7 +164,10 @@ class Filter extends \Verba\Configurable
     function asJson()
     {
         $r = [
-            'value' => $this->getValue()
+            'value' => $this->getValue(),
+            'name' => $this->getName(),
+            'class' => get_class($this),
+            'alias' => $this->getAlias(),
         ];
         return $r;
     }

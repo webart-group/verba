@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Otype\Router;
 
-use Verba\Mod\Acp\Router\ObjectType;
+use Verba\Mod\Acp\Router\Crud;
 
 class ACP extends \Verba\Request\Http\Router
 {

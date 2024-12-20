@@ -267,7 +267,7 @@ class Controller extends \Verba\Configurable
         }
 
         $r = [
-            'imems' => [],
+            'items' => [],
             'buttons' => [],
             'wrap' => [
                 'css_class' => $wrap_class

@@ -2,9 +2,20 @@
 
 namespace Verba\Mod;
 
+use function Verba\isOt;
+
 class Otype extends \Verba\Mod
 {
     use \Verba\ModInstance;
+
+    static function otCode(int|string $mixed): false|string
+    {
+        if($ot_id = isOt($mixed)) {
+            global $S;
+            return $S->otIdToCode($ot_id);
+        }
+        return false;
+    }
 
     function clearOtCache()
     {

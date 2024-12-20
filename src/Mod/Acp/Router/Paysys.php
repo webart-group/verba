@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Acp\Router;
 
-class Paysys extends ObjectType
+class Paysys extends Crud
 {
 
     function route()

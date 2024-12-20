@@ -9,7 +9,7 @@
 
 namespace Verba\Mod\Otype\Router\ACP\API;
 
-use Verba\Mod\Acp\Router\ObjectType;
+use Verba\Mod\Acp\Router\Crud;
 use Verba\Mod\Otype\Block\ACP\API\Attribute\Form\Inside;
 use Verba\Mod\Otype\Block\ACP\API\Attribute\GetAttrs;
 use Verba\Mod\Otype\Block\ACP\API\Attribute\Load;
@@ -34,7 +34,7 @@ class Attribute extends \Verba\Request\Http\Router
                     'cfg' => 'acp acp-ot_attribute acp-ot_attribute-otwidget'
                 ));
                 $rq->setOt('ot_attribute');
-                $h = (new ObjectType($rq))->route();
+                $h = (new Crud($rq))->route();
                 break;
 
             case 'inside':

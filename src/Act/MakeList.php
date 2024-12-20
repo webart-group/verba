@@ -1820,12 +1820,9 @@ class MakeList extends Action
             $r[$this->fieldCode] = [
                 'value' => [
                     'rendered' => $this->fieldResult,
+                    'natural' => $this->rowItem->getNatural($attr_code)
                 ]
             ];
-            $natural_value = $this->rowItem->getNatural($attr_code);
-            if($natural_value !== $this->fieldResult) {
-                $r[$this->fieldCode]['value']['natural'] = $natural_value;
-            }
         }
 
         return $r;

@@ -39,12 +39,7 @@ class Router extends \Verba\Request\Http\Router
             return $layout->route();
         }
 
-        // изменение ввода
-        if($this->rq->node == 'h'){
-            $rq = $this->rq->shift();
-        }else{
-            $rq = $this->rq;
-        }
+        $rq = $this->rq;
 
         if($rq->node == '') {
 
@@ -62,29 +57,7 @@ class Router extends \Verba\Request\Http\Router
 
         } elseif(($autoclass = '\\Verba\\App\\'.ucfirst($rq->node).'\\Router') && class_exists($autoclass)) {
             $h = new $autoclass($rq->shift());
-        } elseif(isOt($rq->node)) {
-
-            $rq->setOt($rq->node);
-            $h = new Router\ObjectType($rq);
-
         }
-
-        /*
-        if(!isset($h)) {
-            switch ($this->rq->node) {
-                case 'tools':
-                    $h = new Router\Tool($this->rq->shift());
-                    break;
-
-                case 'system':
-                    $h = new Router\System($this->rq->shift());
-                    break;
-                case '':
-                    $h = new Block\Page($this->rq);
-                    break;
-            }
-        }
-        */
 
         if(!isset($h) || !$h instanceof Block){
             throw new Routing();

@@ -11,8 +11,6 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
 {
     protected AbstractBlueprint|null $blueprint = null;
 
-    protected Result $result;
-
     protected $migration = [];
 
     const MIGRATION_PADDING = "\t\t";
@@ -43,7 +41,7 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
             }
 
             if(!isset($row['ot_iid'])){
-                $row['ot_iid'] = $this->result->ot_id;
+                $row['ot_iid'] = $this->blueprint->ot_id;
             }
 
             $fxs = $row['_']['fxs'] ?? null;
@@ -64,7 +62,7 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
             );
 
             if($row['attr_code'] == 'id'){
-                $this->result->prim_attr_id = $attr_id;
+                $this->blueprint->prim_attr_id = $attr_id;
             }
 
             if(is_array($fxs) && count($fxs)){
@@ -73,7 +71,7 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
                         $args = $fx[1] ?? [];
                         $className = $fx[0];
                     }
-                    $attrFx = new $className($this->DB(), $attr_id, $this->result->ot_id);
+                    $attrFx = new $className($this->DB(), $attr_id, $this->blueprint->ot_id);
                     call_user_func_array([$attrFx, 'run'], $args);
                 }
             }
@@ -119,7 +117,7 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
 
     protected function handleCustomFieldsConfig()
     {
-        foreach ($this->request->customFields as $row ) {
+        foreach ($this->blueprint->customFields as $row ) {
             $migrationField = new MigrationField();
             $migrationField->applyConfigDirect($row);
             $this->addToMigration($migrationField);
@@ -128,7 +126,7 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
 
     protected function handleIndexesConfig()
     {
-        foreach ($this->request->indexes as $row ) {
+        foreach ($this->blueprint->indexes as $row ) {
             $migrationField = new MigrationIndex();
             $migrationField->applyConfigDirect($row);
             $this->addToMigration($migrationField);
@@ -139,7 +137,7 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
     {
         $tpl = file_get_contents(__DIR__.'/create/create_table_migration.php.dist');
 
-        $migrationCode = $this->generateMigrationCode($this->result);
+        $migrationCode = $this->generateMigrationCode($this->blueprint);
 
         $className = 'BlueprintCreate'.ucfirst($this->result->ot_code).'Table';
 
@@ -169,11 +167,11 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
         return $outputPath;
     }
 
-    public function generateMigrationCode(Result $result)
+    public function generateMigrationCode(BlueprintInterface $blueprint)
     {
         $r = '';
 
-        $r .= '$this->table(\''. $result->tableName .'\')' . PHP_EOL;
+        $r .= '$this->table(\''. $blueprint->tableName .'\')' . PHP_EOL;
 
         /**
          * @var MigrationField|MigrationIndex $migrationEntity
@@ -191,5 +189,61 @@ abstract class AbstractBlueprintService extends Base implements BlueprintService
     public function addToMigration(MigrationField|MigrationIndex $migrationField)
     {
         $this->migration[] = $migrationField;
+    }
+
+    protected function findOrCreateKey($blueprint)
+    {
+        $stmt = $this->DB()->query('SELECT key_id FROM _keys WHERE key_id_code = \''.$blueprint->key_code.'\'');
+        $key_id = $stmt->fetchColumn();
+        if(!$key_id) {
+            $key_id = $this->DB()->table('_keys')
+                ->insert([
+                    'key_id_code' => $blueprint->key_code,
+                    'inherit_id' => $blueprint->key_base_id
+                ])->getInsertId();
+        }
+        return $key_id;
+    }
+
+    protected function findOrCreateVault($blueprint)
+    {
+        $stmt = $this->DB()->query('SELECT vlt_id FROM _obj_data_vaults WHERE `object` = \''.$blueprint->tableName.'\'');
+        $vlt_id = $stmt->fetchColumn();
+
+        if(!$vlt_id) {
+            $vlt_id = $this->DB()->table("_obj_data_vaults")
+                ->insert([
+                    'scheme' => 'mysql',
+                    'object' => $blueprint->tableName,
+                    'ot_id' => 13,
+                    'key_id' => 0
+                ])->getInsertId();
+        }
+
+        return $vlt_id;
+    }
+
+    protected function findOrCreateOtype($blueprint)
+    {
+        $stmt = $this->DB()->query('SELECT id FROM _obj_types WHERE ot_code = \''.$blueprint->ot_code.'\'');
+        $ot_id = $stmt->fetchColumn();
+        if(!$ot_id) {
+
+            $ot_id = $this->DB()->table('_obj_types')
+                ->insert([
+                    'base' => $blueprint->ot_base_id,
+                    'ot_code' => $blueprint->ot_code,
+                    'role' => $blueprint->ot_role,
+                    'base_key' => $blueprint->key_id,
+                    'prim_attr_id' => 0,
+                    'title_ru' => $blueprint->ot_ru,
+                    'title_ua' => $blueprint->ot_ua,
+                    'title_en' => $blueprint->ot_en,
+                    'vlt_id' => $blueprint->vlt_id
+                ])->getInsertId();
+
+        }
+
+        return $ot_id;
     }
 }

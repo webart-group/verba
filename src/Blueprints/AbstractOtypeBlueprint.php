@@ -3,10 +3,13 @@
 namespace Verba\Blueprints;
 
 
-class OtypeBlueprint extends AbstractBlueprint
+abstract class AbstractOtypeBlueprint extends AbstractBlueprint
 {
     public $ot_code;
+    public $ot_id;
     public $key_code;
+    public $key_id;
+    public $vlt_id;
     public $key_base_id;
     public $ot_base_id;
     public $ot_ru;
@@ -14,6 +17,10 @@ class OtypeBlueprint extends AbstractBlueprint
     public $ot_en;
     public $tableName;
     public $ot_role;
+
+    public $attributesFinalCfg;
+
+    public $prim_attr_id;
 
     public $attributes = [];
     public $customFields = [];
@@ -25,7 +32,7 @@ class OtypeBlueprint extends AbstractBlueprint
     public function __construct(array $cfg = null)
     {
           if ($cfg) {
-              $this->app
+              $this->applyConfigDirect($cfg);
           }
     }
 

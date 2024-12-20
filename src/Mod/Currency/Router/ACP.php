@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Currency\Router;
 
-use Verba\Mod\Acp\Router\ObjectType;
+use Verba\Mod\Acp\Router\Crud;
 
 class ACP extends \Verba\Request\Http\Router
 {
@@ -27,7 +27,7 @@ class ACP extends \Verba\Request\Http\Router
         }
 
         if (!isset($router)) {
-            $router = new ObjectType($this->rq);
+            $router = new Crud($this->rq);
         }
 
         $h = $router->route();

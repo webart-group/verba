@@ -903,10 +903,8 @@ class Hive extends Configurable
             $otsome = $otsome->getID();
         }
 
-        if (is_string($otsome)) {
-            if (!is_numeric($otsome)) {
-                $otsome = $this->otCodeToId($otsome);
-            }
+        if (is_string($otsome) && !is_numeric($otsome)) {
+            $otsome = $this->otCodeToId($otsome);
         }
 
         if (!is_integer($otsome)) {

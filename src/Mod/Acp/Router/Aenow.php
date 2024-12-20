@@ -9,7 +9,7 @@
 
 namespace Verba\Mod\Acp\Router;
 
-use Verba\Mod\Acp\Router\ObjectType;
+use Verba\Mod\Acp\Router\Crud;
 
 class Aenow extends \Verba\Request\Http\Router
 {
@@ -28,7 +28,7 @@ class Aenow extends \Verba\Request\Http\Router
             reset($_REQUEST['NewObject']);
             $this->rq->ot_id = key($_REQUEST['NewObject']);
 
-            $h = (new ObjectType($this->rq->shift()))->route();
+            $h = (new Crud($this->rq->shift()))->route();
         }
 
         if (!(isset($_REQUEST['_norelocate']) && $_REQUEST['_norelocate'] == 1)) {

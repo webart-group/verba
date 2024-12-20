@@ -388,7 +388,7 @@ class Block extends Configurable implements BlockInterface
         if ($this->oh === null) {
             $this->oh = false;
             if ($this->rq->ot_id || $this->rq->ot_code) {
-                $this->oh = \Verba\_oh($this->rq->ot_id ? $this->rq->ot_id : $this->rq->ot_code);
+                $this->oh = \Verba\_oh($this->rq->ot_id ?: $this->rq->ot_code);
             }
         }
 

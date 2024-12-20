@@ -5,7 +5,7 @@ namespace Verba\Mod\Acp\Router;
 use Verba\Request\Http\Router;
 
 
-class Banner extends ObjectType
+class Banner extends Crud
 {
 
     function route(){

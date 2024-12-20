@@ -60,7 +60,7 @@ class Product extends Router
         }
 
         if (!isset($router)) {
-            $h = (new ObjectType($this->request))->route();
+            $h = (new Crud($this->request))->route();
         } else {
 
             if ($router instanceof CatalogActionConfigInterface) {

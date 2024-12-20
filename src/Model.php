@@ -90,7 +90,7 @@ class Model extends Base implements ModelInterface
     /**
      * Возвращает объект класса ObjectType для $this->ot_id
      * @return object ObjectType
-     * @see ObjectType
+     * @see Crud
      *
      */
     public function getOT()

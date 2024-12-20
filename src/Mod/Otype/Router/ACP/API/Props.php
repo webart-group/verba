@@ -9,7 +9,7 @@
 
 namespace Verba\Mod\Otype\Router\ACP\API;
 
-use Verba\Mod\Acp\Router\ObjectType;
+use Verba\Mod\Acp\Router\Crud;
 
 class Props extends \Verba\Request\Http\Router
 {
@@ -37,7 +37,7 @@ class Props extends \Verba\Request\Http\Router
         }
         $rq['action'] = $action;
 
-        $router = new ObjectType($rq);
+        $router = new Crud($rq);
 
         $h = $router->route();
 

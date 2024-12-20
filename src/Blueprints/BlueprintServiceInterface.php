@@ -4,6 +4,6 @@ namespace Verba\Blueprints;
 
 interface BlueprintServiceInterface
 {
-    public function run(): BlueprintServiceResultInterface;
+    public function run(): BlueprintInterface;
 }
 

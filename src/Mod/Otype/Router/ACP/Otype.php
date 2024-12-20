@@ -2,7 +2,7 @@
 
 namespace Verba\Mod\Otype\Router\ACP;
 
-use Verba\Mod\Acp\Router\ObjectType;
+use Verba\Mod\Acp\Router\Crud;
 
 class Otype extends \Verba\Request\Http\Router
 {
@@ -10,7 +10,7 @@ class Otype extends \Verba\Request\Http\Router
     function route()
     {
         $this->request->setOt('otype');
-        $h = (new ObjectType($this->request))->route();
+        $h = (new Crud($this->request))->route();
 
         if($h instanceof \Verba\Mod\Routine\Block\Form && $this->request->node == 'cuform-prod'){
             $cfg = $h->request->getParam('cfg');

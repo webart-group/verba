@@ -2,94 +2,34 @@
 
 namespace Verba\Blueprints;
 
-use Verba\Blueprints\create\Request;
-
-
 class UpdateService extends AbstractBlueprintService
 {
-    static function initRequest($blueprint): BlueprintServiceRequestInterface
+    public function run(): BlueprintInterface
     {
-        return $blueprint->getUpdateRequest();
-    }
+        $blueprint = $this->blueprint;
 
-    public function run(): BlueprintServiceResultInterface
-    {
-        $this->result = new Result();
-        $result = $this->doCreate();
-        $migrationPath = $this->createMigration();
-        return $this->result;
-    }
-
-    protected function doCreate(): Result
-    {
-        if(!$this->request->validate()){
-            throw new \Exception('Otype create request is not set');
+        if(!$blueprint->validate()) {
+            throw new \Exception('Otype blueprint validation failed');
         }
 
-        $tableName =
-            $this->result->tableName = $this->request->tableName;
+        $blueprint->key_id = $this->findOrCreateKey($blueprint);
 
-        $ot_code =
-            $this->result->ot_code = $this->request->ot_code;
+        // Data vault
+        $blueprint->vlt_id =$this->findOrCreateVault($blueprint);
 
-        // Create object type base key
-        if(!$this->request->key_code){
-            throw new \Exception('Key code is required');
-        }
 
-        $this->result->key_code = $this->request->key_code;
-        $this->result->key_id = $this->DB()->query('SELECT key_id FROM _keys WHERE key_id_code = \''.$this->request->key_code.'\'')
-            ->fetchColumn();
-        if (!$this->result->key_id) {
-            $this->result->key_id = $this->DB()
-                ->table('_keys')
-                    ->insert([
-                        'key_id_code' => $this->request->key_code,
-                        'inherit_id' => $this->request->key_base_id
-                    ])->getInsertId();
-        }
+        # Object type
+        $blueprint->ot_id = $this->findOrCreateOtype($blueprint);
 
-        // Create data vault record
-        $stmt = $this->DB()->query('SELECT vlt_id FROM _obj_data_vaults WHERE `object` = \''.$tableName.'\'');
-        $this->result->vlt_id = $stmt->fetchColumn();
-
-        if(!$this->result->vlt_id) {
-            $this->result->vlt_id = $this->DB()->table("_obj_data_vaults")
-                ->insert([
-                    'scheme' => 'mysql',
-                    'object' => $tableName,
-                    'ot_id' => 13,
-                    'key_id' => 0
-                ])->getInsertId();
-        }
-
-        # Create object type
-        $stmt = $this->DB()->query('SELECT id FROM _obj_types WHERE ot_code = \''.$this->request->ot_code.'\'');
-        $this->result->ot_id = $stmt->fetchColumn();
-        if(!$this->result->ot_id) {
-
-            $this->result->ot_id = $this->DB()->table('_obj_types')
-                ->insert([
-                    'base' => $this->request->ot_base_id,
-                    'ot_code' => $ot_code,
-                    'role' => $this->request->ot_role,
-                    'base_key' => $this->result->key_id,
-                    'prim_attr_id' => 0,
-                    'title_ru' => $this->request->ot_ru,
-                    'title_ua' => $this->request->ot_ua,
-                    'title_en' => $this->request->ot_en,
-                    'vlt_id' => $this->result->vlt_id
-                ])->getInsertId();
-
-        }
-
-        $this->result->attributesFinalCfg = $this->addAttributes();
+        $blueprint->attributesFinalCfg = $this->addAttributes();
         $this->handleCustomFieldsConfig();
         $this->handleIndexesConfig();
 
-        $this->DB()->query("UPDATE _obj_types SET prim_attr_id={$this->result->prim_attr_id} WHERE id={$this->result->ot_id}");
+        #update primary attribute id
+        $this->DB()->query("UPDATE _obj_types SET prim_attr_id={$blueprint->prim_attr_id} WHERE id={$blueprint->ot_id}");
 
-        return $this->result;
+        $this->createMigration();
+
+        return $blueprint;
     }
-
 }

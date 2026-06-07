@@ -92,6 +92,7 @@ class Head extends \Verba\Block\Html
             return '';
         }
         $r = '';
+        $nl = '';
         foreach($headTags as $ctag){
             $attrs_str = '';
             $tagName = $ctag['tag'];
@@ -102,9 +103,13 @@ class Head extends \Verba\Block\Html
             }
 
             if(isset($ctag['content'])){
-                $r .= '<' . $tagName . $attrs_str . '>'.((string)$ctag['content']).'</'.$tagName.'>';
+                $r .= $nl.'<' . $tagName . $attrs_str . '>'.((string)$ctag['content']).'</'.$tagName.'>';
             }else{
-                $r .= '<' . $tagName . $attrs_str . '/>';
+                $r .= $nl.'<' . $tagName . $attrs_str . '/>';
+            }
+
+            if($nl === '') {
+                $nl = PHP_EOL;
             }
         }
 

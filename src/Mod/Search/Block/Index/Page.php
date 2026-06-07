@@ -2,13 +2,15 @@
 
 namespace Verba\Mod\Search\Block\Index;
 
-use Verba\Mod\Search\Block\HtmlIncludes;
+use Verba\Block\Html;
 
-class Page extends HtmlIncludes
+class Page extends Html
 {
     function prepare()
     {
-        parent::prepare();
+        $this->addScripts('search', 'search');
+        $this->addCSS('search', 'search');
+
         unset($this->items[0]->items['SEARCH_LIST']);
         self::getBlockByRole('search-agent-page')->mute();
     }

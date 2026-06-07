@@ -2,9 +2,8 @@
 
 namespace Verba\Mod\Search\Block\Agent;
 
-use Verba\Mod\Search\Block\HtmlIncludes;
 
-class Page extends HtmlIncludes
+class Page extends \Verba\Block\Html
 {
     public $role = 'search-agent-page';
 
@@ -15,6 +14,12 @@ class Page extends HtmlIncludes
     public $jsCfg = array(
         'otCfg' => array(),
     );
+
+    function prepare()
+    {
+        $this->addScripts('search', 'search');
+        //$this->addCSS('search', 'search');
+    }
 
     function build()
     {

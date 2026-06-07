@@ -1,4 +1,7 @@
 <?php
+
+use webart\verba\src\Mod\Textblock\Block\textblock_getBlock;
+
 class textblock_alert extends textblock_getBlock{
 
   public $templates = array(

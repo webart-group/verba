@@ -3,6 +3,8 @@ namespace Verba\Block\Html\Page;
 
 class Body extends \Verba\Block\Html
 {
+    use \Verba\Block\Html\Element\Attribute\CssClass;
+
     public $templates = [
         'content' => 'page/body.tpl'
     ];
@@ -21,10 +23,8 @@ class Body extends \Verba\Block\Html
 
     public $role = 'HtmlBody';
 
-    use \Verba\Block\Html\Element\Attribute\CssClass;
-
     /**
-     * @return \Verba\Block\Html|\Response\Html
+     * @return \Verba\Block\Html|\Verba\Response\Html
      */
     function route()
     {

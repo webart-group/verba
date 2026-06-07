@@ -1,7 +1,7 @@
 <?php
 namespace Verba;
 
-use DBDriver\mysql\Driver;
+use Verba\DBDriver\mysql\Driver;
 use Exception;
 use Verba\Data\Boolean;
 use Verba\FileSystem\Local;
@@ -442,22 +442,48 @@ class Hive extends Configurable
     {
         $authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? null;
 
-        $U = null;
+        $U = $authorizationHeader
+            ? $this->initUserFromHeader($authorizationHeader)
+            : $this->initUserFromSession();
 
-        if ($authorizationHeader) {
-            $bt = new BearerTokenAuthenticator($authorizationHeader);
-            $U = $bt->authorize();
+        $this->setUser($U);
 
-            $userAuthToken = $bt->getUserAuthToken();
-        }
+        return $this->U;
+    }
+
+    function initUserFromHeader($authorizationHeader)
+    {
+        $bt = new BearerTokenAuthenticator($authorizationHeader);
+        $U = $bt->authorize();
+
+        $userAuthToken = $bt->getUserAuthToken();
 
         if (isset($userAuthToken) && !empty($userAuthToken->session_id)) {
             $this->sessionId = $userAuthToken->session_id;
         }
 
-        $this->setUser($U);
+        return $U;
+    }
 
-        return $this->U;
+    function initUserFromSession()
+    {
+        if (isset($_SESSION['hive']['U'])) {
+            $U = unserialize($_SESSION['hive']['U']);
+            if (is_object($U) && $U instanceof User) {
+                // если в сессии сохранен авторизированный юзер, получаем его ID и перегружаем
+                if ($U->getAuthorized() || $U->requireRefresh()) {
+                    $U = $U->getID();
+                }
+            } elseif (is_int($U)) {
+                $U = new User($U);
+            } else {
+                $U = null;
+            }
+        } else {
+            $U = new User();
+        }
+
+        return $U;
     }
 
     protected function sessionStart()
@@ -473,8 +499,9 @@ class Hive extends Configurable
         }
 
         if(session_status() === PHP_SESSION_ACTIVE){
-            if(!$this->sessionId || session_id() == $this->sessionId){
-                return session_id();
+            if(!$this->sessionId){
+                $this->sessionId = session_id();
+                goto SESSION_OBJECT;
             }
 
             session_abort();
@@ -486,6 +513,7 @@ class Hive extends Configurable
 
         session_start();
 
+        SESSION_OBJECT:
         $this->session = new Session();
 
         return session_id();
@@ -686,7 +714,7 @@ class Hive extends Configurable
      * Возвращает текущий объект  U
      *
      * @return User
-     * @see \Verba\Mod\User\Model\User
+     * @see User
      */
     function U()
     {

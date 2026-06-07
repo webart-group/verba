@@ -5,7 +5,7 @@ class Form extends \Verba\Block\Html
 {
 
     public $templates = array(
-        'content' => '/user/login/login_form.tpl'
+        'content' => '/page/user/login/auth_form.tpl'
     );
 
     public $initState = 'login';// 'login' | 'registration' | 'specify';
@@ -28,9 +28,9 @@ class Form extends \Verba\Block\Html
                 'url' => $mUser->getRegisterUrl(),
                 'alt' => 'login',
             ),
-            'specify' => array(
-                'url' => $mUser->getSpecifyUrl(),
-            ),
+//            'specify' => array(
+//                'url' => $mUser->getSpecifyUrl(),
+//            ),
         );
 
         $initState = $this->rq->getParam('state');

@@ -21,9 +21,12 @@ class Login extends \Verba\Block\Json
                 $post['login'] ?? null,
                 $post['password'] ?? null
             );
+
             if (!$U) {
                 throw new \Exception(\Verba\Lang::get('user auth common_error'));
             }
+
+            $mUser->updateSessionId();
 
             $this->content = [
                 'token' => BearerTokenAuthenticator::generateAccessToken($U)

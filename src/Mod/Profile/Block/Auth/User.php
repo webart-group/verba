@@ -13,18 +13,16 @@ class User extends Html
         $U = \Verba\User();
         $displayName = $U->display_name;
         if(!$displayName){
-            $displayName = '??';
+            $displayName = '-';
         }
 
-        if($U->getUserpic()){
-            $userpic = '<i class="pic-32 img-thumbnail" style="background-image:url(\''.$U->getUserpic().'\');"></i>';
-        }else{
-            $userpic = '';
+        if(!$userpicUrl = $U->getUserpic()){
+            $userpicUrl = '/assets/img/icons/icon-logged.svg';
         }
 
         $this->tpl->assign(array(
             'USER_DISPLAY_NAME' => htmlspecialchars($displayName),
-            'USERPIC' => $userpic,
+            'USERPIC_URL' => $userpicUrl,
         ));
     }
 }

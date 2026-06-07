@@ -16,7 +16,7 @@ class Info extends \Verba\Block\Html {
 
             'LANG_SELECTOR' => new \Verba\Mod\Profile\Block\Toolbar\Dropdown\Group($this,array(
                 'items' => array(
-                    'CONTENT' => new \langu_publicSelector($this,array(
+                    'CONTENT' => new \Verba\Mod\Langu\Block\PublicSelector($this,array(
                         'templates' => array(
                             'content' => 'layout/local/lang-selector/wrap.tpl',
                             'item' => 'layout/local/lang-selector/item.tpl',

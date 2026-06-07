@@ -2,53 +2,65 @@
 
 namespace Verba\Mod\User\Block;
 
-class Login extends \Verba\Block\Html{
+use Verba\Block\Html;
+
+class Login extends Html{
 
     public $templates = [
-        'content' => '/user/login/content.tpl',
+        'content' => '/page/user/login/content.tpl',
     ];
-
-    function route()
-    {
-        $handler = new \App\Layout\Minimal($this->request);
-        $handler->addItems(array(
-            'CONTENT' => $this
-        ));
-
-        return $handler->route();
-    }
 
     function init()
     {
         $this->items = array(
             'AUTH_FORM' => new Login\Form($this)
         );
+//        $this->addHeadTag('script', [
+//            'type' => 'module',
+//            'crossorigin' => '',
+//            'src' => 'js/login-page.js',
+//        ], '');
+        $this->addHeadTag('link', [
+            'rel' => 'modulepreload',
+            'crossorigin' => '',
+            'href' => 'js/tabs.js',
+        ]);
 
-        $this->mergeHtmlIncludes(new \page_htmlIncludesCore($this));
+        $this->addCss([
+            ['tabs login-page'],
+        ], 500);
 
-        $this->mergeHtmlIncludes(new \page_htmlIncludesFormFull($this));
-
-        $this->addCss(array(
-            array('modal'),
-            array('form'),
-            array('commonUI'),
-            array('form style login-form', 'acp'),
-        ), 500);
+//
+//        $this->addCss([
+//            ['modal'],
+//            ['form'],
+//            ['commonUI'],
+//            ['form style login-form', 'acp'],
+//        ], 500);
 
         $this->addScripts(array(
-            array('commonUI', 'common'),
+            // array('commonUI', 'common'),
             array('form formValidator', 'form'),
-            array('publicUIGuest loginFormCtrl', 'common'),
+            //array('publicUIGuest', 'common'),
+            array('loginFormCtrl', 'common'),
         ), 500);
     }
 
     function prepare(){
         \Verba\Hive::setBackURL();
 
-        $this->addJsBefore("
-window.CUI = new commonUI();
-window.CUI.render();
-");
+        /**
+         * @var Html\Page\Body $htmlBody
+         */
+        $htmlBody = $this->getBlockByRole('HtmlBody');
+        $htmlBody->addCssClass('page-login');
+
+        $this->getBlockByRole('layout')->setTplvars(['PAGE_TYPE' => 'auth']);
+//
+//        $this->addJsBefore("
+//window.CUI = new commonUI();
+//window.CUI.render();
+//");
 
         $this->tpl->assign(array(
             'THIS_HOST' => SYS_THIS_HOST,

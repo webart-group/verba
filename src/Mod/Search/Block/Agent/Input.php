@@ -2,9 +2,9 @@
 
 namespace Verba\Mod\Search\Block\Agent;
 
-use Verba\Mod\Search\Block\HtmlIncludes;
+use Verba\Block\Html;
 
-class Input extends HtmlIncludes
+class Input extends Html
 {
 
     public $templates = [
@@ -16,9 +16,8 @@ class Input extends HtmlIncludes
 
     function prepare()
     {
-        parent::prepare();
-        $this->addScripts(array('agentInput', 'search'));
-        $this->addCSS(array('agentInput', 'search'));
+        $this->addScripts(['agentInput', 'search']);
+        //$this->addCSS(array('agentInput', 'search'));
     }
 
     function build()
@@ -26,7 +25,7 @@ class Input extends HtmlIncludes
         try {
             $jsCfg = array(
                 'url' => array(
-                    'create' => '/search/create',
+                    'create' => '/search/pa',
                     'result' => '/search'
                 ),
                 'q' => htmlspecialchars($this->q),

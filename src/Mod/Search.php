@@ -65,7 +65,7 @@ class Search extends \Verba\Mod
         list($lcA, $lcT, $lcD) = $qm->createAlias($_product->vltT($_catalog));
         $qm->addGroupBy(array('id'));
         $qm->addWhere($palias . '.`active` > 0');
-        $qm->addWhere($palias . '.`tmp` = 0');
+        //$qm->addWhere($palias . '.`tmp` = 0');
         $qm->addOrder(array('priority' => 'd', $_product->getPAC() => 'd'));
 
         //подключение таблицы связей каталог-продукты
@@ -127,12 +127,12 @@ class Search extends \Verba\Mod
 
 
         //Products Variants
-        $qm->addWhere('(' . $palias . '.`productId` = 0)');
+        $qm->addWhere('(' . $palias . '.`parentId` = 0)');
         $pta = $palias . '_1';
         list($palias_1, $ptable_1, $db_1) = $qm->createAlias($_product->vltT(), false, $pta);
         $qm->addCJoin(array(array('a' => $palias_1)),
             array(
-                array('p' => array('a' => $palias_1, 'f' => 'productId'),
+                array('p' => array('a' => $palias_1, 'f' => 'parentId'),
                     's' => array('a' => $palias, 'f' => $_product->getPAC()),
                 ),
                 array('p' => array('a' => $palias_1, 'f' => 'active'),

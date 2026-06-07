@@ -1,4 +1,7 @@
 <?php
+
+use webart\verba\src\Mod\Textblock\Block\textblock_getBlock;
+
 class seo_OtherCounters extends seo_public{
 
   function build(){

@@ -9,8 +9,6 @@
             "email": "kmv@webart.group"
         }
     ],
-    "require": {
-    },
     "autoload": {
         "psr-4": {
             "Verba\\": "/src"

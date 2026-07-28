@@ -115,8 +115,8 @@ class Send extends \Verba\Mod\Paysys\Qiwi\Transaction
 
     function genRequestData()
     {
-        $successUrl = new \Url($this->proto->cfg['successUrl']);
-        $failUrl = new \Url($this->proto->cfg['failureUrl']);
+        $successUrl = new \Verba\Url($this->proto->cfg['successUrl']);
+        $failUrl = new \Verba\Url($this->proto->cfg['failureUrl']);
 
         $data = array(
             'shop' => $this->merchantId,

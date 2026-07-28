@@ -19,7 +19,7 @@ class RatingColumn extends Worker {
                     $this->code => [
                         'priority' => $this->priority,
                         'type' => 'virtual',
-                        'handler' => '\Mod\Store\Act\MakeList\Handler\Field\OffersRating'
+                        'handler' => '\Verba\Mod\Store\Act\MakeList\Handler\Field\OffersRating'
                     ]
                 ],
                 'headers' => [

@@ -31,8 +31,8 @@ class Dropdown extends \Verba\Block\Html {
 
         $className = $isLoggedIn ? 'User' : 'Guest';
 
-        $button = '\Mod\Profile\Block\Toolbar\Dropdown\Button\\'.$className;
-        $body = '\Mod\Profile\Block\Toolbar\Dropdown\Body\\'.$className;
+        $button = '\Verba\Mod\Profile\Block\Toolbar\Dropdown\Button\\'.$className;
+        $body = '\Verba\Mod\Profile\Block\Toolbar\Dropdown\Body\\'.$className;
 
         $this->addItems([
             'BUTTON' => new $button($this),

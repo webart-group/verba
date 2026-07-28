@@ -9,8 +9,8 @@ class faq_struct extends \Verba\Block\Html
 
         $treeCfg = array(
             'nodeTypes' => array(
-                'menu' => '\Mod\Infocenter\Tree\View\Menu',
-                'content' => '\Mod\Faq\Tree\View\ContentFaq',
+                'menu' => '\Verba\Mod\Infocenter\Tree\View\Menu',
+                'content' => '\Verba\Mod\Faq\Tree\View\ContentFaq',
             ),
         );
 

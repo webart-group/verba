@@ -3,8 +3,8 @@ namespace Verba;
 
 class Request
 {
-    public $uf = array();
-    public $uf_str = array();
+    public $uf = [];
+    public $uf_str = [];
     public $iid;
     public $node;
     public $action;
@@ -13,8 +13,8 @@ class Request
     public $ot_code;
     public $pot;
 
-    public $params = array();
-    public $tempData = array();
+    public $params = [];
+    public $tempData = [];
 
     protected $request_uri = null;
 
@@ -23,7 +23,7 @@ class Request
         if (is_array($action)) {
             $rq = $action;
         } elseif (!is_array($action) && $action !== null) {
-            $rq = array(
+            $rq = [
                 'action' => $action,
                 'iid' => $iid,
                 'ot_id' => $ot_id,
@@ -31,9 +31,9 @@ class Request
                 'pot' => $pot,
                 'piid' => $piid,
                 'uf' => $uf,
-            );
+            ];
         } else {
-            $rq = array();
+            $rq = [];
         }
 
         $this->refresh($rq);
@@ -188,9 +188,9 @@ class Request
         return ($this->iid = is_numeric($val) ? (int)$val : trim($val));
     }
 
-    function asArray($extended = array())
+    function asArray($extended = [])
     {
-        $r = array(
+        $r = [
             'action' => $this->action,
             'node' => $this->node,
             'iid' => $this->iid,
@@ -199,10 +199,10 @@ class Request
             'key' => $this->key,
             'pot' => $this->pot,
             'uf' => $this->uf,
-        );
+        ];
 
         if (!is_array($extended) || empty($extended)) {
-            $extended = array();
+            $extended = [];
         }
         $r = array_replace_recursive($this->params, $r, $extended);
 
@@ -211,15 +211,22 @@ class Request
         return $r;
     }
 
-    function addParam($params = array())
+    function addParam($params = [])
     {
-        $this->addParams($params);
+        return $this->addParams($params);
     }
 
-    function addParams($params = array())
+    function setParam($name, $value): self
+    {
+        return $this->addParams([$name => $value]);
+    }
+
+    function addParams($params = []): self
     {
         $params = (array)$params;
         $this->params = array_replace_recursive($this->params, $params);
+
+        return $this;
     }
 
     /**
@@ -252,15 +259,15 @@ class Request
      */
     function getParams()
     {
-        return call_user_func_array(array($this, 'getParam'), func_get_args());
+        return call_user_func_array([$this, 'getParam'], func_get_args());
     }
 
     function clearParams()
     {
-        $this->params = array();
+        $this->params = [];
     }
 
-    function addTempData($data = array())
+    function addTempData($data = [])
     {
         $this->tempData = array_replace_recursive($this->tempData, (array)$data);
     }
@@ -277,10 +284,10 @@ class Request
             );
     }
 
-    function getParents()
+    function getParents(): array
     {
         if (!is_array($this->pot)) {
-            $this->pot = arrray();
+            $this->pot = [];
         }
         return $this->pot;
     }
@@ -296,7 +303,7 @@ class Request
         $this->getParents();
         if (!array_key_exists($pot, $this->pot)
             || !is_array($this->pot[$pot])) {
-            $this->pot[$pot] = array();
+            $this->pot[$pot] = [];
         }
         $this->pot[$pot][$piid] = $piid;
     }
@@ -314,14 +321,20 @@ class Request
     function getFirstParent()
     {
         if (!count($this->pot)) {
-            return array(false, false);
+            return [false, false];
         }
         reset($this->pot);
         $pot = key($this->pot);
 
         return is_array($this->pot[$pot]) && !empty($this->pot[$pot])
-            ? array($pot, current($this->pot[$pot]))
-            : array(false, false);
+            ? [$pot, current($this->pot[$pot])]
+            : [false, false];
+    }
+
+    function getFirstParentId()
+    {
+        $pot = $this->getFirstParent();
+        return $pot[1] ?? null;
     }
 
     function shifted(int $offset = 1)

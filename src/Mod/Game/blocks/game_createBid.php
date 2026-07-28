@@ -105,7 +105,7 @@ class game_createBid extends \Verba\Block\Html{
     if(!$store->first_offer){
       $store_ae = $_store->update($store->id, array('first_offer' => time()));
     }
-    $profileGamebidsUrl = new \Url($mUser->getProfileUrl().'/offers');
+    $profileGamebidsUrl = new \Verba\Url($mUser->getProfileUrl().'/offers');
     $this->addHeader('Location: '.$profileGamebidsUrl->get(true));
     setcookie(
       'gamebids-active-tab',

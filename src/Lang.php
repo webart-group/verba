@@ -449,6 +449,91 @@ class Lang extends Base
         }
         return $r;
     }
+
+    /**
+     * Вызывает make_padej_ru/ua/en в зависимости от текущего языка приложения.
+     * @see self::make_padej_ru()
+     */
+    public static function make_padej($q, $word_root, $forms = array(0 => '', 1 => '', 2 => ''))
+    {
+        $method = 'make_padej_' . (self::$locale ?: 'ru');
+        if (!method_exists(static::class, $method)) {
+            $method = 'make_padej_ru';
+        }
+        return static::$method($q, $word_root, $forms);
+    }
+
+    /**
+     * Возвращает нужную форму слова ($word_root + $padeji[x]) в зависимости от количества $q
+     * @param int $q количество объектов
+     * @param string $word_root корень слова, например — 'объект'
+     * @param array $padeji [0]=>'ов' (род.мн.), [1]=>'', [2]=>'а' (вин.мн.)
+     * @return string|false
+     */
+    public static function make_padej_ru($q, $word_root, $padeji = array(0 => '', 1 => '', 2 => ''))
+    {
+        if (!is_numeric($q) || !is_string($word_root))
+            return false;
+
+        $q = intval($q);
+        settype($q, 'string');
+        $ql = strlen($q);
+        if ($ql > 1 && $q[$ql - 2] == '1') {
+            return $word_root . $padeji[0];
+        } else {
+            switch ($q[$ql - 1]) {
+                case '0': case '5': case '6': case '7': case '8': case '9':
+                    return $word_root . $padeji[0];
+                case '1':
+                    return $word_root . $padeji[1];
+                case '2': case '3': case '4':
+                    return $word_root . $padeji[2];
+            }
+        }
+    }
+
+    /**
+     * Повертає потрібну форму слова ($word_root + $vidminky[x]) залежно від кількості $q
+     * @param int $q кількість об'єктів
+     * @param string $word_root корінь слова, наприклад — 'товар'
+     * @param array $vidminky [0]=>'ів' (род.мн.), [1]=>'', [2]=>'и' (наз.мн.)
+     * @return string|false
+     */
+    public static function make_padej_ua($q, $word_root, $vidminky = array(0 => '', 1 => '', 2 => ''))
+    {
+        if (!is_numeric($q) || !is_string($word_root))
+            return false;
+
+        $q = intval($q);
+        settype($q, 'string');
+        $ql = strlen($q);
+        if ($ql > 1 && $q[$ql - 2] == '1') {
+            return $word_root . $vidminky[0];
+        } else {
+            switch ($q[$ql - 1]) {
+                case '0': case '5': case '6': case '7': case '8': case '9':
+                    return $word_root . $vidminky[0];
+                case '1':
+                    return $word_root . $vidminky[1];
+                case '2': case '3': case '4':
+                    return $word_root . $vidminky[2];
+            }
+        }
+    }
+
+    /**
+     * Returns the word form for English — appends 's' for quantities > 1.
+     * @param int $quantity
+     * @param string $word_root
+     * @return string|false
+     */
+    public static function make_padej_en($quantity, $word_root)
+    {
+        if (!is_numeric($quantity) || empty($word_root))
+            return false;
+
+        return $quantity > 1 ? $word_root . 's' : $word_root;
+    }
 }
 
 Lang::$_config_default = [

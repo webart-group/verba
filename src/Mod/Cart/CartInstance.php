@@ -302,7 +302,7 @@ WHERE p_ot_id = '" . $_cst->getID() . "' && p_iid = '" . $cstId . "'");
         if (isset($rq['_tform'])
             && isset($rq['_tform']['ot_id'])
             && \Verba\isOt($rq['_tform']['ot_id']) && ($_tform = \Verba\_oh($rq['_tform']['ot_id']))
-            && $_tform instanceof \Model\Tform
+            && $_tform instanceof \Verba\Model\Tform
         ) {
             // если tform уже записана в БД и id известен
             // просто копируем $tformId

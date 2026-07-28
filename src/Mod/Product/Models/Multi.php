@@ -7,10 +7,9 @@
  * Time: 13:39
  */
 
-namespace Verba\Model\Product;
+namespace Verba\Mod\Product\Models;
 
-
-class Multi extends \Verba\Model\Product
+class Multi extends \Verba\Mod\Product\Models\Product
 {
 
 }

@@ -2,10 +2,9 @@
 namespace Verba\Mod\Product\Act\MakeList\Handler\Field;
 
 
-use Verba\Act\MakeList\Handler\HandlerInterface;
 use Verba\Act\MakeList\Handler\Field;
 
-class ProductCatalogInfo extends Field implements HandlerInterface
+class ProductCatalogInfo extends Field
 {
     function run()
     {

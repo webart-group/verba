@@ -52,7 +52,7 @@ class game_catalog extends game_pageContent
         \Verba\Hive::setBackURL();
 
         if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
-            $url = new \Url($_SERVER['SCRIPT_URL']);
+            $url = new \Verba\Url($_SERVER['SCRIPT_URL']);
             $this->addHeadTag('link', array('rel' => 'canonical', 'href' => $url->get(true)));
         }
 

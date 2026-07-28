@@ -17,9 +17,9 @@ class Router extends \Verba\Request\Http\Router
             case 'profile':
                 $b = new \Verba\Mod\User\RequestHandler\Profile($rq);
                 break;
-//            case 'logout':
-//                $b = new \Verba\Mod\User\RequestHandler\Logout($rq);
-//                break;
+            case 'logout':
+                $b = new \Verba\Mod\User\RequestHandler\Logout($rq);
+                break;
 //            case 'create':
 //            case 'new':
 //                $b = new \Verba\Mod\User\RequestHandler\Create($rq);

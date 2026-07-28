@@ -23,7 +23,8 @@ class Config extends \Verba\Base
         'resizeBySmallerSide' => false,
         'quality' => array(
             'jpg' => 90,
-            'png' => 7
+            'png' => 7,
+            'webp' => 100
         )
     );
 

@@ -30,7 +30,7 @@ class profile_publicView extends page_content {
 
   function route(){
 
-    $reviewBaseUrl = new \Url(\Mod\Profile::getInstance()->getPublicUrl($this->U->getID()));
+    $reviewBaseUrl = new \Verba\Url(\Mod\Profile::getInstance()->getPublicUrl($this->U->getID()));
     $reviewBaseUrl->shiftPath('reviews');
     $reviewBaseUrl = $reviewBaseUrl->get();
 

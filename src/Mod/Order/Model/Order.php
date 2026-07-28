@@ -8,7 +8,7 @@
  */
 namespace Verba\Mod\Order\Model;
 
-class Order extends  \Model\Item
+class Order extends  \Verba\Model\Item
 {
     protected $otype = 'order';
     public $id;
@@ -22,7 +22,7 @@ class Order extends  \Model\Item
     protected $customer;
     protected $validLocale;
     /**
-     * @var \Model\Store
+     * @var \Verba\Model\Store
      */
     protected $Store;
 
@@ -58,7 +58,7 @@ class Order extends  \Model\Item
         $this->paysys = \Verba\_mod('payment')->getPaysys($this->paysysId);
 
 
-        if(!\Lang::isLCValid($this->locale)){
+        if(!\Verba\Lang::isLCValid($this->locale)){
             $this->validLocale = \Verba\Lang::getDefaultLC();
         }else{
             $this->validLocale = $this->locale;
@@ -201,7 +201,7 @@ WHERE `p_ot_id` = '".$_order->getID()."' && `p_iid` = '".$this->getIid()."'";
         if(!empty($tformRqData)){
             foreach($tformRqData as $tformOt => $iids_hashes){
                 $_ctform = \Verba\_oh($tformOt);
-                if(!$_ctform instanceof \Model\Tform){
+                if(!$_ctform instanceof \Verba\Model\Tform){
                     continue;
                 }
                 $tform_attrs = $_ctform->getAttrsByRole('tform-field');
@@ -378,7 +378,7 @@ WHERE `p_ot_id` = '".$_order->getID()."' && `p_iid` = '".$this->getIid()."'";
 
             $params = array('lc'=> $this->getValidLocale());
 
-            $this->__statusUrl = new \Url($path);
+            $this->__statusUrl = new \Verba\Url($path);
 
             $this->__statusUrl->setParams($params);
         }

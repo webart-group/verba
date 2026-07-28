@@ -350,7 +350,7 @@ class Cause extends \Verba\Configurable
             return false;
         }
 
-        $causeClassName = '\Mod\Balop\Cause\\' . $cause_str;
+        $causeClassName = '\Verba\Mod\Balop\Cause\\' . $cause_str;
         if (!class_exists($causeClassName)) {
             return false;
         }

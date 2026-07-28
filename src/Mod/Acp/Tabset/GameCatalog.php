@@ -48,7 +48,7 @@ class GameCatalog extends \Verba\Mod\Acp\Tabset
                     'title' => 'catalog acp tab goodsProps'
                 ),
                 'ot' => 'catalog',
-                'url' => '/acp/h/catalog/cuform-configs',
+                'url' => '/acp/crud/catalog/cuform-configs',
                 'instanceOf' => array('type' => 'node'),
             ),
             'CatalogGoodsTradeForm' => array(
@@ -56,7 +56,7 @@ class GameCatalog extends \Verba\Mod\Acp\Tabset
                     'title' => 'catalog acp tab tradeForm'
                 ),
                 'ot' => 'catalog',
-                'url' => '/acp/h/catalog/cuform/tform',
+                'url' => '/acp/crud/catalog/cuform/tform',
                 'instanceOf' => array('type' => 'node'),
             ),
 

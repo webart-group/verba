@@ -14,7 +14,7 @@ class Tab extends \Verba\Block\Json {
 
         $this->content = '';
 
-        $class = '\Mod\Game\blocks\acp\tools\bids\refresh';
+        $class = '\Verba\Mod\Game\blocks\acp\tools\bids\refresh';
         if(class_exists($class)){
             $bdr = new $class($this);
             $e = $bdr->getToolE();

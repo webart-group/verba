@@ -1403,13 +1403,43 @@ function make_padej_ru($q, $word_root, $padeji = array(0 => '', 1 => '', 2 => ''
 }
 
 /**
- * Функция вызывает make_padej_ru()
- * @see make_padej_ru()
+ * Повертає потрібну форму слова ($word_root + $vidminky[x]) залежно від кількості $q
+ * @param int $q кількість об'єктів
+ * @param string $word_root корінь слова, наприклад - 'товар'
+ * @param array $vidminky масив закінчень для відповідних форм. Наприклад,
+ *       [0] => 'ів' (родовий відмінок мн. — товар[ів])
+ *       [1] => ''   (називний однини   — товар[])
+ *       [2] => 'и'  (називний множини  — товар[и])
+ *
+ * @return string|false слово у відповідній $q формі або false при помилці
  */
-function make_padej_ua()
+function make_padej_ua($q, $word_root, $vidminky = array(0 => '', 1 => '', 2 => ''))
 {
-    $args = func_get_args();
-    return call_user_func_array('\Verba\make_padej_ru', $args);
+    if (!is_numeric($q) || !is_string($word_root))
+        return false;
+
+    $q = intval($q);
+    settype($q, 'string');
+    $ql = strlen($q);
+    if ($ql > 1 && $q[$ql - 2] == '1') {
+        return $word_root . $vidminky[0]; // товарів
+    } else {
+        switch ($q[$ql - 1]) {
+            case '0':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                return $word_root . $vidminky[0]; // товарів
+            case '1':
+                return $word_root . $vidminky[1]; // товар
+            case '2':
+            case '3':
+            case '4':
+                return $word_root . $vidminky[2]; // товари
+        }
+    }
 }
 
 /**
@@ -1617,7 +1647,7 @@ function reductionToArray(&$val, $separator = false)
 
 function reductionToCurrency($val, $precision = 2)
 {
-    return round((float)$val, (int)$precision);
+    return number_format((float)$val, (int)$precision);
 }
 
 function reductionToFloat($val, $strictType = true, $precision = 5)

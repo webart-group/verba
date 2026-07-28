@@ -219,10 +219,10 @@ class Product extends Mod
         $cfg = $this->getPhCfg();
 
         if (array_key_exists($code, $cfg)) {
-            $classSfx = isset($cfg[$code]['_class']) ? $cfg[$code]['_class'] : $code;
+            $classSfx = $cfg[$code]['_class'] ?? $code;
             $hCfg = $cfg[$code];
         } elseif (array_key_exists($prodClassName, $cfg)) {
-            $classSfx = isset($cfg[$prodClassName]['_class']) ? $cfg[$prodClassName]['_class'] : $prodClassName;
+            $classSfx = $cfg[$prodClassName]['_class'] ?? $prodClassName;
             $hCfg = $cfg[$prodClassName];
         } else { //$oh instanceof ot_prodUniq or unknown
             $classSfx = $cfg['_default']['_class'];

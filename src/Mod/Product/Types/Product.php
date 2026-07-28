@@ -5,7 +5,7 @@ namespace Verba\Mod\Product\Types;
 class Product extends \Verba\Configurable
 {
     /**
-     * @var \Model, ObjectType
+     * @var \Verba\Model, ObjectType
      */
     protected $oh;
     protected $cfgHashKey = 'product';
@@ -23,7 +23,7 @@ class Product extends \Verba\Configurable
      * данные о родителе (базовом продукте) для текущей строки
      */
     protected $parentData = [];
-    protected $cartItemClassName = '\\Mod\\Cart\\Item';
+    protected $cartItemClassName = \Verba\Mod\Cart\Item::class;
 
     function __construct($oh, $cfg)
     {
@@ -127,7 +127,7 @@ CONCAT_WS(':', CAST(`" . $prntA . "`.`" . $parentTitleName . "` AS CHAR), CAST(`
         if (!class_exists($this->cartItemClassName))
         {
             $this->log()->error('Unable to find class or file for declared Cart Item class: ' . var_export($this->cartItemClassName, true));
-            $cartItemclassName = '\\Mod\\Cart\\Item';
+            $cartItemclassName = \Verba\Mod\Cart\Item::class;
         } else {
             $cartItemclassName = $this->cartItemClassName;
         }
@@ -200,12 +200,13 @@ CONCAT_WS(':', CAST(`" . $prntA . "`.`" . $parentTitleName . "` AS CHAR), CAST(`
 
     function extractTitle()
     {
-        $this->row['title'] =
-            !empty($this->row['title'])
-                ? $this->row['title']
-                : (isset($this->parentData['title']) && !empty($this->parentData['title'])
+        $this->row['title'] = !empty($this->row['title'])
+            ? $this->row['title']
+            : (isset($this->parentData['title']) && !empty($this->parentData['title'])
                 ? $this->parentData['title']
                 : '');
+
+        return $this->row['title'];
     }
 
     function extractCustoms()
@@ -215,7 +216,7 @@ CONCAT_WS(':', CAST(`" . $prntA . "`.`" . $parentTitleName . "` AS CHAR), CAST(`
 
     /**
      * @param $rqItem
-     * @param $prodItem \Model\Item
+     * @param $prodItem \Verba\Model\Item
      * @return string
      */
     function generateItemHash($rqItem, $prodItem)

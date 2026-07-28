@@ -77,7 +77,7 @@ class shop_ibFormOrderCreate extends \Verba\Block\Json
          * @var $mProfile \Verba\Mod\Profile
          */
         $mProfile = \Verba\_mod('profile');
-        $url = new \Url($mProfile->getPurchaseActionUrl($Order));
+        $url = new \Verba\Url($mProfile->getPurchaseActionUrl($Order));
 
         $this->content = $url->get(true);
         return $this->content;

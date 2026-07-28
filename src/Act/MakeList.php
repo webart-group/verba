@@ -1142,7 +1142,6 @@ class MakeList extends Action
         // добвляем условия по владельцу если доступ к списку получен только по праву "для владельцев"
         $this->addValidOwnerWhereCondition();
 
-
         //
         $this->applySessionCfg();
 
@@ -1207,6 +1206,7 @@ class MakeList extends Action
         $this->fire('beforeQuery');
         $this->Selection->refresh_querys();
         $this->sqlr = $this->Selection->exec_query();
+        $q = $this->Selection->search_q;
         $this->fire('queryExecuted');
         $this->getRows();
         $this->sqlr->free();
@@ -2735,9 +2735,9 @@ class MakeList extends Action
     }
 }
 
-MakeList::$_config_default = array(
+MakeList::$_config_default = [
     'listId' => false,
-    'url' => array(
+    'url' => [
         'forward' => false, // to reload list with new params for example
         'update' => false, // url to send to upadte exists List Item
         'edit' => false, // url to get List Item Edit Form
@@ -2745,22 +2745,22 @@ MakeList::$_config_default = array(
         'delete' => false, // url to request List Items delete
         'base' => false,
         'listerBase' => '/lister', // Lister mod
-    ),
+    ],
     'css' => false, // подключаемые css-файлы в формате
     'scripts' => false,
     'access' => false, // массив прав для
     'access_mode' => 0, // режим проверки прав - 0 - хотя бы по одному ключу, 1 - требуется совпадение по всем
     'wrap' => 'list/default/wrap.tpl', // list body wrap
     'body' => 'list/default/body.tpl', // Подложка тела списка, все элементы
-    'table' => array(
+    'table' => [
         'tpl' => 'list/default/table.tpl'
-    ), // тело списка - заголовки и данные
+    ], // тело списка - заголовки и данные
     'class' => '',
     'layout' => 'table',
-    'pager_panel' => array(
+    'pager_panel' => [
         'tpl' => '/list/default/panels/pager.tpl'//
-    ),
-    'feats' => array(
+    ],
+    'feats' => [
 
         // (маска верх,низ) панель опций (постраничка, результаты, строк на страницу, кнопки)
         'options' => 1,
@@ -2812,83 +2812,83 @@ MakeList::$_config_default = array(
 
         // (булево) возможность редактировать элемент списка (наличие кнопки)
         'editable' => 0,
-    ),
-    'row' => array( // Шаблон строки списка
+    ],
+    'row' => [ // Шаблон строки списка
         'tpl' => 'list/default/row.tpl',
         'class' => '',
         'num' => 'list/default/row_numbering.tpl',
-        'handler' => array(),
+        'handler' => [],
         // отключает генерацию полей методом по умолчанию если указан 'генератор' строки
         // предполагается, что вся работа по генерации значений будет выполнена в обработчике handler
         'preventDefaultFieldParseIfHandler' => true,
-    ),
-    'empty' => array(
+    ],
+    'empty' => [
         'tpl' => 'list/default/empty_list.tpl',
         'langKey' => 'list empty message'
-    ),
-    'filters' => array(
+    ],
+    'filters' => [
         'captionInside' => true, // bool
-        'wrap' => array(
+        'wrap' => [
             'tpl' => 'list/default/filters/wrap.tpl',
             'class' => false,
-        ),
-        'item_wrap' => array(
+        ],
+        'item_wrap' => [
             'tpl' => 'list/default/filters/item_wrap.tpl',
             'caption_tpl' => 'list/default/filters/item_caption.tpl',
             'class' => false,
-        ),
-        'buttons' => array(
+        ],
+        'buttons' => [
             'tpl' => 'list/default/filters/panel-buttons.tpl',
-            'items' => array(
+            'items' => [
                 'reset' => 'list filters buttons reset',
                 'apply' => 'list filters buttons apply'
-            )
+            ]
 
-        ),
-        'items' => array(
+        ],
+        'items' => [
             //'className' => 'class name prefix'
             // other keys as filter class config
-        )
-    ),
+        ]
+    ],
 
-    'control_block' => array( // Блок управляющих элементов - чекбокс, ссылка на редактирование.
+    'control_block' => [ // Блок управляющих элементов - чекбокс, ссылка на редактирование.
         'tpl' => 'list/default/control/block.tpl',
         'class' => null,
         'edit_element' => 'list/default/control/edit_element.tpl', // передав false - сам элемент парсится не будет, однако edit_url будет сформирован
         'select_element' => 'list/default/control/select_element.tpl',
-    ),
+    ],
 
-    'headers' => array( // Заголовки - если grid - названия колонок, иначе - настройки линейки ссылок сортировки.
-        'row' => array(
+    'headers' => [ // Заголовки - если grid - названия колонок, иначе - настройки линейки ссылок сортировки.
+        'row' => [
             'tpl' => '/list/default/headers/row.tpl',
             'class' => '',
-        ),
-        'cell' => array(
+        ],
+        'cell' => [
             'tpl' => '/list/default/headers/cell.tpl',
             'class' => '',
-        ),
+        ],
         'control' => false,// false | string as cell content-tpl for `control` header cell '/list/default/headers/control_content.tpl',
         'num' => false,// false | string as cell content-tpl for `num` headers cell
         'e_class' => 'list-button-order',
         'ordered_class' => 'ordered',
         'onlyConfigHeaders' => 0, // если true - сортируемыми будут только те поля что указаны в ключе headers-fields
-        'fields' => array( // псевдонимы полей /*'filed_name'  => array('title' => 'alt text for display')*/
-        ),
+        'fields' => [ // псевдонимы полей /*'filed_name'  => array('title' => 'alt text for display')*/
+        ],
 
-        'order' => array( // разрешенный/запрещенные в сортировке поля.
+        'order' => [ // разрешенный/запрещенные в сортировке поля.
             'allowed' => false, // array = (f1, f2, f3)
             'denied' => false // array = (f1, f2, f3)
-        ),
-    ),
+        ],
+    ],
 
-    'title' => array(
+    'title' => [
         'tpl' => 'list/default/title.tpl',
         'class' => 'list-title  wow fadeInLeft',
         'leaveEmptyTag' => false,
-    ),
+    ],
     'only_config_fields' => true,
     'fields' => false,
-    'field_default' => array(
+    'field_default' => [
         'data-type' => false,
         'class' => '',
         'class_merge' => false,
@@ -2896,13 +2896,13 @@ MakeList::$_config_default = array(
         'tpl' => 'list/default/cell.tpl',
         // cell content custom template. If empty cell content will be fieldValue
         'content_tpl' => false,
-        'handlers' => array(),
+        'handlers' => [],
         'preventDefaultHandlers' => false,
-        'header' => array(
+        'header' => [
             'textHandler' => null,
-        ),
-    ),
-    'order' => array(
+        ],
+    ],
+    'order' => [
         // порядок парсинга полей, сначала указанные, потом все остальные.
         // формат array(attr1_code[, attr2_code])
         'priority' => false,
@@ -2916,8 +2916,8 @@ MakeList::$_config_default = array(
         // )
         'default' => false,
         'subst' => null,
-    ),
-    'navout' => array(//Линейка постраничного вывода
+    ],
+    'navout' => [//Линейка постраничного вывода
         'tpl' => 'list/default/navigation/navout.tpl',
         'left' => 'list/default/navigation/ending_left.tpl',
         'right' => 'list/default/navigation/ending_right.tpl',
@@ -2936,62 +2936,62 @@ MakeList::$_config_default = array(
         'item_1' => 'list navigation item_1',  // окончание 1 - ы
         'item_2' => 'list navigation item_2',  // окончание 2 - а
 
-        'ronp' => array(
+        'ronp' => [
             'upper' => true,
             'default' => 50,
-            'values' => array(10 => 10, 15 => 15, 30 => 30, 60 => 60, 120 => 120, 240 => 240),
-        ),
-    ),
+            'values' => [10 => 10, 15 => 15, 30 => 30, 60 => 60, 120 => 120, 240 => 240],
+        ],
+    ],
 
-    'crows_info' => array(
+    'crows_info' => [
         'tpl' => 'list/default/crows_info.tpl'
-    ),
-    'buttons' => array(  // управляющие кнопки для отмеченных объектов
-        'top' => array(
+    ],
+    'buttons' => [  // управляющие кнопки для отмеченных объектов
+        'top' => [
             'tbl' => 'list/default/buttons/tbl.tpl',
             'button_wrap' => 'list/default/buttons/button_wrap.tpl',
-            'items' => array(
-                'selectall' => array(
+            'items' => [
+                'selectall' => [
                     'tpl' => 'list/default/buttons/selectall.tpl',
                     'class' => 'list-button-selectall',
                     'feat' => 'selectAll',
-                ),
-                'addnew' => array(
+                ],
+                'addnew' => [
                     'tpl' => 'list/default/buttons/addnew.tpl',
-                    'action' => array(null, 'makeAddNewUrl'),
+                    'action' => [null, 'makeAddNewUrl'],
                     'rights' => 'c',
                     'class' => 'list-button-addnew',
                     'feat' => 'addnew',
                     'titleLangKey' => 'list buttons addnew',
-                ),
-                'delete' => array(
+                ],
+                'delete' => [
                     'tpl' => 'list/default/buttons/del.tpl',
-                    'action' => array(null, 'makeDeleteUrl'),
+                    'action' => [null, 'makeDeleteUrl'],
                     'rights' => 'd',
                     'class' => 'list-button-delete',
-                    'workers' => array(
-                        'deleteButton' => array(
-                            '_script' => array('workers', 'list'),
+                    'workers' => [
+                        'deleteButton' => [
+                            '_script' => ['workers', 'list'],
                             '_className' => 'DeleteButton',
-                        ),
-                    ),
-                ),
-            ),
+                        ],
+                    ],
+                ],
+            ],
             'default_button_class' => 'btn-option'
-        ),
+        ],
         'bottom' => false, // использовать этот ключ что бы задать отдельные шаблоны кнопок в нижних опциях. Иначе испольуется конфиг кнопок верхнего блока.
-    ),
-    'options' => array( // шаблоны верхнего и нижнего блоков опций
+    ],
+    'options' => [ // шаблоны верхнего и нижнего блоков опций
         'state' => 0, // opened or closed by default: 0 - closed; 1 - opened;
-        'top' => array(
+        'top' => [
             'forcedParse' => false,
             'tpl' => 'list/default/panels/options.tpl',
             'items' => [
                 'buttons',
                 'ronpSelector'
             ]
-        ),
-        'bottom' => array(
+        ],
+        'bottom' => [
             'forcedParse' => false,
             'tpl' => 'list/default/panels/options.tpl',
             'items' => [
@@ -2999,16 +2999,16 @@ MakeList::$_config_default = array(
                 'ronpSelector'
             ],
             'max_rows_condition' => 10, // если в выборке строк меньше этого числа, нижние опции не показываются
-        ),
-    ),
+        ],
+    ],
     'parentsRelation' => false,
-    'workers' => array(/*'workerAlias' => array(
+    'workers' => [/*'workerAlias' => array(
       'alias' => 'scalias'
       'script' => arrat('myworker', 'mymod/list'), //скрипт расположения класса воркера
       'name' => 'ListSomeWorkerClassName',        //Название js-класса воркера
       'args' => array("{'url':'myurl'}", "'someStringValue'")    //аргументы в конструктор js-класса, начиная со второго
     )  */
-    ),
+    ],
     'js' => [
         'instance' => 'list/default/instance_js.tpl',
         'wrap_onready' => false,
@@ -3017,7 +3017,7 @@ MakeList::$_config_default = array(
     'dialogsModal' => false,
     'itemClickAction' => false,
     'parseAsJson' => 0,
-);
+];
 /*
 'fields'  => array(
       'price'  => array(

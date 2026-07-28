@@ -289,7 +289,7 @@ WHERE created > '".$date."' && of.`status` = 'success')";
 
     function getOrderCreationButtonAction($list){
 
-        $url = new \Url($this->gC('createFormOrderUrl'));
+        $url = new \Verba\Url($this->gC('createFormOrderUrl'));
         $params = $url->getParams();
         $params['pSlId'] = $list->getID();
         $url->setParams($params);

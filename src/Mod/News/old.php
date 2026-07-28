@@ -268,7 +268,7 @@ class NewsPublic extends \Verba\Mod{
                 'title', 'url_code', 'picture', '_picture_config','date'
             ),
             'hrefHandler' => array(
-                0 => '\Mod\Seo::idToSeoStr',
+                0 => '\Verba\Mod\Seo::idToSeoStr',
             )
         );
 

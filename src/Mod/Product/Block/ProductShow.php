@@ -241,7 +241,7 @@ class ProductShow extends Json
         // comments
         $this->tpl->assign(array(
             'ITEM_TAB_ID' => 'itab_' . $this->oh->getID() . '_' . $this->iid . '_comments',
-            'ITEM_TAB_BUTTON_TITLE' => Lang::get('comment form tab-title', array('comm_count' => $this->item['comments_count'])),
+            'ITEM_TAB_BUTTON_TITLE' => Lang::get('comment form tab-title', array('comm_count' => $this->item['reviews_count'])),
             'COMMENTS_LIST_TITLE_ENDING' => $this->item['title'],
         ));
         $this->tpl->parse('ITEM_TAB_CONTENT', 'item-comments-tab');

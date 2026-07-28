@@ -7,6 +7,11 @@ class Instance extends \Verba\Block\Json
 
     function build()
     {
+
+        $this->setScripts([
+            ['cart customer', 'shop'],
+        ]);
+
         /**
          * @var \Verba\Mod\Cart $Cart
          */
@@ -15,9 +20,13 @@ class Instance extends \Verba\Block\Json
         //$paysys = $Cart->getPaysys();
         //$currency = $Cart->getCurrency();
 
-        $this->content = $Cart->packToCfg();
+        $cfg = $Cart->packToCfg();
 
-        return $this->content;
+        $this->addJsBefore("
+window.CartInstance = new Cart(".json_encode($cfg).");
+window.CartInstance.init();");
+
+        return '';
     }
 
 }

@@ -104,12 +104,12 @@ class GenerateMenu extends \Verba\Mod\Sitemap\Block\Generator {
         return null;
       }
 
-      $r['LOC'] = (new \Url($Node->item['url']))->get(true);
+      $r['LOC'] = (new \Verba\Url($Node->item['url']))->get(true);
 
       // content node
     }elseif($Node->item['ot_id'] == $_cnt->getID()){
 
-      $r['LOC'] = (new \Url($Node->item['url']))->get(true);
+      $r['LOC'] = (new \Verba\Url($Node->item['url']))->get(true);
 
     }else{
       return false;

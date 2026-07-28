@@ -41,7 +41,7 @@ class CustomOrder extends Worker{
       case 'pop':
         break;
       case 'comm':
-        $qm->addOrder(array('comments_count' => 'd'), $alias);
+        $qm->addOrder(array('reviews_count' => 'd'), $alias);
         break;
       case 'cheap':
         $qm->addOrder(array('price' => 'a'), $alias);

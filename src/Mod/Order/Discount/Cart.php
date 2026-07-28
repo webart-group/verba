@@ -10,7 +10,7 @@
 namespace Verba\Mod\Order\Discount;
 
 
-class Cart extends \Verba\Mod\Order\Discount{
+class Cart extends \Verba\Mod\Order\Discount {
 
     function getOrderTotal(){
         return $this->getNoPromosItemsTotal();

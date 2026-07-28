@@ -20,11 +20,11 @@ class Seo extends \Verba\Mod{
     return $buff[1];
   }
 
-  static function idToSeoStr($row, $data = array(), $url = '/'){
+  static function idToSeoStr($row, $data = [], $url = '/'){
 
     $data =(array)$data;
     $url = (string)$url;
-    if(is_object($row) && $row instanceof \Model\Item){
+    if(is_object($row) && $row instanceof \Verba\Model\Item){
       $row = $row->toArray();
     }
     $oh = \Verba\_oh($row['ot_id']);
@@ -36,7 +36,7 @@ class Seo extends \Verba\Mod{
     }
     $url .= $oh->getCode().'-'.$row[$oh->getPAC()];
     if(!empty($data)){
-      $U = new \Url($url);
+      $U = new \Verba\Url($url);
       $U->setParams($data);
       $url = $U->get();
     }
@@ -48,7 +48,7 @@ class Seo extends \Verba\Mod{
     preg_match("/\<img([^>]+)\/\>/i", $src, $buff);
     if(isset($buff[1]) && !empty($buff[1])
     && preg_match("/src=\"(.*?)\"/i", $buff[1], $buff)){
-      $url = new \Url($buff[1][0]);
+      $url = new \Verba\Url($buff[1][0]);
       return $url->get(true);
     }
     return false;

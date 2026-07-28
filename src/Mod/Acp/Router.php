@@ -56,7 +56,14 @@ class Router extends \Verba\Request\Http\Router
             $h = new $modRouter($rq->shift());
 
         } elseif(($autoclass = '\\Verba\\App\\'.ucfirst($rq->node).'\\Router') && class_exists($autoclass)) {
+
             $h = new $autoclass($rq->shift());
+
+        } elseif(isOt($rq->node)) {
+
+            $rq->setOt($rq->node);
+            $h = new Router\Crud($rq);
+
         }
 
         if(!isset($h) || !$h instanceof Block){

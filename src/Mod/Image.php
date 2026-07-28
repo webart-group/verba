@@ -5,7 +5,7 @@ class Image extends \Verba\Mod
 {
     use \Verba\ModInstance;
     protected $valid_objects = array('image');
-    static public $media_types = array('jpg' => 2, 'jpeg' => 2, 'png' => 3, 'gif' => 1);
+    static public $media_types = array('jpg' => 2, 'jpeg' => 2, 'png' => 3, 'gif' => 1, 'webp' => 18);
     protected $tmp_zip_dir = false;
     static protected $imageConfigs = array();
 
@@ -166,6 +166,9 @@ class Image extends \Verba\Mod
             case 3:
                 $MtSuff = $qkey = 'png';
                 break;
+            case 18:
+                $MtSuff = $qkey = 'webp';
+                break;
             default :
                 $this->log()->warning('Unexpected image format [' . $r['type'] . ']' . __METHOD__ . ' (' . __LINE__ . ')] image_src[' . var_export($src, true) . ']');
                 return false;
@@ -175,10 +178,7 @@ class Image extends \Verba\Mod
         && isset($types_quality[$qkey])
         && is_numeric($types_quality[$qkey])
             ? $types_quality[$qkey]
-            : (isset($defaultQ[$qkey])
-                ? $defaultQ[$qkey]
-                : null
-            );
+            : $defaultQ[$qkey] ?? null;
 
         if ($r['width'] > $maxwidth || $r['height'] > $maxheight) {
             $calcMthd = $resizeBySmallerSide ? 'calcImageWHBySmallerSide' : 'calcImageWH';
@@ -187,7 +187,7 @@ class Image extends \Verba\Mod
                 $this->log()->error('Bad sizes for image resample. From[' . var_export($src, true) . '] To:[' . var_export($destination, true) . '] img params:[' . var_export($r, true) . ']');
                 return false;
             }
-            if (!is_resource($thumb = imagecreatetruecolor($newwidth, $newheight))) {
+            if (!is_object($thumb = imagecreatetruecolor($newwidth, $newheight))) {
                 $this->log()->error('Unable to create image resource to resampling. From[' . var_export($src, true) . '] To:[' . var_export($destination, true) . '] img params:[' . var_export($r, true) . '], quality:[' . var_export($quality, true) . ']');
                 return false;
             }
@@ -203,6 +203,22 @@ class Image extends \Verba\Mod
             imagefilledrectangle($thumb, 0, 0, $newwidth, $newheight, $transparent);
 
             imagecopyresampled($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $r['width'], $r['height']);
+
+            if($MtSuff == 'webp') {
+                // === ШАРПЕНИНГ  ===
+//                $sharpen = [
+//                    [-1, -1, -1],
+//                    [-1,  9, -1],
+//                    [-1, -1, -1]
+//                ];
+                $sharpen = [[1,-1,1], [-1,3,-1], [1,-1,1]];
+                imageconvolution($source, $sharpen, 1, 0);   // умеренная резкость
+
+                // Можно попробовать сильнее:
+                // $sharpen = [[0,-1,0], [-1,5,-1], [0,-1,0]];
+            }
+
+
             $r['width'] = $newwidth;
             $r['height'] = $newheight;
             if (!$imgFinalizeMethod($thumb, $destination, $quality)) {
@@ -539,6 +555,9 @@ class Image extends \Verba\Mod
             case 3:
                 $MtSuff = 'png';
                 break;
+            case 18:
+                $MtSuff = 'webp';
+                break;
             default :
                 $this->log()->warning('Unexpected image format [' . $r['type'] . ']' . __METHOD__ . ' (' . __LINE__ . ')] image_src[' . var_export($filepath, true) . ']');
                 return false;
@@ -582,6 +601,10 @@ class Image extends \Verba\Mod
             case 3:
                 $MtSuff = 'png';
                 $qty = 9;
+                break;
+            case 18:
+                $MtSuff = 'webp';
+                $qty = 100;
                 break;
             default :
                 $this->log()->warning('Unexpected image format [' . $r['type'] . ']' . __METHOD__ . ' (' . __LINE__ . ')] image_src[' . var_export($filepath, true) . ']');

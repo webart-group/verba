@@ -22,8 +22,8 @@ class faq_index extends \Verba\Block\Html
 
     $treeCfg = array(
       'nodeTypes' => array(
-        'menu' => array('\Mod\Menu\Tree\View\Menu',array('templates' => array('body' => 'tree/node/body-no-link.tpl'))),
-        'content' => '\Mod\Faq\Tree\View\ContentFaqOnPage',
+        'menu' => array('\Verba\Mod\Menu\Tree\View\Menu',array('templates' => array('body' => 'tree/node/body-no-link.tpl'))),
+        'content' => '\Verba\Mod\Faq\Tree\View\ContentFaqOnPage',
       ),
       'levelsCfg' => array(
         1 => array(

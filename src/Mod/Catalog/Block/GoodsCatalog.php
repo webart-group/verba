@@ -85,7 +85,7 @@ class GoodsCatalog extends Json
             'CATALOG_PRODUCTS' => new ProductsList($this),
         ));
 
-        if (!isset($_SERVER['QUERY_STRING']) || empty($_SERVER['QUERY_STRING'])) {
+        if (empty($_SERVER['QUERY_STRING'])) {
             $this->addItems(array(
                 'CATALOG_DESCRIPTION' => new PromoBlockPlaceHolder($this, array(
                     'items' => array(new Description($this))

@@ -277,7 +277,7 @@ class Links extends \Verba\Mod
      */
     function makeLinkingButton($list, $buttonName, &$buttonCfg)
     {
-        $url = new \Url($buttonCfg['url']);
+        $url = new \Verba\Url($buttonCfg['url']);
         $params = $url->getParams();
         $this->fillPostParamsByButtonCfg($list, $buttonCfg, $params);
         $url->setParams($params);
@@ -535,7 +535,7 @@ WHERE
         $linkingCfg[$linkingAlias] = $cfg;
         $list->addExtData('linking', $linkingCfg);
 
-        $url = new \Url($buttonCfg['url']);
+        $url = new \Verba\Url($buttonCfg['url']);
         $params = $url->getParams();
         $params['lalias'] = $linkingAlias;
         $params['primSlId'] = $list->getID();
@@ -583,7 +583,7 @@ WHERE
 
         $linkingCfg = $linkingCfg[$linkingAlias];
 
-        $url = new \Url($buttonCfg['url']);
+        $url = new \Verba\Url($buttonCfg['url']);
 
         $params = $url->getParams();
         $params['lalias'] = $linkingAlias;
@@ -634,7 +634,7 @@ WHERE
         }
         $linkingCfg = $linkingCfg[$linkingAlias];
 
-        $url = new \Url($buttonCfg['url']);
+        $url = new \Verba\Url($buttonCfg['url']);
         $params = $url->getParams();
         $params['lalias'] = $linkingAlias;
         $params['primSlId'] = $linkingCfg['primSlId'];
@@ -851,7 +851,7 @@ WHERE
         $linkingCfg[$linkingAlias] = $cfg;
         $list->addExtData('linking', $linkingCfg);
 
-        $url = new \Url($buttonCfg['url']);
+        $url = new \Verba\Url($buttonCfg['url']);
         $params = $url->getParams();
         $params['lalias'] = $linkingAlias;
         $params['primSlId'] = $list->getId();
@@ -983,7 +983,7 @@ WHERE
 
         $linkingCfg = $linkingCfg[$linkingAlias];
 
-        $url = new \Url($buttonCfg['url']);
+        $url = new \Verba\Url($buttonCfg['url']);
 
         $params = $url->getParams();
         $params['lalias'] = $linkingAlias;
@@ -1034,7 +1034,7 @@ WHERE
         }
         $linkingCfg = $linkingCfg[$linkingAlias];
 
-        $url = new \Url($buttonCfg['url']);
+        $url = new \Verba\Url($buttonCfg['url']);
         $params = $url->getParams();
         $params['lalias'] = $linkingAlias;
         $params['primSlId'] = $linkingCfg['primSlId'];

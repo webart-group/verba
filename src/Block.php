@@ -89,12 +89,6 @@ class Block extends Configurable implements BlockInterface
         $this->init();
     }
 
-    function getGuard(){
-        if(!is_object($this->guard)){
-            $this->guard = new Guard($this->guard);
-        }
-    }
-
     function getRequest(){
         return $this->rq;
     }

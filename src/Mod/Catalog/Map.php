@@ -14,6 +14,8 @@ class Map extends \Verba\Block\Json
     private $br;
     private $data;
 
+    protected $hidden_enabled = false;
+
     function build()
     {
         $this->content = $this->getMenuTree();
@@ -60,7 +62,7 @@ class Map extends \Verba\Block\Json
         }
     }
 
-    function handleNode($ot, $iids, &$pointTo, $parent = false, $url_prefix = false)
+    function handleNode($ot, $iids, &$pointTo, $parent = false, $url_prefix = false): void
     {
         $CatalogTransformer = new MapTransformer();
 
@@ -72,6 +74,10 @@ class Map extends \Verba\Block\Json
         usort($iids, array($this, 'sort'));
         foreach ($iids as $iid) {
             $item = $this->data[$ot][$iid];
+
+            if($item['hidden'] && !$this->hidden_enabled) {
+                continue;
+            }
 
             if (isset($item['url'])) {
                 $url = $item['url'];

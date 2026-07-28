@@ -116,7 +116,7 @@ class BlogPublic extends \Verba\Mod{
         $socImage = \Verba\Mod\Seo::extractImageUrlFromText($txt);
         \Verba\Mod\Seo::addOtags($item['title'], $socImage);
 
-        $url = new \Url(\Mod\Seo::idToSeoStr($item));
+        $url = new \Verba\Url(\Mod\Seo::idToSeoStr($item));
         $tpl->assign(array(
             'ITEM_TITLE' => htmlspecialchars($item['title']),
             'ITEM_DATE' =>  strftime('%d.%m.%Y', strtotime($item['date'])),

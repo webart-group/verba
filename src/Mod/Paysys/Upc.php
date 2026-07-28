@@ -63,9 +63,9 @@ class Upc extends \Verba\Mod
         }
 
         if ($n->isValid() && $n->tranCode == '000') {
-            $fUrl = new \Url($this->gC('successUrl'));
+            $fUrl = new \Verba\Url($this->gC('successUrl'));
         } else {
-            $fUrl = new \Url($this->gC('failureUrl'));
+            $fUrl = new \Verba\Url($this->gC('failureUrl'));
         }
         $this->updateOrderStatus($n);
 

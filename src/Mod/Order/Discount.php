@@ -25,7 +25,7 @@ class Discount extends \Verba\Configurable{
 
     function __construct($cfg = false, $cart){
         if(!$cart || !$cart instanceof \Verba\Mod\Cart\CartInstance){
-            throw new \Exception('\Mod\Order\Discount: Invalid Cart object');
+            throw new \Exception('\Verba\Mod\Order\Discount: Invalid Cart object');
         }
         $this->cart = $cart;
         if(is_array($cfg)){

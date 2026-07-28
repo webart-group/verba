@@ -7,7 +7,7 @@ class ItemClickToLoadUrl extends Worker{
 
   public $jsScriptFile = 'ItemClickToLoadUrl';
 
-  public $urlGenerator = '\Mod\Seo::idToSeoStr';
+  public $urlGenerator = '\Verba\Mod\Seo::idToSeoStr';
 
   function init(){
     $this->parent->listen('rowBefore', 'genUrl', $this, 'ItemClickToLoadUrl_genUrl');

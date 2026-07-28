@@ -31,7 +31,7 @@ class GenerateCatalog extends \Verba\Mod\Sitemap\Block\Generator {
       goto HANDLE_PRODUCTS;
     }
 
-    $cat_url = new \Url($this->item['fullcode']);
+    $cat_url = new \Verba\Url($this->item['fullcode']);
     $this->tpl->assign(array(
       'LOC' => $cat_url->get(true),
       'LASTMOD' => $ctx->lastmod,

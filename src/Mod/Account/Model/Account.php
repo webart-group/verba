@@ -105,7 +105,7 @@ class Account extends \Verba\Model\Item
 
     function createCause($classNameSuff, $data)
     {
-        $classNameBase = '\Mod\Balop\Cause';
+        $classNameBase = '\Verba\Mod\Balop\Cause';
         $className = $classNameBase .'\\' . ucfirst($classNameSuff);
         if (!class_exists($className, false)) {
             $className = $classNameBase;

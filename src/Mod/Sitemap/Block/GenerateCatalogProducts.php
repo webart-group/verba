@@ -40,7 +40,7 @@ class GenerateCatalogProducts extends \Verba\Mod\Sitemap\Block\Generator {
       $sqlr = $this->DB()->query($fullq);
       if($sqlr && $sqlr->getNumRows()){
         while($row = $sqlr->fetchRow()){
-          $url = new \Url(\Mod\Seo::idToSeoStr($row));
+          $url = new \Verba\Url(\Mod\Seo::idToSeoStr($row));
           $url->setFullPath($this->cat_item['fullcode']);
           $this->tpl->assign(array(
             'LOC' =>  $url->get(true),
@@ -55,7 +55,7 @@ class GenerateCatalogProducts extends \Verba\Mod\Sitemap\Block\Generator {
         if(!isset($buyLink)){
           if(substr($this->cat_item['fullcode'], 0,4) == '/buy'){
             $buyLink = '/sell'.substr($this->cat_item['fullcode'], 4);
-            $buyLink = new \Url($buyLink);
+            $buyLink = new \Verba\Url($buyLink);
             $this->tpl->assign(array(
               'LOC' =>  $buyLink->get(true),
               'LASTMOD' => $ctx->lastmod,

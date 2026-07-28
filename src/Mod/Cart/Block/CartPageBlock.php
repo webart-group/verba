@@ -8,7 +8,7 @@ class CartPageBlock extends \Verba\Block\Html
     function build()
     {
         $this->setScripts([
-            ['cartView cartView_block orderDiscountView', 'shop'],
+            ['cartView cartView_block orderDiscount orderDiscountView', 'shop'],
         ]);
 
         $this->tpl->define([

@@ -24,7 +24,7 @@ class CommentCountDecrease extends Handler
 
         $ae = $_parent->initAddEdit(array('action' => 'edit'));
         $ae->setIID($piid);
-        $ae->setGettedObjectData(array('comments_count' => '-1'));
+        $ae->setGettedObjectData(array('reviews_count' => '-1'));
         $ae->addedit_object();
 
         return;

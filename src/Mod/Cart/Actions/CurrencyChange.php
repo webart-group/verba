@@ -1,9 +1,9 @@
 <?php
-namespace Verba\Mod\Cart\Block\Currency;
+namespace Verba\Mod\Cart\Actions;
 
 use Verba\Exception\Building;
 
-class Change extends \Verba\Block\Json
+class CurrencyChange extends \Verba\Block\Json
 {
     function build()
     {

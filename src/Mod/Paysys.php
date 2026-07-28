@@ -81,7 +81,7 @@ class Paysys1
                 $supportEmail = 'admin@' . SYS_PRIMARY_HOST;
             }
             $pscode = $order->getPaysys()->getCode();
-            $statusUrl = new \Url($modOrder->gC('url status'));
+            $statusUrl = new \Verba\Url($modOrder->gC('url status'));
             $statusUrl->setParams(array('iid' => $order->code));
             $this->tpl->assign(array(
                 'REPORT_STATUS' => $bp['reportCode'],

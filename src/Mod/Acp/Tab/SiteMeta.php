@@ -10,6 +10,6 @@ class SiteMeta extends \Verba\Mod\Acp\Tab{
   public $pot = 19;
   public $ot = 'meta';
   public $piid = 1;
-  public $url = '/acp/h/meta/cuform';
+  public $url = '/acp/meta/cuform';
 }
 ?>

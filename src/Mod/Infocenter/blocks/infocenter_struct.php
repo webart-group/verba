@@ -7,7 +7,7 @@ class infocenter_struct extends \Verba\Block\Html
         $_menu = \Verba\_oh('menu');
         $treeCfg = array(
             'nodeTypes' => array(
-                'menu' => '\Mod\Infocenter\Tree\View\Menu',
+                'menu' => '\Verba\Mod\Infocenter\Tree\View\Menu',
             ),
             'levelsCfg' => array(
                 1 => array(

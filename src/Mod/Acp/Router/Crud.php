@@ -37,7 +37,8 @@ class Crud extends Router
                 $acp_cfgs = 'acp/list acp/ots/' . $rq->ot_code;
                 $cfg = $rq->getParam('cfg');
                 $rq->addParam(array('cfg' => empty($cfg) ? $acp_cfgs : $acp_cfgs.' ' . $cfg));
-                $h = new \Verba\Mod\Otype\CRUD\ListJson($rq);
+                //$h = new \Verba\Mod\Otype\CRUD\ListJson($rq);
+                $h = new \Verba\Mod\Routine\Block\MakeList($rq);
                 $h->contentType = 'json';
                 break;
 

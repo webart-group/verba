@@ -12,7 +12,7 @@ class ProductsList extends TabList
     );
     public $ot;
     public $action = 'list';
-    public $url = '/acp/h/product/list';
+    public $url = '/acp/product/list';
     public $linkedTo = array('type' => 'tab', 'id' => 'CatalogAef');
     public $maxLevel = 1;
     public $currentLevel = 0;

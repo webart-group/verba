@@ -50,7 +50,7 @@ class paysys_requestForm extends \Verba\Block\Html{
       $fields = array();
     }
 
-    $Url = new \Url($this->PaySend->url);
+    $Url = new \Verba\Url($this->PaySend->url);
 
     if($this->PaySend->requestMethod == 'GET'){
       $getParams = $Url->getParams();

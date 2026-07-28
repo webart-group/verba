@@ -9,7 +9,7 @@ class UsersList extends \Verba\Mod\Acp\Tab\TabList{
   );
   public $ot = 'user';
   public $action = 'list';
-  public $url = '/acp/h/user/list';
+  public $url = '/acp/crud/user/list';
 
   function states(){
     $r = parent::states();

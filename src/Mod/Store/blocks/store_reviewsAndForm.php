@@ -91,13 +91,13 @@ class store_reviewsAndForm extends \Verba\Block\Html
 
     function setUrlBase($url)
     {
-        $this->urlBase = new \Url($url);
+        $this->urlBase = new \Verba\Url($url);
     }
 
     function getUrlBase()
     {
         if ($this->urlBase === null) {
-            $this->urlBase = new \Url($this->rq->getRequestUri());
+            $this->urlBase = new \Verba\Url($this->rq->getRequestUri());
         }
         return $this->urlBase;
     }

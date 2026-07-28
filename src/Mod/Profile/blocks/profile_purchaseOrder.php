@@ -87,7 +87,7 @@ class profile_purchaseOrder extends order_Page {
   function getReviewsCfg(){
 
     return array(
-      'urlBase' => (new \Url($this->urlBase))->shiftPath('reviews')->get(),
+      'urlBase' => (new \Verba\Url($this->urlBase))->shiftPath('reviews')->get(),
       'Order' => $this->Order,
       'Store' => $this->Store,
       'prodItem' => $this->prodItem,

@@ -3,8 +3,8 @@ namespace Verba\Block;
 
 trait Template
 {
-    public $templates = array();
-    public $tplvars = array();
+    public $templates = [];
+    public $tplvars = [];
 
     /**
      * @var \Verba\FastTemplate

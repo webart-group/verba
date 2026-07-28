@@ -64,11 +64,11 @@ class Promotion extends \Verba\Mod
         $r = array();
         $pac = $_prom->getPAC();
         while ($row = $sqlr->fetchRow()) {
-            $cstName = '\Mod\Order\Discount\\' . $row['dtype'];
+            $cstName = '\Verba\Mod\Order\Discount\\' . $row['dtype'];
             if (class_exists($cstName)) {
                 $className = $cstName;
             } else {
-                $className = '\Mod\Order\Discount';
+                $className = '\Verba\Mod\Order\Discount';
             }
 
             $cfg = array(

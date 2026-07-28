@@ -1,7 +1,9 @@
 <?php
+
+use Verba\Mod\Product\Act\MakeList\Handler\ProductHandlerFieldTrait;
 class product_acpListHandlerVariants extends ListHandlerField{
 
-  use product_listHandlerField;
+  use ProductHandlerFieldTrait;
 
   protected $cur;
 

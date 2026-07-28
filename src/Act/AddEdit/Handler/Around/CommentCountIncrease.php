@@ -45,7 +45,7 @@ class CommentCountIncrease extends Around
 
         $ae = $_parent->initAddEdit(array('action' => 'edit'));
         $ae->setIID($piid);
-        $ae->setGettedObjectData(array('comments_count' => $val));
+        $ae->setGettedObjectData(array('reviews_count' => $val));
         $ae->addedit_object();
 
         return;

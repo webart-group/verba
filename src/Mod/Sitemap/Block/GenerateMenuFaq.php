@@ -19,7 +19,7 @@ class GenerateMenuFaq extends GenerateMenu {
     }
     // content node
 
-    $r['LOC'] = (new \Url($Node->item['url']))->get(true);
+    $r['LOC'] = (new \Verba\Url($Node->item['url']))->get(true);
 
 
 

@@ -18,8 +18,6 @@ class GameBidHandler extends After{
     'owner',
     'price',
     'picture',
-    'gameCatId',
-    'serviceCatId',
     'currencyId',
   );
 

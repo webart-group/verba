@@ -8,6 +8,6 @@ class CatalogAef extends AEForm
         'title' => 'catalog acp tab title'
     ];
     public $ot = 'catalog';
-    public $url = '/acp/h/catalog/cuform';
+    public $url = '/acp/crud/catalog/cuform';
     public $instanceOf = array('type' => 'node');
 }

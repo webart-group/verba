@@ -34,13 +34,13 @@ class Send extends \Verba\Mod\Paysys\Liqpay\Transaction
 
         $mOrder = \Verba\_mod('order');
 
-        $resultUrl = new \Url($mOrder->gC('url status'));
+        $resultUrl = new \Verba\Url($mOrder->gC('url status'));
         $resultUrl->setParams(array(
             'iid' => $this->orderCode
         ));
         $resultUrl = $resultUrl->get(true);
 
-        $notifyUrl = new \Url($mOrder->gC('url notify') . '/' . $this->_paysysCode);
+        $notifyUrl = new \Verba\Url($mOrder->gC('url notify') . '/' . $this->_paysysCode);
         $notifyUrl->setParams(array(
             'iid' => $this->orderCode
         ));

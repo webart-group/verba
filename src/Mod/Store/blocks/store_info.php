@@ -30,7 +30,7 @@ class store_info extends \Verba\Block\Html{
 //    }
 
     $listId = 'or_'._oh('store')->getID().'_'.$this->Store->getId();
-    $reviewBaseUrl = new \Url(\Mod\Store::getInstance()->getPublicUrl($this->Store->getId(), 'info'));
+    $reviewBaseUrl = new \Verba\Url(\Mod\Store::getInstance()->getPublicUrl($this->Store->getId(), 'info'));
     $reviewBaseUrl->shiftPath('review');
     $reviewBaseUrl = $reviewBaseUrl->get();
 

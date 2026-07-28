@@ -8,6 +8,6 @@ class MetaAef extends AEForm
         'title' => 'meta acp tab_aef title'
     );
     public $ot = 'meta';
-    public $url = '/acp/h/meta/cuform';
+    public $url = '/acp/meta/cuform';
     public $linkedTo = array('type' => 'tab');
 }

@@ -45,17 +45,17 @@ class Parts extends \Verba\Base {
             $this->storeId = (int)$_buf[4];
             $this->userId = (int)$_buf[5];
             $this->loadable = true;
-            $this->ChannelClassName = '\Mod\Chatik\Channel\Store';
+            $this->ChannelClassName = '\Verba\Mod\Chatik\Channel\Store';
 
             // канал извещения пользователя
         }elseif($this->type == 'usrntf'){
             $this->userId = (int)$_buf[6];
             $this->loadable = false;
-            $this->ChannelClassName = '\Mod\Notifier\WS\Channel\User';
+            $this->ChannelClassName = '\Verba\Mod\Notifier\WS\Channel\User';
         }elseif($this->type == 'store'){
             $this->loadable = false;
             $this->storeId = (int)$_buf[7];
-            $this->ChannelClassName = '\Mod\Notifier\WS\Channel\Store';
+            $this->ChannelClassName = '\Verba\Mod\Notifier\WS\Channel\Store';
         }else{
             return false;
         }

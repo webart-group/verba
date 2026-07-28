@@ -137,7 +137,7 @@ class paysys_status extends \Verba\Block\Html
         $paysys = \Verba\Mod\Payment::i()->getPaysys($this->o->paysys->getId());
 
         $url = \Verba\Mod\Order::i()->gC('url processpayment');
-        $url = new \Url($url);
+        $url = new \Verba\Url($url);
 
         $this->tpl->assign(array(
             'ORDER_PAYMENT_URL' => $url->get(true),

@@ -42,7 +42,7 @@ class Form extends \Verba\Block\Json
             'PAC' => $pac,
             'POT' => $pot->getID(),
             'PIID' => $piid,
-            'FORWARD_ACTION' => '/acp/h/meta/editnow',
+            'FORWARD_ACTION' => '/acp/meta/editnow',
             'META_PAC' => $pac,
             'INSERT_OPTIONS' => '',
         ));

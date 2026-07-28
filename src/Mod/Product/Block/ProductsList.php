@@ -26,7 +26,8 @@ class ProductsList extends Json
         try{
 
             $_catalog = _oh('catalog');
-            $catData = $_catalog->getData($this->request->getParam('piid'), 1);
+            $piid = $this->request->getParam('piid') ?? $this->request->getFirstParentId();
+            $catData = $_catalog->getData($piid, 1);
             if(!$catData) {
                 throw new Building('Catalog missed or not found');
             }
@@ -60,7 +61,12 @@ class ProductsList extends Json
              * @var $mLister Lister
              */
             $mLister = _mod('lister');
-            $mLister->extendCfgByUiConfigurator($_product, $dcfg, $catCfg['groups']['public_fields'], $catCfg['groups']['public_filters']);
+            $mLister->extendCfgByUiConfigurator(
+                $_product,
+                $dcfg,
+                $catCfg['groups']['public_fields'],
+                $catCfg['groups']['public_filters']
+            );
 
             // добавляем обработчик на поле price если оно есть.
             if (isset($dcfg['fields']['price'])) {
@@ -102,6 +108,7 @@ class ProductsList extends Json
                 'block' => $this,
             );
 
+            $this->fire('beforeListInit');
             $list = $_product->initList($cfg);
 
             $list->addExtendedData(array(
@@ -180,6 +187,44 @@ class ProductsList extends Json
                 ]
             );
 
+            ### Акции
+            $_promo = \Verba\_oh('promotion');
+            list($promoA, $promoT, $promoDb) = $qm->createAlias($_promo->vltT());
+            list($lpA, $lpT, $lpD) = $qm->createAlias($_promo->vltT($_product));
+
+            $qm->addCJoin([['a' => $lpA]],
+                [
+                    ['p' => ['a' => $lpA, 'f' => 'p_ot_id'],
+                        's' => $_promo->getID(),
+                    ],
+                    ['p' => ['a' => $lpA, 'f' => 'ch_iid'],
+                        's' => ['a' => $palias, 'f' => $_product->getPAC()],
+                    ],
+                ], false, null, 'LEFT'
+            );
+
+            $qm->addSelect('GROUP_CONCAT(CONCAT_WS(\'^\', 
+            CAST(`' . $promoA . '`.`id` AS CHAR), 
+            CAST(`' . $promoA . '`.`title_' . \Verba\Lang::$locale . '` AS CHAR),
+            CAST(`' . $promoA . '`.`annotation_' . \Verba\Lang::$locale . '` AS CHAR),
+#            CAST(`' . $promoA . '`.`conditions_' . \Verba\Lang::$locale . '` AS CHAR),
+#            CAST(`' . $promoA . '`.`picture` AS CHAR), 
+#            CAST(`' . $promoA . '`.`start_at` AS CHAR), 
+#            CAST(`' . $promoA . '`.`end_at` AS CHAR), 
+            CAST(`' . $promoA . '`.`dcontext` AS CHAR), 
+            CAST(`' . $promoA . '`.`daffect` AS CHAR), 
+            CAST(`' . $promoA . '`.`dcfg` AS CHAR)
+            ) SEPARATOR \'~\')', false, 'promos', true);
+            $qm->addCJoin(array(array('a' => $promoA)),
+                array(
+                    array('p' => array('a' => $promoA, 'f' => 'id'),
+                        's' => array('a' => $lpA, 'f' => 'p_iid'),
+                    ),
+                    array('p' => array('a' => $promoA, 'f' => 'active'),
+                        's' => '1'
+                    )
+                ), true, null, 'LEFT');
+
             ###  Данные по магазину
             $_store = _oh('store');
             // store table, extract store picture
@@ -201,7 +246,7 @@ class ProductsList extends Json
                 );
             }
 
-            $this->content = $list->generateListJson();
+            $this->content = $list->generateList();
 
             $q = $list->QM()->getQuery();
 

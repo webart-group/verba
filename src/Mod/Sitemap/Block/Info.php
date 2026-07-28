@@ -15,7 +15,7 @@ class Info extends \Verba\Block\Html{
   function build(){
     try{
       $this->content['path'] = \\Verba\_mod('sitemap')->getFilePath();
-      $url = new \Url(\Verba\_mod('sitemap')->getFileUrl());
+      $url = new \Verba\Url(\Verba\_mod('sitemap')->getFileUrl());
       if(!file_exists($this->content['path'])
         || !($stat = stat($this->content['path']))
         || !$url){

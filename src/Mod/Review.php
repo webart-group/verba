@@ -32,7 +32,7 @@ class Review extends \Verba\Mod
           'subject' => 'review/create/notify/subject.tpl',
         ));
 
-        $acpUrl = new \Url(SYS_THIS_HOST.\Verba\_mod('acp')->gC('url'));
+        $acpUrl = new \Verba\Url(SYS_THIS_HOST.\Verba\_mod('acp')->gC('url'));
         $acpUrl = $acpUrl->get(true);
         $tpl->assign(array(
           'ACP_URL' => $acpUrl,

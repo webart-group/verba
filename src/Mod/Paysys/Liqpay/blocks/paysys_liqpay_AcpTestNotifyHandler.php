@@ -33,7 +33,7 @@ class paysys_liqpay_AcpTestNotifyHandler extends \Verba\Block\Html
             $signature = \PaySignature_Liqpay::genSignature($mod->gC('signature'), $hashedData);
         }
 
-        $notifyUrl = new \Url($mod->gC('notifyUrl'));
+        $notifyUrl = new \Verba\Url($mod->gC('notifyUrl'));
 
         $this->content = array(
             'data' => $hashedData,

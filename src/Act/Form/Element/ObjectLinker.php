@@ -20,9 +20,9 @@ class ObjectLinker extends Element
          'rule_alias' => str, //rule alias
          'title' => str, //element title in form
          'url' => array(
-            'create' => '/acp/h/product/variant/cuform',
-            'update' => '/acp/h/product/variant/cuform',
-            'remove' => '/acp/h/product/variant/remove',
+            'create' => '/acp/product/variant/cuform',
+            'update' => '/acp/product/variant/cuform',
+            'remove' => '/acp/product/variant/remove',
           ),
           'attr' => array(
             'picture', ''articul', 'price', 'size', 'size_unit', 'old_price', 'quantity'
@@ -69,9 +69,8 @@ class ObjectLinker extends Element
         $fr = $this->direction == 'down' ? '1' : '2';
         reset($this->aot);
 
-        while ($i = each($this->aot)) {
-            $k = $i['key'];
-            $v = $i['value'];
+        foreach ($this->aot as $k => $v) {
+
             $aot_cfg = $selector = false;
             if (is_numeric($v) || is_string($v)) {
                 $caot = $v;
@@ -105,8 +104,8 @@ class ObjectLinker extends Element
             }
 
 
-            if (isset($aot_cfg['item']['tpl']) && !empty($aot_cfg['item']['tpl'])) {
-                if (!isset($aot_cfg['item']['selector']) || empty($aot_cfg['item']['selector'])) {
+            if (!empty($aot_cfg['item']['tpl'])) {
+                if (empty($aot_cfg['item']['selector'])) {
                     $selector = $_aoh->getCode();
                 } else {
                     $selector = $aot_cfg['item']['selector'];
@@ -146,7 +145,7 @@ class ObjectLinker extends Element
             $aot[$aot_id] = array_replace_recursive($aot[$aot_id], $aot_cfg);
             $title = $aot[$aot_id]['title'];
             $options[$_aoh->getID()] = $title;
-            if (!isset($aot[$aot_id]['attr']) || empty($aot[$aot_id]['attr'])) {
+            if (empty($aot[$aot_id]['attr'])) {
                 $aot[$aot_id]['attr'] = $this->attrs;
             }
         }

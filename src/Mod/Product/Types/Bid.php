@@ -1,5 +1,5 @@
 <?php
-namespace Verba\Mod\Game\Product;
+namespace Verba\Mod\Product\Types;
 
 
 class Bid extends \Verba\Mod\Product\Types\Product {
@@ -11,17 +11,6 @@ class Bid extends \Verba\Mod\Product\Types\Product {
             return $title;
         }
         $title = $this->oh->getTitle();
-        $gId = $this->row['gameCatId'];
-        $sId = $this->row['serviceCatId'];
-        $catItems = \Verba\_mod('catalog')->OTIC()->getItems(array($gId, $sId));
-        if(array_key_exists($gId, $catItems)){
-            $title .= ', '.$catItems[$gId]->title;
-        }
-
-        $this->row['_extra']['data']['gameCatId'] = $gId;
-        $this->row['_extra']['data']['gameCatTitle'] = $catItems[$gId]->title;
-        $this->row['_extra']['data']['serviceCatId'] = $sId;
-        $this->row['_extra']['data']['serviceCatTitle'] = $catItems[$sId]->title;
 
         $this->row['title'] = $title;
         return $this->row['title'];
@@ -44,12 +33,10 @@ class Bid extends \Verba\Mod\Product\Types\Product {
 
         $desc = array();
 
-        $catalogItem = \Verba\_mod('catalog')->OTIC()->getItem($this->row['serviceCatId']);
+        $catalogItem = \Verba\_mod('catalog')->OTIC()->getItem($this->row['p_iid']);
         $catCfg = $catalogItem->getValue('config');
 
-        if(isset($catCfg) && is_array($catCfg) && isset($catCfg['groups']['order_description']['items'])
-            && is_array($catCfg['groups']['order_description']['items'])
-        ){
+        if(!empty($catCfg['groups']['order_description']['items'])) {
             foreach ($catCfg['groups']['order_description']['items'] as $fi => $fiData){
                 $desc[] = $Item->getValue($fiData['code']);
             }
@@ -79,5 +66,4 @@ class Bid extends \Verba\Mod\Product\Types\Product {
 
         return $this->row['description'];
     }
-
 }

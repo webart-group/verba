@@ -587,7 +587,7 @@ class Customer extends \Verba\Mod
                 && count($discDetailed)) {
                 $rq = false;
                 foreach ($discDetailed as $discount_id => $dd) {
-                    if ($dd['_class'] == '\Mod\Order\Discount\Cart\FirstPurchase') {
+                    if ($dd['_class'] == '\Verba\Mod\Order\Discount\Cart\FirstPurchase') {
                         $rq = $dd['percent'];
                         break;
                     }

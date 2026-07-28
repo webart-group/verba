@@ -403,7 +403,7 @@ class Item extends \Verba\Base {
         if(!is_array($val) || !isset($val['ot_id'])
             || !\Verba\isOt($val['ot_id'])
             || !($_tform = \Verba\_oh($val['ot_id']))
-            || !$_tform instanceof \Model\Tform
+            || !$_tform instanceof \Verba\Model\Tform
             || !settype($val['id'], 'integer')
             || !$val['id']
         ){

@@ -43,7 +43,7 @@ class game_buyList extends \Verba\Block\Html
 
         // добавляем обработчик на поле price если оно есть.
         if (isset($dcfg['fields']['price'])) {
-            $dcfg['fields']['price']['handler'] = array('\Mod\Store\Act\MakeList\Handler\Field\PriceFormater');
+            $dcfg['fields']['price']['handler'] = array('\Verba\Mod\Store\Act\MakeList\Handler\Field\PriceFormater');
             if (!isset($dcfg['workers'])) {
                 $dcfg['workers'] = array();
                 $dcfg['workers']['PriceFormatter'] = array(

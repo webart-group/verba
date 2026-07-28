@@ -9,10 +9,10 @@ class OrderPayedBuyerEase extends Ordered
      */
     protected $_i;
     protected $otype = 'order';
-    protected $_i_class = '\Mod\Order\Model\Order';
+    protected $_i_class = '\Verba\Mod\Order\Model\Order';
     protected $block = 0;
 
-    protected $_itemClassSuffixRequired = '\Mod\Order\Model\Order';
+    protected $_itemClassSuffixRequired = '\Verba\Mod\Order\Model\Order';
 
     function calcSum()
     {

@@ -74,7 +74,7 @@ class Pay extends \Verba\Block\Html
          * @var $mProfile Profile
          */
         $mProfile = \Verba\_mod('profile');
-        $url = new \Url($mProfile->getPurchaseActionUrl($this->Order));
+        $url = new \Verba\Url($mProfile->getPurchaseActionUrl($this->Order));
         $this->addHeader('Location', $url->get());
 
     }

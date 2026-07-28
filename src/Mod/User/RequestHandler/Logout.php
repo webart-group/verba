@@ -2,9 +2,8 @@
 
 namespace Verba\Mod\User\RequestHandler;
 
-class Logout extends \Verba\Block\Json
+class Logout extends \Verba\Block\Html
 {
-
     function build()
     {
         /**

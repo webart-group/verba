@@ -613,7 +613,7 @@ class system_toolM1Catalog extends \Verba\Block\Json
                                 }
 
                                 if (preg_match("/\\\Mods\\\(.*)?$/i", $fieldCfg['headerText'], $_buff)) {
-                                    $headerText = '\Mod\\' . ucfirst($_buff[1]);
+                                    $headerText = '\Verba\Mod\\' . ucfirst($_buff[1]);
                                 }
 
                                 if ($headerText !== $fieldCfg['headerText']) {
@@ -640,15 +640,15 @@ class system_toolM1Catalog extends \Verba\Block\Json
                                 }
 
                                 if (preg_match("/\\\Mods\\\Image\\\Handlers\\\Present\\\([a-z0-9_]+)$/i", $handler, $_buff)) {
-                                    $handler = '\Mod\\Image\Act\Look\Handler\\' . ucfirst($_buff[1]);
+                                    $handler = '\Verba\Mod\\Image\Act\Look\Handler\\' . ucfirst($_buff[1]);
                                 }
 
                                 if (preg_match("/\\\Mods\\\Image\\\Act\\\Look\\\Handler\\\([a-z0-9_]+)$/i", $handler, $_buff)) {
-                                    $handler = '\Mod\\Image\Act\Look\Handler\\' . ucfirst($_buff[1]);
+                                    $handler = '\Verba\Mod\\Image\Act\Look\Handler\\' . ucfirst($_buff[1]);
                                 }
 
                                 if (preg_match("/\\\Mods\\\(.*)?$/i", $handler, $_buff)) {
-                                    $handler = '\Mod\\' . ucfirst($_buff[1]);
+                                    $handler = '\Verba\Mod\\' . ucfirst($_buff[1]);
                                 }
 
                                 if ($handler != $fieldCfg['handler']) {
@@ -701,7 +701,7 @@ class system_toolM1Catalog extends \Verba\Block\Json
                                         $fieldUpdate['handler']
                                     );
                                 } else if (preg_match("/\\\Mods\\\(.*)?$/i", $fieldCfg['handler'], $_buff)) {
-                                    $fieldUpdate['handler'] = '\Mod\\' . ucfirst($_buff[1]);
+                                    $fieldUpdate['handler'] = '\Verba\Mod\\' . ucfirst($_buff[1]);
                                     $all_subs[] = array(
                                         $formKey,
                                         'handler',
